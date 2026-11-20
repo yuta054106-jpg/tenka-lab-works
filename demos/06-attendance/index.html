@@ -41,7 +41,7 @@
     <section class="intro wrap" aria-labelledby="h-intro">
       <h2 id="h-intro" class="sec-title">打刻から、月の集計と出勤簿まで自動で</h2>
       <p class="intro__lead">3店舗・8人の11月の打刻から、残業・深夜・遅刻を自動で数え、出勤簿を1人1枚で作ります。店長が打刻を直すと、理由と履歴が残ります。</p>
-      <p class="intro__note">※ デモ（架空のお店）です。お店・スタッフ・時間はすべて架空です。修正した内容はこのブラウザの中だけで使い、保存も送信もしません。ページを読み込み直すと最初のデータに戻ります。</p>
+      <p class="intro__note">※ デモ（架空のお店）です。お店・スタッフ・時間はすべて架空です。修正した内容はこのブラウザの中だけで使い、保存も送信もしません。ページを読み込み直すと最初のデータに戻ります。残業・深夜の数え方はこのデモの仮定で、実際のお店では就業規則に合わせて決めます。</p>
     </section>
 
     <div class="tabs" id="tabs-bar">
@@ -153,7 +153,7 @@
               </button>
             </div>
           </div>
-          <p class="print-note">PDF にするには、印刷の画面で「PDF に保存」を選び、「ヘッダーとフッター」をオフにします。</p>
+          <p class="print-note">PDF にするには、印刷の画面でプリンター（送信先）を「PDF に保存」（Edge は「PDF として保存」）に切り替えます。きれいに出すには「ヘッダーとフッター」のチェックを外してください。</p>
         </div>
         <div class="desk">
           <p class="roster-scroll-hint">表は横にスクロールできます</p>
@@ -164,8 +164,8 @@
 
     <div class="wrap">
       <section class="card gas-card" aria-labelledby="h-gas">
-        <div class="card__head"><h2 id="h-gas">Googleフォーム＋スプレッドシート（GAS）で作ると</h2></div>
-        <p class="gas__lead">このデモはブラウザの中だけで動く再現です。同じ仕組みを Googleフォームとスプレッドシート、GAS（Google が無料で用意しているプログラムの仕組み）で作ると、毎日の打刻から月末の書類までがつながります。</p>
+        <div class="card__head"><h2 id="h-gas">Googleフォーム＋スプレッドシート＋GAS で作ると</h2></div>
+        <p class="gas__lead">このデモはブラウザの中だけで動く再現です。同じ仕組みを Googleフォームとスプレッドシート、GAS（Googleアカウントがあれば追加の費用なしで使える自動化の仕組み）で作ると、打刻の記録から月末の集計・出勤簿 PDF の作成までを自動にできます。打刻はスタッフが行い、出勤簿の共有・送信は店長が中身を確かめてから行います。</p>
         <ol class="flow">
           <li class="flow__item">
             <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="9" y="3" width="14" height="26" rx="2.5" fill="none" stroke="#6B4A34" stroke-width="2"/><path d="M14 25h4" stroke="#6B4A34" stroke-width="2" stroke-linecap="round"/></svg>
@@ -179,7 +179,7 @@
           </li>
           <li class="flow__item">
             <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="12" fill="none" stroke="#6B4A34" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span class="flow__label">毎月1日 朝6時</span>
+            <span class="flow__label">毎月1日の朝（6時台）</span>
             <span class="flow__text">前月の集計と出勤簿 PDF を自動で作成</span>
           </li>
           <li class="flow__item">
@@ -206,7 +206,7 @@
           <dl><dt>集計・出勤簿</dt><dd>このデモ：画面を開いた時に計算</dd><dd>GAS：毎月1日に自動で計算し、PDF を Googleドライブに保存</dd></dl>
           <dl><dt>共有</dt><dd>このデモ：しない</dd><dd>GAS：店長が確認してから（自動では送らない）</dd></dl>
         </div>
-        <p class="gas__note">給与の計算は、就業規則や社労士の確認が必要なため、このデモでは扱いません。</p>
+        <p class="gas__note">給与・人件費の金額は、このデモでは出しません（給与の計算は、就業規則や社労士への確認が必要なため）。</p>
         <p class="card__link"><a href="../../">ほかの作品例を見る</a></p>
       </section>
     </div>
@@ -231,7 +231,7 @@
           <div class="edit__presets" id="edit-presets">
             <button type="button" class="preset">打刻忘れ（本人に確認済み）</button>
             <button type="button" class="preset">打刻の押し間違い</button>
-            <button type="button" class="preset">シフトの変更</button>
+            <button type="button" class="preset">打刻機の不具合</button>
           </div>
           <textarea id="edit-reason" rows="3" maxlength="100" autocomplete="off"></textarea>
           <p class="ferr" id="err-reason" hidden></p>

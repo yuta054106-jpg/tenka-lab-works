@@ -614,7 +614,7 @@
         '<tbody>' + rows + '</tbody>' +
         '<tfoot><tr><th scope="row" colspan="5" class="c-total">合計</th><td class="num">' + (t.brk ? dur(t.brk) : '') + '</td><td class="num">' + (t.work ? dur(t.work) : '') + '</td><td class="num">' + (t.ot ? dur(t.ot) : '') + '</td><td class="num">' + (t.night ? dur(t.night) : '') + '</td><td></td></tr></tfoot>' +
       '</table></div>' +
-      '<p class="r-note">※ 11月21日以降は、まだ打刻がないため空欄です。<br>※ 実働＝退勤−出勤−休憩（1分単位）。残業は1日8時間超、深夜は22時〜翌5時。' + (overnight ? '<br>※ 24:30 は翌日の0:30 を表します。' : '') + '</p>' +
+      '<p class="r-note">※ 11月21日以降は、まだ打刻がないため空欄です。<br>※ 実働＝退勤−出勤−休憩（1分単位）。残業（1日8時間超）・深夜（22時〜翌5時）の数え方は、この見本の仮定です。' + (overnight ? '<br>※ 24:30 は翌日の0:30 を表します。' : '') + '</p>' +
       '<div class="r-checks"><div><p>本人確認</p><span></span></div><div><p>店長確認</p><span></span></div></div>' +
       '<p class="r-foot">この出勤簿は TENKA LAB の制作見本です。お店・スタッフ・時間はすべて架空です。</p>' +
       '</article>'
@@ -622,7 +622,7 @@
   $('r-staff').addEventListener('change', function () { rStaff = this.value; renderRoster() })
   var baseTitle = document.title
   $('print-btn').addEventListener('click', function () { window.print() })
-  window.addEventListener('beforeprint', function () { document.title = '出勤簿_2026年11月_' + staffOf(rStaff).name; renderRoster() })
+  window.addEventListener('beforeprint', function () { document.title = '出勤簿_見本_2026年11月_' + staffOf(rStaff).name; renderRoster() })
   window.addEventListener('afterprint', function () { document.title = baseTitle })
 
   // ---------- 修正のダイアログ ----------
@@ -769,7 +769,7 @@
     if (!editing) return
     var c = previewCalc(readForm())
     var el = $('edit-preview')
-    if (!c) { el.innerHTML = 'この内容だと <strong>退勤までそろうと計算します</strong>'; return }
+    if (!c) { el.innerHTML = '<strong>出勤・退勤（休憩は開始と終了）を入れると、実働・残業・深夜をここに出します</strong>'; return }
     el.innerHTML = 'この内容だと <span>実働 <strong>' + dur(c.work) + '</strong>・残業 <strong>' + dur(c.ot) + '</strong>・深夜 <strong>' + dur(c.night) + '</strong></span>'
   }
   function updateLen () { $('edit-len').textContent = $('edit-reason').value.length + ' / 100' }
