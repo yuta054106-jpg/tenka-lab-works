@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>カフェ ユメツム（デモ）売上ダッシュボード｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。カフェ ユメツムの売上を、目標の達成ペース・前月比・客単価・利益・曜日の傾向まで、スマホでひと目で見られるダッシュボードにした見本です。数字はすべて架空です。">
+  <meta name="theme-color" content="#6B4A34">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="カフェ ユメツム（デモ）売上ダッシュボード｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。Excel の売上を、スマホでひと目で見られる画面にする見本です。数字はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9h12l-1.5 10h-9z' fill='%236B4A34'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <p class="demo-band" role="note">デモ（架空のお店）｜TENKA LAB の制作見本です。店名・数字はすべて架空です。</p>
+
+  <header class="site-header">
+    <div class="wrap">
+      <h1 class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 10h12l-1.6 9.5h-8.8z" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M15.6 12h1.9a2.3 2.3 0 0 1 0 4.6h-2.6" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 7c-.8-1 .8-2 0-3M12 7c-.8-1 .8-2 0-3" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="brand__name">カフェ ユメツム</span>
+        <span class="brand__demo">デモ</span>
+      </h1>
+      <p class="brand__sub">売上ダッシュボード｜2026年11月19日 時点</p>
+    </div>
+  </header>
+
+  <div class="month-bar">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+    <div class="wrap">
+      <div class="month-tabs" role="tablist" aria-label="対象の月" id="month-tabs">
+        <button type="button" role="tab" class="month-tab" id="tab-9" data-m="9" aria-selected="false" aria-controls="main" tabindex="-1">9月</button>
+        <button type="button" role="tab" class="month-tab" id="tab-10" data-m="10" aria-selected="false" aria-controls="main" tabindex="-1">10月</button>
+        <button type="button" role="tab" class="month-tab" id="tab-11" data-m="11" aria-selected="true" aria-controls="main" tabindex="0">11月<span class="month-tab__sub">（19日まで）</span></button>
+      </div>
+      <p class="month-note">※ 数字はすべて架空です（作品例3の売上管理シートと同じ架空のお店）</p>
+    </div>
+  </div>
+
+  <main id="main" class="wrap" role="tabpanel" aria-labelledby="tab-11">
+
+    <section class="kpis" aria-label="今月の主な数字" id="kpis"></section>
+
+    <div class="grid">
+      <section class="card card--full" aria-labelledby="h-daily">
+        <div class="card__head">
+          <h2 id="h-daily">日別の売上</h2>
+          <p class="card__aside" id="daily-aside"></p>
+        </div>
+        <div class="chart" id="daily-chart">
+          <div class="chart__svg" id="daily-svg"></div>
+          <div class="chart__hits" id="daily-hits"></div>
+          <div class="tip" id="daily-tip" hidden></div>
+        </div>
+        <p class="card__link"><a href="#daily" id="to-daily">すべての数字を日別の一覧で見る</a></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-cat">
+        <div class="card__head"><h2 id="h-cat">売上の内訳</h2></div>
+        <ul class="legend" aria-hidden="true">
+          <li><span class="sw sw--dine"></span>店内飲食</li>
+          <li><span class="sw sw--take"></span>テイクアウト</li>
+          <li><span class="sw sw--retail"></span>物販</li>
+        </ul>
+        <ul class="cats" id="cats"></ul>
+        <p class="sub" id="cat-comment"></p>
+      </section>
+
+      <section class="card" aria-labelledby="h-month">
+        <div class="card__head"><h2 id="h-month">月別の売上と経費</h2></div>
+        <ul class="legend" aria-hidden="true">
+          <li><span class="sw sw--sales"></span>売上</li>
+          <li><span class="sw sw--cost"></span>経費</li>
+        </ul>
+        <div class="chart" id="month-chart"><div class="chart__svg" id="month-svg"></div></div>
+        <details class="mini">
+          <summary>経費の内訳を見る</summary>
+          <table class="mini__table" id="cost-table"></table>
+        </details>
+      </section>
+
+      <section class="card" aria-labelledby="h-week">
+        <div class="card__head">
+          <h2 id="h-week">曜日別の平均売上</h2>
+          <p class="card__aside">定休日（火）を除く</p>
+        </div>
+        <p class="comment" id="week-comment"></p>
+        <ul class="weeks" id="weeks"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="h-about">
+        <div class="card__head"><h2 id="h-about">この画面でできること</h2></div>
+        <ul class="about">
+          <li>Excel やスプレッドシートの売上を、スマホでひと目で見られる形にします</li>
+          <li>目標の達成ペース・前月との比較・曜日の傾向を自動で計算します</li>
+          <li>お店に合わせて、見る数字やグラフを選べます</li>
+        </ul>
+        <p class="card__link"><a href="../../03-sales-sheet/tenkalab-sample-sales-sheet.xlsx">元になった売上管理シート（作品例3）を見る</a></p>
+      </section>
+
+      <details class="daily card--full" id="daily">
+        <summary id="daily-summary"><span class="daily__arrow" aria-hidden="true">▸</span><span id="daily-summary-text">日別の一覧を開く</span></summary>
+        <div class="daily__body">
+          <p class="sub daily__note">持帰＝テイクアウト。金額の単位は円です。</p>
+          <div class="daily__table-wrap" id="daily-table"></div>
+          <ul class="daily__rows" id="daily-rows"></ul>
+        </div>
+      </details>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。カフェ ユメツムは架空のお店で、数字はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
