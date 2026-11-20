@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>整体院 ソラユイ チャット案内デモ（架空のお店）</title>
+<meta name="description" content="TENKA LAB のデモ（架空のお店）です。整体院のサイトの右下に、料金・空き状況・駐車場などに答えて予約ページへ案内するチャット窓口を付けた見本。実在のお店ではありません。">
+<meta property="og:title" content="整体院 ソラユイ チャット案内デモ（架空のお店）">
+<meta property="og:description" content="TENKA LAB のデモ（架空のお店）。料金・空き状況・アクセスに答えて予約へ案内するシナリオ型チャットの見本です。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yuta054106-jpg.github.io/tenka-lab-works/demos/01-ai-chat/">
+<meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/demos/01-ai-chat/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script src="chat.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#top">整体院 ソラユイ</a>
+    <nav class="site-nav" aria-label="ページ内メニュー">
+      <ul>
+        <li><a href="#menu">料金</a></li>
+        <li><a href="#access">アクセス</a></li>
+        <li><a href="#reserve">予約</a></li>
+      </ul>
+    </nav>
+  </div>
+  <p class="demo-band">デモ（架空のお店）です。実在の整体院ではありません</p>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="eyebrow">肩・腰・姿勢の整体</p>
+        <h1 id="hero-title">からだの「こわばり」を、<br>ゆっくりほどく。</h1>
+        <p class="lead">強く押さない、ボキボキ鳴らさない整体です。はじめての方は、お話を伺うところから始めます。</p>
+        <ul class="facts" aria-label="特徴">
+          <li>初回 5,500円</li>
+          <li>駅から徒歩5分</li>
+          <li>駐車場 2台</li>
+        </ul>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="#reserve">予約する</a>
+          <button class="btn btn-outline" type="button" data-open-chat>チャットで相談</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 400 320" width="400" height="320" focusable="false">
+          <circle cx="250" cy="140" r="120" fill="#E3EFEA"/>
+          <circle cx="300" cy="80" r="36" fill="#FFF4D6"/>
+          <path d="M20 250 C 110 190, 190 300, 280 230 S 380 200, 400 220" fill="none" stroke="#2F6B5A" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+          <path d="M0 280 C 100 230, 200 320, 300 260 S 390 240, 400 250" fill="none" stroke="#2F6B5A" stroke-width="2" stroke-linecap="round" opacity=".3"/>
+          <g fill="#2F6B5A">
+            <circle cx="200" cy="96" r="18"/>
+            <path d="M200 120 c -10 30 -12 54 -8 88 l 16 0 c 4 -34 2 -58 -8 -88 z"/>
+            <path d="M196 132 C 170 112, 150 92, 136 70" fill="none" stroke="#2F6B5A" stroke-width="10" stroke-linecap="round"/>
+            <path d="M204 132 C 230 112, 250 92, 264 70" fill="none" stroke="#2F6B5A" stroke-width="10" stroke-linecap="round"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="menu" aria-labelledby="menu-title">
+    <div class="container narrow">
+      <h2 id="menu-title">メニュー・料金</h2>
+      <p class="note center">すべて税込。デモ用の架空の料金です。</p>
+      <table class="price">
+        <caption class="visually-hidden">メニューと料金</caption>
+        <thead><tr><th scope="col">メニュー</th><th scope="col">料金</th></tr></thead>
+        <tbody>
+          <tr class="price-first"><th scope="row">初回（お話＋整体 60分）</th><td>5,500円</td></tr>
+          <tr><th scope="row">整体 40分</th><td>4,400円</td></tr>
+          <tr><th scope="row">整体 60分</th><td>6,050円</td></tr>
+          <tr><th scope="row">姿勢チェック付き 70分</th><td>7,150円</td></tr>
+          <tr><th scope="row">回数券（60分×5回）</th><td>27,500円</td></tr>
+        </tbody>
+      </table>
+      <div class="center"><a class="btn btn-accent" href="#reserve">予約する</a></div>
+    </div>
+  </section>
+
+  <section class="block tint" id="first" aria-labelledby="first-title">
+    <div class="container">
+      <h2 id="first-title">はじめての方へ</h2>
+      <ul class="cards">
+        <li><h3>強く押しません</h3><p>痛みの出ない強さで、少しずつほぐします。強さはいつでも変えられます。</p></li>
+        <li><h3>着替えがあります</h3><p>動きやすい服をお貸しします。お仕事帰りの服のままでも大丈夫です。</p></li>
+        <li><h3>説明してから始めます</h3><p>からだの状態と施術の内容、料金をお伝えしてから始めます。</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="access" aria-labelledby="access-title">
+    <div class="container narrow">
+      <h2 id="access-title">アクセス・営業時間</h2>
+      <dl class="info">
+        <dt>所在地</dt><dd>◯◯市△△ 2-4-6（架空）</dd>
+        <dt>最寄り駅</dt><dd>◯◯駅 南口から徒歩5分</dd>
+        <dt>駐車場</dt><dd>院の裏に2台（無料）</dd>
+        <dt>営業時間</dt><dd>月・火・木・金 10:00〜20:00<br>土・日 9:00〜17:00<br>祝日も曜日どおりに営業</dd>
+        <dt>定休日</dt><dd>水曜</dd>
+        <dt>電話</dt><dd>000-0000-0000（デモ用の架空の番号）</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="block tint" id="reserve" aria-labelledby="reserve-title">
+    <div class="container narrow">
+      <h2 id="reserve-title" tabindex="-1">ご予約（デモ）</h2>
+      <p class="demo-note" id="reserve-demo-note">デモのため送信されません。実際のお店では、ここでお名前と連絡先を伺います。</p>
+      <form class="reserve-form" id="reserve-form" aria-describedby="reserve-demo-note" novalidate>
+        <div class="field">
+          <label for="r-menu">メニュー</label>
+          <select id="r-menu" name="menu">
+            <option value="初回（お話＋整体 60分）">初回（お話＋整体 60分）5,500円</option>
+            <option value="整体 40分">整体 40分 4,400円</option>
+            <option value="整体 60分">整体 60分 6,050円</option>
+            <option value="姿勢チェック付き 70分">姿勢チェック付き 70分 7,150円</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="r-date">日付</label>
+          <select id="r-date" name="date"></select>
+        </div>
+        <div class="field">
+          <label for="r-time">時間</label>
+          <select id="r-time" name="time"></select>
+        </div>
+        <button class="btn btn-accent btn-block" type="submit">この内容で予約する（デモ）</button>
+        <p class="form-result" id="reserve-result" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
+  <section class="block" id="about-demo" aria-labelledby="about-title">
+    <div class="container narrow">
+      <div class="lab-card">
+        <h2 id="about-title">このチャットについて（TENKA LAB）</h2>
+        <p>このチャットは答えを用意したシナリオ型です。お店の情報に合わせて作ります。本物のAI（文章で自由に答える）版もご相談ください。</p>
+        <p class="note">右下の「チャットで相談」から試せます。外部のサービスにはつながず、このページの中だけで動いています。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p><b>整体院 ソラユイ</b>（デモ・架空のお店）</p>
+  <p class="footer-note">このページは TENKA LAB のデモです。店名・住所・電話番号・料金・空き状況は、すべて架空のものです。</p>
+  <p>制作：TENKA LAB</p>
+</footer>
+
+<button class="chat-launcher" id="chat-launcher" type="button" aria-expanded="false" aria-controls="chat-panel">
+  <svg aria-hidden="true" focusable="false" width="22" height="22" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="currentColor"/></svg>
+  <span>チャットで相談</span>
+</button>
+
+<section class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" hidden>
+  <div class="chat-head">
+    <div>
+      <h2 class="chat-title" id="chat-title" tabindex="-1">ソラユイ ご案内チャット</h2>
+      <p class="chat-badge">デモ（架空のお店）</p>
+    </div>
+    <button class="chat-close" id="chat-close" type="button" aria-label="チャットを閉じる">
+      <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="chat-log" id="chat-log" role="log" aria-live="polite" aria-label="チャットのやりとり" tabindex="-1"></div>
+  <form class="chat-input" id="chat-form" autocomplete="off">
+    <label class="visually-hidden" for="chat-text">質問を入力</label>
+    <input id="chat-text" name="q" type="text" maxlength="200" placeholder="例：駐車場はありますか？" enterkeyhint="send">
+    <button class="chat-send" type="submit">送信</button>
+  </form>
+</section>
+</body>
+</html>

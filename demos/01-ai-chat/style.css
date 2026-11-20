@@ -1,0 +1,162 @@
+/* 整体院 ソラユイ（デモ・架空のお店）＋シナリオ型チャット
+   配色・文字は design.md に従う。外部フォント・外部画像なし */
+:root{
+  --base:#F5F8F6;--white:#fff;--main:#2F6B5A;--main-dark:#245446;--main-soft:#E3EFEA;--line:#CFE0D8;
+  --accent:#B8430F;--accent-dark:#963409;--text:#1F2D29;--sub:#4F5F5A;
+  --demo-bg:#FFF4D6;--demo-text:#5C4300;
+  --gap:64px;--radius:16px;--shadow:0 12px 32px rgba(31,45,41,.12);
+  --font:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:104px}
+body{margin:0;background:var(--base);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.8;overflow-wrap:anywhere;padding-bottom:88px}
+h1,h2,h3{line-height:1.5;margin:0 0 16px;font-weight:700}
+h1{font-size:28px;letter-spacing:.02em}
+h2{font-size:22px;text-align:center;margin-bottom:24px;letter-spacing:.04em}
+.block h2::after{content:"";display:block;width:40px;height:3px;border-radius:2px;background:var(--main);margin:12px auto 0}
+h3{font-size:18px;margin-bottom:8px}
+p{margin:0 0 16px}
+a{color:var(--main-dark)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[tabindex="-1"]:focus{outline:none}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip-link{position:absolute;left:8px;top:-48px;z-index:100;background:var(--white);padding:8px 16px;border-radius:8px}
+.skip-link:focus{top:8px}
+.container{max-width:1072px;margin:0 auto;padding:0 16px}
+.narrow{max-width:672px}
+.center{text-align:center}
+.note{color:var(--sub);font-size:14px}
+.block{padding:var(--gap) 0}
+.tint{background:var(--main-soft)}
+
+/* ボタン（アクセント色は予約の行動ボタンだけ） */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 28px;border:2px solid var(--main);border-radius:999px;background:var(--white);color:var(--main-dark);font:700 16px var(--font);text-decoration:none;cursor:pointer;transition:background-color .2s}
+.btn-accent{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 16px rgba(184,67,15,.25)}
+.btn-accent:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
+.btn-outline:hover{background:var(--main-soft)}
+.btn-block{width:100%}
+
+/* ヘッダー */
+.site-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:1072px;margin:0 auto;padding:4px 16px}
+.logo{font-weight:700;font-size:18px;letter-spacing:.06em;text-decoration:none;color:var(--text);white-space:nowrap}
+.site-nav ul{list-style:none;margin:0;padding:0;display:flex}
+.site-nav a{display:flex;align-items:center;min-height:44px;padding:0 10px;font-size:14px;text-decoration:none;color:var(--text)}
+.site-nav a:hover{color:var(--main)}
+.demo-band{margin:0;background:var(--demo-bg);color:var(--demo-text);text-align:center;font-size:13px;font-weight:700;padding:4px 16px;line-height:1.6}
+
+/* ファーストビュー */
+.hero{background:linear-gradient(165deg,var(--main-soft) 0%,var(--base) 65%);padding:40px 0 32px}
+.hero-inner{display:grid;gap:16px;align-items:center}
+.eyebrow{color:var(--main-dark);font-size:14px;font-weight:700;letter-spacing:.16em;margin-bottom:8px}
+.lead{color:var(--sub)}
+.facts{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.facts li{background:var(--white);border:1px solid var(--line);border-radius:999px;padding:2px 14px;font-size:14px;font-weight:700}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.hero-actions .btn{flex:1 1 140px}
+.hero-art svg{display:block;width:100%;max-width:400px;height:auto;margin:0 auto}
+
+/* 料金 */
+.price{width:100%;border-collapse:collapse;background:var(--white);margin:8px 0 32px;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(31,45,41,.06)}
+.price th,.price td{padding:14px 16px;border-bottom:1px solid var(--main-soft);text-align:left}
+.price td{text-align:right;white-space:nowrap;font-weight:700}
+.price thead th{background:var(--main-soft);font-size:14px}
+.price thead th:last-child{text-align:right}
+.price tbody th{font-weight:400}
+.price .price-first th{font-weight:700}
+.price tr:last-child th,.price tr:last-child td{border-bottom:none}
+
+/* はじめての方へ */
+.cards{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.cards li{background:var(--white);border-radius:var(--radius);padding:24px;border-top:4px solid var(--main)}
+.cards p{margin:0;color:var(--sub)}
+
+/* アクセス */
+.info{display:grid;grid-template-columns:5.5em 1fr;gap:12px 16px;margin:0;background:var(--white);border-radius:var(--radius);padding:24px}
+.info dt{font-weight:700}.info dd{margin:0}
+
+/* 予約（デモ） */
+.demo-note{background:var(--demo-bg);color:var(--demo-text);font-weight:700;border-radius:12px;padding:12px 16px;font-size:15px}
+.reserve-form{background:var(--white);border-radius:var(--radius);padding:24px;display:grid;gap:16px}
+.field{display:grid;gap:4px}
+.field label{font-weight:700}
+.field select{min-height:48px;width:100%;padding:8px 12px;border:1px solid #8FA39C;border-radius:10px;background:var(--white);color:var(--text);font:16px var(--font)}
+.form-result{margin:0;min-height:1.8em;font-weight:700;color:var(--main-dark)}
+.form-result:empty{display:none}
+.form-result.is-shown{background:var(--main-soft);border-radius:10px;padding:12px 16px}
+
+/* TENKA LAB の説明 */
+.lab-card{background:var(--white);border:2px solid var(--main);border-radius:var(--radius);padding:32px 24px}
+.lab-card h2{font-size:20px}
+.lab-card p:last-child{margin:0}
+
+/* フッター */
+.site-footer{background:var(--text);color:#fff;text-align:center;padding:40px 16px;font-size:14px}
+.site-footer p{margin:0 0 8px}
+.footer-note{color:#D5E2DD;font-size:13px}
+
+/* ===== チャット ===== */
+.chat-launcher{position:fixed;right:16px;bottom:16px;z-index:30;display:inline-flex;align-items:center;gap:8px;min-height:56px;padding:0 22px;border:none;border-radius:999px;background:var(--main);color:#fff;font:700 16px var(--font);box-shadow:0 6px 20px rgba(31,45,41,.3);cursor:pointer}
+.chat-launcher:hover{background:var(--main-dark)}
+.chat-launcher[aria-expanded="true"]{display:none}
+.chat-panel{position:fixed;left:8px;right:8px;bottom:8px;z-index:40;display:flex;flex-direction:column;height:min(600px,calc(100dvh - 16px));height:min(600px,calc(100vh - 16px));background:var(--white);border-radius:20px;box-shadow:0 16px 48px rgba(31,45,41,.3);overflow:hidden}
+@supports (height:100dvh){.chat-panel{height:min(600px,calc(100dvh - 16px))}}
+.chat-panel[hidden]{display:none}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--main);color:#fff;padding:10px 8px 10px 16px}
+.chat-title{font-size:16px;margin:0;text-align:left;letter-spacing:.02em}
+.chat-badge{display:inline-block;margin:2px 0 0;background:var(--demo-bg);color:var(--demo-text);font-size:12px;font-weight:700;border-radius:999px;padding:0 10px;line-height:1.8}
+.chat-close{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border:none;border-radius:50%;background:transparent;color:#fff;cursor:pointer}
+.chat-close:hover{background:rgba(255,255,255,.15)}
+.chat-close:focus-visible{outline-color:#fff}
+.chat-log{flex:1;overflow-y:auto;padding:16px 12px;background:var(--base);display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.msg{max-width:88%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.7;animation:pop .2s ease-out}
+.msg p{margin:0}
+.msg p + p,.msg p + ul,.msg ul + p{margin-top:6px}
+.msg ul{margin:0;padding-left:1.2em}
+.msg-bot{align-self:flex-start;background:var(--white);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg-user{align-self:flex-end;background:var(--main-soft);border-bottom-right-radius:4px}
+.msg-notice{align-self:stretch;max-width:none;background:var(--demo-bg);color:var(--demo-text);font-weight:700;font-size:14px;text-align:center;border-radius:12px}
+.typing{display:inline-flex;gap:4px;align-items:center;padding:14px 16px}
+.typing span{width:8px;height:8px;border-radius:50%;background:#7E918A;animation:blink 1.2s infinite ease-in-out}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+.choices{display:flex;flex-wrap:wrap;gap:8px;align-self:stretch;animation:pop .2s ease-out}
+.choice{min-height:44px;padding:6px 14px;border:1.5px solid var(--main);border-radius:999px;background:var(--white);color:var(--main-dark);font:700 14px var(--font);cursor:pointer;text-align:left}
+.choice:hover{background:var(--main-soft)}
+.choice-accent{background:var(--accent);border-color:var(--accent);color:#fff}
+.choice-accent:hover{background:var(--accent-dark)}
+/* 空き状況の例 */
+.slots{margin-top:8px;display:grid;gap:8px}
+.slot-day{font-weight:700;font-size:14px;margin:0}
+.msg .slot-list{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.slot{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:4px 10px;border-radius:8px;font:700 14px var(--font)}
+button.slot{border:1.5px solid var(--main);background:var(--white);color:var(--main-dark);cursor:pointer}
+button.slot:hover{background:var(--main-soft)}
+.slot-full{border:1.5px dashed #A9B8B2;color:#5E6E68;background:#F1F4F2;font-weight:400}
+.slot-note{font-size:13px;color:var(--sub);margin-top:4px}
+.chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--white)}
+.chat-input input{flex:1;min-width:0;min-height:48px;padding:8px 14px;border:1px solid #8FA39C;border-radius:999px;font:16px var(--font);color:var(--text)}
+.chat-send{min-height:48px;padding:0 18px;border:none;border-radius:999px;background:var(--main);color:#fff;font:700 15px var(--font);cursor:pointer}
+.chat-send:hover{background:var(--main-dark)}
+
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .msg,.choices,.typing span{animation:none}
+}
+
+@media (min-width:768px){
+  :root{--gap:96px}
+  body{font-size:17px}
+  h1{font-size:42px}h2{font-size:30px}
+  .lab-card h2{font-size:24px}
+  .hero{padding:72px 0 64px}
+  .hero-inner{grid-template-columns:1.1fr .9fr;gap:48px}
+  .hero-actions .btn{flex:0 0 auto}
+  .cards{grid-template-columns:repeat(3,1fr)}
+  .lab-card{padding:40px}
+  .chat-panel{left:auto;right:24px;bottom:24px;width:380px;height:min(600px,calc(100vh - 48px))}
+  @supports (height:100dvh){.chat-panel{height:min(600px,calc(100dvh - 48px))}}
+  .chat-launcher{right:24px;bottom:24px}
+}

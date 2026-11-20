@@ -316,3 +316,11 @@ a:hover { color: var(--c-link-hover); }
   /* 3列ではカードの幅が狭いため、本文を少し小さくする */
   .card__body { font-size: .9375rem; }
 }
+
+/* デモ1：AIチャット */
+.thumb--chat {
+  background: linear-gradient(135deg, #E8F1F6, #F6FAF8);
+  color: #1F3A5F;
+  box-shadow: inset 0 -4px 0 #2A9D8F;
+}
+.thumb--chat .thumb__type { color: #2A7F74; }
