@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>定食と惣菜 ユキマド（デモ）お店のページ更新｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。店主がスマホで営業日・売り切れ・お知らせを書き換えると、お客様が見るお店のページが変わる見本です。">
+  <meta name="theme-color" content="#2D4B6B">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="定食と惣菜 ユキマド（デモ）お店のページ更新｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。店主がスマホで営業日・売り切れ・お知らせを書き換えると、お客様が見るお店のページが変わる見本です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='5' width='18' height='16' rx='3' fill='%23F2B84B' stroke='%232D4B6B' stroke-width='2'/%3E%3Cpath d='M12 5v16M3 13h18' stroke='%232D4B6B' stroke-width='1.5'/%3E%3Cpath d='M2 6.5Q2 3 6 3.6Q12 2 18 3.6Q22 3 22 6.5Q20 8 17 7Q15 9.6 13 7.6Q10 8.6 8 7.6Q5 9 2 6.5Z' fill='%23FFFFFF' stroke='%232D4B6B' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。店名・お品書き・営業日はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
+        <span class="brand__name">定食と惣菜 ユキマド</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">お店のページ更新（営業日・売り切れ・お知らせ）</p>
+    </div>
+  </header>
+
+  <!-- 使い回す SVG（ロゴ） -->
+  <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="logo">
+        <rect x="3" y="5" width="18" height="16" rx="3" fill="#F2B84B" stroke="#2D4B6B" stroke-width="2"/>
+        <path d="M12 5v16M3 13h18" stroke="#2D4B6B" stroke-width="1.5"/>
+        <path d="M2 6.5Q2 3 6 3.6Q12 2 18 3.6Q22 3 22 6.5Q20 8 17 7Q15 9.6 13 7.6Q10 8.6 8 7.6Q5 9 2 6.5Z" fill="#FFFFFF" stroke="#2D4B6B" stroke-width="1.5" stroke-linejoin="round"/>
+      </g>
+    </defs>
+  </svg>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro wrap" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="intro__title">休みもお品書きも、スマホで30秒で更新</h1>
+      <p class="intro__lead">お店の営業日・売り切れ・お知らせを、店主さんがスマホで書き換えられるホームページの見本です。店主の画面を触ると、お客様が見るページが変わります。</p>
+
+      <div class="guide">
+        <p class="guide__lead guide__lead--pc">左がお客様の見るページ、右が店主の更新画面です。右を触ると、左のページが変わります。</p>
+        <p class="guide__lead guide__lead--sp">「② 店主の画面」で変えると、「① お客様の画面」が変わります。タブで行き来して確かめてください。</p>
+        <ol class="guide__steps">
+          <li class="step">
+            <p class="step__title"><span class="step__no" aria-hidden="true">1</span>今日を「休み」にする</p>
+            <p class="step__desc">札が「本日は 臨時休業です」に変わります</p>
+            <button type="button" class="step__try" data-try="today" aria-label="今日を休みにする操作へ移動">試す<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </li>
+          <li class="step">
+            <p class="step__title"><span class="step__no" aria-hidden="true">2</span>品を「売り切れ」にする</p>
+            <p class="step__desc">お品書きに「本日売り切れ」の札が付きます</p>
+            <button type="button" class="step__try" data-try="soldout" aria-label="品を売り切れにする操作へ移動">試す<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </li>
+          <li class="step">
+            <p class="step__title"><span class="step__no" aria-hidden="true">3</span>例文でお知らせを出す</p>
+            <p class="step__desc">お知らせ欄とカレンダーの2か所が変わります</p>
+            <button type="button" class="step__try" data-try="notice" aria-label="例文でお知らせを出す操作へ移動">試す<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </li>
+        </ol>
+      </div>
+
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。店名・お品書き・値段・営業日はすべて架空です。</li>
+        <li>※ このデモの変更は、お使いのブラウザの中だけに保存されます。どこにも送信されません。「見本に戻す」で最初の状態に戻ります。</li>
+        <li>※ このデモでは画面の中で反映されます。実際のお店のページでは、スプレッドシート等から更新する形をご提案します。</li>
+      </ul>
+      <div class="flags" data-flags></div>
+    </section>
+
+    <div class="tabs" id="tabs-bar">
+      <div class="tabs__list" role="tablist" aria-label="デモの画面">
+        <button type="button" role="tab" class="tab" id="tab-customer" data-tab="customer" aria-selected="true" aria-controls="panel-customer" tabindex="0">① お客様の画面<span class="tab__badge" id="tab-badge" hidden></span></button>
+        <button type="button" role="tab" class="tab" id="tab-owner" data-tab="owner" aria-selected="false" aria-controls="panel-owner" tabindex="-1">② 店主の画面<span class="tab__dot" id="tab-dot" aria-hidden="true"></span></button>
+      </div>
+    </div>
+
+    <div class="stage">
+      <!-- ① お客様の画面 -->
+      <section class="device device--customer" role="tabpanel" id="panel-customer" aria-labelledby="name-customer">
+        <p class="device__name" id="name-customer"><span class="device__no" aria-hidden="true">1</span>お客様の画面（お店のページ）</p>
+        <div class="device__frame">
+          <div class="device__screen" id="screen-customer" tabindex="0" aria-label="お客様の画面（スクロールできます）">
+            <div class="shop">
+              <header class="shop-head">
+                <h2 class="shop-head__name">
+                  <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
+                  定食と惣菜 ユキマド
+                </h2>
+                <button type="button" class="shop-head__tel" data-tel aria-label="電話（デモのため発信しません）">
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-icon="tel"></svg>
+                </button>
+              </header>
+
+              <div class="shop__body">
+                <!-- FV -->
+                <div class="fv">
+                  <div class="fv__pic" role="img" aria-label="雪の積もった屋根と、藍ののれんの掛かった定食屋の入口（イラスト）">
+                    <svg viewBox="0 0 360 184" preserveAspectRatio="xMidYMid slice" width="360" height="184" aria-hidden="true" focusable="false">
+                      <rect width="360" height="184" fill="#DCE6EE"/>
+                      <g fill="#FFFFFF">
+                        <circle cx="14" cy="18" r="2"/><circle cx="34" cy="44" r="1.5"/><circle cx="22" cy="80" r="2.5"/><circle cx="10" cy="118" r="1.5"/>
+                        <circle cx="26" cy="150" r="2"/><circle cx="60" cy="12" r="3"/><circle cx="96" cy="8" r="1.5"/><circle cx="130" cy="16" r="2"/>
+                        <circle cx="168" cy="6" r="2.5"/><circle cx="204" cy="14" r="1.5"/><circle cx="238" cy="8" r="2"/><circle cx="276" cy="16" r="3"/>
+                        <circle cx="312" cy="10" r="1.5"/><circle cx="344" cy="22" r="2"/><circle cx="350" cy="58" r="2.5"/><circle cx="336" cy="88" r="1.5"/>
+                        <circle cx="352" cy="120" r="2"/><circle cx="342" cy="150" r="1.5"/><circle cx="80" cy="24" r="1.5"/><circle cx="186" cy="22" r="1.5"/>
+                        <circle cx="300" cy="28" r="1.5"/><circle cx="8" cy="54" r="2"/><circle cx="48" cy="100" r="1.5"/><circle cx="114" cy="26" r="2"/>
+                      </g>
+                      <rect x="40" y="52" width="280" height="132" fill="#EFE6D8"/>
+                      <rect x="40" y="172" width="280" height="12" fill="#6A4E2E"/>
+                      <path d="M24 58 L50 34 H310 L336 58 Z" fill="#5E564E"/>
+                      <path d="M46 36 Q48 22 66 24 Q84 16 104 22 Q124 14 146 21 Q168 13 190 20 Q212 14 232 21 Q254 15 274 22 Q296 16 308 26 Q318 30 314 38 Q290 34 270 39 Q250 33 228 38 Q206 33 184 38 Q162 33 140 38 Q118 33 96 38 Q74 33 46 36 Z" fill="#FFFFFF"/>
+                      <path d="M46 36 Q74 33 96 38 Q118 33 140 38 Q162 33 184 38 Q206 33 228 38 Q250 33 270 39 Q290 34 314 38" fill="none" stroke="#C9D3DC" stroke-width="1"/>
+                      <rect x="64" y="78" width="86" height="72" fill="#F2B84B" stroke="#6A4E2E" stroke-width="3"/>
+                      <path d="M92.7 78v72M121.3 78v72M64 114h86" stroke="#6A4E2E" stroke-width="3"/>
+                      <path d="M58 152 Q60 144 72 146 Q86 141 100 146 Q116 141 130 146 Q146 142 156 152 Z" fill="#FFFFFF"/>
+                      <rect x="186" y="78" width="110" height="94" fill="#6A4E2E"/>
+                      <path d="M241 128v44" stroke="#5A4026" stroke-width="2"/>
+                      <path d="M176 70h130" stroke="#6A4E2E" stroke-width="3" stroke-linecap="round"/>
+                      <g fill="#2D4B6B">
+                        <path d="M180 70 H219.3 V120 Q209.5 128 199.7 120 Q189.8 128 180 120 Z"/>
+                        <path d="M221.3 70 H260.7 V120 Q250.9 128 241 120 Q231.2 128 221.3 120 Z"/>
+                        <path d="M262.7 70 H302 V120 Q292.2 128 282.4 120 Q272.5 128 262.7 120 Z"/>
+                      </g>
+                      <g stroke="#FFFFFF" stroke-width="2" stroke-linecap="round">
+                        <path d="M241 85v22M231.5 90.5l19 11M231.5 101.5l19-11"/>
+                      </g>
+                      <rect x="300" y="138" width="32" height="34" fill="#FFFFFF" stroke="#6A4E2E" stroke-width="2"/>
+                      <path d="M306 147h20M306 155h20M306 163h14" stroke="#CFC5B6" stroke-width="2"/>
+                      <path d="M0 174 Q30 166 60 172 Q90 178 120 171 Q150 165 180 172 Q210 178 240 171 Q270 165 300 172 Q330 178 360 170 V184 H0 Z" fill="#FFFFFF"/>
+                    </svg>
+                  </div>
+                  <div class="sign" id="sign" role="status" aria-live="polite">
+                    <span class="sign__string" aria-hidden="true"></span>
+                    <div class="sign__inner" id="sign-inner"></div>
+                  </div>
+                  <p class="fv__catch">札幌の、まいにちの定食とおかず</p>
+                  <p class="fv__sub">定食6品・惣菜6品／持ち帰りできます</p>
+                </div>
+
+                <section class="blk" aria-labelledby="h-news">
+                  <h3 class="blk__title" id="h-news">お知らせ</h3>
+                  <div class="news-wrap" id="c-news"></div>
+                </section>
+
+                <section class="blk" aria-labelledby="h-daily">
+                  <div class="blk__headrow">
+                    <h3 class="blk__title" id="h-daily">本日の日替わり</h3>
+                    <span class="blk__aside" id="c-daily-date"></span>
+                  </div>
+                  <div class="daily" id="c-daily">
+                    <svg class="daily__pic" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                      <rect x="3" y="7" width="58" height="50" rx="8" fill="#C9A77C" stroke="#6A4E2E" stroke-width="2"/>
+                      <ellipse cx="32" cy="22" rx="18" ry="9" fill="#FFFFFF" stroke="#6A6259" stroke-width="1.5"/>
+                      <path d="M21 22 Q24 16 34 17 Q43 18 42 23 Q38 27 28 26 Q21 25 21 22 Z" fill="#A9683A" stroke="#6A4E2E" stroke-width="1.5"/>
+                      <path d="M27 21l3 3M33 20l3 3" stroke="#6A4E2E" stroke-width="1.5" stroke-linecap="round"/>
+                      <path d="M8 40 H28 Q28 52 18 52 Q8 52 8 40 Z" fill="#FFFFFF" stroke="#6A6259" stroke-width="1.5"/>
+                      <path d="M9 40 Q12 34 18 34 Q24 34 27 40 Z" fill="#FFFFFF" stroke="#6A6259" stroke-width="1.5"/>
+                      <path d="M36 40 H56 Q56 52 46 52 Q36 52 36 40 Z" fill="#9A2E1F" stroke="#6A4E2E" stroke-width="1.5"/>
+                      <ellipse cx="46" cy="40" rx="10" ry="2.5" fill="#C08A4F" stroke="#6A4E2E" stroke-width="1.5"/>
+                    </svg>
+                    <div class="daily__body" id="c-daily-body"></div>
+                  </div>
+                </section>
+
+                <section class="blk" aria-labelledby="h-menu">
+                  <h3 class="blk__title" id="h-menu">お品書き</h3>
+                  <p class="blk__note">値段はすべて税込です（架空）</p>
+                  <h4 class="menu__sub">定食（ご飯・味噌汁・小鉢つき）</h4>
+                  <ul class="menu" id="c-menu-t"></ul>
+                  <h4 class="menu__sub">惣菜（持ち帰り・1パック）</h4>
+                  <ul class="menu" id="c-menu-s"></ul>
+                </section>
+
+                <section class="blk" aria-labelledby="h-cal">
+                  <h3 class="blk__title" id="h-cal">営業日カレンダー</h3>
+                  <div class="seg seg--month" id="c-months" role="group" aria-label="表示する月"></div>
+                  <p class="blk__note blk__note--mt">定休日：毎週水曜／営業 11:00–20:00（L.O. 19:30）</p>
+                  <div class="cal-wrap" id="c-cal"></div>
+                  <ul class="legend" id="c-legend"></ul>
+                </section>
+
+                <section class="blk" aria-labelledby="h-access">
+                  <h3 class="blk__title" id="h-access">アクセス</h3>
+                  <div class="map" role="img" aria-label="地下鉄〇〇駅2番出口から、〇〇通を北へ進み、2つ目の角を右に曲がった先（簡略化した架空の地図）">
+                    <svg viewBox="0 0 360 220" width="360" height="220" aria-hidden="true" focusable="false">
+                      <rect width="360" height="220" fill="#EEF1EC"/>
+                      <g fill="#FFFFFF" stroke="#D9D2C6" stroke-width="1">
+                        <rect x="-1" y="104" width="362" height="10"/>
+                        <rect x="-1" y="40" width="362" height="10"/>
+                        <rect x="230" y="-1" width="10" height="222"/>
+                        <rect x="64" y="-1" width="10" height="222"/>
+                        <rect x="-1" y="120" width="362" height="20"/>
+                        <rect x="150" y="-1" width="20" height="222"/>
+                      </g>
+                      <path d="M150.5 120.5h19v19h-19z" fill="#FFFFFF"/>
+                      <rect x="78" y="54" width="68" height="46" rx="8" fill="#CFE0C8"/>
+                      <text x="112" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#2E6B47">〇〇公園</text>
+                      <text x="146" y="196" text-anchor="end" font-size="11" fill="#6A6259">〇〇通</text>
+                      <text x="146" y="30" text-anchor="end" font-size="11" fill="#6A6259">〇〇通</text>
+                      <path d="M176 146 H160 V45 H236" fill="none" stroke="#2D4B6B" stroke-width="4" stroke-dasharray="2 8" stroke-linecap="round"/>
+                      <rect x="176" y="148" width="92" height="28" rx="6" fill="#2D4B6B"/>
+                      <text x="222" y="166" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">地下鉄〇〇駅</text>
+                      <circle cx="178" cy="176" r="8" fill="#FFFFFF" stroke="#2D4B6B" stroke-width="2"/>
+                      <text x="178" y="180" text-anchor="middle" font-size="11" font-weight="700" fill="#2D4B6B">2</text>
+                      <rect x="175" y="68" width="52" height="20" rx="10" fill="#FFFFFF" stroke="#D9D2C6"/>
+                      <text x="201" y="82" text-anchor="middle" font-size="11" font-weight="700" fill="#33302C">徒歩4分</text>
+                      <path d="M246 46 c-8 -8 -12 -14 -12 -20 a12 12 0 0 1 24 0 c0 6 -4 12 -12 20 z" fill="#2D4B6B"/>
+                      <rect x="240" y="20" width="12" height="10" rx="1.5" fill="#F2B84B"/>
+                      <path d="M246 20v10M240 25h12" stroke="#2D4B6B" stroke-width="1.2"/>
+                      <rect x="262" y="12" width="66" height="22" rx="6" fill="#FFFFFF"/>
+                      <text x="295" y="28" text-anchor="middle" font-size="13" font-weight="700" fill="#2D4B6B">ユキマド</text>
+                      <g fill="#6A6259" stroke="#6A6259">
+                        <path d="M340 72 V54 M334 60 L340 52 L346 60" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <text x="340" y="88" text-anchor="middle" font-size="12" font-weight="700" stroke="none">N</text>
+                      </g>
+                    </svg>
+                  </div>
+                  <dl class="info">
+                    <div><dt>住所</dt><dd>札幌市〇〇区〇〇 1-2-3（架空）</dd></div>
+                    <div><dt>最寄り</dt><dd>地下鉄〇〇駅 2番出口から徒歩4分（架空）</dd></div>
+                    <div><dt>営業</dt><dd>11:00–20:00（L.O. 19:30）</dd></div>
+                    <div><dt>定休</dt><dd>毎週水曜（臨時休業はお知らせとカレンダーでお知らせします）</dd></div>
+                    <div><dt>電話</dt><dd>000-0000-0000（架空）</dd></div>
+                  </dl>
+                  <button type="button" class="btn-main btn-main--tel" data-tel>
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-icon="tel"></svg>
+                    電話する 000-0000-0000
+                  </button>
+                  <p class="tel-note">※ デモのため、押しても電話はかかりません</p>
+                </section>
+              </div>
+
+              <footer class="shop-foot">
+                <p class="shop-foot__name">定食と惣菜 ユキマド（架空のお店）</p>
+                <p class="shop-foot__copy">© Yukimado（デモ）</p>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="stage__arrow" aria-hidden="true">
+        <svg width="72" height="24" viewBox="0 0 72 24" focusable="false"><path d="M70 12H14" stroke="#2D4B6B" stroke-width="3" stroke-linecap="round"/><path d="M2 12l14-8v16z" fill="#2D4B6B"/></svg>
+        <p>右で変えると<br>左が変わります</p>
+      </div>
+
+      <!-- ② 店主の更新画面 -->
+      <section class="device device--owner" role="tabpanel" id="panel-owner" aria-labelledby="name-owner">
+        <p class="device__name" id="name-owner"><span class="device__no" aria-hidden="true">2</span>店主の更新画面</p>
+        <div class="device__frame">
+          <div class="device__screen" id="screen-owner" tabindex="0" aria-label="店主の更新画面（スクロールできます）">
+            <div class="owner">
+              <div class="appbar">
+                <h2 class="appbar__name">
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-icon="pen"></svg>
+                  ユキマド 更新画面
+                </h2>
+                <span class="appbar__who">店主（架空）</span>
+              </div>
+              <div class="owner__notice">
+                <p class="owner__lock"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-icon="lock"></svg>変更はこのブラウザの中だけに保存されます（送信しません）</p>
+                <div class="flags flags--owner" data-flags></div>
+              </div>
+
+              <div class="owner__body">
+                <!-- ① 営業日 -->
+                <section class="ocard" aria-labelledby="h-o-days">
+                  <h3 class="ocard__title" id="h-o-days">① 営業日</h3>
+                  <div class="otoday" id="o-today-box">
+                    <p class="olabel" id="o-today-label"></p>
+                    <div class="seg seg--3" id="o-today" role="radiogroup" aria-label="今日の営業"></div>
+                  </div>
+                  <hr class="ocard__rule">
+                  <div class="ocal-head">
+                    <p class="olabel">カレンダー</p>
+                    <div class="seg seg--month seg--inline" id="o-months" role="group" aria-label="表示する月"></div>
+                  </div>
+                  <p class="onote">日を押すたびに、営業 → 臨時休業 → 短縮 → 営業 と変わります</p>
+                  <div class="ocal-wrap" id="o-cal"></div>
+                  <ul class="legend" id="o-legend"></ul>
+                  <p class="ocard__said" id="o-cal-said" role="status"></p>
+                </section>
+
+                <!-- ② お品書き・売り切れ -->
+                <section class="ocard" aria-labelledby="h-o-menu">
+                  <h3 class="ocard__title" id="h-o-menu">② お品書き・売り切れ</h3>
+                  <p class="olabel" id="o-daily-label">本日の日替わり（3つから選ぶ）</p>
+                  <div class="ochoice" id="o-daily" role="radiogroup" aria-labelledby="o-daily-label"></div>
+                  <div class="orow orow--daily" id="o-daily-sold"></div>
+                  <h4 class="osub">定食</h4>
+                  <ul class="olist" id="o-menu-t"></ul>
+                  <h4 class="osub">惣菜</h4>
+                  <ul class="olist" id="o-menu-s"></ul>
+                </section>
+
+                <!-- ③ お知らせ -->
+                <section class="ocard" aria-labelledby="h-o-news">
+                  <h3 class="ocard__title" id="h-o-news">③ お知らせ</h3>
+                  <form class="oform" id="o-form" novalidate>
+                    <p class="ostep"><span class="ostep__no" aria-hidden="true">1</span>例文を選ぶ</p>
+                    <div class="tpls" id="o-tpls" role="group" aria-label="例文"></div>
+
+                    <p class="ostep"><span class="ostep__no" aria-hidden="true">2</span>日付と文を確かめる</p>
+                    <div class="ofield" id="f-date-wrap" hidden>
+                      <label for="f-date">日付</label>
+                      <input type="date" id="f-date" aria-describedby="e-date">
+                      <p class="oerr" id="e-date" hidden></p>
+                    </div>
+                    <div class="ofield">
+                      <label for="f-title">見出し</label>
+                      <input type="text" id="f-title" maxlength="30" autocomplete="off" aria-describedby="e-title c-title">
+                      <p class="ocount" id="c-title" aria-live="off">0 / 30</p>
+                      <p class="oerr" id="e-title" hidden></p>
+                    </div>
+                    <div class="ofield">
+                      <label for="f-body">本文</label>
+                      <textarea id="f-body" maxlength="120" rows="4" aria-describedby="e-body c-body"></textarea>
+                      <p class="ocount" id="c-body" aria-live="off">0 / 120</p>
+                      <p class="oerr" id="e-body" hidden></p>
+                    </div>
+
+                    <p class="ostep"><span class="ostep__no" aria-hidden="true">3</span>出す</p>
+                    <p class="onote onote--mb">送信はしません。このデモの画面の中だけで出ます</p>
+                    <button type="submit" class="btn-main" id="o-publish">お店のページに出す</button>
+                    <p class="osaid" id="o-said" role="status"></p>
+                  </form>
+
+                  <div class="olist-news">
+                    <p class="olist-news__title" id="o-news-title" tabindex="-1"></p>
+                    <p class="onote">お客様のページには新しい3件が出ます</p>
+                    <ul id="o-news"></ul>
+                  </div>
+                </section>
+
+                <div class="oreset">
+                  <button type="button" class="linkish" id="o-reset">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false" data-icon="back"></svg>見本に戻す
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="real wrap" aria-labelledby="h-real">
+      <div class="real__card">
+        <h2 id="h-real" class="real__title">実際のお店で作るときは</h2>
+        <p>このデモでは画面の中で反映されます。実際のお店のページでは、スプレッドシート等から更新する形をご提案します。実際のお店の作り方は、ご相談のうえ決めていきます。</p>
+        <p class="real__label">同じ仕組みが使える業種</p>
+        <ul class="real__tags">
+          <li>食堂・カフェ（営業日・売り切れ）</li>
+          <li>美容室（臨時休業・出勤日）</li>
+          <li>教室（休講日・体験の日）</li>
+        </ul>
+        <a class="btn-main btn-main--real" href="../../#contact">このような仕組みのご相談はこちら</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。定食と惣菜 ユキマドは架空のお店で、お品書き・値段・営業日・電話番号もすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
