@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ハルツグ（デモ）在庫・発注の管理｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。入荷と使った量を記録すると、足りない材料が色で分かり、仕入先ごとの発注リストと発注書が自動でできる見本です。お店・品目・仕入先はすべて架空です。">
+  <meta name="theme-color" content="#3E2F25">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ハルツグ（デモ）在庫・発注の管理｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。入荷と使った量を記録すると、足りない材料が色で分かり、仕入先ごとの発注リストと発注書が自動でできる見本です。お店・品目・仕入先はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='%23C98A4B' stroke='%233E2F25' stroke-width='2'/%3E%3Cpath d='M12 5.5c-2.5 2.5 2.5 4.5 0 6.5s2.5 4.5 0 6.5' fill='none' stroke='%23FFFFFF' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。お店・品目・数量・仕入先はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="9" fill="#C98A4B" stroke="#3E2F25" stroke-width="2"/>
+          <path d="M12 5.5c-2.5 2.5 2.5 4.5 0 6.5s2.5 4.5 0 6.5" fill="none" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand__name">ハルツグ</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">焼き菓子と珈琲｜在庫・発注の管理</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">材料が切れる前に、色で分かる在庫表</h1>
+      <p class="intro__lead">入荷と使った量を記録するだけで、足りない材料が色で分かり、仕入先ごとの発注リストが自動でできます。月末の棚卸もこの画面で。</p>
+      <nav aria-label="手順">
+        <ol class="steps steps--4" id="steps">
+          <li class="step"><a href="#rec-card" data-go="rec-card"><span class="step__num" aria-hidden="true">1</span><span class="step__label">入荷・使った量を記録</span></a></li>
+          <li class="step"><a href="#stock-card" data-go="stock-card"><span class="step__num" aria-hidden="true">2</span><span class="step__label">足りない物が色で分かる</span></a></li>
+          <li class="step"><a href="#tab-order" data-go="order"><span class="step__num" aria-hidden="true">3</span><span class="step__label">発注リストが自動でできる</span></a></li>
+          <li class="step"><a href="#tab-count" data-go="count"><span class="step__num" aria-hidden="true">4</span><span class="step__label">月末は棚卸で数え直し</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。お店・品目・数量・仕入先はすべて架空です。</li>
+        <li>※ 記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「最初の状態に戻す」で元に戻せます。</li>
+        <li>※ 金額は税抜の参考です。税の扱いはお客様のルールに合わせます。</li>
+        <li id="note-nosave" hidden>※ この端末では保存できないため、再読み込みすると最初の状態に戻ります。</li>
+      </ul>
+    </section>
+
+    <!-- 上の数字（§6） -->
+    <section class="summary" aria-label="在庫の状況">
+      <div class="summary__box summary__box--low" role="group" id="sum-low">
+        <p class="summary__label"><span class="summary__icon" data-icon="low"></span>少ない</p>
+        <p class="summary__val"><span class="summary__n" id="sum-low-n">0</span><span class="summary__unit">品目</span></p>
+        <p class="summary__link"><a href="#stock-card" class="js-sum-alert" id="sum-low-link">見る ›</a></p>
+      </div>
+      <div class="summary__box summary__box--out" role="group" id="sum-out">
+        <p class="summary__label"><span class="summary__icon" data-icon="out"></span>切れ</p>
+        <p class="summary__val"><span class="summary__n" id="sum-out-n">0</span><span class="summary__unit">品目</span></p>
+        <p class="summary__link"><a href="#stock-card" class="js-sum-alert" id="sum-out-link">見る ›</a></p>
+      </div>
+      <div class="summary__box summary__box--wait" role="group" id="sum-wait">
+        <p class="summary__label"><span class="summary__icon" data-icon="wait"></span>入荷待ち</p>
+        <p class="summary__val"><span class="summary__n" id="sum-wait-n">0</span><span class="summary__unit">品目</span></p>
+        <p class="summary__link"><a href="#wait-card" id="sum-wait-link">発注リストで見る ›</a></p>
+      </div>
+      <div class="summary__box summary__box--yen" role="group" id="sum-yen">
+        <p class="summary__label">在庫金額の合計</p>
+        <p class="summary__val"><span class="summary__n summary__n--yen" id="sum-yen-n">¥0</span></p>
+        <p class="summary__note">税抜の参考</p>
+      </div>
+    </section>
+
+    <!-- タブ（§7）とパネル -->
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="作業" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-rec" aria-controls="panel-rec" aria-selected="true">在庫と記録</button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-order" aria-controls="panel-order" aria-selected="false" tabindex="-1">発注リスト<span class="tabs__badge" id="tab-order-badge" aria-hidden="true"></span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-count" aria-controls="panel-count" aria-selected="false" tabindex="-1">棚卸</button>
+      </div>
+
+      <!-- タブ1：在庫と記録 -->
+      <section class="panel" role="tabpanel" id="panel-rec" aria-labelledby="tab-rec">
+        <div class="rec-grid">
+          <section class="card rec" id="rec-card" aria-labelledby="h-rec">
+            <div class="card__head"><h2 id="h-rec" tabindex="-1">記録する</h2></div>
+            <div class="field">
+              <label class="field__label" for="rec-item">品目</label>
+              <select id="rec-item" class="select"></select>
+              <p class="rec__now" id="rec-now"></p>
+            </div>
+            <div class="field">
+              <p class="field__label" id="rec-kind-label">種類</p>
+              <div class="seg" id="rec-kind" role="radiogroup" aria-labelledby="rec-kind-label"></div>
+              <p class="field__hint" id="rec-kind-hint"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="rec-qty" id="rec-qty-label">数量（kg）</label>
+              <div class="qty-box">
+                <input id="rec-qty" class="input input--qty" type="text" inputmode="decimal" autocomplete="off" aria-describedby="rec-qty-hint">
+                <span class="qty-box__unit" id="rec-qty-unit" aria-hidden="true">kg</span>
+              </div>
+              <p class="field__err" id="rec-qty-err" hidden></p>
+              <p class="field__hint" id="rec-qty-hint"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="rec-memo">メモ（任意・40文字まで）</label>
+              <input id="rec-memo" class="input" type="text" maxlength="40" autocomplete="off">
+            </div>
+            <div class="rec__after" id="rec-after" hidden></div>
+            <button type="button" class="btn-main rec__btn" id="rec-btn"><span data-icon="pencil"></span>記録する</button>
+          </section>
+
+          <section class="card" id="stock-card" aria-labelledby="h-stock">
+            <div class="card__head"><h2 id="h-stock" tabindex="-1">在庫一覧</h2><p class="sub" id="stock-shown"></p></div>
+            <div class="filters">
+              <div class="seg" id="f-state" role="radiogroup" aria-label="状態で絞り込み"></div>
+              <div class="seg" id="f-cat" role="radiogroup" aria-label="分類で絞り込み"></div>
+            </div>
+            <div class="yen-box">
+              <p class="yen-box__l1"><span>在庫金額の合計</span><span class="yen-box__total" id="stock-yen"></span></p>
+              <p class="yen-box__shown" id="stock-yen-shown" hidden></p>
+              <p class="yen-box__note">現在庫 × 単価（税抜の参考）。マイナスの在庫は 0 として数えます。税の扱いはお客様のルールに合わせます。</p>
+            </div>
+            <div id="stock-area"></div>
+          </section>
+        </div>
+
+        <section class="card hist" id="hist-card" aria-labelledby="h-hist">
+          <div class="card__head"><h2 id="h-hist" tabindex="-1">履歴<span class="hist__count" id="hist-count"></span></h2></div>
+          <p class="sub hist__lead">記録は消さずに残します。間違えた時は「取り消す」で、打ち消しの記録を足します。</p>
+          <div id="hist-area"></div>
+        </section>
+      </section>
+
+      <!-- タブ2：発注リスト -->
+      <section class="panel" role="tabpanel" id="panel-order" aria-labelledby="tab-order" hidden>
+        <div class="order-head">
+          <h2 class="sec-title" id="h-order" tabindex="-1">発注リスト</h2>
+          <p class="sub">発注点以下になった品目を自動で拾い、目標在庫までの数を発注単位で切り上げています。数は手で直せます。</p>
+        </div>
+        <div id="order-area"></div>
+        <section class="card wait" id="wait-card" aria-labelledby="h-wait">
+          <div class="card__head"><h3 id="h-wait" tabindex="-1">入荷待ち（発注済み）</h3><p class="sub">入荷を記録すると、ここから消えます</p></div>
+          <div id="wait-area"></div>
+        </section>
+      </section>
+
+      <!-- タブ3：棚卸 -->
+      <section class="panel" role="tabpanel" id="panel-count" aria-labelledby="tab-count" hidden>
+        <section class="card count" id="count-card" aria-labelledby="h-count">
+          <div class="card__head"><h2 id="h-count" tabindex="-1">棚卸</h2></div>
+          <p class="sub">棚の数を数えて入れると、帳簿との差が出ます。「棚卸を確定」で差を記録に足し、帳簿を数えた数に合わせます。数えなかった品目（空欄）はそのままです。</p>
+          <div class="filters filters--count">
+            <div class="seg" id="c-cat" role="radiogroup" aria-label="分類で絞り込み"></div>
+          </div>
+          <p class="count__status" id="count-status"></p>
+          <div id="count-area"></div>
+          <div class="count__ops">
+            <button type="button" class="btn-main count__btn" id="count-btn"><span data-icon="clip"></span>棚卸を確定</button>
+            <button type="button" class="btn-sub count__clear" id="count-clear">入力を消す</button>
+          </div>
+          <p class="sub count__off" id="count-off">数えた数を1つ以上入れると押せます</p>
+        </section>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><span data-icon="undo18"></span>最初の状態に戻す</button>
+    </div>
+
+    <!-- 実際のお仕事では（§15-1） -->
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の品目と発注のルール（発注点・目標・発注単位・仕入先）に合わせて作ります。費用をかけずに始めるなら、Googleスプレッドシート＋GAS がおすすめです。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="8" y="3" width="16" height="26" rx="3" fill="none" stroke="#3E2F25" stroke-width="2"/><path d="M11 9h10M11 14h10M11 19h10M16 9v10" fill="none" stroke="#3E2F25" stroke-width="2" stroke-linecap="round"/><path d="M14 25h4" stroke="#3E2F25" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Googleスプレッドシート＋GAS（費用0円）</h3>
+          <ul class="dot-list">
+            <li>スマホから入荷・使った量を記録できます</li>
+            <li>発注点を切った品目を、毎朝メールでお知らせします（LINE への通知は別途設定）</li>
+            <li>仕入先ごとの発注書を PDF で保存します</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="4" y="6" width="24" height="20" rx="2" fill="none" stroke="#3E2F25" stroke-width="2"/><path d="M4 12h24M4 19h24M12 6v20M20 6v20" stroke="#3E2F25" stroke-width="2"/></svg>
+          <h3>Excel で作る</h3>
+          <ul class="dot-list">
+            <li>いまお使いの在庫表の Excel を生かして作れます</li>
+            <li>発注リスト・発注書をボタン1つで作ります</li>
+            <li>お店のパソコンの中だけで動きます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe">品目の数・発注のルールはお店に合わせて決めます。POS・レジとの自動連携は別途ご相談ください。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。焼き菓子と珈琲 ハルツグと仕入先は架空で、品目・数量・金額もすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title"></h2>
+    <p class="confirm__body" id="cf-body"></p>
+    <ul class="confirm__list" id="cf-list" hidden></ul>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok"></button>
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
