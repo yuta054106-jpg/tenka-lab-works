@@ -1,0 +1,166 @@
+/* ヘアサロン ユキアカリ（作品例・架空のお店）
+   配色・文字は design.md に従う。写真は Unsplash（出典は design.md と footer） */
+:root{
+  --base:#FAF6F1;--white:#fff;--pink:#D9A9A0;--pink-soft:#F3E4E0;--pink-line:#E9CFC8;
+  --gold:#8A6A2F;--gold-dark:#6F5525;--text:#3A322D;--sub:#6B5F57;--photo-bg:#EADBD3;
+  --gap:64px;--radius:16px;--shadow:0 12px 32px rgba(58,50,45,.10);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{margin:0;background:var(--base);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-size:16px;line-height:1.8;padding-bottom:72px;overflow-wrap:anywhere}
+h1,h2,h3{font-family:'Shippori Mincho',serif;line-height:1.5;margin:0 0 16px;font-weight:700}
+h1{font-size:28px;letter-spacing:.04em}
+h2{font-size:24px;text-align:center;margin-bottom:24px;letter-spacing:.06em}
+h2::after{content:"";display:block;width:48px;height:2px;background:var(--pink);margin:12px auto 0}
+h3{font-size:19px}
+p{margin:0 0 16px}
+a{color:inherit}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.container{max-width:1072px;margin:0 auto;padding:0 16px}
+.narrow{max-width:672px}
+.center{text-align:center}
+.note{color:var(--sub);font-size:14px}
+.block{padding:var(--gap) 0}
+.tint{background:var(--pink-soft)}
+
+/* 写真の共通枠（読み込めなくても成立するよう背景色を敷く） */
+.photo{margin:0;overflow:hidden;background:var(--photo-bg);border-radius:var(--radius)}
+.photo img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* ボタン（アクセント色は予約ボタンだけ） */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:8px 32px;border:2px solid var(--text);border-radius:999px;background:var(--white);color:var(--text);font:700 16px 'Noto Sans JP',sans-serif;letter-spacing:.06em;cursor:pointer;transition:background-color .2s,box-shadow .2s}
+.btn-reserve{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 6px 16px rgba(138,106,47,.28)}
+.btn-reserve:hover{background:var(--gold-dark);border-color:var(--gold-dark)}
+.btn-lg{min-height:56px;padding:12px 48px;font-size:17px}
+
+/* ヘッダー */
+.site-header{position:sticky;top:0;z-index:10;background:rgba(250,246,241,.96);border-bottom:1px solid var(--pink-line)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;max-width:1072px;margin:0 auto;padding:8px 16px;flex-wrap:wrap}
+.logo{font-family:'Shippori Mincho',serif;font-weight:700;font-size:18px;letter-spacing:.08em;text-decoration:none}
+.menu-toggle{min-height:48px;padding:0 20px;border:1px solid var(--sub);border-radius:999px;background:none;font:inherit;color:var(--text);cursor:pointer}
+.header-reserve{display:none}
+.site-nav{display:none;width:100%}
+.site-nav.open{display:block}
+.site-nav ul{list-style:none;margin:0;padding:0}
+.site-nav a{display:block;padding:12px 0;text-decoration:none;border-top:1px solid var(--pink-line)}
+.sample-band{margin:0;background:var(--pink);color:var(--text);text-align:center;font-size:13px;padding:4px 16px;line-height:1.6;font-weight:700}
+
+/* ファーストビュー */
+.hero{background:linear-gradient(160deg,var(--pink-soft) 0%,var(--base) 60%);padding:40px 0 40px}
+.hero + .block{padding-top:40px}
+.hero-inner{display:grid;gap:32px;align-items:center}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:12px;color:var(--sub);font-size:14px;letter-spacing:.2em}
+.eyebrow::before{content:"";width:32px;height:1px;background:var(--gold)}
+.hero-lead{color:var(--sub)}
+.hero-facts{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.hero-facts li{background:var(--white);border:1px solid var(--pink-line);border-radius:999px;padding:4px 14px;font-size:14px;font-weight:700}
+.hero-photo{aspect-ratio:4/3;box-shadow:var(--shadow)}
+.hero-photo img{object-position:50% 45%}
+
+/* お悩み */
+.worry-inner{display:grid;gap:32px;align-items:center}
+.worry-photo{aspect-ratio:16/10}
+.worry-photo img{object-position:50% 38%}
+.worry-text h2{text-align:center}
+.worry-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.worry-list li{position:relative;background:var(--white);border-radius:12px;padding:14px 16px 14px 48px;box-shadow:0 2px 8px rgba(58,50,45,.05)}
+.worry-list li::before{content:"";position:absolute;left:18px;top:50%;width:14px;height:8px;border-left:2px solid var(--pink);border-bottom:2px solid var(--pink);transform:translateY(-70%) rotate(-45deg)}
+
+/* 選ばれる理由 */
+.reasons{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.reasons li{background:var(--white);border-radius:var(--radius);padding:32px 24px 24px;position:relative;box-shadow:0 2px 12px rgba(58,50,45,.05)}
+.reasons p{margin:0}
+.num{display:inline-flex;width:40px;height:40px;border-radius:50%;border:1px solid var(--pink);color:var(--text);align-items:center;justify-content:center;font:700 18px 'Shippori Mincho',serif;margin-bottom:12px}
+
+/* メニュー・料金 */
+.menu-photo{aspect-ratio:16/9;margin-bottom:48px}
+.menu-photo img{object-position:50% 22%;filter:saturate(.35) brightness(1.12)}
+.price{width:100%;border-collapse:collapse;background:var(--white);margin:16px 0 32px;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(58,50,45,.05)}
+.price th,.price td{padding:14px 16px;border-bottom:1px solid var(--pink-soft);text-align:left}
+.price td{text-align:right;white-space:nowrap;font-weight:700}
+.price thead th{background:var(--pink-soft);font-size:14px}
+.price thead th:last-child{text-align:right}
+.price tbody th{font-weight:400}
+.price .price-set th,.price .price-set td{border-bottom:none;background:#FDF8F6;font-weight:700}
+
+/* スタイリスト */
+.stylist-inner{display:grid;gap:24px;margin-top:8px}
+.stylist-photo{aspect-ratio:4/3}
+.stylist-photo img{object-position:50% 72%}
+.stylists{display:grid;gap:16px;align-content:center}
+.stylist{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:0 2px 12px rgba(58,50,45,.05)}
+.stylist h3{margin-bottom:4px}
+.stylist p:last-child{margin:0}
+.avatar{width:64px;height:64px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font:700 24px 'Shippori Mincho',serif}
+.skill{color:var(--sub);font-size:14px;margin-bottom:8px}
+
+/* ご予約の流れ */
+.flow{list-style:none;margin:0;padding:0;counter-reset:f}
+.flow li{counter-increment:f;display:grid;gap:0;padding:16px 0 16px 56px;position:relative;border-bottom:1px solid var(--pink-line)}
+.flow li::before{content:counter(f);position:absolute;left:0;top:16px;width:36px;height:36px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:700}
+.flow span{color:var(--sub)}
+
+/* よくある質問 */
+details{background:var(--white);border-radius:12px;margin-bottom:8px;padding:0 16px}
+summary{padding:16px 0;cursor:pointer;font-weight:700}
+details p{padding-bottom:16px;margin:0}
+
+/* アクセス */
+.info{display:grid;grid-template-columns:5.5em 1fr;gap:12px 16px;margin:0;background:var(--white);border-radius:var(--radius);padding:24px}
+.info dt{font-weight:700}.info dd{margin:0}
+
+/* 最後の予約（写真＋暗い重ねで白文字のコントラストを確保） */
+.last-cta{position:relative;isolation:isolate;padding:96px 0;color:#fff;background:#2E2622}
+.last-cta-bg{position:absolute;inset:0;z-index:-2}
+.last-cta-bg img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.last-cta::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(36,28,24,.66)}
+.last-cta h2::after{background:var(--pink)}
+.last-cta p{margin-bottom:24px}
+
+/* フッター */
+.site-footer{background:var(--text);color:#fff;text-align:center;padding:40px 16px;font-size:14px}
+.site-footer p{margin:0 0 8px}
+.footer-note{color:#E6DCD5;font-size:13px}
+
+/* スマホ固定ボタン・ダイアログ */
+.fixed-reserve{position:fixed;left:16px;right:16px;bottom:8px;min-height:56px;z-index:20;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+dialog{border:none;border-radius:16px;padding:24px;max-width:90vw;width:420px;color:var(--text)}
+dialog h2{font-size:20px}
+dialog::backdrop{background:rgba(58,50,45,.6)}
+
+@media (min-width:768px){
+  body{font-size:17px;padding-bottom:0}
+  h1{font-size:44px}h2{font-size:32px}
+  :root{--gap:96px}
+  .hero-photo{aspect-ratio:16/10}
+  .worry-photo{aspect-ratio:21/9}
+  .reasons{grid-template-columns:repeat(3,1fr)}
+  .worry-list{grid-template-columns:repeat(2,1fr)}
+  .menu-photo{aspect-ratio:21/8}
+  .stylist-photo{aspect-ratio:16/9}
+  .header-reserve{display:inline-flex;padding:8px 24px}
+  .fixed-reserve{display:none}
+  .last-cta{padding:128px 0}
+}
+@media (min-width:1024px){
+  .menu-toggle{display:none}
+  .site-nav{display:block;width:auto}
+  .site-nav ul{display:flex;gap:24px}
+  .site-nav a{border:none;padding:8px 0;font-size:14px;white-space:nowrap;text-decoration:none}
+  .site-nav a:hover{color:var(--gold)}
+  .header-inner{flex-wrap:nowrap}
+  .logo,.header-reserve{white-space:nowrap}
+  .hero{padding:72px 0 64px}
+  .hero + .block{padding-top:var(--gap)}
+  .hero-inner{grid-template-columns:1fr 440px;gap:64px}
+  .hero-photo{aspect-ratio:4/5;border-radius:220px 220px 16px 16px}
+  .worry-inner{grid-template-columns:360px 1fr;gap:64px}
+  .worry-photo{aspect-ratio:3/4;border-radius:180px 180px 16px 16px}
+  .worry-text h2{text-align:left}
+  .worry-text h2::after{margin-left:0}
+  .worry-list{grid-template-columns:1fr}
+  .stylist-inner{grid-template-columns:400px 1fr;gap:48px;align-items:center}
+  .stylist-photo{aspect-ratio:4/5}
+}
