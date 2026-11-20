@@ -461,6 +461,41 @@
                 </div>
               </div>
             </article>
+<!-- 10 コハクノ食品 CSVから伝票を一括作成 -->
+            <article class="card" aria-labelledby="w10-title">
+              <div class="thumb thumb--dash">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/10-csv-slip-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/10-csv-slip-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">10 ／ CSVから伝票を一括作成（動くデモ）</p>
+                <h3 id="w10-title">コハクノ食品 <span class="nowrap">出荷実績CSV → 出荷伝票</span></h3>
+                <p class="card__sub">システムから出したCSVを読み込むだけで、伝票番号ごとの出荷伝票が<span class="nowrap">まとめてできあがる</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>CSVの読み込み</li><li>項目の対応を色と番号で表示</li><li>伝票の一括印刷・PDF保存</li><li>読めない行の一覧</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>CSVを見ながら伝票に手で写している事務作業を、「読み込んで印刷するだけ」にできることを、触って確かめてもらう。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>CSVのどの列が伝票のどの欄に入るかを、同じ色と番号の札で示す</li>
+                      <li>列が足りない・数量が数字でないなどの行は、行番号と理由を一覧にして、残りの行で伝票を作る</li>
+                      <li>印刷では札やボタンを消し、A4 1枚に伝票1枚で出す</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/08-csv-slip/">デモを触ってみる<span class="sr">（コハクノ食品のCSVから伝票を一括作成するデモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">読み込んだCSVはお使いのブラウザの中だけで読み、どこにも送信も保存もしません。金額は税抜の参考です。実際のお仕事では、お手元のExcel（VBA）やGoogleスプレッドシート（GAS）で作ります。</p>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </div>
