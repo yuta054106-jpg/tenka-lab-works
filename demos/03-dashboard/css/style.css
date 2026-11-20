@@ -79,7 +79,7 @@ a { color: var(--c-main); }
   text-underline-offset: 3px;
 }
 .tl-bar__back:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
-.tl-bar__back::before { content: ""; position: absolute; inset: -12px -8px; }
+.tl-bar__back::before { content: ""; position: absolute; inset: -14px -8px; }   /* 押せる範囲を高さ 48px に */
 .tl-bar__back::after { content: "→"; margin-left: 4px; }
 .tl-bar__back:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (min-width: 768px) {
@@ -120,7 +120,8 @@ a { color: var(--c-main); }
 .month-tab[aria-selected="true"]:focus-visible { outline-color: #fff; }
 .month-note { margin-top: 6px; font-size: 14px; color: var(--c-sub); line-height: 1.5; }
 
-main { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
+/* main には .wrap も付いているため、.wrap の上下 0 に負けないよう main.wrap で指定する */
+main.wrap { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
 
 /* カード共通 */
 .card, .kpi {
@@ -141,7 +142,7 @@ main { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
 /* 指標カード */
 .kpis {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
-  margin-top: 24px; margin-bottom: var(--gap-block);
+  margin-bottom: var(--gap-block);
 }
 .kpi { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
 .kpi__title { font-size: 14px; font-weight: 700; color: var(--c-sub); line-height: 1.5; }
@@ -318,4 +319,10 @@ main { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
   .dtable .off-label { font-size: 14px; color: var(--c-sub); }
   .dtable tr.total td { font-weight: 700; border-top: 2px solid var(--c-main); }
   .btn { width: 280px; }
+}
+
+/* 768〜1023px：4列だとカードの中が約 110px しかなく「104.0万円」「26.0万円」も右が切れるため、2列×2段にする（2026-11-21 オウホン） */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kpi { min-height: 0; }
 }

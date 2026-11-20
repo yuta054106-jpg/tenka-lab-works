@@ -118,10 +118,11 @@ a { color: var(--c-main); }
   font-weight: 700;
   letter-spacing: .12em;
   line-height: 1.4;
+  white-space: nowrap;
 }
 .site-nav ul {
   display: flex;
-  gap: var(--sp-1);
+  gap: 0;
   padding: 0;
   list-style: none;
 }
@@ -133,6 +134,7 @@ a { color: var(--c-main); }
   color: var(--c-text);
   font-size: 14px;
   font-weight: 700;
+  white-space: nowrap;
   text-decoration: none;
 }
 .site-nav a:hover { color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
@@ -238,8 +240,35 @@ a { color: var(--c-main); }
 .collage__front { right: 0; bottom: 6%; width: 62%; z-index: 1; }
 .collage__sp { left: 6%; bottom: 0; width: 22%; z-index: 2; }
 
+/* ---------- 制作実績（実在のサイト） ---------- */
+/* 作品例（架空）と分けるため、白い帯の上に置く */
+.results {
+  padding: var(--section-y) 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-line);
+  border-bottom: 1px solid var(--c-line);
+}
+.results .card { background: var(--c-bg); }
+.group__lead {
+  max-width: 40em;
+  margin-top: var(--sp-1);
+  color: var(--c-sub);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.thumb--dview { background: #0B1626; }
+.thumb--sync { background: #161214; }
+.thumb .thumb__pc--solo { left: 8%; top: 14%; width: 84%; }
+.thumb__chip--real { background: #FFFFFF; color: var(--c-main); }
+
 /* ---------- 作品一覧 ---------- */
 .works { padding: var(--section-y) 0; }
+.works__title {
+  margin-top: 4px;
+  font-size: 24px;
+  line-height: 1.5;
+}
+.works__head + .group { margin-top: var(--sp-6); }
 .group + .group { margin-top: var(--section-y); }
 .group__title {
   margin-top: 4px;
@@ -550,9 +579,18 @@ a { color: var(--c-main); }
   :root { --section-y: 96px; }
   .label { font-size: 13px; }
   .hero { padding: var(--sp-12) 0; }
-  .hero__inner { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--sp-6); }
-  .hero h1 { font-size: 44px; line-height: 1.35; }
+  /* h1 の3つの句（最長「まとめてお任せください。」12字）が1行ずつ収まるよう 1:1 にする */
+  .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--sp-6); }
+  .hero h1 { font-size: clamp(34px, 3.4vw, 40px); line-height: 1.35; }
   .hero__lead { font-size: 18px; }
   .group__title, .contact h2 { font-size: 30px; }
+  .works__title { font-size: 34px; }
+  .works__head + .group { margin-top: var(--sp-8); }
   .card h3 { font-size: 20px; }
+}
+
+/* 375px 前後：ブランドとメニュー3つを1行に収める */
+@media (max-width: 400px) {
+  .brand { font-size: 18px; letter-spacing: .08em; }
+  .site-nav a { padding: 0 6px; }
 }

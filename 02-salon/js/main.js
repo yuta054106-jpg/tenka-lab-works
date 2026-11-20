@@ -14,3 +14,13 @@ nav.addEventListener('click', (e) => {
 const dialog = document.getElementById('reserve-dialog')
 document.querySelectorAll('[data-reserve]').forEach((b) => b.addEventListener('click', () => dialog.showModal()))
 document.getElementById('dialog-close').addEventListener('click', () => dialog.close())
+
+// スマホの固定「予約する」：FV の「予約する」が画面から消えたら出す（北燈の #fixed-cta と同じ作り）
+const fixedReserve = document.querySelector('.fixed-reserve')
+const heroReserve = document.getElementById('hero-reserve')
+if (fixedReserve && heroReserve && 'IntersectionObserver' in window) {
+  fixedReserve.classList.add('is-watched')
+  new IntersectionObserver((entries) => {
+    entries.forEach((e) => fixedReserve.classList.toggle('is-visible', !e.isIntersecting))
+  }).observe(heroReserve)
+}

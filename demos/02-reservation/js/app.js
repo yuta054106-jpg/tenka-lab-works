@@ -9,10 +9,12 @@
   var SLOTS = ['10:00', '13:30', '18:30']
   var COURSES = ['刺しゅう', '編み物', 'ミシン小物']
   var STATUS = {
-    new: { label: '未対応', mark: '●', cls: 'badge--new' },
-    doing: { label: '対応中', mark: '◐', cls: 'badge--doing' },
-    done: { label: '完了', mark: '✓', cls: 'badge--done' }
+    // 記号は文字ではなく CSS の SVG アイコン（.badge__icon--状態）で出す
+    new: { label: '未対応', cls: 'badge--new' },
+    doing: { label: '対応中', cls: 'badge--doing' },
+    done: { label: '完了', cls: 'badge--done' }
   }
+  var GUIDE_KEY = 'tenkalab-demo-reservation-guide-closed'
   var STATUS_ORDER = { new: 0, doing: 1, done: 2 }
   var WEEK = ['日', '月', '火', '水', '木', '金', '土']
 
@@ -217,7 +219,12 @@
   // ---------- 管理画面 ----------
   function renderSummary() {
     var t = today()
-    var html = ''
+    // 左（スマホは1行目）に「未対応」の件数。数はタブのバッジ（#admin-count）と同じ
+    var nNew = countBy('new')
+    var html = '<div class="summary__col summary__new' + (nNew ? '' : ' is-zero') + '">' +
+      '<p class="summary__day">未対応</p>' +
+      '<p class="summary__num">' + nNew + '件</p>' +
+      (nNew ? '' : '<p class="note">すべて対応済み</p>') + '</div>'
     ;[{ label: '今日', d: t }, { label: '明日', d: addDays(t, 1) }].forEach(function (col) {
       var key = ymd(col.d)
       var rows = state.items.filter(function (r) { return r.type === 'reservation' && r.date === key })
@@ -296,7 +303,7 @@
     return '<li class="item card' + (r.status === 'new' ? ' is-new' : '') + '" data-id="' + esc(r.id) + '" tabindex="-1" aria-label="' + esc(r.name + '、' + st.label) + '">' +
       '<div class="item__grid">' +
         '<div class="item__meta">' +
-          '<span class="item__status"><span class="badge ' + st.cls + '">' + st.mark + ' ' + st.label + '</span></span>' +
+          '<span class="item__status"><span class="badge ' + st.cls + '"><span class="badge__icon badge__icon--' + r.status + '" aria-hidden="true"></span>' + st.label + '</span></span>' +
           '<span class="item__kind"><span class="badge badge--kind">' + (isRes ? '予約' : '問い合わせ') + '</span><span class="item__course-pc">' + esc(r.course) + '</span></span>' +
           '<span class="item__received">' + esc(receivedText(r.receivedAt)) + '</span>' +
         '</div>' +
@@ -434,8 +441,26 @@
     save()
     renderAdmin()
     syncSlotChoices()
+    setGuide(true)
     toast('見本データ8件に戻しました')
   })
+
+  // ---------- 使い方3ステップ（閉じたら記録し、次からは出さない） ----------
+  function setGuide(show) {
+    $('guide').hidden = !show
+    try {
+      if (show) window.localStorage.removeItem(GUIDE_KEY)
+      else window.localStorage.setItem(GUIDE_KEY, '1')
+    } catch (e) { /* 保存できない環境では、この表示中だけ閉じる */ }
+  }
+  $('guide-close').addEventListener('click', function () {
+    setGuide(false)
+    var sel = tabs.filter(function (t) { return t.getAttribute('aria-selected') === 'true' })[0]
+    if (sel) sel.focus()
+  })
+  try {
+    if (window.localStorage.getItem(GUIDE_KEY) === '1') $('guide').hidden = true
+  } catch (e) { /* localStorage が使えなければ毎回出す */ }
 
   // ---------- お客さま画面（受付フォーム） ----------
   var form = $('entry-form')

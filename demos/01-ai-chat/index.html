@@ -54,7 +54,10 @@
       </div>
       <div class="hero-photo">
         <div class="hero-photo__frame">
-          <img src="img/hero.jpg" srcset="img/hero-800.jpg 800w, img/hero.jpg 1200w" sizes="(min-width: 768px) 420px, calc(100vw - 32px)" alt="施術者が肩に手を当てて、こわばりを確かめている様子" width="1200" height="930" decoding="async" fetchpriority="high">
+          <picture>
+            <source media="(min-width: 768px)" srcset="img/hero-pc.jpg" width="840" height="1050">
+            <img src="img/hero.jpg" srcset="img/hero-800.jpg 800w, img/hero.jpg 1200w" sizes="calc(100vw - 32px)" alt="施術者が手のひらを背中の上のほうに添えて、こわばりを確かめている様子" width="1200" height="900" decoding="async" fetchpriority="high">
+          </picture>
         </div>
         <p class="hero-photo__card" aria-hidden="true"><span class="hero-photo__label">初回（お話＋整体 60分）</span><span class="hero-photo__price">5,500円</span></p>
       </div>
@@ -136,9 +139,10 @@
   <section class="block" id="about-demo" aria-labelledby="about-title">
     <div class="container narrow">
       <div class="lab-card">
-        <h2 id="about-title">このチャットについて（TENKA LAB）</h2>
+        <h2 id="about-title">このチャットについて<span class="ib">（TENKA LAB）</span></h2>
         <p>このチャットは答えを用意したシナリオ型です。お店の情報に合わせて作ります。本物のAI（文章で自由に答える）版もご相談ください。</p>
         <p class="note">右下の「チャットで相談」から試せます。外部のサービスにはつながず、このページの中だけで動いています。</p>
+        <p class="lab-card__link"><a href="../../">作品例一覧へ</a></p>
       </div>
     </div>
   </section>
@@ -147,7 +151,7 @@
 <footer class="site-footer">
   <p><b>整体院 ソラユイ</b>（デモ・架空のお店）</p>
   <p class="footer-note">このページは TENKA LAB のデモです。店名・住所・電話番号・料金・空き状況は、すべて架空のものです。</p>
-  <p class="footer-note">写真：Unsplash（Sincerely Media）</p>
+  <p class="footer-note">写真：Unsplash（Edward Muntinga）</p>
   <p>制作：TENKA LAB</p>
 </footer>
 

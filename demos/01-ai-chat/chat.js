@@ -82,7 +82,8 @@
   var LABELS = {
     price: '料金を知りたい', reserve: '予約したい', first: 'はじめてで不安', access: '駐車場・アクセス', hours: '営業時間',
     firstPrice: '初回の料金は？', pay: '支払い方法は？', pain: '痛くないですか？', clothes: '服装は？', duration: '時間はどのくらい？',
-    phone: '電話で予約したい', goReserve: '予約ページへ進む', top: '最初に戻る'
+    phone: '電話で予約したい', goReserve: '予約ページへ進む', top: '最初に戻る',
+    effect: '肩こり・腰痛について', cancel: 'キャンセル・予約変更', kids: '子ども連れでも大丈夫？'
   };
   var MAIN = ['price', 'reserve', 'first', 'access', 'hours'];
 
@@ -107,11 +108,24 @@
     reserve: {
       msgs: ['空き状況の例です（明日から3日分）。ご希望の時間を押すと、予約ページに日時が入ります。'],
       slots: true,
-      choices: ['goReserve', 'phone', 'top']
+      choices: ['goReserve', 'cancel', 'phone', 'top']
     },
     first: {
       msgs: ['はじめての方も多くいらっしゃいます。よくいただく質問はこちらです。'],
-      choices: ['pain', 'clothes', 'duration', 'reserve', 'top']
+      choices: ['pain', 'clothes', 'duration', 'effect', 'kids', 'reserve', 'top']
+    },
+    // 医療の効果をうたわない（治る・改善・効く を答えに使わない）
+    effect: {
+      msgs: ['効果の感じ方には個人差があります。お話を伺ってから、施術の内容をご説明します。', 'はじめての方は「初回（お話＋整体 60分）」で、最初の15分ほど、気になる所や普段の過ごし方を伺います。'],
+      choices: ['firstPrice', 'reserve', 'top']
+    },
+    cancel: {
+      msgs: ['<p>予約の変更・キャンセルは、前日までにご連絡いただければ料金はかかりません。</p><p>当日の変更・キャンセルは、お電話でご連絡ください（デモ用の架空の決まりです）。</p>'],
+      choices: ['phone', 'reserve', 'top']
+    },
+    kids: {
+      msgs: ['お子さま連れでもご来院いただけます。施術のあいだは、ベッドのそばでお待ちいただけます。ご予約のときに「子ども連れ」とお伝えください（デモ用の架空の内容です）。'],
+      choices: ['reserve', 'first', 'top']
     },
     pain: {
       msgs: ['強く押したり、ボキボキ鳴らしたりする施術はしていません。強さは途中でいつでも変えられますので、遠慮なくお伝えください。'],
@@ -148,6 +162,10 @@
   /* 自由入力のキーワード（上から順に判定） */
   var PRICE_WORDS = ['料金', '値段', 'いくら', '価格', '費用', '金額', '円'];
   var RULES = [
+    { node: 'cancel', any: ['キャンセル', 'きゃんせる', '取り消', '取消', '変更', 'へんこう', '日にちを変', '日時を変', '時間を変'] },
+    { node: 'kids', any: ['子ども', '子供', 'こども', '子連れ', 'こづれ', '赤ちゃん', 'あかちゃん', 'ベビー', 'キッズ', '託児', '息子', '娘'] },
+    // 「腰痛」は「痛」を含むので、痛みの質問（pain）より先に判定する
+    { node: 'effect', any: ['治', 'なおる', 'なおり', 'なおせ', '効', 'きくか', 'ききます', '改善', '肩こり', '肩凝り', 'かたこり', '腰痛', 'ようつう', '頭痛', '症状'] },
     { node: 'firstPrice', all: [['初回', '初めて', 'はじめて'], PRICE_WORDS] },
     { node: 'pay', any: ['支払', 'カード', '現金', '電子マネー', 'paypay', 'qr', '決済'] },
     { node: 'phone', any: ['電話', 'でんわ', 'tel'] },
@@ -165,7 +183,12 @@
   ];
   function matchNode(text) {
     var t = text.normalize ? text.normalize('NFKC').toLowerCase() : text.toLowerCase();
-    var has = function (w) { return t.indexOf(w.toLowerCase()) !== -1; };
+    // 英字だけの語（tel・qr・paypay）は単語として出てきたときだけ当てる（hotel・hotels などに反応しない）
+    var has = function (w) {
+      w = w.toLowerCase();
+      if (/^[a-z]+$/.test(w)) return new RegExp('(^|[^a-z])' + w + '(?![a-z])').test(t);
+      return t.indexOf(w) !== -1;
+    };
     for (var i = 0; i < RULES.length; i++) {
       var r = RULES[i];
       if (r.all && r.all.every(function (group) { return group.some(has); })) return r.node;
@@ -372,17 +395,33 @@
     }
   }
 
+  var opener = null; // チャットを開いたボタン（閉じたらここへフォーカスを戻す）
+
   function closeChat(returnFocus) {
     panel.hidden = true;
     launcher.setAttribute('aria-expanded', 'false');
-    if (returnFocus !== false) launcher.focus();
+    if (returnFocus === false) return;
+    // スマホで FV のボタンが見えている間は右下のボタンを隠すので、開いたボタンへ戻す
+    var target = opener || launcher;
+    if (target === launcher && window.getComputedStyle(launcher).visibility === 'hidden') {
+      target = document.querySelector('[data-open-chat]') || launcher;
+    }
+    target.focus();
   }
 
-  launcher.addEventListener('click', openChat);
+  launcher.addEventListener('click', function () { opener = launcher; openChat(); });
   closeBtn.addEventListener('click', function () { closeChat(true); });
   Array.prototype.forEach.call(document.querySelectorAll('[data-open-chat]'), function (b) {
-    b.addEventListener('click', openChat);
+    b.addEventListener('click', function () { opener = b; openChat(); });
   });
+
+  /* 右下の「チャットで相談」：FV の同じボタンが見えている間は is-fv を付ける（CSS でスマホだけ隠す） */
+  var heroActions = document.querySelector('.hero-actions');
+  if (heroActions && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { launcher.classList.toggle('is-fv', e.isIntersecting); });
+    }).observe(heroActions);
+  }
   panel.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { e.preventDefault(); closeChat(true); }
   });

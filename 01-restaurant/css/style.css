@@ -225,7 +225,7 @@ a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1
   position: relative;
   width: auto;
   min-width: 0;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 16px;
   font-size: 14px;
 }
@@ -233,7 +233,7 @@ a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1
 .btn-reserve--header::before {
   content: "";
   position: absolute;
-  inset: -4px 0;
+  inset: -2px 0;
 }
 @media (min-width: 1024px) {
   .btn-reserve--header { min-width: 0; min-height: 44px; padding: 0 24px; font-size: 15px; }
@@ -278,7 +278,7 @@ a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1
   text-underline-offset: 3px;
 }
 .tl-bar__back:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
-.tl-bar__back::before { content: ""; position: absolute; inset: -12px -8px; }
+.tl-bar__back::before { content: ""; position: absolute; inset: -14px -8px; }   /* 押せる範囲を高さ 48px に */
 .tl-bar__back::after { content: "→"; margin-left: 4px; }
 .tl-bar__back:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (min-width: 768px) {
@@ -346,8 +346,9 @@ a { color: var(--link); text-decoration: underline; text-decoration-thickness: 1
   .global-nav { display: block; margin-left: auto; }
   .global-nav ul { display: flex; gap: var(--s-4); }
   .global-nav a {
-    display: inline-block;
-    padding-block: 12px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;   /* 押せる範囲 48px（ヘッダーは 72px） */
     color: var(--c-text-on-dark);
     font-size: 14px;
     line-height: 1;
@@ -1165,19 +1166,40 @@ input[type="date"].field__input::-webkit-date-and-time-value { text-align: left;
 .map__box {
   position: relative;
   aspect-ratio: 4 / 3;
-  background-color: var(--c-sumi);
-  background-image:
-    repeating-linear-gradient(0deg, rgba(201,160,99,.18) 0 1px, transparent 1px 48px),
-    repeating-linear-gradient(90deg, rgba(201,160,99,.18) 0 1px, transparent 1px 48px);
-  background-position: center;
+  background-color: #26211C;
   border: 1px solid var(--c-line-dark);
   border-radius: 4px;
   overflow: hidden;
 }
+/* 自作の SVG 地図（R1）。文字は HTML で重ね、画面幅が変わっても大きさを保つ */
+.map__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.map__label {
+  position: absolute;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.map__label--station { left: 26.5%; top: 69%; transform: translateX(-50%); color: var(--c-sub-on-dark); }
+.map__label--walk { left: 50.75%; top: 52.7%; transform: translate(-50%, calc(-100% - 4px)); color: var(--c-gold); font-weight: 700; }
+.map__label--shop {
+  left: calc(68% + 16px);
+  top: 33.3%;
+  transform: translateY(-50%);
+  font-family: var(--f-mincho);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  color: var(--c-text-on-dark);
+}
 .map__pin {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 33.3%;
+  left: 68%;
   width: 16px;
   height: 16px;
   margin: -8px 0 0 -8px;

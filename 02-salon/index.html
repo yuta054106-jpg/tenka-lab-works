@@ -10,8 +10,7 @@
 <meta property="og:description" content="作品例（架空のお店）。実在のお店ではありません。">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:,">
-<meta property="og:image" content="https://images.unsplash.com/photo-1560869713-bf165a9cfac1?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=80">
-<link rel="preconnect" href="https://images.unsplash.com">
+<meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/02-salon/img/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
@@ -46,19 +45,19 @@
       <div class="hero-text">
         <p class="eyebrow">大人のための美容室</p>
         <h1 id="hero-title">あなたの髪に、<br>ちょうどいい時間を。</h1>
-        <p class="hero-lead">1日6組限定。カウンセリングに15分かけます。</p>
+        <p class="hero-lead">仕上がりの好みから、朝の過ごし方まで。伺ってから、はさみを入れます。</p>
         <ul class="hero-facts">
           <li>1日6組限定</li>
           <li>カウンセリング15分</li>
           <li>カット 6,600円（税込）</li>
         </ul>
-        <button class="btn btn-reserve btn-lg" type="button" data-reserve>予約する</button>
+        <button class="btn btn-reserve btn-lg" type="button" data-reserve id="hero-reserve">予約する</button>
       </div>
       <figure class="hero-photo photo">
         <img
-          src="https://images.unsplash.com/photo-1560869713-bf165a9cfac1?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
-          srcset="https://images.unsplash.com/photo-1560869713-bf165a9cfac1?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w,
-                  https://images.unsplash.com/photo-1560869713-bf165a9cfac1?auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w"
+          src="img/hero-1600.jpg"
+          srcset="img/hero-800.jpg 800w,
+                  img/hero-1600.jpg 1600w"
           sizes="(min-width:1024px) 480px, 100vw"
           width="1600" height="2847"
           alt="スタイリストがコテで、お客様の長い髪にゆるやかな巻きをつけている後ろ姿"
@@ -71,15 +70,16 @@
     <div class="container worry-inner">
       <figure class="worry-photo photo">
         <img
-          src="https://images.unsplash.com/photo-1734111719430-fe4a3973f8af?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
-          srcset="https://images.unsplash.com/photo-1734111719430-fe4a3973f8af?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w,
-                  https://images.unsplash.com/photo-1734111719430-fe4a3973f8af?auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w"
+          src="img/worry-1600.jpg"
+          srcset="img/worry-800.jpg 800w,
+                  img/worry-1600.jpg 1600w"
           sizes="(min-width:1024px) 400px, 100vw"
           width="1600" height="2400"
           alt="ロールブラシで明るい色の髪をとかしている手元"
           loading="lazy" decoding="async">
       </figure>
       <div class="worry-text">
+        <p class="en-label">CONCERN</p>
         <h2 id="worry-title">こんなお悩みありませんか</h2>
         <ul class="worry-list">
           <li>前回と違う仕上がりになってしまう</li>
@@ -93,6 +93,7 @@
 
   <section class="block tint" id="concept" aria-labelledby="concept-title">
     <div class="container">
+      <p class="en-label">REASON</p>
       <h2 id="concept-title">選ばれる理由</h2>
       <ol class="reasons">
         <li><span class="num">1</span><h3>料金が一目で分かる</h3><p>カットもカラーも税込の料金を載せています。当日、追加料金が出ることはありません。</p></li>
@@ -106,9 +107,9 @@
     <div class="container">
       <figure class="menu-photo photo">
         <img
-          src="https://images.unsplash.com/photo-1589876518759-5b460cabcc4c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
-          srcset="https://images.unsplash.com/photo-1589876518759-5b460cabcc4c?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w,
-                  https://images.unsplash.com/photo-1589876518759-5b460cabcc4c?auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w"
+          src="img/menu-1600.jpg"
+          srcset="img/menu-800.jpg 800w,
+                  img/menu-1600.jpg 1600w"
           sizes="(min-width:1072px) 1040px, 100vw"
           width="1600" height="1067"
           alt="ピンクの布の上に置かれた、金色のすきばさみ"
@@ -116,17 +117,18 @@
       </figure>
     </div>
     <div class="container narrow">
+      <p class="en-label">MENU</p>
       <h2 id="menu-title">メニュー・料金</h2>
       <p class="note center">すべて税込。架空の料金です。</p>
       <table class="price">
         <caption class="visually-hidden">メニューと料金</caption>
         <thead><tr><th scope="col">メニュー</th><th scope="col">料金</th></tr></thead>
         <tbody>
-          <tr><th scope="row">カット</th><td>6,600円</td></tr>
-          <tr><th scope="row">カラー</th><td>7,700円</td></tr>
-          <tr><th scope="row">パーマ</th><td>9,900円</td></tr>
-          <tr><th scope="row">トリートメント</th><td>4,400円</td></tr>
-          <tr class="price-set"><th scope="row">カット＋カラー（セット割）</th><td>12,100円</td></tr>
+          <tr><th scope="row">カット<span class="price-desc">シャンプー・ブロー込み</span></th><td>6,600円</td></tr>
+          <tr><th scope="row">カラー<span class="price-desc">根元〜全体。白髪染めも同じ料金</span></th><td>7,700円</td></tr>
+          <tr><th scope="row">パーマ<span class="price-desc">カット別</span></th><td>9,900円</td></tr>
+          <tr><th scope="row">トリートメント<span class="price-desc">3ステップの集中ケア</span></th><td>4,400円</td></tr>
+          <tr class="price-set"><th scope="row">カット＋カラー（セット割）<span class="price-desc">別々より 2,200円お得</span></th><td>12,100円</td></tr>
         </tbody>
       </table>
       <div class="center"><button class="btn btn-reserve btn-lg" type="button" data-reserve>予約する</button></div>
@@ -135,14 +137,15 @@
 
   <section class="block tint" id="stylist" aria-labelledby="stylist-title">
     <div class="container">
+      <p class="en-label">STYLIST</p>
       <h2 id="stylist-title">スタイリスト紹介</h2>
       <p class="note center">架空のスタイリストです。</p>
       <div class="stylist-inner">
         <figure class="stylist-photo photo">
           <img
-            src="https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?auto=format&amp;fit=crop&amp;w=1600&amp;q=80"
-            srcset="https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?auto=format&amp;fit=crop&amp;w=800&amp;q=80 800w,
-                    https://images.unsplash.com/photo-1700760934268-8aa0ef52ce0a?auto=format&amp;fit=crop&amp;w=1600&amp;q=80 1600w"
+            src="img/stylist-1600.jpg"
+            srcset="img/stylist-800.jpg 800w,
+                    img/stylist-1600.jpg 1600w"
             sizes="(min-width:1024px) 420px, 100vw"
             width="1600" height="2000"
             alt="濡れた髪をくしでとり、はさみで毛先を整えている手元"
@@ -150,22 +153,22 @@
         </figure>
         <div class="stylists">
           <article class="stylist">
-            <div class="avatar"><img src="https://images.unsplash.com/photo-1560869713-bf165a9cfac1?auto=format&amp;fit=crop&amp;w=240&amp;h=240&amp;q=80" alt="" width="240" height="240" loading="lazy" decoding="async" style="object-position:50% 35%"></div>
+            <div class="avatar"><img src="img/avatar-haruka.jpg" alt="" width="240" height="240" loading="lazy" decoding="async" style="object-position:50% 35%"></div>
             <div>
               <h3>ハルカ</h3>
-              <p class="career">スタイリスト歴 12年（架空）</p>
-              <ul class="skills" aria-label="得意なこと"><li>ショート</li><li>白髪ぼかし</li></ul>
+              <p class="career">店長・スタイリスト歴 12年（架空）</p>
+              <ul class="skills" aria-label="得意なこと"><li>ショート・ボブ</li><li>白髪ぼかしカラー</li></ul>
             </div>
-            <p class="comment">毎朝ラクに決まる形を、一緒に探しましょう。</p>
+            <p class="comment">乾かすだけで形が決まるショートが得意です。白髪は隠すより、自然にぼかして明るく。</p>
           </article>
           <article class="stylist">
-            <div class="avatar"><img src="https://images.unsplash.com/photo-1734111719430-fe4a3973f8af?auto=format&amp;fit=crop&amp;w=240&amp;h=240&amp;q=80" alt="" width="240" height="240" loading="lazy" decoding="async" style="object-position:50% 40%"></div>
+            <div class="avatar"><img src="img/avatar-minami.jpg" alt="" width="240" height="240" loading="lazy" decoding="async" style="object-position:50% 40%"></div>
             <div>
               <h3>ミナミ</h3>
               <p class="career">スタイリスト歴 8年（架空）</p>
-              <ul class="skills" aria-label="得意なこと"><li>ミディアム</li><li>縮毛矯正</li></ul>
+              <ul class="skills" aria-label="得意なこと"><li>ミディアム・ロング</li><li>縮毛矯正</li></ul>
             </div>
-            <p class="comment">くせ毛も、扱いやすい髪に。無理のない方法を提案します。</p>
+            <p class="comment">くせや広がりは、根元から毛先まで髪の状態を見てから。自然なまっすぐさで、扱いやすい髪に整えます。</p>
           </article>
         </div>
       </div>
@@ -174,6 +177,7 @@
 
   <section class="block" id="flow" aria-labelledby="flow-title">
     <div class="container narrow">
+      <p class="en-label">FLOW</p>
       <h2 id="flow-title">ご予約の流れ</h2>
       <ol class="flow">
         <li><b>ご予約</b><span>ボタンから日時を選びます。</span></li>
@@ -186,33 +190,52 @@
 
   <section class="block tint" id="faq" aria-labelledby="faq-title">
     <div class="container narrow">
+      <p class="en-label">FAQ</p>
       <h2 id="faq-title">よくある質問</h2>
-      <details><summary>初めてでも大丈夫ですか？</summary><p>はい。初めての方ほどカウンセリングを丁寧に行います。</p></details>
-      <details><summary>所要時間はどのくらいですか？</summary><p>カットで約1時間30分、カラーを加えると約3時間が目安です（架空）。</p></details>
-      <details><summary>キャンセルはできますか？</summary><p>前日までにご連絡いただければ、料金はかかりません（架空）。</p></details>
-      <details><summary>支払い方法は？</summary><p>現金・クレジットカード・電子マネーに対応しています（架空）。</p></details>
-      <details><summary>駐車場はありますか？</summary><p>専用の駐車場はありません。近くのコインパーキングをご利用ください（架空）。</p></details>
+      <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span class="faq__text">初めてでも大丈夫ですか？</span><span class="faq__icon" aria-hidden="true"></span></summary><p>はい。初めての方ほどカウンセリングを丁寧に行います。</p></details>
+      <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span class="faq__text">所要時間はどのくらいですか？</span><span class="faq__icon" aria-hidden="true"></span></summary><p>カットで約1時間30分、カラーを加えると約3時間が目安です（架空）。</p></details>
+      <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span class="faq__text">キャンセルはできますか？</span><span class="faq__icon" aria-hidden="true"></span></summary><p>前日までにご連絡いただければ、料金はかかりません（架空）。</p></details>
+      <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span class="faq__text">支払い方法は？</span><span class="faq__icon" aria-hidden="true"></span></summary><p>現金・クレジットカード・電子マネーに対応しています（架空）。</p></details>
+      <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span class="faq__text">駐車場はありますか？</span><span class="faq__icon" aria-hidden="true"></span></summary><p>専用の駐車場はありません。近くのコインパーキングをご利用ください（架空）。</p></details>
     </div>
   </section>
 
   <section class="block" id="access" aria-labelledby="access-title">
-    <div class="container narrow">
+    <div class="container access-wrap">
+      <p class="en-label">ACCESS</p>
       <h2 id="access-title">アクセス・営業時間</h2>
-      <dl class="info">
-        <dt>所在地</dt><dd>◯◯市△△1-2-3（架空）</dd>
-        <dt>営業時間</dt><dd>10:00〜19:00</dd>
-        <dt>定休日</dt><dd>火曜</dd>
-        <dt>道順</dt><dd>最寄りの◯◯駅の東口を出て、まっすぐ進み、2つ目の角を右に曲がった白いビルの2階です（架空）。</dd>
-      </dl>
+      <div class="access-inner">
+        <dl class="info">
+          <dt>所在地</dt><dd>◯◯市△△1-2-3（架空）</dd>
+          <dt>営業時間</dt><dd>10:00〜19:00</dd>
+          <dt>定休日</dt><dd>火曜</dd>
+          <dt>道順</dt><dd>最寄りの◯◯駅の東口を出て、まっすぐ進み、2つ目の角を右に曲がった白いビルの2階です（架空）。</dd>
+        </dl>
+        <figure class="map">
+          <div class="map__box" aria-hidden="true">
+            <!-- 自作のイメージ地図（北燈の地図の色替え。地図サービスには接続しない）。箱と viewBox は同じ 4:3 -->
+            <svg class="map__svg" viewBox="0 0 400 300" focusable="false">
+              <path d="M0 70H400M0 250H400M60 0V300M310 0V300" fill="none" stroke="#F3E4E0" stroke-width="4"/>
+              <path d="M0 170H400M150 0V300" fill="none" stroke="#E9CFC8" stroke-width="10"/>
+              <rect x="94" y="186" width="24" height="16" rx="3" fill="#FFFFFF" stroke="#8A6A2F" stroke-width="1.5"/>
+              <path d="M118 194H134V158H272V112" fill="none" stroke="#8A6A2F" stroke-width="2" stroke-dasharray="4 6" stroke-linecap="round"/>
+            </svg>
+            <span class="map__label map__label--station">◯◯駅 東口</span>
+            <span class="map__pin"></span>
+            <span class="map__label map__label--shop">ユキアカリ</span>
+          </div>
+          <figcaption class="map__caption">地図はイメージです（実際のお店では Google マップを埋め込みます）</figcaption>
+        </figure>
+      </div>
     </div>
   </section>
 
   <section class="last-cta" aria-labelledby="last-title">
     <div class="last-cta-bg" aria-hidden="true">
       <img
-        src="https://images.unsplash.com/photo-1791714888992-eabe6f976e53?auto=format&amp;fit=crop&amp;w=1600&amp;h=900&amp;q=60"
-        srcset="https://images.unsplash.com/photo-1791714888992-eabe6f976e53?auto=format&amp;fit=crop&amp;w=800&amp;h=900&amp;q=60 800w,
-                https://images.unsplash.com/photo-1791714888992-eabe6f976e53?auto=format&amp;fit=crop&amp;w=1600&amp;h=900&amp;q=60 1600w"
+        src="img/last-1600.jpg"
+        srcset="img/last-800.jpg 800w,
+                img/last-1600.jpg 1600w"
         sizes="100vw"
         width="1600" height="900"
         alt=""
