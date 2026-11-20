@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>TENKA LAB の作品例（架空のお店）｜店舗の集客LP・HPと売上管理シート</title>
-  <meta name="description" content="TENKA LAB の作品例・デモ6点（すべて架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボードと売上管理シート。店舗ビジネスの数字が分かる制作者として、集客のページと売上・経費の管理シート・業務システムを作ります。実在のお店・お客様の実績ではありません。">
+  <meta name="description" content="TENKA LAB の作品例・デモ7点（すべて架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボード・売上管理シート・請求書の自動作成。店舗ビジネスの数字が分かる制作者として、集客のページと売上・経費の管理シート・業務システムを作ります。実在のお店・お客様の実績ではありません。">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TENKA LAB の作品例（架空のお店）">
-  <meta property="og:description" content="飲食店の予約LP・美容室のホームページ・AIチャットや予約管理のデモ・カフェの売上管理シート。すべて架空のお店の作品例で、実在のお店・お客様の実績ではありません。">
+  <meta property="og:description" content="飲食店の予約LP・美容室のホームページ・AIチャットや予約管理のデモ・カフェの売上管理シートと請求書の自動作成デモ。すべて架空のお店の作品例で、実在のお店・お客様の実績ではありません。">
   <!-- og:image は未設定（OGP 画像は未作成。指示書 A5 で作る予定） -->
   <!-- フォント：Google Fonts（Noto Sans JP 400・700）のみ。画像は自サイト内（assets/thumbs は各作品の画面を撮ったもの） -->
   <link rel="icon" href="data:,">
@@ -55,7 +55,7 @@
     </section>
 
     <section id="works" class="works" aria-labelledby="works-title">
-      <h2 id="works-title" class="sr">作品例・デモ 6点</h2>
+      <h2 id="works-title" class="sr">作品例・デモ 7点</h2>
 
       <!-- グループ1：集客のページ -->
       <div class="group">
@@ -292,6 +292,42 @@
                     <a class="btn btn--sub" href="03-sales-sheet/tenkalab-sample-sales-sheet.xlsx" download="tenkalab-sample-sales-sheet.xlsx">Excel ファイルをダウンロード<span class="sr">（カフェ ユメツムの売上管理シート、xlsx 形式）</span></a>
                   </p>
                   <p class="card__small">xlsx 形式・約22KB。Excel または Google スプレッドシートで開けます。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 07 ユメツム 請求書の自動作成 -->
+            <article class="card" aria-labelledby="w7-title">
+              <div class="thumb thumb--dash">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/07-invoice-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/07-invoice-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">07 ／ 請求書の自動作成（動くデモ）</p>
+                <h3 id="w7-title">カフェ ユメツム <span class="nowrap">請求書の自動作成</span></h3>
+                <p class="card__sub">納品の明細から、取引先ごとの請求書を<span class="nowrap">ボタン1つで</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>税率ごとの消費税計算</li><li>A4 の印刷・PDF保存</li><li>入力チェック付きの表</li><li>読み上げ対応</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>小さなお店・個人事業の経理担当が、月末に取引先ごとに手で作っている請求書を、明細を確かめてボタンを押すだけで作れるようにする。インボイス（適格請求書）に必要な登録番号・税率ごとの合計と消費税額も紙面に載せる。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>消費税は請求書ごと・税率ごとに1回だけ端数を切り捨て。端数が出る明細をわざと入れ、計算を確かめられるようにした</li>
+                      <li>明細は表計算ソフトに近い見た目で入力でき、空欄や0などの誤りはその場で日本語で案内する</li>
+                      <li>Googleスプレッドシート＋GAS で作る場合の流れ（毎月1日に作成 → Googleドライブに PDF 保存 → 送付メールの下書き。送信は人が確認）を画面で説明</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/05-invoice/">デモを触ってみる<span class="sr">（カフェ ユメツムの請求書の自動作成デモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">入力内容は保存も送信もされず、再読み込みで最初のデータに戻ります。請求書には「見本」の印が入ります。作品例05・06と同じ架空のお店です。</p>
                 </div>
               </div>
             </article>
