@@ -1,0 +1,375 @@
+/* TENKA LAB 営業用デモページ（店先でスマホを見せる1ページ）
+   ../portfolio.css を読み込んだ上で、足りない部品だけ足す
+   デザイン：営業用デモ/design.md（ヨウタンワ 2026-11-21） */
+:root {
+  --section-y: 48px;
+  --sales-max: 560px;
+}
+
+/* 固定ボタンに隠れないよう下をあける */
+body.sales { padding-bottom: 88px; }
+
+/* 飛び先は上に少しあける */
+[id] { scroll-margin-top: 16px; }
+
+/* ---------- ① ヘッダー ---------- */
+.s-header {
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-line);
+}
+.s-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  height: 56px;
+}
+.sales .brand {
+  font-size: 18px;
+  letter-spacing: .1em;
+}
+.s-area {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  background: var(--c-tag);
+  border-radius: 999px;
+  color: var(--c-main);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ---------- ② ファーストビュー ---------- */
+.s-hero {
+  padding: var(--sp-3) 0 var(--sp-4);
+  background: var(--c-bg);
+}
+.s-hero h1 {
+  margin-top: var(--sp-1);
+  font-size: 26px;
+  line-height: 1.4;
+  letter-spacing: .02em;
+}
+.s-hero__lead {
+  margin-top: 12px;
+  color: var(--c-sub);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.s-pick__title {
+  margin-top: var(--sp-3);
+  color: var(--c-text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.s-picks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-1);
+  margin-top: var(--sp-1);
+  padding: 0;
+  list-style: none;
+}
+.pick {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  min-height: 56px;
+  height: 100%;
+  padding: 8px 12px 8px 8px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  color: var(--c-text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.35;
+  text-decoration: none;
+  font-feature-settings: "palt" 1;   /* 「・」を詰めて7字を1行に収める */
+}
+.pick:active { border-color: var(--c-main); }
+@media (hover: hover) {
+  .pick:hover { border-color: var(--c-main); }
+}
+.pick img {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 8px;
+}
+.pick img.pick__pc { object-position: left top; }
+
+.s-note {
+  margin-top: 12px;
+  color: var(--c-sub);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* ---------- 欄の見出し（③〜⑥共通） ---------- */
+.s-h2 {
+  margin-top: 4px;
+  font-size: 22px;
+  line-height: 1.45;
+}
+.s-lead {
+  margin-top: var(--sp-1);
+  color: var(--c-sub);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ---------- ③ 制作実績（実在のサイト・白い欄） ---------- */
+.s-results {
+  padding: var(--section-y) 0;
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-line);
+  border-bottom: 1px solid var(--c-line);
+}
+.s-results .row-card { background: var(--c-bg); }
+
+/* ---------- ④ 作品例・デモ（架空のお店） ---------- */
+.s-works {
+  padding: var(--section-y) 0;
+  background: var(--c-bg);
+}
+.s-group { margin-top: var(--sp-4); }
+.s-lead + .s-group { margin-top: var(--sp-3); }
+.s-group__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.s-group + .row-cards { margin-top: 12px; }
+.s-textlink {
+  display: inline-block;
+  padding: 12px 0;
+  color: var(--c-main);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.s-works .s-note { margin-top: 12px; }
+.s-works .s-note .s-textlink { padding: 12px 0; line-height: 24px; }
+
+/* ---------- 横長の小さなカード（実績・作品例で共通） ---------- */
+.row-cards {
+  display: grid;
+  gap: 12px;
+  margin-top: var(--sp-2);
+  padding: 0;
+  list-style: none;
+}
+.row-card {
+  padding: var(--sp-2);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+}
+.row-card__top {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: var(--sp-2);
+}
+.row-card__thumb {
+  position: relative;
+  width: 104px;
+  height: 128px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+/* 実績：PC の画面を枠なしで敷く */
+.row-card__thumb--pc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left top;
+}
+/* 作品例：箱の中にスマホの枠（下は切れてよい） */
+.row-card .frame-sp {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  width: 64px;
+  border-width: 3px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .22);
+}
+.row-card .frame-sp img { border-radius: 9px; }
+
+/* サムネイルの箱の背景（index.html と同じ） */
+.bg-1C1915 { background: #1C1915; }
+.bg-F3E4E0 { background: #F3E4E0; }
+.bg-E3EEEA { background: #E3EEEA; }
+.bg-EAF0E6 { background: #EAF0E6; }
+.bg-EFE6DC { background: #EFE6DC; }
+.bg-0B1626 { background: #0B1626; }
+.bg-161214 { background: #161214; }
+
+.row-card__text > * + * { margin-top: 4px; }
+.tag {
+  display: inline-block;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.tag--real {
+  background: var(--c-main);
+  color: #FFFFFF;
+}
+.tag--fake {
+  background: var(--c-tag);
+  border: 1px solid var(--c-line);
+  color: var(--c-sub);
+}
+.row-card__kind {
+  color: var(--c-main);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  line-height: 1.5;
+}
+.row-card h3 {
+  font-size: 17px;
+  line-height: 1.45;
+}
+.row-card__sub {
+  color: var(--c-sub);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.row-card__btn { margin-top: 12px; }
+
+/* ---------- ⑤ 進め方 ---------- */
+.s-steps {
+  padding: 0 0 var(--section-y);
+  background: var(--c-bg);
+}
+.s-steps__inner {
+  padding-top: var(--section-y);
+  border-top: 1px solid var(--c-line);
+}
+.steps {
+  display: grid;
+  gap: 12px;
+  margin: var(--sp-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.steps li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.steps__num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--c-main);
+  border-radius: 50%;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+.steps p b {
+  display: block;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.steps p span {
+  display: block;
+  color: var(--c-sub);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---------- ⑥ 最後の帯（紺） ---------- */
+.s-close {
+  padding: var(--section-y) 0;
+  background: var(--c-main);
+  color: #FFFFFF;
+}
+.s-close__text {
+  margin-top: 12px;
+  color: var(--c-on-dark-sub);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.s-close__points {
+  display: grid;
+  gap: var(--sp-1);
+  margin-top: var(--sp-3);
+  padding: 0;
+  list-style: none;
+}
+.s-close__points li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.s-close__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(15px * 1.7 / 2 - 3px);
+  width: 6px;
+  height: 6px;
+  background: var(--c-on-dark-sub);
+}
+.btn--sub.s-close__btn,
+.btn--sub.s-close__btn:hover {
+  margin-top: var(--sp-3);
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--c-main);
+}
+.btn--sub.s-close__btn:hover { background: var(--c-tag); border-color: var(--c-tag); }
+.s-close :focus-visible { outline-color: #FFFFFF; }
+
+/* ---------- 右下の固定ボタン「業種で選ぶ」 ---------- */
+.to-pick {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 48px;
+  padding: 0 20px;
+  background: var(--c-main);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(27, 42, 65, .28);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+.to-pick svg { flex: none; }
+
+/* ---------- PC・タブレット：スマホの見た目を中央に置く ---------- */
+@media (min-width: 768px) {
+  .sales .wrap {
+    max-width: var(--sales-max);
+    padding: 0 var(--sp-3);
+  }
+  .s-picks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .to-pick { right: calc(50% - 280px + 16px); }
+}
+
+/* portfolio.css の 1024px 以上の拡大を打ち消す（PC も同じサイズのまま） */
+@media (min-width: 1024px) {
+  .sales .label { font-size: 12px; }
+}
