@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ツグミヤ（デモ）シフト表づくり｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。スタッフの希望（○△×）から、決まった規則でシフトの下書きを自動で作り、足りない枠が色と文字で分かる見本です。お店・スタッフ・希望・時給はすべて架空です。">
+  <meta name="theme-color" content="#2F4F3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ツグミヤ（デモ）シフト表づくり｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。スタッフの希望（○△×）から、決まった規則でシフトの下書きを自動で作り、足りない枠が色と文字で分かる見本です。お店・スタッフ・希望・時給はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='4' width='20' height='16' rx='3' fill='%23F8F5EF' stroke='%232F4F3E' stroke-width='2'/%3E%3Cpath d='M12 4v16' stroke='%232F4F3E' stroke-width='1.5'/%3E%3Ccircle cx='7' cy='12' r='2.5' fill='%23B85C38'/%3E%3Crect x='14.5' y='9' width='5' height='6' rx='1' fill='%23D9A441'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。お店・スタッフ・希望・時給はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="2" y="4" width="20" height="16" rx="3" fill="#F8F5EF" stroke="#2F4F3E" stroke-width="2"/>
+          <path d="M12 4v16" stroke="#2F4F3E" stroke-width="1.5"/>
+          <circle cx="7" cy="12" r="2.5" fill="#B85C38"/>
+          <rect x="14.5" y="9" width="5" height="6" rx="1" fill="#D9A441"/>
+        </svg>
+        <span class="brand__name">ツグミヤ</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">弁当と惣菜｜シフト表づくり（2026年12月前半）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">希望を集めて、シフトの下書きまで自動で</h1>
+      <p class="intro__lead">スタッフの出られる日（○△×）から、決まった規則でシフトの下書きを作ります。足りない枠は色と文字で分かり、入れ替えると日数・時間・人件費の目安がすぐ変わります。</p>
+      <nav aria-label="手順">
+        <ol class="steps steps--5" id="steps">
+          <li class="step"><a href="#hope-card" data-tab="hope" data-go="hope-card"><span class="step__num" aria-hidden="true">1</span><span class="step__label">希望を集める</span></a></li>
+          <li class="step"><a href="#auto-card" data-tab="shift" data-go="auto-card"><span class="step__num" aria-hidden="true">2</span><span class="step__label">自動で下書き</span></a></li>
+          <li class="step"><a href="#board-card" data-tab="shift" data-go="board-card"><span class="step__num" aria-hidden="true">3</span><span class="step__label">手で直す</span></a></li>
+          <li class="step"><a href="#gap-card" data-tab="shift" data-go="gap-card"><span class="step__num" aria-hidden="true">4</span><span class="step__label">足りない枠が色で分かる</span></a></li>
+          <li class="step"><a href="#list-card" data-tab="list" data-go="list-card"><span class="step__num" aria-hidden="true">5</span><span class="step__label">印刷・共有</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。お店・スタッフ・希望・時給はすべて架空です。</li>
+        <li>※ 入力はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「最初の状態に戻す」で元に戻せます。</li>
+        <li>※ 人件費は「時間 × 時給」の目安です。深夜・休日の割増・交通費は含みません。</li>
+        <li id="note-nosave" hidden>※ この端末では保存できないため、再読み込みすると最初の状態に戻ります。</li>
+      </ul>
+    </section>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="作業" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-hope" aria-controls="panel-hope" aria-selected="true">希望</button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-shift" aria-controls="panel-shift" aria-selected="false" tabindex="-1">シフト表<span class="tabs__badge tabs__badge--bad" id="tab-shift-badge" aria-hidden="true" hidden></span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-list" aria-controls="panel-list" aria-selected="false" tabindex="-1">一覧・印刷</button>
+      </div>
+
+      <!-- タブ1：希望（§7） -->
+      <section class="panel" role="tabpanel" id="panel-hope" aria-labelledby="tab-hope">
+        <section class="card" id="hope-card" aria-labelledby="h-hope">
+          <div class="card__head"><h2 id="h-hope" tabindex="-1">希望（12/1〜12/14）</h2><p class="sub">8人・12営業日（水曜は定休日）</p></div>
+          <p class="sub hope__desc">LINE やフォームで集めた希望を、○△× で入れた状態です（見本）。押すと切り替わります。</p>
+          <p class="legend" id="hope-legend">
+            <span class="legend__i"><span class="mk mk--o" data-icon="hopeO"></span>出られる</span>
+            <span class="legend__i"><span class="mk mk--t" data-icon="hopeT"></span>どちらでも</span>
+            <span class="legend__i"><span class="mk mk--x" data-icon="hopeX"></span>出られない</span>
+            <span class="legend__note">押すたびに ○ → △ → × → ○ と変わります</span>
+          </p>
+          <details class="staff-info">
+            <summary>スタッフの条件（8人）</summary>
+            <div id="staff-info-area"></div>
+          </details>
+        </section>
+        <div id="hope-area" class="hope-area"></div>
+        <button type="button" class="btn-main hope__go" id="hope-draft"><span data-icon="draft20"></span>この希望で下書きを作る</button>
+      </section>
+
+      <!-- タブ2：シフト表（§8） -->
+      <section class="panel" role="tabpanel" id="panel-shift" aria-labelledby="tab-shift" hidden>
+        <section class="card" id="auto-card" aria-labelledby="h-auto">
+          <div class="card__head"><h2 id="h-auto" tabindex="-1">シフト表（12/1〜12/14）</h2></div>
+          <p class="notice" id="notice" hidden><span data-icon="info"></span><span>希望が変わりました。下書きに反映するには『自動で下書きを作る』をもう一度押してください（手で直した所は消えます）。</span></p>
+          <div class="auto__row">
+            <button type="button" class="btn-main auto__btn" id="auto-btn"><span data-icon="draft20"></span>自動で下書きを作る</button>
+            <p class="sub auto__desc">希望・上限・調理できる人を見て、決まった規則で枠に人を入れます。同じ希望なら、何度押しても同じ結果です。</p>
+          </div>
+          <details class="rules">
+            <summary>自動の規則と必要な人数</summary>
+            <table class="need">
+              <caption class="visually-hidden">曜日ごとの必要人数</caption>
+              <thead><tr><th scope="col">曜日</th><th scope="col">朝 9–13</th><th scope="col">昼 13–17</th><th scope="col">夜 17–20</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">火・木・金・月</th><td>2人</td><td>2人</td><td>1人</td></tr>
+                <tr><th scope="row">土・日</th><td>2人</td><td>3人</td><td>2人</td></tr>
+                <tr><th scope="row">水</th><td colspan="3">定休日</td></tr>
+              </tbody>
+            </table>
+            <p class="sub">各枠に「調理できる人」が1人以上必要です。</p>
+            <ul class="dot-list rules__list">
+              <li>日付の順・枠の順（朝→昼→夜）に埋めます</li>
+              <li>各枠で、まず調理できる人を1人入れ、残りを埋めます</li>
+              <li>候補は「○の人 → △の人」の順。同じなら、その時点で入った時間が少ない人を先にします</li>
+              <li>希望×の日・週の上限日数・1日の上限時間を超える人は入れません。朝と夜だけ（間が空く）入れることもしません</li>
+              <li>埋まらない枠は、無理に入れずに「不足」にします</li>
+            </ul>
+          </details>
+        </section>
+
+        <p class="sum-empty" id="sum-empty">まだ下書きがありません。『自動で下書きを作る』を押してください。</p>
+        <section class="summary" aria-label="シフトの状況" id="summary">
+          <div class="summary__box summary__box--gap" role="group" id="sum-gap" aria-labelledby="sum-gap-l">
+            <p class="summary__label" id="sum-gap-l"><span class="summary__icon" id="sum-gap-icon"></span>足りない枠</p>
+            <p class="summary__val"><span class="summary__n" id="sum-gap-n">—</span><span class="summary__unit" id="sum-gap-u">枠</span></p>
+            <p class="summary__link" id="sum-gap-link-p"><a href="#gap-card" id="sum-gap-link">一覧を見る ›</a></p>
+            <p class="summary__note summary__note--good" id="sum-gap-ok" hidden>すべて足りています</p>
+          </div>
+          <div class="summary__box summary__box--warn" role="group" id="sum-warn" aria-labelledby="sum-warn-l">
+            <p class="summary__label" id="sum-warn-l"><span class="summary__icon" data-icon="warn"></span>警告</p>
+            <p class="summary__val"><span class="summary__n" id="sum-warn-n">—</span><span class="summary__unit" id="sum-warn-u">件</span></p>
+            <p class="summary__link" id="sum-warn-link-p"><a href="#warn-card" id="sum-warn-link">一覧を見る ›</a></p>
+            <p class="summary__note" id="sum-warn-none" hidden>—</p>
+          </div>
+          <div class="summary__box" role="group" id="sum-hours" aria-labelledby="sum-hours-l">
+            <p class="summary__label" id="sum-hours-l">合計の時間</p>
+            <p class="summary__val"><span class="summary__n" id="sum-hours-n">—</span><span class="summary__unit" id="sum-hours-u">時間</span></p>
+            <p class="summary__note" id="sum-hours-note"></p>
+          </div>
+          <div class="summary__box" role="group" id="sum-yen" aria-labelledby="sum-yen-l">
+            <p class="summary__label" id="sum-yen-l">人件費の目安</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="sum-yen-n">—</span></p>
+            <p class="summary__note" id="sum-yen-note">割増・交通費は含みません</p>
+          </div>
+        </section>
+
+        <div class="shift-body" id="shift-body">
+          <div class="shift-side" id="shift-side">
+            <section class="card" id="gap-card" aria-labelledby="h-gap" hidden>
+              <div class="card__head"><h3 id="h-gap" tabindex="-1">足りない枠（0）</h3></div>
+              <div id="gap-area"></div>
+            </section>
+            <section class="card" id="warn-card" aria-labelledby="h-warn" hidden>
+              <div class="card__head"><h3 id="h-warn" tabindex="-1">警告（0）</h3></div>
+              <div id="warn-area"></div>
+              <p class="sub warn__note">警告があっても、このまま確定できます（店長の判断を優先）。</p>
+            </section>
+          </div>
+          <div class="shift-main" id="shift-main">
+            <section class="card board-card" id="board-card" aria-labelledby="h-board">
+              <div class="card__head"><h3 id="h-board" tabindex="-1">2週間のシフト表</h3><p class="sub">札を押すと入れ替え・外すができます</p></div>
+              <div id="board-area"></div>
+            </section>
+          </div>
+          <section class="card" id="total-card" aria-labelledby="h-total">
+            <div class="card__head"><h3 id="h-total" tabindex="-1">スタッフごとの合計</h3><p class="sub">人件費は目安</p></div>
+            <div id="total-area"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- タブ3：一覧・印刷（§11） -->
+      <section class="panel" role="tabpanel" id="panel-list" aria-labelledby="tab-list" hidden>
+        <section class="card" id="list-card" aria-labelledby="h-list">
+          <div class="card__head"><h2 id="h-list" tabindex="-1">一覧・印刷</h2></div>
+          <p class="sub">お店に貼る表です。印刷すると A4 横1枚に収まります。ボタンや色の札は出ず、足りない枠は『【不足】』の文字で出ます。</p>
+          <div class="print-row">
+            <button type="button" class="btn-main print__btn" id="print-btn"><span data-icon="print20"></span>印刷・PDFで保存（A4 横）</button>
+            <p class="sub print__hint">PDF にするには、印刷の画面で送信先を『PDF に保存』にします。</p>
+          </div>
+          <div id="list-area"></div>
+        </section>
+
+        <section class="card" id="mine-card" aria-labelledby="h-mine">
+          <div class="card__head"><h2 id="h-mine" tabindex="-1">あなたのシフト（スタッフに送る文面の見本）</h2></div>
+          <p class="sub">実際は LINE やメールで1人ずつ送ります。このデモでは送信しません（見本の表示だけ）。</p>
+          <div class="field mine__field">
+            <label class="field__label" for="mine-staff">スタッフ</label>
+            <select id="mine-staff" class="select mine__select"></select>
+          </div>
+          <div id="mine-area"></div>
+        </section>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><span data-icon="undo18"></span>最初の状態に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の人数・時間帯・規則に合わせて作ります。費用をかけずに始めるなら、Google フォーム＋スプレッドシート＋GAS がおすすめです。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="8" y="3" width="16" height="26" rx="3" fill="none" stroke="#2F4F3E" stroke-width="2"/><path d="M11 9h10M11 14h10M11 19h10M16 9v10" fill="none" stroke="#2F4F3E" stroke-width="2" stroke-linecap="round"/><path d="M14 25h4" stroke="#2F4F3E" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Google フォーム＋スプレッドシート＋GAS（費用0円から）</h3>
+          <ul class="dot-list">
+            <li>スタッフはスマホのフォームで希望を出します</li>
+            <li>ボタン1つで下書きを作り、店長がシートで直します</li>
+            <li>確定したら各スタッフにメールでお知らせします（LINE への通知は別途設定）</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="4" y="6" width="24" height="20" rx="2" fill="none" stroke="#2F4F3E" stroke-width="2"/><path d="M4 12h24M4 19h24M12 6v20M20 6v20" stroke="#2F4F3E" stroke-width="2"/></svg>
+          <h3>Excel で作る</h3>
+          <ul class="dot-list">
+            <li>いまお使いのシフト表の Excel を生かして作れます</li>
+            <li>下書き・人件費の目安・印刷をボタン1つで</li>
+            <li>お店のパソコンの中だけで動きます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe">連勤の上限・新人とベテランの組み合わせなどの規則は、お店に合わせて決めます。勤怠・出勤簿の自動集計（<a href="../06-attendance/">作品例⑥</a>）ともつなげられます。休憩時間・労働時間の法令の確認は、実際のお仕事でご相談ください。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。弁当と惣菜 ツグミヤとスタッフは架空で、希望・時給もすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title"></h2>
+    <p class="confirm__body" id="cf-body"></p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok"></button>
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <dialog class="pick" id="pick" aria-labelledby="pk-title">
+    <div class="pick__head">
+      <h2 class="pick__title" id="pk-title"></h2>
+      <button type="button" class="pick__x" id="pk-x" aria-label="閉じる"><span data-icon="close"></span></button>
+    </div>
+    <p class="pick__meta" id="pk-meta"></p>
+    <div class="pick__body">
+      <h3 class="pick__h">いま入っている人</h3>
+      <ul class="pick__list" id="pk-cur"></ul>
+      <h3 class="pick__h pick__h--cand" id="pk-cand-title"></h3>
+      <p class="pick__tier">そのまま入れられる人</p>
+      <ul class="pick__list" id="pk-ok"></ul>
+      <p class="pick__tier">入れると警告・注意が出る人</p>
+      <ul class="pick__list" id="pk-ng"></ul>
+    </div>
+    <div class="pick__foot"><button type="button" class="confirm__cancel" id="pk-close">閉じる</button></div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
