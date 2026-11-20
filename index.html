@@ -5,245 +5,304 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>TENKA LAB の作品例（架空のお店）｜店舗の集客LP・HPと売上管理シート</title>
-  <meta name="description" content="TENKA LAB の作品例・デモ5点（すべて架空のお店）。飲食店の予約LP、美容室のホームページ、カフェの売上管理シート、教室の予約・問い合わせ管理、整体院のAIチャット。店舗ビジネスの数字が分かる制作者として、集客のページと売上・経費の管理シート・業務システムを作ります。実在のお店・お客様の実績ではありません。">
+  <meta name="description" content="TENKA LAB の作品例・デモ6点（すべて架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボードと売上管理シート。店舗ビジネスの数字が分かる制作者として、集客のページと売上・経費の管理シート・業務システムを作ります。実在のお店・お客様の実績ではありません。">
   <meta property="og:type" content="website">
   <meta property="og:title" content="TENKA LAB の作品例（架空のお店）">
-  <meta property="og:description" content="飲食店の予約LP・美容室のホームページ・カフェの売上管理シート。すべて架空のお店の作品例で、実在のお店・お客様の実績ではありません。">
-  <!-- og:image は未設定（OGP 画像は未作成。公開する場合は自作の画像を用意して追加する） -->
-  <!-- フォント：外部フォントは使わない（端末の標準フォントのみ）。画像：外部画像なし（サムネイルは CSS の色面） -->
+  <meta property="og:description" content="飲食店の予約LP・美容室のホームページ・AIチャットや予約管理のデモ・カフェの売上管理シート。すべて架空のお店の作品例で、実在のお店・お客様の実績ではありません。">
+  <!-- og:image は未設定（OGP 画像は未作成。指示書 A5 で作る予定） -->
+  <!-- フォント：Google Fonts（Noto Sans JP 400・700）のみ。画像は自サイト内（assets/thumbs は各作品の画面を撮ったもの） -->
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap">
   <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
   <a class="skip" href="#works">作品例へ移動</a>
 
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap site-header__inner">
       <p class="brand">TENKA LAB</p>
-      <p class="notice notice--top"><strong>作品例（架空のお店）</strong>です。このページの作品はすべて架空のお店のもので、実在のお店・お客様の実績ではありません。</p>
+      <nav class="site-nav" aria-label="ページ内メニュー">
+        <ul>
+          <li><a href="#works">作品例</a></li>
+          <li><a href="#contact">ご相談</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
+  <p class="fake-strip" role="note">このページの作品はすべて架空のお店の作品例です。<span class="ib">実在のお店・お客様の実績ではありません。</span></p>
 
   <main>
     <section class="hero" aria-labelledby="page-title">
-      <div class="wrap">
-        <p class="hero__label">Works ／ 作品例</p>
-        <h1 id="page-title">TENKA LAB の作品例</h1>
-        <p class="hero__lead">店舗ビジネスの数字が分かる制作者として、<span class="ib">お客様を集めるLP・ホームページと、</span><span class="ib">売上・経費を見える化する管理シート・業務システムを作ります。</span></p>
-        <ul class="hero__points">
-          <li>集客：予約・来店につながるLP・ホームページ</li>
-          <li>管理：売上・経費の管理シート、業務システム</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="works" class="works" aria-labelledby="works-title">
-      <div class="wrap">
-        <h2 id="works-title">作品例・デモ 5点</h2>
-        <p class="works__note">お店の名前・住所・料金・数字はすべて架空です。</p>
-
-        <div class="cards">
-          <!-- 作品例1 -->
-          <article class="card" aria-labelledby="w1-title">
-            <div class="thumb thumb--restaurant" aria-hidden="true">
-              <span class="thumb__type">予約LP</span>
-              <span class="thumb__name">とりと酒 北燈</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">01 ／ 予約LP</p>
-              <h3 id="w1-title">とりと酒 北燈（ほくとう）</h3>
-              <p class="card__sub">炭火焼鳥と日本酒の店の予約ページ</p>
-              <p class="card__fake">作品例（架空のお店）。実在のお店・お客様の実績ではありません。</p>
-
-              <h4>ねらい</h4>
-              <p>接待や少人数の宴会の店をスマホで探す会社員が、個室・コースの総額・キャンセルの決まりを確かめて、夜でもその場でWeb予約できるようにする。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>行動を「Web予約」の1つに絞り、予約ボタンをページ内の各所とスマホの画面下の固定バーに置いた</li>
-                <li>個室の人数、コースの価格（税込）と時間、飲み放題、キャンセルの決まりを予約フォームの手前で全部見せる</li>
-                <li>接待・宴会・デートの利用シーンごとに合う席とコースを示し、単価の高い予約につなげる構成</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>HTML</li><li>CSS</li><li>JavaScript（素のまま）</li><li>レスポンシブ</li><li>入力チェック付きフォーム</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="01-restaurant/index.html">作品を見る<span class="sr">（とりと酒 北燈の予約LP）</span></a>
-              </p>
-            </div>
-          </article>
-
-          <!-- 作品例2 -->
-          <article class="card" aria-labelledby="w2-title">
-            <div class="thumb thumb--salon" aria-hidden="true">
-              <span class="thumb__type">ホームページ</span>
-              <span class="thumb__name">ヘアサロン ユキアカリ</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">02 ／ ホームページ</p>
-              <h3 id="w2-title">ヘアサロン ユキアカリ</h3>
-              <p class="card__sub">美容室のホームページ</p>
-              <p class="card__fake">作品例（架空のお店）。実在のお店・お客様の実績ではありません。</p>
-
-              <h4>ねらい</h4>
-              <p>初めての街で「失敗しない美容室」を探す方が、料金・雰囲気・スタイリストを確かめて、不安なく予約に進めるようにする。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>メニューと料金（税込）を表で一目で分かるようにし、スマホでも崩れない形にした</li>
-                <li>髪や手元の写真で店の雰囲気を伝えつつ、店名や顔が写らない写真を選んだ（写真は Unsplash License で利用できるものだけを使用）</li>
-                <li>悩み → 選ばれる理由 → 料金 → 予約の流れ → よくある質問の順で、予約までの不安を減らす構成</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>HTML</li><li>CSS</li><li>JavaScript（素のまま）</li><li>レスポンシブ</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="02-salon/index.html">作品を見る<span class="sr">（ヘアサロン ユキアカリのホームページ）</span></a>
-              </p>
-            </div>
-          </article>
-
-          <!-- 作品例3 -->
-          <article class="card" aria-labelledby="w3-title">
-            <div class="thumb thumb--sheet" aria-hidden="true">
-              <span class="thumb__type">売上管理シート</span>
-              <span class="thumb__name">カフェ ユメツム</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">03 ／ 売上管理シート</p>
-              <h3 id="w3-title">カフェ ユメツム</h3>
-              <p class="card__sub">カフェの売上・経費の管理シート（Excel）</p>
-              <p class="card__fake">作品例（架空のお店）。実在のお店・お客様の実績ではありません。</p>
-
-              <h4>ねらい</h4>
-              <p>毎日の売上と経費を入れるだけで、月ごとの売上・利益・目標の達成具合が分かるようにし、店主が数字で判断できるようにする。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>入力する所を色で分け、売上区分・経費科目はプルダウンで選ぶだけにした</li>
-                <li>月次の集計とダッシュボード（グラフ2つ）が自動で更新され、入力が増えても計算範囲が足りる作り</li>
-                <li>関数だけで作り、マクロを使わない（マクロの有効化が要らず、Google スプレッドシートでも開ける）</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>Excel</li><li>SUMIFS・IFERROR などの関数</li><li>プルダウン（入力規則）</li><li>グラフ</li><li>マクロなし</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="03-sales-sheet/tenkalab-sample-sales-sheet.xlsx" download="tenkalab-sample-sales-sheet.xlsx">Excel ファイルをダウンロード<span class="sr">（カフェ ユメツムの売上管理シート、xlsx 形式）</span></a>
-              </p>
-              <p class="card__small">xlsx 形式・約22KB。Excel または Google スプレッドシートで開けます。</p>
-            </div>
-          </article>
-          <article class="card" aria-labelledby="w4-title">
-            <div class="thumb thumb--demo" aria-hidden="true">
-              <span class="thumb__type">動くデモ</span>
-              <span class="thumb__name">ソラマメ手しごと教室</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">04 ／ 予約・問い合わせ管理（動くデモ）</p>
-              <h3 id="w4-title">ソラマメ手しごと教室</h3>
-              <p class="card__sub">小さな教室の予約受付と、お店側の受付一覧</p>
-              <p class="card__fake">デモ（架空のお店）。実在のお店・お客様の実績ではありません。入力内容は外部に送信されず、お使いのブラウザ内だけに保存されます。</p>
-
-              <h4>ねらい</h4>
-              <p>電話・LINE・メールに散らばりがちな予約と問い合わせを1つの画面にまとめ、「今日・明日の予約」と「残り枠」がスマホでひと目で分かるようにする。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>受付を「未対応・対応中・完了」で管理し、未対応が上に来るので対応漏れが起きにくい</li>
-                <li>時間帯ごとの残り枠（定員6名）を自動で計算し、日付を切り替えて確認できる</li>
-                <li>お客さま側の受付フォームは入力の誤りをその場で日本語で案内する</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>レスポンシブ</li><li>ブラウザ内保存（localStorage）</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="demos/02-reservation/index.html">デモを触ってみる<span class="sr">（ソラマメ手しごと教室の予約・問い合わせ管理デモ）</span></a>
-              </p>
-              <p class="card__small">個人情報は入力しないでください。「見本データに戻す」で最初の状態に戻せます。</p>
-            </div>
-          </article>
-
-          <!-- デモ1 -->
-          <article class="card" aria-labelledby="d1-title">
-            <div class="thumb thumb--chat" aria-hidden="true">
-              <span class="thumb__type">動くデモ ／ AIチャット</span>
-              <span class="thumb__name">整体院 ソラユイ</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">05 ／ お店のAIチャット（動くデモ）</p>
-              <h3 id="d1-title">整体院 ソラユイ</h3>
-              <p class="card__sub">ホームページの右下に出る、24時間の相談窓口</p>
-              <p class="card__fake">デモ（架空のお店）。実在のお店・お客様の実績ではありません。予約は送信されません。</p>
-
-              <h4>ねらい</h4>
-              <p>営業時間外や電話しにくいときでも、料金・初回の不安・駐車場・空き状況にその場で答え、予約ページまで案内する。お店の電話対応を減らし、予約の取りこぼしを防ぐ。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>選ぶだけで答えにたどり着ける選択肢と、文字で聞いても近い答えを返すキーワード判定の両方に対応</li>
-                <li>空き状況の例から時間を選ぶと、予約フォームにそのまま日時が入り、予約まで迷わない流れ</li>
-                <li>答えはお店の情報に合わせて用意する「シナリオ型」で費用0円。本物のAIが文章で答える版もご相談いただけます</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>HTML</li><li>CSS</li><li>JavaScript（素のまま）</li><li>レスポンシブ</li><li>キーボード操作・読み上げ対応</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="demos/01-ai-chat/index.html">デモを試す<span class="sr">（整体院 ソラユイのAIチャット）</span></a>
-              </p>
-            </div>
-          </article>
-
-          <article class="card" aria-labelledby="w5-title">
-            <div class="thumb thumb--sheet" aria-hidden="true">
-              <span class="thumb__type">動くデモ</span>
-              <span class="thumb__name">カフェ ユメツム</span>
-            </div>
-            <div class="card__body">
-              <p class="card__kind">05 ／ 売上ダッシュボード（動くデモ）</p>
-              <h3 id="w5-title">カフェ ユメツム 売上ダッシュボード</h3>
-              <p class="card__sub">作品例3の売上管理シートの数字を、スマホでひと目で見られる画面に</p>
-              <p class="card__fake">デモ（架空のお店）。数字はすべて架空で、実在のお店・お客様の実績ではありません。</p>
-
-              <h4>ねらい</h4>
-              <p>忙しい店主・複数店舗の経営者が、今月の売上・目標の達成ペース・利益を、スマホを開いて数秒で分かるようにする。</p>
-
-              <h4>工夫した点</h4>
-              <ul class="list">
-                <li>月を切り替えるだけで、指標・グラフ・曜日別の傾向・日別の一覧がまとめて切り替わる</li>
-                <li>「売上が多い曜日」などの一言コメントをデータから自動で作る</li>
-                <li>グラフは数値ラベルと記号を併記し、色だけに頼らない（読み上げにも対応）</li>
-              </ul>
-
-              <h4>使った技術</h4>
-              <ul class="tags">
-                <li>HTML</li><li>CSS</li><li>JavaScript</li><li>SVG グラフ（ライブラリなし）</li><li>レスポンシブ</li>
-              </ul>
-
-              <p class="card__action">
-                <a class="btn" href="demos/03-dashboard/index.html">デモを触ってみる<span class="sr">（カフェ ユメツムの売上ダッシュボードのデモ）</span></a>
-              </p>
-            </div>
-          </article>
+      <div class="wrap hero__inner">
+        <div class="hero__text">
+          <p class="label">WORKS</p>
+          <h1 id="page-title"><span class="ib">お店の集客と数字を、</span><span class="ib">まとめて形にします。</span></h1>
+          <p class="hero__lead">予約につながる LP・ホームページから、売上の管理シート、予約の管理やチャットの仕組みまで。店舗ビジネスの数字が分かる制作者として作ります。</p>
+          <ul class="chips" aria-label="得意なこと">
+            <li>集客のページ</li>
+            <li>売上の管理</li>
+            <li>業務の仕組み</li>
+          </ul>
+        </div>
+        <div class="collage">
+          <div class="frame-pc collage__back"><img src="assets/thumbs/01-restaurant-pc.jpg" alt="" width="1200" height="750" decoding="async" fetchpriority="high"></div>
+          <div class="frame-pc collage__front"><img src="assets/thumbs/02-salon-pc.jpg" alt="" width="1200" height="750" decoding="async"></div>
+          <div class="frame-sp collage__sp"><img src="assets/thumbs/03-chat-sp.jpg" alt="" width="480" height="1000" decoding="async"></div>
         </div>
       </div>
     </section>
 
-    <section class="contact" aria-labelledby="contact-title">
+    <section id="works" class="works" aria-labelledby="works-title">
+      <h2 id="works-title" class="sr">作品例・デモ 6点</h2>
+
+      <!-- グループ1：集客のページ -->
+      <div class="group">
+        <div class="wrap">
+          <p class="label">WEBSITE</p>
+          <h2 class="group__title">集客のページ</h2>
+
+          <div class="cards cards--2">
+            <!-- 01 北燈 -->
+            <article class="card" aria-labelledby="w1-title">
+              <div class="thumb thumb--restaurant">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/01-restaurant-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/01-restaurant-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">01 ／ 予約LP</p>
+                <h3 id="w1-title">とりと酒 北燈（ほくとう）</h3>
+                <p class="card__sub">炭火焼鳥と日本酒の店の予約ページ</p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>レスポンシブ</li><li>入力チェック付きフォーム</li><li>スマホ固定ボタン</li><li>素の JavaScript</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>接待や少人数の宴会の店をスマホで探す会社員が、個室・コースの総額・キャンセルの決まりを確かめて、夜でもその場でWeb予約できるようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>行動を「Web予約」の1つに絞り、予約ボタンをページ内の各所とスマホの画面下の固定バーに置いた</li>
+                      <li>個室の人数、コースの価格（税込）と時間、飲み放題、キャンセルの決まりを予約フォームの手前で全部見せる</li>
+                      <li>接待・宴会・デートの利用シーンごとに合う席とコースを示し、単価の高い予約につなげる構成</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="01-restaurant/">作品を見る<span class="sr">（とりと酒 北燈の予約LP）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 02 ユキアカリ -->
+            <article class="card" aria-labelledby="w2-title">
+              <div class="thumb thumb--salon">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/02-salon-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/02-salon-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">02 ／ ホームページ</p>
+                <h3 id="w2-title">ヘアサロン ユキアカリ</h3>
+                <p class="card__sub">美容室のホームページ</p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>レスポンシブ</li><li>スマホで崩れない料金表</li><li>開閉メニュー</li><li>素の JavaScript</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>初めての街で「失敗しない美容室」を探す方が、料金・雰囲気・スタイリストを確かめて、不安なく予約に進めるようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>メニューと料金（税込）を表で一目で分かるようにし、スマホでも崩れない形にした</li>
+                      <li>髪や手元の写真で店の雰囲気を伝えつつ、店名や顔が写らない写真を選んだ（写真は Unsplash License で利用できるものだけを使用）</li>
+                      <li>悩み → 選ばれる理由 → 料金 → 予約の流れ → よくある質問の順で、予約までの不安を減らす構成</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="02-salon/">作品を見る<span class="sr">（ヘアサロン ユキアカリのホームページ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- グループ2：動くデモ・管理の仕組み -->
+      <div class="group">
+        <div class="wrap">
+          <p class="label">SYSTEM</p>
+          <h2 class="group__title">動くデモ・管理の仕組み</h2>
+
+          <div class="cards cards--2">
+            <!-- 03 ソラユイ -->
+            <article class="card" aria-labelledby="w3-title">
+              <div class="thumb thumb--chat">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/03-chat-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/03-chat-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">03 ／ AIチャット（動くデモ）</p>
+                <h3 id="w3-title">整体院 ソラユイ</h3>
+                <p class="card__sub">ホームページの右下に出る、24時間の<span class="nowrap">相談窓口</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>シナリオ型チャット</li><li>キーワード判定</li><li>予約フォームへの自動入力</li><li>キーボード操作・読み上げ対応</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>営業時間外や電話しにくいときでも、料金・初回の不安・駐車場・空き状況にその場で答え、予約ページまで案内する。お店の電話対応を減らし、予約の取りこぼしを防ぐ。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>選ぶだけで答えにたどり着ける選択肢と、文字で聞いても近い答えを返すキーワード判定の両方に対応</li>
+                      <li>空き状況の例から時間を選ぶと、予約フォームにそのまま日時が入り、予約まで迷わない流れ</li>
+                      <li>答えはお店の情報に合わせて用意する「シナリオ型」で費用0円。本物のAIが文章で答える版もご相談いただけます</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/01-ai-chat/">デモを試す<span class="sr">（整体院 ソラユイのAIチャット）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">予約は送信されません。外部のサービスにはつながず、ページの中だけで動きます。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 04 ソラマメ -->
+            <article class="card" aria-labelledby="w4-title">
+              <div class="thumb thumb--demo">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/04-reservation-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/04-reservation-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">04 ／ 予約・問い合わせ管理（動くデモ）</p>
+                <h3 id="w4-title">ソラマメ手しごと教室</h3>
+                <p class="card__sub">小さな教室の予約受付と、お店側の<span class="nowrap">受付一覧</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>受付の状態管理</li><li>残り枠の自動計算</li><li>入力チェック付きフォーム</li><li>ブラウザ内保存</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>電話・LINE・メールに散らばりがちな予約と問い合わせを1つの画面にまとめ、「今日・明日の予約」と「残り枠」がスマホでひと目で分かるようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>受付を「未対応・対応中・完了」で管理し、未対応が上に来るので対応漏れが起きにくい</li>
+                      <li>時間帯ごとの残り枠（定員6名）を自動で計算し、日付を切り替えて確認できる</li>
+                      <li>お客さま側の受付フォームは入力の誤りをその場で日本語で案内する</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/02-reservation/">デモを触ってみる<span class="sr">（ソラマメ手しごと教室の予約・問い合わせ管理デモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">入力内容は外部に送信されず、お使いのブラウザ内だけに保存されます。個人情報は入力しないでください。「見本データに戻す」で最初の状態に戻せます。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 05 ユメツム 売上ダッシュボード -->
+            <article class="card" aria-labelledby="w5-title">
+              <div class="thumb thumb--dash">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/05-dashboard-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/05-dashboard-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">05 ／ 売上ダッシュボード（動くデモ）</p>
+                <h3 id="w5-title">カフェ ユメツム <span class="nowrap">売上ダッシュボード</span></h3>
+                <p class="card__sub">売上管理シートの数字を、スマホでひと目で見られる画面に</p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>月の切り替え</li><li>一言コメントの自動作成</li><li>SVG グラフ（ライブラリなし）</li><li>読み上げ対応</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>忙しい店主・複数店舗の経営者が、今月の売上・目標の達成ペース・利益を、スマホを開いて数秒で分かるようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>月を切り替えるだけで、指標・グラフ・曜日別の傾向・日別の一覧がまとめて切り替わる</li>
+                      <li>「売上が多い曜日」などの一言コメントをデータから自動で作る</li>
+                      <li>グラフは数値ラベルと記号を併記し、色だけに頼らない（読み上げにも対応）</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/03-dashboard/">デモを触ってみる<span class="sr">（カフェ ユメツムの売上ダッシュボードのデモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">数字はすべて架空です。作品例06の売上管理シートと同じ架空のお店です。</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 06 ユメツム 売上管理シート -->
+            <article class="card" aria-labelledby="w6-title">
+              <div class="thumb thumb--sheet">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="sheet" aria-hidden="true">
+                  <div class="sheet__kpis">
+                    <p class="sheet__kpi"><span>売上</span><b>1,284,000</b></p>
+                    <p class="sheet__kpi"><span>利益</span><b>312,500</b></p>
+                    <p class="sheet__kpi"><span>目標達成</span><b>92%</b></p>
+                  </div>
+                  <div class="sheet__bars">
+                    <span class="h40"></span><span class="h55"></span><span class="h48"></span><span class="h70"></span><span class="h62"></span><span class="h82"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">06 ／ 売上管理シート（Excel）</p>
+                <h3 id="w6-title">カフェ ユメツム 売上管理シート</h3>
+                <p class="card__sub">カフェの売上・経費の管理シート</p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>SUMIFS などの関数</li><li>プルダウン入力</li><li>グラフ</li><li>マクロなし</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>毎日の売上と経費を入れるだけで、月ごとの売上・利益・目標の達成具合が分かるようにし、店主が数字で判断できるようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>入力する所を色で分け、売上区分・経費科目はプルダウンで選ぶだけにした</li>
+                      <li>月次の集計とダッシュボード（グラフ2つ）が自動で更新され、入力が増えても計算範囲が足りる作り</li>
+                      <li>関数だけで作り、マクロを使わない（マクロの有効化が要らず、Google スプレッドシートでも開ける）</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn btn--sub" href="03-sales-sheet/tenkalab-sample-sales-sheet.xlsx" download="tenkalab-sample-sales-sheet.xlsx">Excel ファイルをダウンロード<span class="sr">（カフェ ユメツムの売上管理シート、xlsx 形式）</span></a>
+                  </p>
+                  <p class="card__small">xlsx 形式・約22KB。Excel または Google スプレッドシートで開けます。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
       <div class="wrap">
+        <p class="label label--on-dark">CONTACT</p>
         <h2 id="contact-title">ご依頼・ご相談</h2>
         <p>店舗のLP・ホームページ、売上・経費の管理シートや業務システムのご相談は、<span class="ib">このページをご覧になったサイトのメッセージ機能からお気軽にどうぞ。</span></p>
       </div>
@@ -253,6 +312,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <p>このページの作品はすべて作品例（架空のお店）です。実在のお店・お客様の実績ではありません。</p>
+      <p>作品の画面内の写真：Unsplash</p>
       <p><small>&copy; TENKA LAB</small></p>
     </div>
   </footer>

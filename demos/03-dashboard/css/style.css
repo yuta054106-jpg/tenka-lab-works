@@ -53,9 +53,37 @@ a { color: var(--c-main); }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* (A) デモ帯 */
-.demo-band {
-  background: var(--c-warn-bg); color: var(--c-warn);
-  font-size: 14px; line-height: 1.6; padding: 8px 16px; text-align: center;
+/* ---------- TENKA LAB バー（作品例・デモ 4ページ共通） ---------- */
+.tl-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 40px;
+  padding: 8px 16px;
+  background: #1B2A41;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: .04em;
+}
+.tl-bar__text { margin: 0; }
+.tl-bar strong { font-weight: 700; }
+.tl-bar__back {
+  flex: none;
+  position: relative;
+  color: #FFFFFF;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.tl-bar__back:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
+.tl-bar__back::before { content: ""; position: absolute; inset: -12px -8px; }
+.tl-bar__back::after { content: "→"; margin-left: 4px; }
+.tl-bar__back:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+@media (min-width: 768px) {
+  .tl-bar { padding: 8px 32px; }
 }
 
 /* ヘッダー (B) */
@@ -113,7 +141,7 @@ main { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
 /* 指標カード */
 .kpis {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
-  margin-bottom: var(--gap-block);
+  margin-top: 24px; margin-bottom: var(--gap-block);
 }
 .kpi { padding: 12px; display: flex; flex-direction: column; gap: 4px; }
 .kpi__title { font-size: 14px; font-weight: 700; color: var(--c-sub); line-height: 1.5; }

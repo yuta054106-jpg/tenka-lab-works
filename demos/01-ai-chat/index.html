@@ -18,6 +18,10 @@
 </head>
 <body>
 <a class="skip-link" href="#main">本文へ移動</a>
+<div class="tl-bar" role="note">
+  <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。実在のお店ではありません。</p>
+  <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+</div>
 <header class="site-header">
   <div class="header-inner">
     <a class="logo" href="#top">整体院 ソラユイ</a>
@@ -29,7 +33,6 @@
       </ul>
     </nav>
   </div>
-  <p class="demo-band">デモ（架空のお店）です。実在の整体院ではありません</p>
 </header>
 
 <main id="main">
@@ -49,19 +52,11 @@
           <button class="btn btn-outline" type="button" data-open-chat>チャットで相談</button>
         </div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <svg viewBox="0 0 400 320" width="400" height="320" focusable="false">
-          <circle cx="250" cy="140" r="120" fill="#E3EFEA"/>
-          <circle cx="300" cy="80" r="36" fill="#FFF4D6"/>
-          <path d="M20 250 C 110 190, 190 300, 280 230 S 380 200, 400 220" fill="none" stroke="#2F6B5A" stroke-width="3" stroke-linecap="round" opacity=".55"/>
-          <path d="M0 280 C 100 230, 200 320, 300 260 S 390 240, 400 250" fill="none" stroke="#2F6B5A" stroke-width="2" stroke-linecap="round" opacity=".3"/>
-          <g fill="#2F6B5A">
-            <circle cx="200" cy="96" r="18"/>
-            <path d="M200 120 c -10 30 -12 54 -8 88 l 16 0 c 4 -34 2 -58 -8 -88 z"/>
-            <path d="M196 132 C 170 112, 150 92, 136 70" fill="none" stroke="#2F6B5A" stroke-width="10" stroke-linecap="round"/>
-            <path d="M204 132 C 230 112, 250 92, 264 70" fill="none" stroke="#2F6B5A" stroke-width="10" stroke-linecap="round"/>
-          </g>
-        </svg>
+      <div class="hero-photo">
+        <div class="hero-photo__frame">
+          <img src="img/hero.jpg" srcset="img/hero-800.jpg 800w, img/hero.jpg 1200w" sizes="(min-width: 768px) 420px, calc(100vw - 32px)" alt="施術者が肩に手を当てて、こわばりを確かめている様子" width="1200" height="930" decoding="async" fetchpriority="high">
+        </div>
+        <p class="hero-photo__card" aria-hidden="true"><span class="hero-photo__label">初回（お話＋整体 60分）</span><span class="hero-photo__price">5,500円</span></p>
       </div>
     </div>
   </section>
@@ -152,6 +147,7 @@
 <footer class="site-footer">
   <p><b>整体院 ソラユイ</b>（デモ・架空のお店）</p>
   <p class="footer-note">このページは TENKA LAB のデモです。店名・住所・電話番号・料金・空き状況は、すべて架空のものです。</p>
+  <p class="footer-note">写真：Unsplash（Sincerely Media）</p>
   <p>制作：TENKA LAB</p>
 </footer>
 
