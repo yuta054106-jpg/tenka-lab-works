@@ -96,7 +96,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   text-underline-offset: 3px;
 }
 .tl-bar__back:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
-.tl-bar__back::before { content: ""; position: absolute; inset: -12px -8px; }
+.tl-bar__back::before { content: ""; position: absolute; inset: -14px -8px; }   /* 押せる範囲を高さ 48px に */
 .tl-bar__back::after { content: "→"; margin-left: 4px; }
 .tl-bar__back:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
 @media (min-width: 768px) {
@@ -168,6 +168,9 @@ main { padding-bottom: var(--gap-block); }
 .card__aside { font-size: 14px; color: var(--c-sub); line-height: 1.6; }
 .card__aside--lock { display: inline-flex; align-items: center; gap: 4px; }
 .card__link { margin-top: 24px; font-size: 14px; }
+/* 文字だけのリンクも押せる範囲を 44px 以上に（オウホン検査で追加） */
+.card__link a, .kpi--warn a, .stable a.nm { position: relative; }
+.card__link a::before { content: ""; position: absolute; inset: -14px -8px; }
 
 /* ---------- ボタン ---------- */
 .btn-main {
@@ -357,6 +360,7 @@ main { padding-bottom: var(--gap-block); }
 .kpi--warn { background: var(--c-warn-bg); border-color: var(--c-warn); }
 .kpi--warn .kpi__h, .kpi--warn .kpi__v, .kpi--warn .kpi__s, .kpi--warn a { color: var(--c-warn); }
 .kpi--warn a { font-weight: 700; display: inline-block; padding: 4px 0; }
+.kpi--warn a::before { content: ""; position: absolute; inset: -10px -4px; }
 .kpi--ok .kpi__v { color: var(--c-good); }
 
 /* ---------- ② スタッフ別 ---------- */
@@ -387,6 +391,7 @@ main { padding-bottom: var(--gap-block); }
 .stable tbody td:last-child, .stable tfoot td:last-child { padding-left: 16px; }
 .stable .nm-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
 .stable .nm { font-weight: 700; padding: 2px 0; }
+.stable a.nm::before { content: ""; position: absolute; inset: -9px -8px; }
 .stable tfoot tr.total th, .stable tfoot tr.total td { border-top: 2px solid var(--c-main); background: var(--c-base); font-weight: 700; }
 
 /* ---------- ② 区分別・店舗別 ---------- */
@@ -445,10 +450,11 @@ main { padding-bottom: var(--gap-block); }
 .r-name { font-family: var(--font-head); font-size: 16px !important; font-weight: 700; }
 .r-help { font-size: 12px; }
 .r-shift { display: block; font-size: 12px; color: var(--p-sub); }
-.r-from { position: relative; padding-right: 8px; text-align: right; line-height: 1.5; }
+.r-from { position: relative; min-height: 56px; padding-right: 68px; text-align: right; line-height: 1.5; }
 .r-from__name { font-size: 16px; font-weight: 700; }
 .r-from__store { font-size: 12px; }
-.stamp { position: absolute; top: 18px; right: -8px; transform: rotate(-4deg); opacity: .9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+/* 角印は店名・店舗名の右に置き、文字にかぶせない（オウホン検査で修正） */
+.stamp { position: absolute; top: 0; right: 0; transform: rotate(-4deg); opacity: .9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .r-sum {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 24px;
   border: 1.5px solid var(--p-ink); background: var(--p-rule); gap: 1px;
@@ -714,7 +720,8 @@ main { padding-bottom: var(--gap-block); }
   .r-shift { display: inline; margin-left: 3mm; }
   .r-from__name { font-size: 11pt; }
   .r-from__store { font-size: 8pt; }
-  .stamp { width: 15mm; height: 15mm; top: 8mm; right: 0; }
+  .r-from { min-height: 15mm; padding-right: 18mm; }
+  .stamp { width: 15mm; height: 15mm; top: 0; right: 0; }
   .r-sum { grid-template-columns: repeat(8, minmax(0, 1fr)); margin-top: 4mm; }
   .r-sum dt { font-size: 7.5pt; padding: .5mm 0; }
   .r-sum dd { font-size: 10pt; padding: 1mm 0; }
