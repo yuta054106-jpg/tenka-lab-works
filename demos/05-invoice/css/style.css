@@ -251,7 +251,7 @@ input[aria-invalid="true"] { border: 2px solid var(--c-bad) !important; backgrou
 .fld select { padding-right: 4px; }
 .fld input:focus, .fld select:focus { outline: none; border: 2px solid var(--c-main); padding: 0 11px; }
 .fld--qty input, .fld--price input { text-align: right; }
-.rc__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.rc__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; }
 .rc__amount {
   display: flex; align-items: center; justify-content: space-between; min-height: 48px; margin-top: 12px; padding: 0 12px;
   background: var(--c-base); border-radius: 8px; font-size: 14px; font-weight: 700;
@@ -280,7 +280,7 @@ input[aria-invalid="true"] { border: 2px solid var(--c-bad) !important; backgrou
 .sheet .c-client { width: 160px; }
 .sheet .c-qty { width: 72px; }
 .sheet .c-price { width: 96px; }
-.sheet .c-rate { width: 104px; }
+.sheet .c-rate { width: 120px; }
 .sheet .c-amt { width: 112px; }
 .sheet .c-del { width: 64px; }
 .sheet th, .sheet td { border: 1px solid var(--c-line); padding: 0; vertical-align: top; }

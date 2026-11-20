@@ -388,7 +388,11 @@
     var t = e.target
     if (!mqPC.matches || t.getAttribute('data-f') !== 'price') return
     var row = findRow(Number(t.closest('[data-id]').getAttribute('data-id')))
-    if (row && t.value !== row.price) t.value = row.price
+    if (!row || t.value === row.price) return
+    // Tab で入った時の全選択を保つ（値を差し替えると選択が外れ、打った数字が後ろにつながるため）
+    var all = t.selectionStart === 0 && t.selectionEnd === t.value.length
+    t.value = row.price
+    if (all) t.select()
   })
   elSheet.addEventListener('focusout', function (e) {
     var t = e.target
