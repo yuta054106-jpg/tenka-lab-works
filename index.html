@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>TENKA LAB の制作実績と作品例｜店舗の集客LP・HPと売上管理シート</title>
-  <meta name="description" content="TENKA LAB の制作実績（実在のサイト2件）と、作品例・デモ7点（架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボードと売上管理シート。13店舗の経理を統括してきた経験をもとに、集客のページと売上・経費の管理シート・業務システムを仕上げます。作品例は実在のお店・お客様の実績ではありません。">
+  <meta name="description" content="TENKA LAB の制作実績（実在のサイト2件）と、作品例・デモ8点（架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボード・売上管理シート・請求書と勤怠の自動集計。13店舗の経理を統括してきた経験をもとに、集客のページと売上・経費の管理シート・業務システムを仕上げます。作品例は実在のお店・お客様の実績ではありません。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yuta054106-jpg.github.io/tenka-lab-works/">
   <meta property="og:title" content="TENKA LAB の制作実績と作品例">
@@ -386,6 +386,42 @@
                     <a class="btn" href="demos/05-invoice/">デモを触ってみる<span class="sr">（カフェ ユメツムの請求書の自動作成デモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
                   </p>
                   <p class="card__small">入力内容は保存も送信もされず、再読み込みで最初のデータに戻ります。請求書には「見本」の印が入ります。作品例05・06と同じ架空のお店です。</p>
+                </div>
+              </div>
+            </article>
+
+<!-- 08 ユメツム 勤怠・出勤簿の自動集計 -->
+            <article class="card" aria-labelledby="w8-title">
+              <div class="thumb thumb--dash">
+                <span class="thumb__chip">架空のお店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/08-attendance-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/08-attendance-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">08 ／ 勤怠・出勤簿の自動集計（動くデモ）</p>
+                <h3 id="w8-title">カフェ ユメツム <span class="nowrap">勤怠・出勤簿の自動集計</span></h3>
+                <p class="card__sub">3店舗・8人の打刻から、月の集計と出勤簿を<span class="nowrap">自動で</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>残業・深夜・遅刻の自動計算</li><li>理由つきの修正と履歴</li><li>A4 の出勤簿の印刷</li><li>読み上げ対応</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>複数のお店を持つ飲食店・小売店で、店長や経理担当が月末に手で数えている実働・残業・深夜の時間と出勤簿づくりを、打刻の記録から自動にする。打刻を直すときは理由と履歴が残るようにする。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>応援勤務は「働いた店舗」で数え、所属の店舗と分けて集計。打刻もれの日は集計に入れず「確認が必要」として知らせる</li>
+                      <li>店長が打刻を直すと、理由が必須で、修正前後・理由・日時が履歴に追記される（消せない）</li>
+                      <li>Googleフォーム＋スプレッドシート＋GAS で作る場合の流れ（打刻 → 自動で記録 → 毎月1日に集計と出勤簿 PDF を作成。共有・送信は人が確認）を画面で説明</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/06-attendance/">デモを触ってみる<span class="sr">（カフェ ユメツムの勤怠・出勤簿の自動集計デモ）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">修正は保存も送信もされず、再読み込みで最初のデータに戻ります。残業・深夜の数え方はデモの仮定です。給与の金額は出しません。作品例05〜07と同じ架空のお店です。</p>
                 </div>
               </div>
             </article>
