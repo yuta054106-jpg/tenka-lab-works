@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ソラマメ手しごと教室（デモ）予約・問い合わせ管理｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。手芸教室「ソラマメ手しごと教室」の体験予約・問い合わせを、受付フォームとお店の管理画面ひとつにまとめた見本です。入力内容は外部に送信されず、ブラウザ内だけに保存されます。">
+  <meta name="theme-color" content="#4F6F52">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ソラマメ手しごと教室（デモ）予約・問い合わせ管理｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。予約・問い合わせを、紙・LINE・メールからひとつの画面にまとめる見本です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12c0-4 3-6 6-6 2 0 2.5 1.5 3 1.5S13 6 15 6c3 0 6 2 6 6s-3 6-6 6c-2 0-2.5-1.5-3-1.5S11 18 9 18c-3 0-6-2-6-6z' fill='%234F6F52'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <p class="demo-band" role="note">デモ（架空のお店）｜TENKA LAB の制作見本です。入力内容は外部に送信されず、このブラウザ内だけに保存されます。</p>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M2 12c0-4.2 3.2-6.5 6.5-6.5 2.2 0 2.8 1.6 3.5 1.6s1.3-1.6 3.5-1.6C18.8 5.5 22 7.8 22 12s-3.2 6.5-6.5 6.5c-2.2 0-2.8-1.6-3.5-1.6s-1.3 1.6-3.5 1.6C5.2 18.5 2 16.2 2 12z" fill="#4F6F52"/>
+          <path d="M5.5 12h13" stroke="#FFFFFF" stroke-width="1.5" stroke-dasharray="2 2" fill="none"/>
+        </svg>
+        <span class="brand__name">ソラマメ手しごと教室</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">刺しゅう・編み物・ミシン小物</p>
+    </div>
+    <nav class="screen-tabs" aria-label="画面の切り替え">
+      <div class="screen-tabs__inner" role="tablist">
+        <button type="button" class="screen-tab" role="tab" id="tab-customer" aria-controls="panel-customer" aria-selected="false" tabindex="-1">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v12H3z M3 6l9 7 9-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <span>お客さま画面</span>
+        </button>
+        <button type="button" class="screen-tab" role="tab" id="tab-admin" aria-controls="panel-admin" aria-selected="true" tabindex="0">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <span>お店の管理画面</span>
+          <span class="count-badge" id="admin-count" aria-label="未対応 0件">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- 画面A：お客さま画面 -->
+    <section class="panel panel--form" id="panel-customer" role="tabpanel" aria-labelledby="tab-customer" hidden>
+      <h2 class="panel__title">体験レッスンのご予約・お問い合わせ</h2>
+      <p class="note">1回2時間・定員6名。先生がひとりで教えている小さな教室です。</p>
+
+      <p class="caution" role="note">個人情報は入力しないでください。これはデモです。お名前・連絡先は『見本 太郎』『090-0000-0000』のような見本で試してください。</p>
+
+      <div id="form-area">
+        <form class="card form" id="entry-form" novalidate>
+          <div class="error-summary" id="error-summary" tabindex="-1" hidden></div>
+
+          <fieldset class="field" id="f-type">
+            <legend class="label">ご用件 <span class="tag tag--req">必須</span></legend>
+            <div class="choices choices--2">
+              <label class="choice"><input type="radio" name="type" value="reservation" checked><span>体験レッスンの予約</span></label>
+              <label class="choice"><input type="radio" name="type" value="inquiry"><span>お問い合わせ</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field" id="f-course" aria-describedby="err-course">
+            <legend class="label">講座 <span class="tag tag--req">必須</span></legend>
+            <div class="choices choices--3">
+              <label class="choice"><input type="radio" name="course" value="刺しゅう"><span>刺しゅう</span></label>
+              <label class="choice"><input type="radio" name="course" value="編み物"><span>編み物</span></label>
+              <label class="choice"><input type="radio" name="course" value="ミシン小物"><span>ミシン小物</span></label>
+            </div>
+            <p class="error" id="err-course" hidden></p>
+          </fieldset>
+
+          <div class="reservation-only" id="reservation-only">
+            <div class="field" id="f-date">
+              <label class="label" for="in-date">希望日 <span class="tag tag--req">必須</span></label>
+              <input class="input" type="date" id="in-date" name="date" aria-describedby="hint-date err-date">
+              <p class="note" id="hint-date">今日から30日以内</p>
+              <p class="error" id="err-date" hidden></p>
+            </div>
+
+            <fieldset class="field" id="f-slot" aria-describedby="err-slot">
+              <legend class="label">時間帯 <span class="tag tag--req">必須</span></legend>
+              <div class="choices choices--3 choices--slot" id="slot-choices"></div>
+              <p class="error" id="err-slot" hidden></p>
+            </fieldset>
+          </div>
+
+          <div class="field" id="f-name">
+            <label class="label" for="in-name">お名前 <span class="tag tag--req">必須</span></label>
+            <input class="input" type="text" id="in-name" name="name" placeholder="見本 太郎" maxlength="40" autocomplete="off" aria-describedby="err-name">
+            <p class="error" id="err-name" hidden></p>
+          </div>
+
+          <div class="field" id="f-contact">
+            <label class="label" for="in-contact">連絡先 <span class="tag tag--req">必須</span></label>
+            <input class="input" type="text" id="in-contact" name="contact" placeholder="090-0000-0000 または sample@example.com" maxlength="80" autocomplete="off" aria-describedby="hint-contact err-contact">
+            <p class="note" id="hint-contact">電話番号かメールアドレス</p>
+            <p class="error" id="err-contact" hidden></p>
+          </div>
+
+          <div class="field" id="f-message">
+            <label class="label" for="in-message">ひとこと <span class="tag tag--opt">任意</span></label>
+            <textarea class="input input--area" id="in-message" name="message" placeholder="初めてでも大丈夫ですか？ など" maxlength="200" aria-describedby="count-message"></textarea>
+            <p class="note note--right" id="count-message" aria-live="polite">残り200文字</p>
+          </div>
+
+          <p class="note">外部には送信されません</p>
+          <button type="submit" class="btn btn--primary btn--form">この内容で受け付ける（デモ）</button>
+        </form>
+
+        <div class="card done" id="done" tabindex="-1" hidden>
+          <h3 class="done__title">✓ 受け付けました</h3>
+          <p>デモのため実際には送信されません。『お店の管理画面』を開くと、いまの受付が『未対応』として届いています。</p>
+          <div class="done__actions">
+            <button type="button" class="btn btn--secondary" id="go-admin">お店の管理画面を見る</button>
+            <button type="button" class="btn btn--text" id="again">もう1件入力する</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 画面B：お店の管理画面 -->
+    <section class="panel panel--admin" id="panel-admin" role="tabpanel" aria-labelledby="tab-admin">
+      <div class="admin-head">
+        <h2 class="panel__title">受付一覧</h2>
+        <button type="button" class="btn btn--text" id="reset">見本データに戻す</button>
+      </div>
+      <p class="note" id="storage-note">データはこのブラウザ内だけに保存されています</p>
+
+      <section class="summary" aria-labelledby="summary-title">
+        <h3 id="summary-title">今日・明日の予約</h3>
+        <div class="summary__cols" id="summary-cols"></div>
+      </section>
+
+      <section class="seats" aria-labelledby="seats-title">
+        <div class="seats__head">
+          <h3 id="seats-title">残り枠（定員6名）</h3>
+          <div class="date-nav">
+            <button type="button" class="btn btn--square" id="seat-prev" aria-label="前の日">&lt;</button>
+            <p class="date-nav__label" id="seat-date" aria-live="polite"></p>
+            <button type="button" class="btn btn--square" id="seat-next" aria-label="次の日">&gt;</button>
+          </div>
+        </div>
+        <div class="seats__grid" id="seats-grid"></div>
+      </section>
+
+      <section class="list-area" aria-labelledby="list-title">
+        <h3 id="list-title" class="visually-hidden">受付の一覧</h3>
+        <div class="filters" role="group" aria-label="状態で絞り込み" id="filters"></div>
+        <div class="list" id="list">
+          <div class="list__head" aria-hidden="true">
+            <span>状態</span><span>希望日・時間帯</span><span>講座・種類</span><span>お名前・連絡先</span><span>受付日時</span><span>操作</span>
+          </div>
+          <ul class="list__items" id="list-items"></ul>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。店名・人名・連絡先はすべて架空です。</p>
+    <p><a href="../../">同じ仕組みをあなたのお店に → TENKA LAB 作品例へ</a></p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
