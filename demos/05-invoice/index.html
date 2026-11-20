@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>カフェ ユメツム（デモ）請求書の自動作成｜TENKA LAB</title>
-  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。カフェ ユメツムの11月の納品明細から、取引先ごとの請求書をボタン1つで作る見本です。税率ごとの合計と消費税（インボイスの記載事項）も自動で計算します。お店・取引先・金額はすべて架空です。">
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。カフェ ユメツムの11月の納品明細から、取引先ごとの請求書をボタン1つで作る見本です。インボイス（適格請求書）に必要な税率ごとの合計と消費税額も計算します。お店・取引先・金額はすべて架空です。">
   <meta name="theme-color" content="#6B4A34">
   <meta property="og:type" content="website">
   <meta property="og:title" content="カフェ ユメツム（デモ）請求書の自動作成｜TENKA LAB">
-  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。納品明細から取引先ごとの請求書を自動で作り、印刷・PDF保存までできる見本です。お店・取引先・金額はすべて架空です。">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。納品明細から取引先ごとの請求書を自動で作り、印刷・PDFで保存までできる見本です。お店・取引先・金額はすべて架空です。">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9h12l-1.5 10h-9z' fill='%236B4A34'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/app.js" defer></script>
@@ -40,7 +40,7 @@
 
     <section class="intro" aria-labelledby="h-intro">
       <h2 id="h-intro" class="sec-title">毎月の請求書を、明細からまとめて作ります</h2>
-      <p class="intro__lead">納品の明細を入れておけば、取引先ごとの請求書がボタン1つでできあがります。税率ごとの合計と消費税（インボイスの記載事項）も自動で計算します。</p>
+      <p class="intro__lead">納品の明細を入れておけば、取引先ごとの請求書がボタン1つでできあがります。インボイス（適格請求書）に必要な、税率ごとの合計・消費税額・登録番号も紙面に載せます。</p>
       <nav aria-label="手順">
         <ol class="steps" id="steps">
           <li class="step" data-step="1"><a href="#details"><span class="step__num" aria-hidden="true">1</span><span class="step__label">明細を確かめる</span><span class="step__done">済</span></a></li>
@@ -48,7 +48,7 @@
           <li class="step" data-step="3"><a href="#invoices"><span class="step__num" aria-hidden="true">3</span><span class="step__label">印刷・PDFで保存</span><span class="step__done">済</span></a></li>
         </ol>
       </nav>
-      <p class="intro__note">※ お店・取引先・金額はすべて架空です。入力した内容はこのブラウザの中だけで使い、保存も送信もしません。</p>
+      <p class="intro__note">※ お店・取引先・金額はすべて架空です。入力した内容はこのブラウザの中だけで使い、保存も送信もしません。再読み込みすると最初のデータに戻ります。</p>
     </section>
 
     <section class="card details-card" id="details" aria-labelledby="h-details">
@@ -78,7 +78,7 @@
           <span class="make-label">請求書を作る（3社分）</span>
         </button>
         <p class="disabled-reason" id="make-reason" hidden>明細が1行もありません</p>
-        <p class="sub make__note">取引先ごとに、請求番号・税率ごとの消費税まで自動で計算します</p>
+        <p class="sub make__note">取引先ごとに請求番号をつけ、税率ごとの小計と消費税を計算します</p>
       </div>
     </section>
 
@@ -88,12 +88,12 @@
     </section>
 
     <section class="card gas-card" aria-labelledby="h-gas">
-      <div class="card__head"><h2 id="h-gas">Googleスプレッドシート（GAS）で作ると</h2></div>
-      <p class="gas__lead">このデモはブラウザの中だけで動く再現です。同じ仕組みを Googleスプレッドシートと GAS（Google が無料で用意しているプログラムの仕組み）で作ると、毎月の作業がここまで自動になります。</p>
+      <div class="card__head"><h2 id="h-gas">Googleスプレッドシート＋GAS で作ると</h2></div>
+      <p class="gas__lead">このデモはブラウザの中だけで動く再現です。同じ仕組みを Googleスプレッドシートと GAS（Googleアカウントがあれば追加の費用なしで使える自動化の仕組み）で作ると、請求書の作成から送付メールの下書きまでを自動にできます。明細の入力と、送る前の確認は人が行います。</p>
       <ol class="flow">
         <li class="flow__item">
           <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="12" fill="none" stroke="#6B4A34" stroke-width="2"/><path d="M16 9v7l5 3" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="flow__label">毎月1日 朝6時</span>
+          <span class="flow__label">毎月1日の朝（6時台）</span>
           <span class="flow__text">自動で動き出す</span>
         </li>
         <li class="flow__item">

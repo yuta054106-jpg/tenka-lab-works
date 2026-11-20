@@ -47,8 +47,8 @@
   ]
 
   var LIMITS = {
-    qty: { max: 9999, empty: '数量を入れてください', min: '1以上の数を入れてください', over: '9,999 までにしてください' },
-    price: { max: 9999999, empty: '単価を入れてください', min: '1円以上で入れてください', over: '9,999,999円までにしてください' }
+    qty: { max: 9999, empty: '数量を入れてください', min: '1以上で入れてください', over: '9,999以下で入れてください' },
+    price: { max: 9999999, empty: '単価を入れてください', min: '1円以上で入れてください', over: '9,999,999円以下で入れてください' }
   }
   var FIELD_NAME = { name: '品名', qty: '数量', price: '単価' }
 
@@ -217,7 +217,7 @@
     }).join('')
   }
   function rateOptions (sel) {
-    return '<option value="8"' + (sel === 8 ? ' selected' : '') + '>8% 軽減</option><option value="10"' + (sel === 10 ? ' selected' : '') + '>10%</option>'
+    return '<option value="8"' + (sel === 8 ? ' selected' : '') + '>8%（軽減）</option><option value="10"' + (sel === 10 ? ' selected' : '') + '>10%</option>'
   }
   function errAttrs (row, f) {
     return row.err[f] ? ' aria-invalid="true" aria-describedby="e-' + row.id + '-' + f + '"' : ''
@@ -226,6 +226,11 @@
     var m = row.err[f]
     return '<p class="ferr" id="e-' + row.id + '-' + f + '"' + (m ? '' : ' hidden') + '>' + ICON_ERR + '<span>' + esc(m || '') + '</span></p>'
   }
+  // PC の表の単価：入力中でないときはカンマ区切りで見せる（値そのものは row.price に生で持つ）
+  function priceDisplay (v) {
+    var n = normNum(v)
+    return /^\d+$/.test(n) ? Number(n).toLocaleString('ja-JP') : v
+  }
   function amountText (row) {
     var a = rowAmount(row)
     return a === null ? '—' : fmt(a)
@@ -233,7 +238,7 @@
 
   function emptyBox () {
     if (rows.length === 0) {
-      return '<div class="empty-box">' + ICON_DOC_S + '<p class="empty-box__title">明細がありません</p><p class="sub">「＋ 行を追加」か「最初のデータに戻す」を押してください</p></div>'
+      return '<div class="empty-box">' + ICON_DOC_S + '<p class="empty-box__title">明細がありません</p><p class="sub">「行を追加」か「最初のデータに戻す」を押してください</p></div>'
     }
     var c = clientOf(filter)
     return '<div class="empty-box">' + ICON_DOC_S + '<p class="empty-box__title">' + c.short + ' の明細はありません</p><p class="sub"><button type="button" class="linkish" data-showall>すべて表示する</button></p></div>'
@@ -265,7 +270,7 @@
       '<td><select id="f-' + row.id + '-client" data-f="client" aria-label="' + no + '行目の取引先">' + clientOptions(row.client) + '</select></td>' +
       '<td class="cell-in"><input type="text" id="f-' + row.id + '-name" data-f="name" maxlength="30" value="' + esc(row.name) + '" aria-label="' + no + '行目の品名"' + errAttrs(row, 'name') + '>' + errP(row, 'name') + '</td>' +
       '<td class="cell-in num"><input type="text" inputmode="numeric" id="f-' + row.id + '-qty" data-f="qty" value="' + esc(row.qty) + '" aria-label="' + no + '行目の数量"' + errAttrs(row, 'qty') + '>' + errP(row, 'qty') + '</td>' +
-      '<td class="cell-in num"><input type="text" inputmode="numeric" id="f-' + row.id + '-price" data-f="price" value="' + esc(row.price) + '" aria-label="' + no + '行目の単価"' + errAttrs(row, 'price') + '>' + errP(row, 'price') + '</td>' +
+      '<td class="cell-in num"><input type="text" inputmode="numeric" id="f-' + row.id + '-price" data-f="price" value="' + esc(priceDisplay(row.price)) + '" aria-label="' + no + '行目の単価"' + errAttrs(row, 'price') + '>' + errP(row, 'price') + '</td>' +
       '<td><select id="f-' + row.id + '-rate" data-f="rate" aria-label="' + no + '行目の税率">' + rateOptions(row.rate) + '</select></td>' +
       '<td class="amt"><output data-amt="' + row.id + '">' + amountText(row) + '</output></td>' +
       '<td class="del-cell"><button type="button" class="del" data-del="' + row.id + '" aria-label="' + no + '行目を削除">削除</button></td>' +
@@ -300,7 +305,7 @@
         (bad ? '<span class="rc__flag">' + ICON_ERR + '要修正</span>' : '') +
         '<span class="rc__amt">' + amountText(row) + '</span></div>' +
         '<p class="rc__name">' + (row.name.trim() ? esc(row.name) : '<span class="sub">（品名なし）</span>') + '</p>' +
-        '<div class="rc__l3"><span class="rc__calc">' + esc(qtyTxt) + ' × ' + esc(priceTxt) + ' ・ ' + (row.rate === 8 ? '8%軽減' : '10%') + '</span>' +
+        '<div class="rc__l3"><span class="rc__calc">' + esc(qtyTxt) + ' × ' + esc(priceTxt) + ' ・ ' + (row.rate === 8 ? '8%（軽減）' : '10%') + '</span>' +
         '<button type="button" class="rc__edit" data-edit="' + row.id + '" aria-expanded="false" aria-label="' + no + '行目を編集">編集' + ICON_ARROW + '</button></div>' +
         '</li>'
     }
@@ -379,6 +384,12 @@
     if (summaryShown) renderSummary(false)
     markChanged()
   })
+  elSheet.addEventListener('focusin', function (e) {
+    var t = e.target
+    if (!mqPC.matches || t.getAttribute('data-f') !== 'price') return
+    var row = findRow(Number(t.closest('[data-id]').getAttribute('data-id')))
+    if (row && t.value !== row.price) t.value = row.price
+  })
   elSheet.addEventListener('focusout', function (e) {
     var t = e.target
     var f = t.getAttribute && t.getAttribute('data-f')
@@ -388,10 +399,11 @@
     var row = findRow(Number(li.getAttribute('data-id')))
     if (!row) return
     if (f !== 'name') {
-      var n = normNum(t.value)
-      if (n !== t.value) { t.value = n; row[f] = n; markChanged() }
+      var n = normNum(row[f])
+      if (n !== row[f]) { t.value = n; row[f] = n; markChanged() }
     }
     row.err[f] = checkField(row, f)
+    if (f === 'price' && mqPC.matches) t.value = priceDisplay(row.price)
     updateRowView(row)
     if (summaryShown) renderSummary(false)
   })
@@ -558,7 +570,21 @@
     return list
   }
 
+  // フォーカス中の数量・単価欄の正規化を先に反映する
+  // （作った直後のフォーカス移動で focusout が値を書き換え、請求書が「古い」になるのを防ぐ）
+  function flushActiveField () {
+    var t = document.activeElement
+    if (!t || !elSheet.contains(t)) return
+    var f = t.getAttribute('data-f')
+    if (f !== 'qty' && f !== 'price') return
+    var row = findRow(Number(t.closest('[data-id]').getAttribute('data-id')))
+    if (!row) return
+    var n = normNum(row[f])
+    if (n !== row[f]) { row[f] = n; t.value = n; markChanged() }
+  }
+
   function generate () {
+    flushActiveField()
     if (rows.length === 0) { announce('明細が1行もありません'); return }
     rows.forEach(function (r) {
       r.err = { name: checkField(r, 'name'), qty: checkField(r, 'qty'), price: checkField(r, 'price') }
@@ -586,6 +612,11 @@
     h.focus({ preventScroll: true })
     announce(invoices.length + '社分の請求書を作りました')
   }
+  // マウスで押したときにフォーカスを動かさない
+  // （入力欄の blur でエラー文が出てボタンが下にずれ、クリックが空振りするのを防ぐ）
+  function keepFocus (e) { e.preventDefault() }
+  elMake.addEventListener('mousedown', keepFocus)
+  elMakeFixed.addEventListener('mousedown', keepFocus)
   elMake.addEventListener('click', generate)
   elMakeFixed.addEventListener('click', generate)
 
@@ -632,8 +663,8 @@
       '<p class="p-note">※は軽減税率（8%）の対象です。単価・金額は税抜です。</p>' +
       '<div class="totals"><table class="totals__table"><tbody>' + tot + '</tbody></table>' +
       '<p class="p-note">消費税は、税率ごとに合計した金額から計算し、1円未満を切り捨てています。</p></div>' +
-      '<dl class="bank"><div><dt>お振込先</dt><dd>（架空の口座）〇〇銀行 〇〇支店 普通 0000000<br>口座名義 カフェ ユメツム<br>振込手数料はご負担をお願いいたします。</dd></div>' +
-      '<div><dt>備考</dt><dd>' + MONTH + '月分の焼き菓子の納品代金です。</dd></div></dl>' +
+      '<dl class="bank"><div><dt>お振込先</dt><dd>（架空の口座）〇〇銀行 〇〇支店 普通 0000000<br>口座名義 カフェ ユメツム<br>恐れ入りますが、振込手数料は貴社にてご負担ください。</dd></div>' +
+      '<div><dt>備考</dt><dd>' + MONTH + '月分の納品代金です。</dd></div></dl>' +
       '<p class="p-foot">この請求書は TENKA LAB の制作見本です。お店・取引先・登録番号・住所・口座はすべて架空です。</p>' +
       '</article>'
   }
@@ -669,7 +700,7 @@
           '<div class="print-wrap"><button type="button" class="btn-main btn-main--print' + (stale ? ' is-disabled' : '') + '" id="print-btn" aria-disabled="' + stale + '"' + (stale ? ' aria-describedby="print-reason"' : '') + '>' + ICON_PRINT + '印刷・PDFで保存</button>' +
           '<span class="print-target" id="print-target">（' + cur.client.short + ' の1枚）</span>' +
           (stale ? '<p class="disabled-reason" id="print-reason">作り直してから印刷できます</p>' : '') + '</div>' +
-          '<p class="print-note">PDF にするには、印刷の画面で送信先を「PDF に保存」にします。きれいに出すには「ヘッダーとフッター」をオフにしてください。</p>' +
+          '<p class="print-note">PDF にするには、印刷の画面でプリンター（送信先）を「PDF に保存」（Edge は「PDF として保存」）に切り替えます。きれいに出すには「ヘッダーとフッター」のチェックを外してください。</p>' +
         '</div>' +
         '<div class="desk">' + invoices.map(paperHTML).join('') + '</div>' +
       '</div></div>'
@@ -688,6 +719,9 @@
     if (focus) $('inv-tab-' + i).focus()
   }
 
+  elArea.addEventListener('mousedown', function (e) {
+    if (e.target.closest('#regen')) e.preventDefault()
+  })
   elArea.addEventListener('click', function (e) {
     var t = e.target.closest('[data-tab]')
     if (t) { selectTab(Number(t.getAttribute('data-tab')), false); return }
@@ -716,7 +750,7 @@
 
   // PDF 保存のファイル名の候補にする
   window.addEventListener('beforeprint', function () {
-    if (invoices && invoices[selected]) document.title = '請求書_' + invoices[selected].no + '_' + invoices[selected].client.short
+    if (invoices && invoices[selected]) document.title = '請求書_見本_' + invoices[selected].no + '_' + invoices[selected].client.short
   })
   window.addEventListener('afterprint', function () { document.title = docTitle })
 
