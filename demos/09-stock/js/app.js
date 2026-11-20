@@ -663,6 +663,12 @@
     var area = $('stock-area')
     area.textContent = ''
     if (!shown.length) { area.appendChild(h('p', { class: 'empty', text: 'この条件の品目はありません。' })); return }
+    // 品目名を「本体」と「（…）」に分け、括弧の前でだけ折り返すようにする（§23-2）
+    function nameParts (name) {
+      var i = name.indexOf('（')
+      if (i <= 0) return [h('span', { class: 'nm-seg', text: name })]
+      return [h('span', { class: 'nm-seg', text: name.slice(0, i) }), h('span', { class: 'nm-seg', text: name.slice(i) })]
+    }
     function sub (it) { return [it.cat + '・仕入先' + it.sup + '・', h('span', { class: 'nw', text: '目標 ' + fmtQty(it.target10, it) })] }
     function recBtn (it) {
       return h('button', { type: 'button', class: 'btn-sub btn-sm', 'aria-label': it.name + 'を記録', onclick: function () { pickItem(it.no) } }, ['記録', icon('chev', 14)])
@@ -680,7 +686,7 @@
         var x = stOf(it.no); var st = stateOf(x.stock10, it.rop10)
         return h('tr', { 'data-no': it.no, 'data-state': st }, [
           h('td', {}, tagsFor(it.no)),
-          h('th', { scope: 'row' }, [h('span', { class: 'stock__name', text: it.name }), h('span', { class: 'stock__sub' }, sub(it))]),
+          h('th', { scope: 'row' }, [h('span', { class: 'stock__name' }, nameParts(it.name)), h('span', { class: 'stock__sub' }, sub(it))]),
           h('td', { class: 'num stock__q' + (x.stock10 < 0 ? ' is-neg' : ''), text: fmtQty(x.stock10, it) }),
           h('td', { class: 'num', text: fmtQty(it.rop10, it) }),
           h('td', { class: 'num', text: fmtYen(yenOf(x.stock10, it.price)) }),
@@ -693,7 +699,7 @@
       var x = stOf(it.no); var st = stateOf(x.stock10, it.rop10)
       return h('li', { 'data-no': it.no, 'data-state': st }, [
         tagsFor(it.no),
-        h('p', { class: 'stock-list__name', text: it.name }),
+        h('p', { class: 'stock-list__name' }, nameParts(it.name)),
         h('p', { class: 'stock-list__sub' }, sub(it)),
         h('p', { class: 'stock-list__q' }, [
           h('span', {}, [h('span', { class: 'lbl', text: '在庫 ' }), h('strong', { class: x.stock10 < 0 ? 'is-neg' : null, text: fmtQty(x.stock10, it) })]),

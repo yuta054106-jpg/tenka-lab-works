@@ -312,19 +312,26 @@ main > * + * { margin-top: var(--gap-block); }
 
 .stock { display: none; }
 .stock-list { display: grid; gap: 8px; }
+/* スマホのカード：左に「札／品目名／在庫と発注点」の3段、右に記録ボタン（§23-1） */
 .stock-list li {
-  display: grid; gap: 4px; padding: 12px 16px; background: var(--c-surface);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; row-gap: 4px; align-items: center;
+  padding: 10px 12px 10px 16px; background: var(--c-surface);
   border: 1px solid var(--c-line); border-radius: 8px; line-height: 1.4;
 }
 .stock-list li[data-state="low"] { box-shadow: inset 4px 0 0 var(--st-low-edge); }
 .stock-list li[data-state="out"] { box-shadow: inset 4px 0 0 var(--c-bad); }
-.stock-list__name { margin-top: 4px; font-size: 16px; font-weight: 700; }
-.stock-list__sub { font-size: 13px; color: var(--c-sub); }
-.stock-list__q { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; }
+.stock-list li > .tags { grid-column: 1; grid-row: 1; }
+.stock-list__name { grid-column: 1; grid-row: 2; margin-top: 0; font-size: 16px; font-weight: 700; }
+.stock-list__sub { display: none; }
+.stock-list__q { grid-column: 1; grid-row: 3; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 16px; }
 .stock-list__q .lbl { font-size: 13px; color: var(--c-sub); }
 .stock-list__q strong { font-size: 18px; }
 .stock-list__q .rop { font-size: 15px; }
-.stock-list__foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 14px; }
+.stock-list__foot { display: contents; font-size: 14px; }
+.stock-list__foot > span { display: none; }
+.stock-list__foot > .btn-sm { grid-column: 2; grid-row: 1 / 4; align-self: center; justify-self: end; padding: 0 10px; }  /* 360px で在庫・発注点を1行に収めるため、表と同じ内側 10px に（幅 約 66px） */
+/* 品目名を括弧の前でだけ折り返す（§23-2） */
+.nm-seg { display: inline-block; max-width: 100%; }
 .is-flash { animation: flash 1.2s ease-out; }
 @keyframes flash { from { background-color: #FFF3D6; } to { background-color: #FFFFFF; } }
 .stock tr.is-flash > * { animation: flash 1.2s ease-out; }
@@ -504,10 +511,10 @@ main > * + * { margin-top: var(--gap-block); }
   .stock-list { display: none; }
   .stock { display: table; width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
   .stock .c-st { width: 112px; }
-  .stock .c-q { width: 88px; }
-  .stock .c-rop { width: 80px; }
-  .stock .c-yen { width: 88px; }
-  .stock .c-op { width: 84px; }
+  .stock .c-q { width: 80px; }
+  .stock .c-rop { width: 72px; }
+  .stock .c-yen { width: 80px; }
+  .stock .c-op { width: 76px; }
   .stock thead th { height: 40px; padding: 0 8px; background: var(--c-soft); color: var(--c-sub); font-size: 13px; font-weight: 700; text-align: left; }
   .stock thead th.num { text-align: right; }
   .stock td, .stock tbody th { height: 56px; padding: 8px; border-bottom: 1px solid var(--c-line); vertical-align: middle; text-align: left; }
