@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ラーメン ユキノメ（デモ）アルバイト募集とお給料の目安｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。ラーメン店のアルバイト募集ページに、働きたい時間からお給料の目安（深夜の割増・交通費つき）を計算できる仕組みを付けた見本です。お店・時給・スタッフの声はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#7A3419">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ラーメン ユキノメ（デモ）アルバイト募集とお給料の目安｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。ラーメン店のアルバイト募集ページに、働きたい時間からお給料の目安（深夜の割増・交通費つき）を計算できる仕組みを付けた見本です。お店・時給・スタッフの声はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M3 15h22a11 11 0 0 1-22 0z' fill='%237A3419'/%3E%3Cg fill='none' stroke='%237A3419' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M9 12c-1.5-2 1.5-3.5 0-6'/%3E%3Cpath d='M19 12c-1.5-2 1.5-3.5 0-6'/%3E%3C/g%3E%3Cg fill='none' stroke='%237A3419' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 12V8'/%3E%3Cpath d='M14 8.5c-2.5 0-3.5-1.5-3.5-3 2.5 0 3.5 1.5 3.5 3z'/%3E%3Cpath d='M14 8.5c2.5 0 3.5-1.5 3.5-3-2.5 0-3.5 1.5-3.5 3z'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11h-9l-5 4v-4H4z"/><path d="M8 9h8M8 12.5h5"/></g></symbol>
+      <symbol id="i-bowl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18a9 9 0 0 1-18 0z"/><path d="M9 21h6"/><path d="M8.5 9c-1-1.3 1-2.2 0-3.8M15.5 9c-1-1.3 1-2.2 0-3.8M12 9c-1-1.3 1-2.2 0-3.8"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.3l3 3 6-6.3"/></g></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 7v6"/></g><circle cx="12" cy="16.6" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-right" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v5h5"/><path d="M4.6 15a8 8 0 1 0 1.6-8.6L4 10"/></g></symbol>
+      <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 20 20"><path d="M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v-5c0-4 2-6.5 5-7.5M4 13h5v5H4"/><path d="M14 18v-5c0-4 2-6.5 5-7.5M14 13h5v5h-5"/></g></symbol>
+      <symbol id="i-qr" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="6" height="6" rx="1"/><rect x="14.5" y="3.5" width="6" height="6" rx="1"/><rect x="3.5" y="14.5" width="6" height="6" rx="1"/><path d="M14.5 14.5h2v2M20.5 14.5v0M14.5 20.5h6v-3M18 17.5v0"/></g></symbol>
+      <symbol id="i-tag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 4.5h8l9 9-7.5 7.5-9-9z"/><circle cx="8" cy="9" r="1.5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・募集の内容・時給・スタッフの声はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <path d="M3 15h22a11 11 0 0 1-22 0z" fill="#7A3419"/>
+          <g fill="none" stroke="#7A3419" stroke-width="2" stroke-linecap="round"><path d="M9 12c-1.5-2 1.5-3.5 0-6"/><path d="M19 12c-1.5-2 1.5-3.5 0-6"/></g>
+          <g fill="none" stroke="#7A3419" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 12V8"/><path d="M14 8.5c-2.5 0-3.5-1.5-3.5-3 2.5 0 3.5 1.5 3.5 3z"/><path d="M14 8.5c2.5 0 3.5-1.5 3.5-3-2.5 0-3.5 1.5-3.5 3z"/></g>
+        </svg>
+        <span class="hd__name nw">ラーメン ユキノメ</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+      <p class="hd__price"><span class="nw">時給 1,200円から</span><span class="nw">（架空）</span></p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <p class="hero__tag"><span class="nw">デモ（架空のお店）</span></p>
+          <p class="hero__kind">アルバイト募集<span class="nw">（ホール・キッチン）</span></p>
+          <h1 id="h-top" tabindex="-1"><span class="nw">湯気の向こうで、</span><br><span class="nw">いっしょに</span><span class="nw">働きませんか</span></h1>
+          <p class="hero__lead"><span class="nw">ラーメン ユキノメ</span>では、<span class="nw">ホール</span>と<span class="nw">キッチン</span>のアルバイトを募集しています。<span class="nw">週1日</span>・<span class="nw">1日3時間</span>から、学校やほかの予定に合わせて入れます。働きたい時間を選ぶと、お給料の目安を計算できます。</p>
+          <ul class="hero__wages">
+            <li class="nw">ホール 時給1,200円</li>
+            <li class="nw">キッチン 時給1,250円</li>
+            <li class="nw">22:00〜翌5:00 は25%増し</li>
+          </ul>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#pay" id="hero-cta"><span>お給料の目安を計算する</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></a>
+            <a class="btn-sub hero__btn2" href="#apply">応募について</a>
+          </div>
+          <p class="hero__note">計算はこの画面の中だけで行います。名前や連絡先の入力はありません。</p>
+        </div>
+        <svg class="hero__art" viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="400" height="300" rx="24"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="400" height="300" fill="#EDE5DA"/>
+            <!-- 窓 -->
+            <rect x="40" y="28" width="320" height="168" rx="12" fill="#DDE2E1" stroke="#7A3419" stroke-width="3"/>
+            <g fill="#FFFFFF">
+              <circle cx="72" cy="56" r="4"/><circle cx="118" cy="80" r="3"/><circle cx="96" cy="128" r="5"/><circle cx="150" cy="48" r="3"/>
+              <circle cx="168" cy="150" r="4"/><circle cx="232" cy="60" r="4"/><circle cx="262" cy="96" r="3"/><circle cx="300" cy="52" r="5"/>
+              <circle cx="330" cy="130" r="3"/><circle cx="246" cy="146" r="4"/>
+              <g class="snow"><circle cx="64" cy="98" r="3"/><circle cx="182" cy="92" r="4"/><circle cx="214" cy="128" r="3"/><circle cx="286" cy="160" r="4"/><circle cx="338" cy="80" r="3"/></g>
+            </g>
+            <path d="M200 28v168M40 112h320" fill="none" stroke="#7A3419" stroke-width="3"/>
+            <!-- 桟の雪 -->
+            <g fill="#FFFFFF"><ellipse cx="96" cy="196" rx="42" ry="9"/><ellipse cx="190" cy="196" rx="36" ry="7"/><ellipse cx="300" cy="196" rx="48" ry="10"/></g>
+            <!-- 雪の芽 -->
+            <g stroke="#7A3419" stroke-width="1.5"><path d="M332 188v-12" fill="none"/><path d="M332 178c-7 0-10-4-10-8 7 0 10 4 10 8z" fill="#8DBE84"/><path d="M332 178c7 0 10-4 10-8-7 0-10 4-10 8z" fill="#8DBE84"/></g>
+            <!-- 湯気 -->
+            <g fill="none" stroke="#FFFFFF" stroke-width="5">
+              <path d="M164 176c-12-14 12-22 0-38s10-24 2-36"/>
+              <path class="steam" d="M200 172c-12-14 12-22 0-38s10-24 2-36"/>
+              <path d="M236 176c-12-14 12-22 0-38s10-24 2-36"/>
+            </g>
+            <!-- カウンター -->
+            <rect x="0" y="236" width="400" height="64" fill="#FFFFFF"/>
+            <path d="M0 236h400" stroke="#7A3419" stroke-width="2"/>
+            <!-- どんぶり -->
+            <rect x="176" y="250" width="48" height="10" rx="4" fill="#FFFFFF" stroke="#7A3419" stroke-width="2"/>
+            <path d="M112 196h176a88 60 0 0 1-176 0z" fill="#FFFFFF" stroke="#7A3419" stroke-width="2"/>
+            <path d="M132 222h12v-6h12v6h12v-6h12v6h12v-6h12v6h12v-6h12v6h12v-6h12v6" fill="none" stroke="#7A3419" stroke-width="1.5"/>
+            <ellipse cx="200" cy="196" rx="88" ry="16" fill="#E3B678" stroke="#7A3419" stroke-width="2"/>
+            <path d="M136 196c10-6 20 6 30 0s20 6 30 0M168 202c10-6 20 6 30 0s20 6 30 0" fill="none" stroke="#F4DE9E" stroke-width="3"/>
+            <circle cx="248" cy="194" r="14" fill="#C98E6A" stroke="#7A3419" stroke-width="1.5"/>
+            <g fill="#8DBE84"><circle cx="150" cy="190" r="3"/><circle cx="160" cy="199" r="3"/><circle cx="176" cy="188" r="3"/><circle cx="214" cy="191" r="3"/><circle cx="226" cy="200" r="3"/><circle cx="270" cy="198" r="3"/></g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2. こんな人に・働きやすさ -->
+    <section class="sec" id="for" aria-labelledby="h-for">
+      <div class="wrap">
+        <p class="sec__en">FOR YOU</p>
+        <h2 class="sec__title" id="h-for">こんな方に、<span class="nw">向いています</span></h2>
+        <ul class="fors">
+          <li>
+            <span class="fors__ic"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg></span>
+            <h3>学校やほかの予定と両立したい方</h3>
+            <p><span class="nw">週1日</span>・<span class="nw">1日3時間</span>から入れます。テストの前や家の用事がある週は、シフトを減らせます。</p>
+          </li>
+          <li>
+            <span class="fors__ic"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg></span>
+            <h3>人と話すのが好きな方も、黙々と作業したい方も</h3>
+            <p>お客様と話す<span class="nw">ホール</span>と、麺をゆでて盛り付ける<span class="nw">キッチン</span>。合う方を選べます。</p>
+          </li>
+          <li>
+            <span class="fors__ic"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-bowl"/></svg></span>
+            <h3>ラーメンが好きな方</h3>
+            <p>勤務の日のまかないで、お店のラーメンを食べられます<span class="nw">（4時間以上の日）</span>。</p>
+          </li>
+        </ul>
+
+        <div class="point-block">
+          <p class="sec__en">POINT</p>
+          <h2 class="sec__title" id="h-point">働きやすさ</h2>
+          <ol class="points">
+            <li>
+              <span class="points__n" aria-hidden="true">1</span>
+              <h3>シフトは<span class="nw">2週間ごと</span>にスマホで</h3>
+              <p>入れる日と時間を、<span class="nw">2週間ごと</span>にスマホで出します。決まったシフトもスマホで見られます。</p>
+            </li>
+            <li>
+              <span class="points__n" aria-hidden="true">2</span>
+              <h3>まかないは<span class="nw">1杯無料</span></h3>
+              <p><span class="nw">4時間以上</span>働く日は、好きなラーメンを<span class="nw">1杯</span>どうぞ。</p>
+            </li>
+            <li>
+              <span class="points__n" aria-hidden="true">3</span>
+              <h3>最初の<span class="nw">3回</span>は先輩といっしょに</h3>
+              <p><span class="nw">ホール</span>は食券の受け取りから、<span class="nw">キッチン</span>はトッピングの盛り付けから。<span class="nw">1つずつ</span>覚えます。</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 募集の内容 -->
+    <section class="sec sec--line" id="job" aria-labelledby="h-job">
+      <div class="wrap">
+        <p class="sec__en">JOB</p>
+        <h2 class="sec__title" id="h-job">募集の内容<span class="nw">（架空）</span></h2>
+        <table class="job">
+          <caption class="visually-hidden">募集の内容（架空）</caption>
+          <tbody>
+            <tr><th scope="row">職種</th><td><span class="nw">ホール</span>（食券の受け取り・ご案内・配膳・片づけ）／<span class="nw">キッチン</span>（麺ゆで・盛り付け・仕込み・洗い場）</td></tr>
+            <tr><th scope="row">時給</th><td><span class="nw">ホール 1,200円</span>／<span class="nw">キッチン 1,250円</span>（研修の間も同じ）</td></tr>
+            <tr><th scope="row">深夜の<wbr>時給</th><td><span class="nw">22:00〜翌5:00</span> は<span class="nw">25%増し</span>（<span class="nw">ホール 1,500円</span>／<span class="nw">キッチン 1,562.5円</span>）</td></tr>
+            <tr><th scope="row">勤務の<wbr>時間</th><td><span class="nw">10:30〜翌1:30</span> の間で、<span class="nw">週1日</span>・<span class="nw">1日3時間</span>から。例：<span class="nw">昼の番 10:30〜15:00</span>／<span class="nw">夜の番 17:00〜22:00</span>／<span class="nw">遅番 20:00〜翌1:30</span></td></tr>
+            <tr><th scope="row">休憩</th><td>休憩を除いて<span class="nw">6時間</span>を超える日は、<span class="nw">60分</span></td></tr>
+            <tr><th scope="row">交通費</th><td>往復の実費を、<span class="nw">1日800円</span>まで</td></tr>
+            <tr><th scope="row">まかない</th><td><span class="nw">4時間以上</span>働く日に<span class="nw">1杯</span>（無料）</td></tr>
+            <tr><th scope="row">服装</th><td>Tシャツ・前掛け・帽子をお貸しします。滑りにくい靴もお貸しします</td></tr>
+            <tr><th scope="row">応募<wbr>できる方</th><td>高校生・大学生・専門学生・フリーター・主婦（主夫）の方など。<span class="nw">18歳未満</span>の方は<span class="nw">22時</span>まで</td></tr>
+            <tr><th scope="row">お店の<wbr>営業時間</th><td><span class="nw">11:00〜15:00</span>／<span class="nw">17:30〜翌1:00</span><span class="nw">（定休日 水曜）</span></td></tr>
+          </tbody>
+        </table>
+        <p class="note">※ お店・募集の内容・時給・スタッフの声はすべて架空です<span class="nw">（デモ）</span>。</p>
+      </div>
+    </section>
+
+    <!-- 4. 1日の流れ -->
+    <section class="sec sec--band" id="day" aria-labelledby="h-day">
+      <div class="wrap">
+        <p class="sec__en">ONE DAY</p>
+        <h2 class="sec__title" id="h-day">1日の流れ</h2>
+        <p class="sec__lead">シフトの例です。時刻は日によって前後します<span class="nw">（架空）</span>。</p>
+        <div class="days">
+          <div class="card day">
+            <h3><span class="nw">ホール</span>（<span class="nw">夜の番</span> <span class="nw">17:00〜22:00</span>）</h3>
+            <ol class="day-flow">
+              <li><span class="day-flow__t nw">17:00</span><div><h4>着替え・手洗い</h4><p>店長と、その日の予約やおすすめを確かめます。</p></div></li>
+              <li><span class="day-flow__t nw">17:15</span><div><h4>開店の準備</h4><p>カウンターとテーブルをふき、お冷とおしぼりを用意します。</p></div></li>
+              <li><span class="day-flow__t nw">17:30</span><div><h4>開店</h4><p>食券を受け取り、お冷を出して、席へご案内します。</p></div></li>
+              <li><span class="day-flow__t nw">19:00</span><div><h4>いちばん混む時間</h4><p>できあがったラーメンを運び、空いた器を下げます。</p></div></li>
+              <li><span class="day-flow__t nw">21:30</span><div><h4>片づけ・引き継ぎ</h4><p>洗い物と補充をして、<span class="nw">22:00</span> に<span class="nw">遅番</span>へ引き継いで終わりです。</p></div></li>
+            </ol>
+          </div>
+          <div class="card day">
+            <h3><span class="nw">キッチン</span>（<span class="nw">遅番</span> <span class="nw">20:00〜翌1:30</span>・<span class="nw">休憩30分</span>）</h3>
+            <ol class="day-flow">
+              <li><span class="day-flow__t nw">20:00</span><div><h4>着替え・手洗い</h4><p>スープと麺の残りの量を、<span class="nw">夜の番</span>の人と確かめます。</p></div></li>
+              <li><span class="day-flow__t nw">20:15</span><div><h4>麺ゆで・盛り付け</h4><p>最初はねぎ・海苔・チャーシューの盛り付けから。慣れたら麺ゆでを覚えます。</p></div></li>
+              <li><span class="day-flow__t nw">22:30</span><div><h4>休憩<span class="nw">（30分）</span></h4><p>まかないのラーメンを食べて休みます。</p></div></li>
+              <li><span class="day-flow__t nw">23:00</span><div><h4>しめのラーメンの時間</h4><p>夜遅くに来るお客様で、もう一度混みます。</p></div></li>
+              <li><span class="day-flow__t nw">翌1:00</span><div><h4>閉店・片づけ</h4><p>寸胴と麺ゆで機を洗い、<span class="nw">翌1:30</span> に終わりです。</p></div></li>
+            </ol>
+          </div>
+        </div>
+        <p class="note">※ <span class="nw">22:00</span> を過ぎた時間は時給が<span class="nw">25%増し</span>になります。下の「<a class="inline-link" href="#pay">お給料の目安</a>」で、このシフトの例を計算できます。</p>
+      </div>
+    </section>
+
+    <!-- 5. お給料の目安（主役） -->
+    <section class="sec sec--band sec--pay" id="pay" aria-labelledby="h-pay">
+      <div class="wrap">
+        <p class="sec__en">PAY</p>
+        <h2 class="sec__title" id="h-pay" tabindex="-1">お給料の目安を計算</h2>
+        <p class="sec__lead">働きたい時間を選ぶと、<span class="nw">1日</span>と<span class="nw">1か月</span>のお給料の目安が出ます。</p>
+
+        <div class="pay-presets" role="group" aria-labelledby="pay-presets-label">
+          <p id="pay-presets-label" class="pay-presets__label">シフトの例を入れる</p>
+          <div class="pay-presets__btns">
+            <button type="button" class="btn-sm" data-preset="lunch"><span class="nw">昼の番</span><span class="nw">（ホール）</span></button>
+            <button type="button" class="btn-sm" data-preset="evening"><span class="nw">夜の番</span><span class="nw">（ホール）</span></button>
+            <button type="button" class="btn-sm" data-preset="late"><span class="nw">遅番</span><span class="nw">（キッチン）</span></button>
+          </div>
+        </div>
+
+        <div class="pay-grid">
+          <div class="card pay-in">
+            <fieldset class="pay-field" id="f-job">
+              <legend>職種</legend>
+              <div class="pay-opts pay-opts--2">
+                <label class="pay-opt pay-opt--job"><input class="visually-hidden" type="radio" name="job" value="hall" checked><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t"><span class="nw">ホール</span><span class="pay-opt__sub nw">時給1,200円</span></span></label>
+                <label class="pay-opt pay-opt--job"><input class="visually-hidden" type="radio" name="job" value="kitchen"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t"><span class="nw">キッチン</span><span class="pay-opt__sub nw">時給1,250円</span></span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="pay-field" id="f-time">
+              <legend>働く時刻</legend>
+              <div class="pay-times">
+                <div class="pay-time">
+                  <label class="pay-time__l" for="pay-start">始まり</label>
+                  <select class="pay-select" id="pay-start"></select>
+                </div>
+                <span class="pay-times__sep" aria-hidden="true">〜</span>
+                <div class="pay-time">
+                  <label class="pay-time__l" for="pay-end">終わり</label>
+                  <select class="pay-select" id="pay-end"></select>
+                </div>
+              </div>
+              <p class="pay-hint">日付をまたぐ時は「翌」のついた時刻を選んでください<span class="nw">（例：翌1:30）</span>。</p>
+            </fieldset>
+
+            <fieldset class="pay-field" id="f-brk">
+              <legend>休憩</legend>
+              <div class="pay-opts pay-opts--3">
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="brk" value="0" checked><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">なし</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="brk" value="30"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">30分</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="brk" value="60"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">60分</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="pay-field" id="f-days">
+              <legend>週に何日</legend>
+              <div class="pay-opts pay-opts--6">
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="1"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">1日</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="2"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">2日</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="3" checked><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">3日</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="4"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">4日</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="5"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">5日</span></label>
+                <label class="pay-opt"><input class="visually-hidden" type="radio" name="days" value="6"><svg class="pay-opt__ck" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="pay-opt__t nw">6日</span></label>
+              </div>
+            </fieldset>
+
+            <div class="pay-field pay-field--fare">
+              <label class="pay-label" for="pay-fare">交通費<span class="nw">（往復・1日）</span></label>
+              <select class="pay-select pay-select--wide" id="pay-fare"></select>
+              <p class="pay-hint">お店から支給するのは、<span class="nw">1日800円</span>までです<span class="nw">（架空）</span>。</p>
+            </div>
+          </div>
+
+          <div class="card pay-out" id="pay-out">
+            <h3 class="pay-out__title" id="pay-result-title" tabindex="-1">お給料の目安<span class="nw">（額面）</span></h3>
+
+            <div class="pay-err" id="pay-err" hidden>
+              <svg class="pay-err__ic" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>
+              <div>
+                <p class="pay-err__h">計算できません</p>
+                <p class="pay-err__t" id="pay-err-text"></p>
+              </div>
+            </div>
+
+            <div class="pay-sum" id="pay-sum">
+              <div class="pay-sum__row">
+                <p class="pay-sum__l">1日の目安<span class="nw">（交通費を含む）</span></p>
+                <p class="pay-sum__v"><span class="pay-sum__n" id="pay-day"></span><span class="pay-sum__u">円</span></p>
+              </div>
+              <div class="pay-sum__row">
+                <p class="pay-sum__l">1か月の目安</p>
+                <p class="pay-sum__v"><span class="pay-sum__n" id="pay-month"></span><span class="pay-sum__u">円</span></p>
+                <p class="pay-sum__f" id="pay-formula"></p>
+              </div>
+            </div>
+
+            <div class="pay-break-wrap" id="pay-break-wrap">
+              <h4 class="pay-break__h">1日の内訳</h4>
+              <dl class="pay-break" id="pay-break">
+                <div><dt>お店にいる時間</dt><dd id="pb-span"></dd></div>
+                <div><dt>休憩</dt><dd id="pb-brk"></dd></div>
+                <div><dt>通常の時間</dt><dd id="pb-day"></dd></div>
+                <div><dt>深夜の時間<span class="nw">（22:00〜翌5:00）</span></dt><dd id="pb-night"></dd></div>
+                <div><dt>お給料<span class="nw">（円未満は四捨五入）</span></dt><dd id="pb-wage"></dd></div>
+                <div><dt>交通費<span class="nw">（1日800円まで）</span></dt><dd id="pb-fare"></dd></div>
+                <div><dt>1週間に働く時間</dt><dd id="pb-week"></dd></div>
+              </dl>
+            </div>
+
+            <p class="pay-must"><span class="nw">額面の目安</span>です。税金・社会保険は含みません。実際は雇用契約の内容で決まります。</p>
+
+            <ul class="pay-rules">
+              <li>※ <span class="nw">22:00〜翌5:00</span> の時間は、時給の<span class="nw">25%増し</span>で計算しています。</li>
+              <li>※ 休憩は、深夜でない時間から先に引いて計算しています（目安）。</li>
+              <li>※ <span class="nw">1日</span>のお給料の円未満は四捨五入、<span class="nw">1か月</span>の目安の円未満は切り捨てています。<span class="nw">1か月</span>は <span class="nw">4.3週</span>（1年 <span class="nw">52週</span> ÷ <span class="nw">12か月</span> ≒ <span class="nw">4.33</span> を少なめにしたもの）で計算しています。</li>
+              <li>※ <span class="nw">18歳未満</span>の方は、<span class="nw">22時</span>以降は働けません。</li>
+              <li>※ 時給・交通費の上限・まかないは<span class="nw">デモ</span>の<span class="nw">架空</span>の条件です。</li>
+            </ul>
+
+            <p class="pay-hash-line" id="pay-hash-line">この条件は URL で開き直せます<span class="nw">（<span class="pay-hash" id="pay-hash"></span>）</span></p>
+
+            <div class="pay-acts">
+              <a class="btn-main pay-to-apply" href="#apply" id="pay-to-apply"><span>応募について見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></a>
+              <button type="button" class="btn-text" id="pay-reset"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-undo"/></svg><span>最初の条件に戻す</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. スタッフの声（架空） -->
+    <section class="sec" id="voice" aria-labelledby="h-voice">
+      <div class="wrap">
+        <p class="sec__en">VOICE</p>
+        <h2 class="sec__title" id="h-voice">スタッフの声<span class="nw">（架空）</span></h2>
+        <ul class="voices">
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>授業のない日の夜だけ、<span class="nw">週2日</span>で入っています。テストの前はシフトを減らせるので、続けやすいです。</p>
+            <p class="voice__who"><span class="nw">ホール</span>・大学生<span class="nw">（架空）</span></p>
+          </li>
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>最初はねぎと海苔の盛り付けから。麺のゆで方は、先輩が横について何回も見てくれました。</p>
+            <p class="voice__who"><span class="nw">キッチン</span>・専門学生<span class="nw">（架空）</span></p>
+          </li>
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>子どもが学校にいる昼の時間だけ働いています。まかないのラーメンが楽しみです。</p>
+            <p class="voice__who"><span class="nw">ホール</span>・<span class="nw">昼の番</span><span class="nw">（架空）</span></p>
+          </li>
+        </ul>
+        <p class="note">※ スタッフの声はすべて架空です<span class="nw">（デモ）</span>。</p>
+      </div>
+    </section>
+
+    <!-- 7. よくある質問 -->
+    <section class="sec sec--line" id="faq" aria-labelledby="h-faq">
+      <div class="wrap">
+        <p class="sec__en">FAQ</p>
+        <h2 class="sec__title" id="h-faq">よくある質問</h2>
+        <div class="faq-list">
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>テストの期間は休めますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>休めます。テストの<span class="nw">2週間前</span>までに、シフトの希望で「入れない日」を出してください。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>高校生でも働けますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>働けます。<span class="nw">18歳未満</span>の方は、法律で<span class="nw">22時</span>以降は働けないため、<span class="nw">22時</span>までのシフトになります。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>ほかのアルバイトと掛け持ちできますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>できます。働く時間は、ほかのお仕事と合わせて数える決まりがあるため、面接の時に週の予定を教えてください。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>髪の色やネイルの決まりはありますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>髪の色は自由です。<span class="nw">キッチン</span>では帽子をかぶり、長い髪はまとめます。ネイル・つけ爪は、食べ物を扱うため控えてください。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>飲食店で働いたことがなくても大丈夫ですか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>最初の<span class="nw">3回</span>は先輩がいっしょに入り、<span class="nw">1つずつ</span>覚えます。食券の受け取りや盛り付けなど、覚えやすい仕事から始めます。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>まかないはありますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p><span class="nw">4時間以上</span>働く日に、好きなラーメンを<span class="nw">1杯</span>（無料）食べられます。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>「お給料の目安」と、実際にもらう金額は同じですか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>同じとは限りません。目安は額面で、税金・社会保険は含みません。実際の金額は、雇用契約の内容と働いた時間で決まります。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>シフトはどうやって決まりますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p><span class="nw">2週間ごと</span>に、入れる日と時間をスマホで出してもらい、店長が決めてスマホでお知らせします。</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 応募について（フォームなし） -->
+    <section class="sec sec--band" id="apply" aria-labelledby="h-apply">
+      <div class="wrap">
+        <p class="sec__en">ENTRY</p>
+        <h2 class="sec__title" id="h-apply" tabindex="-1">応募について</h2>
+        <p class="sec__lead">面接は<span class="nw">30分</span>ほどです。お店で、働きたい曜日や時間を伺います<span class="nw">（架空）</span>。</p>
+        <div class="apply">
+          <p class="apply__h">応募から働き始めるまで<span class="nw">（架空）</span></p>
+          <ol class="apply__steps">
+            <li><span class="apply__n" aria-hidden="true">1</span><span>応募する</span></li>
+            <li><span class="apply__n" aria-hidden="true">2</span><span>お店で面接<span class="nw">（30分ほど）</span></span></li>
+            <li><span class="apply__n" aria-hidden="true">3</span><span>最初の<span class="nw">3回</span>は先輩といっしょに</span></li>
+          </ol>
+          <button type="button" class="btn-main apply__btn" id="apply-btn" aria-controls="apply-msg"><span>応募する<span class="nw">（デモ）</span></span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+          <p class="apply__nopi">このデモでは、名前や連絡先の入力はありません。</p>
+          <div class="apply__msg" id="apply-msg" role="status" hidden>
+            <p class="apply__msg-h"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span>このデモでは送信しません</span></p>
+            <p class="apply__msg-b">実際のお仕事では、ここに応募フォーム・LINE・電話をつなぎます（このデモでは送信しません）。</p>
+            <p class="apply__msg-c">お給料の目安で選んだ時間を、応募フォームに引き継ぐこともできます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">TENKA LAB より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">飲食店・小さなお店の、自前のアルバイト募集ページをお作りします。Instagram のプロフィールや店頭の QR から、このページへつなぎます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>
+            <h3>求人の中身は、店長に聞き取り</h3>
+            <ul><li>時給・シフト・まかない・仕事の中身を<span class="nw">30分</span>ほど伺い、原稿にします</li><li><span class="nw">1日の流れ</span>とスタッフの声も、いっしょに作ります</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-qr"/></svg>
+            <h3>Instagram・店頭の QR から</h3>
+            <ul><li>プロフィールのリンクと、店頭やレジ横に貼る QR を用意します</li><li>ページを見た数と「応募する」を押した数を、アクセス解析で数えられるようにします</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>
+            <h3>求人サイトとの違いと費用</h3>
+            <ul><li>掲載料はかからず、時給やシフトが変わってもお店の判断で直せます（直す作業は保守の範囲）</li><li>求人サイトほど多くの人の目には触れないため、Instagram・店頭・求人サイトと合わせて使う形をおすすめします</li><li>費用の目安：求人の LP <span class="nw">1枚</span> <span class="nw">80,000円（税込）</span>から。お給料の目安の計算などの機能をつける場合は、内容によりお見積もり</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で確かめていただくこと</h3>
+          <ul>
+            <li>時給が、その時の地域の最低賃金を下回っていないこと</li>
+            <li>求人に書く労働条件（仕事の内容・時間・休憩・賃金・交通費など）の書き方と、雇う時に書面で示す内容</li>
+            <li>深夜・時間外の割増、休憩、<span class="nw">18歳未満</span>の方の働ける時間などの決まり</li>
+          </ul>
+          <p class="work-check__note">これらの判断は TENKA LAB では行いません。必要に応じて、社会保険労務士などの専門家にご確認ください。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">ラーメン ユキノメ</span>と、募集の内容・時給・スタッフの声はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <nav class="fixbar" id="fixbar" aria-label="すぐに使うボタン">
+    <a class="btn-sub" href="#pay">お給料を計算</a>
+    <a class="btn-main" href="#apply">応募について</a>
+  </nav>
+</body>
+</html>
