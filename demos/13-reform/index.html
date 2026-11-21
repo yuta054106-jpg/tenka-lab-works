@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ハルカゼ住まい工房（デモ）札幌のリフォームとかんたん概算｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空の会社）。工務店のホームページに、場所・グレード・数を選ぶと目安の金額と工期が出る概算シミュレーターを付けた見本です。会社・事例・金額はすべて架空です。">
+  <meta name="theme-color" content="#2F4A3F">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ハルカゼ住まい工房（デモ）札幌のリフォームとかんたん概算｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空の会社）。工務店のホームページに、場所・グレード・数を選ぶと目安の金額と工期が出る概算シミュレーターを付けた見本です。会社・事例・金額はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Crect x='6' y='12' width='16' height='12' rx='1' fill='%23E9DCC6' stroke='%232F4A3F' stroke-width='2'/%3E%3Cpath d='M3 13L14 4l11 9' fill='none' stroke='%232F4A3F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='12' y='16' width='5' height='5' fill='%23F2C66D' stroke='%232F4A3F' stroke-width='1.5'/%3E%3Ccircle cx='22' cy='5' r='1.5' fill='%23BCC8CF'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-kitchen" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h26"/><rect x="5" y="16" width="10" height="11" rx="1"/><rect x="17" y="16" width="10" height="11" rx="1"/><path d="M12.5 21v2M19.5 21v2"/><circle cx="8" cy="12" r="2"/><circle cx="14" cy="12" r="2"/><path d="M22 16V9a2.5 2.5 0 0 1 5 0v1.5"/></g></symbol>
+      <symbol id="i-bath" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h26v3a6 6 0 0 1-6 6H9a6 6 0 0 1-6-6z"/><path d="M7 20.5c1.5-1.2 3-1.2 4.5 0s3 1.2 4.5 0 3-1.2 4.5 0 3 1.2 4.5 0"/><path d="M9 25l-1.5 3M23 25l1.5 3"/><path d="M6 16V7a3 3 0 0 1 3-3h3v3"/><path d="M10 9h4"/></g></symbol>
+      <symbol id="i-toilet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="8" height="12" rx="1"/><path d="M5 16h22c0 4.5-3.6 7.5-8 7.5h-3"/><path d="M11 21l-1 7h9l-1-4.5"/></g></symbol>
+      <symbol id="i-basin" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="14" height="10" rx="1"/><path d="M4 19h24c0 5-5.4 8-12 8S4 24 4 19z"/><path d="M16 19v-3h3.5"/></g></symbol>
+      <symbol id="i-window" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="24" height="24" rx="1"/><rect x="8.5" y="8.5" width="15" height="15"/><path d="M16 8.5v15"/></g></symbol>
+      <symbol id="i-wall" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14L15 5l11 9v13H4z"/><path d="M11 27v-7h6v7"/><path d="M20 26l5-5 2.5 2.5-5 5z"/><path d="M26.2 22.2l3-3"/></g></symbol>
+      <symbol id="i-interior" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="10" height="14" rx="1"/><path d="M2.5 22.5l9-13"/><path d="M14 16h4.5M16.5 13.5l2.5 2.5-2.5 2.5"/><rect x="21" y="9" width="9" height="14" rx="1"/><path d="M21 12.5h9M21 16h9M21 19.5h9"/></g></symbol>
+      <symbol id="i-snow" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3v26M4.7 9.5l22.6 13M4.7 22.5l22.6-13"/><path d="M12.5 5l3.5 3 3.5-3M12.5 27l3.5-3 3.5 3M4.8 14l4.4-1.5-.9-4.5M27.2 18l-4.4 1.5.9 4.5M4.8 18l4.4 1.5-.9 4.5M27.2 14l-4.4-1.5.9-4.5"/></g></symbol>
+      <symbol id="i-tool" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h17l4 5H4z"/><path d="M9 9V6h6v3"/><path d="M3 24L24 21l.6 4L3.6 28z"/><path d="M8 23.3l.3 2M13 22.6l.3 2M18 21.9l.3 2"/></g></symbol>
+      <symbol id="i-table" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="24" height="22" rx="2"/><path d="M4 11h24M4 17h24M4 22h24M13 5v22"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#2F4A3F"/><path d="M5.5 10.3l3 3 6-6.3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-check-good" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#2E6B47"/><path d="M5.5 10.3l3 3 6-6.3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-calc" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="12" height="16" rx="2"/><rect x="6.5" y="4.5" width="7" height="3"/><path d="M7 11h.01M10 11h.01M13 11h.01M7 14.5h.01M10 14.5h.01M13 14.5h.01"/></g></symbol>
+      <symbol id="i-cal" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="15" height="13.5" rx="2"/><path d="M2.5 8.5h15M6.5 2v4M13.5 2v4"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5h14v9H9l-4 3.5v-3.5H3z"/><path d="M6.5 8.5h7"/></g></symbol>
+      <symbol id="i-plane" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2L2 9l6 2.5L10.5 18z"/><path d="M18 2L8 11.5"/></g></symbol>
+      <symbol id="i-menu" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></g></symbol>
+      <symbol id="i-close" viewBox="0 0 20 20"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 4.5l11 11M15.5 4.5l-11 11"/></g></symbol>
+      <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 20 20"><path d="M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 16 16"><path d="M8 2.5v11M3.5 9L8 13.5 12.5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-warn" viewBox="0 0 16 16"><path d="M8 1.8L15 14H1z" fill="#B3261E" stroke="#B3261E" stroke-width="1.2" stroke-linejoin="round"/><path d="M8 6v3.6" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="11.8" r=".95" fill="#FFFFFF"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="14" height="26" rx="2.5"/><path d="M14 25h4"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong><span class="nw">（架空の会社）</span>です。会社・事例・金額はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <rect x="6" y="12" width="16" height="12" rx="1" fill="#E9DCC6" stroke="#2F4A3F" stroke-width="2"/>
+          <path d="M3 13L14 4l11 9" fill="none" stroke="#2F4A3F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="12" y="16" width="5" height="5" fill="#F2C66D" stroke="#2F4A3F" stroke-width="1.5"/>
+          <circle cx="22" cy="5" r="1.5" fill="#BCC8CF"/>
+        </svg>
+        <span class="hd__name">ハルカゼ住まい工房</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+      <button type="button" class="btn-sub hd__menu" id="hd-menu" aria-expanded="false" aria-controls="hd-nav">
+        <svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><span>メニュー</span>
+      </button>
+      <nav class="hd__nav" id="hd-nav" aria-label="ページ内の案内">
+        <ul class="hd__list">
+          <li><a href="#reason">選ばれる理由</a></li>
+          <li><a href="#sim">かんたん概算</a></li>
+          <li><a href="#works">施工事例</a></li>
+          <li><a href="#flow">工事の流れ</a></li>
+          <li><a href="#faq">よくある質問</a></li>
+        </ul>
+        <a class="btn-main hd__cta" href="#contact">無料で相談</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <p class="hero__tag"><span>作品例・デモ<span class="nw">（架空の会社）</span></span></p>
+          <h1 id="h-top" tabindex="-1"><span class="nw">札幌の冬に強い、</span><br><span class="nw">水まわりと断熱の</span><span class="nw">リフォーム</span></h1>
+          <p class="hero__lead">キッチン・浴室・トイレの入れ替えから、内窓・外壁まで。<span class="nw">ハルカゼ住まい工房</span>は、見積もりの内訳を全部お見せします。まずは<span class="nw">30秒</span>の概算で、だいたいの金額をどうぞ。</p>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#sim" id="hero-cta"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-calc"/></svg><span>かんたん概算<span class="nw">（30秒）</span></span></a>
+            <p class="hero__free">相談は無料です<span class="nw">（現地調査・お見積もり）</span></p>
+          </div>
+          <ul class="hero__facts">
+            <li><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>札幌市とその周辺</li>
+            <li><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>自社の職人が工事</li>
+            <li><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>見積もりの内訳を全部見せます</li>
+          </ul>
+        </div>
+        <svg class="hero__art" viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="400" height="300" rx="16"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)">
+          <rect x="0" y="0" width="400" height="300" fill="#E4ECE8"/>
+          <g fill="#FFFFFF">
+            <circle cx="40" cy="40" r="3"/><circle cx="92" cy="78" r="2"/><circle cx="150" cy="30" r="2.5"/><circle cx="330" cy="36" r="3"/>
+            <circle cx="360" cy="96" r="2"/><circle cx="56" cy="124" r="2.5"/><circle cx="300" cy="62" r="2"/><circle cx="216" cy="24" r="2"/>
+          </g>
+          <rect x="110" y="130" width="180" height="120" fill="#E9DCC6" stroke="#8C6A48" stroke-width="2"/>
+          <rect x="250" y="72" width="18" height="36" fill="#8C6A48"/>
+          <rect x="247" y="66" width="24" height="8" rx="4" fill="#FFFFFF" stroke="#BCC8CF" stroke-width="1.5"/>
+          <path d="M90 135L200 60l110 75z" fill="#2F4A3F" stroke-linejoin="round"/>
+          <path d="M92 131L200 57l108 74" fill="none" stroke="#BCC8CF" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M92 131L200 57l108 74" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <g stroke="#8C6A48">
+            <rect x="135" y="160" width="48" height="40" fill="#D8E5EC" stroke-width="3"/>
+            <rect x="139" y="164" width="40" height="32" fill="none" stroke-width="1.5"/>
+            <rect x="217" y="160" width="48" height="40" fill="#F2C66D" stroke-width="3"/>
+            <rect x="221" y="164" width="40" height="32" fill="none" stroke-width="1.5"/>
+          </g>
+          <rect x="188" y="200" width="26" height="50" fill="#8C6A48"/>
+          <circle cx="208" cy="226" r="2.5" fill="#E9DCC6"/>
+          <g fill="#FFFFFF" stroke="#BCC8CF" stroke-width="1.5">
+            <ellipse cx="80" cy="268" rx="120" ry="30"/>
+            <ellipse cx="320" cy="270" rx="130" ry="30"/>
+            <ellipse cx="200" cy="282" rx="190" ry="26"/>
+          </g>
+          <rect x="0" y="286" width="400" height="14" fill="#FFFFFF"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2. 選ばれる理由 -->
+    <section class="sec" id="reason" aria-labelledby="h-reason">
+      <div class="wrap">
+        <p class="sec__num">01</p>
+        <h2 class="sec__title" id="h-reason" tabindex="-1"><span class="nw">ハルカゼ住まい工房</span>が<span class="nw">選ばれる理由</span></h2>
+        <p class="sec__lead">札幌の家を、札幌の冬に合わせて直します。</p>
+        <ul class="reasons">
+          <li class="reason">
+            <span class="reason__ic"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-snow"/></svg></span>
+            <div>
+              <h3>札幌の冬を知る、<span class="nw">地元の工務店</span></h3>
+              <p>寒さ・水道の凍結・雪の重みを前提に、断熱と配管の凍結対策をいっしょに考えます。札幌市とその周辺だけを受け持つので、困った時にすぐ伺えます。</p>
+            </div>
+          </li>
+          <li class="reason">
+            <span class="reason__ic"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-tool"/></svg></span>
+            <div>
+              <h3>自社の職人が、<span class="nw">最後まで</span></h3>
+              <p>大工2人・設備の職人1人<span class="nw">（架空）</span>が、現地調査から工事・点検まで同じ顔ぶれで担当します。「話した人と工事する人が違う」がありません。</p>
+            </div>
+          </li>
+          <li class="reason">
+            <span class="reason__ic"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-table"/></svg></span>
+            <div>
+              <h3>見積もりの内訳を、<span class="nw">全部見せます</span></h3>
+              <p>本体・工事・処分費を分けて書き、「一式」でまとめません。このページの「<a class="inline-link" href="#sim">かんたん概算</a>」も、同じ考え方で内訳を出しています。</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. かんたん概算（シミュレーター） -->
+    <section class="sec sec--band" id="sim" aria-labelledby="h-sim">
+      <div class="wrap">
+        <p class="sec__num">02</p>
+        <h2 class="sec__title" id="h-sim" tabindex="-1">かんたん概算<span class="nw">（30秒）</span></h2>
+        <p class="sec__lead">場所・グレード・数を選ぶと、だいたいの金額と工期が出ます。いくつかの場所を足して、合計も見られます。</p>
+
+        <div class="sim">
+          <form class="sim__form card" id="sim-form" novalidate>
+            <fieldset class="sim-step">
+              <legend><span class="sim-step__n">1</span>場所を選ぶ</legend>
+              <div class="tiles" id="sim-places">
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="kitchen"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-kitchen"/></svg><span class="tile__name">キッチン</span><span class="tile__range">1式</span></label>
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="bath"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bath"/></svg><span class="tile__name">浴室</span><span class="tile__range">1式</span></label>
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="toilet"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-toilet"/></svg><span class="tile__name">トイレ</span><span class="tile__range nw">1〜3台</span></label>
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="basin"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-basin"/></svg><span class="tile__name">洗面</span><span class="tile__range nw">1〜3台</span></label>
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="window"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-window"/></svg><span class="tile__name nw">窓の断熱</span><span class="tile__range nw">1〜20枚</span></label>
+                <label class="tile"><input class="visually-hidden" type="radio" name="place" value="wall"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><svg class="tile__ic" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-wall"/></svg><span class="tile__name">外壁</span><span class="tile__range nw">20〜60坪</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="sim-step" id="step-grade" disabled>
+              <legend><span class="sim-step__n">2</span>グレードを選ぶ</legend>
+              <div class="tiles tiles--grade">
+                <label class="tile tile--grade"><input class="visually-hidden" type="radio" name="grade" value="std" checked><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="tile__name">標準</span><span class="tile__desc" id="grade-std-desc">場所を選ぶと、説明が出ます</span></label>
+                <label class="tile tile--grade"><input class="visually-hidden" type="radio" name="grade" value="pro"><svg class="tile__ck" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg><span class="tile__name">こだわり</span><span class="tile__desc" id="grade-pro-desc">場所を選ぶと、説明が出ます</span></label>
+              </div>
+            </fieldset>
+
+            <fieldset class="sim-step" id="step-qty" disabled>
+              <legend><span class="sim-step__n">3</span><span id="qty-legend">広さ・数</span></legend>
+              <p class="sim-step__none" id="qty-none">場所を選ぶと、数の入れ方が出ます。</p>
+              <div class="qty-wrap" id="qty-box" hidden>
+                <div class="qty-row">
+                  <div class="qty">
+                    <button type="button" class="qty__minus" id="qty-minus" aria-label="1つ減らす"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></button>
+                    <input class="qty__n" id="sim-qty" type="text" inputmode="numeric" autocomplete="off" aria-labelledby="qty-legend qty-unit" aria-describedby="sim-qty-hint sim-qty-err">
+                    <button type="button" class="qty__plus" id="qty-plus" aria-label="1つ増やす"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg></button>
+                  </div>
+                  <span class="qty__unit nw" id="qty-unit"></span>
+                </div>
+                <p class="field__hint" id="sim-qty-hint"></p>
+                <p class="field__err" id="sim-qty-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span id="sim-qty-err-t"></span></p>
+              </div>
+            </fieldset>
+
+            <fieldset class="sim-step" id="step-opt" disabled>
+              <legend><span class="sim-step__n">4</span>オプション<span class="sim-step__sub">（チェックで足す）</span></legend>
+              <p class="sim-step__none" id="opt-none">場所を選ぶと、オプションが出ます。</p>
+              <div class="opts" id="opt-list"></div>
+            </fieldset>
+          </form>
+
+          <div class="sim__side" id="sim-side">
+            <div class="sim-result card" id="sim-result">
+              <p class="sim-result__empty" id="res-empty">場所を選ぶと、目安が出ます</p>
+              <div id="res-body" hidden>
+                <p class="sim-result__title" id="res-title"></p>
+                <p class="sim-result__opts" id="res-opts" hidden></p>
+                <p class="sim-result__label">目安</p>
+                <p class="sim-result__big"><span id="res-range"></span><span class="sim-result__tax nw">（税込）</span></p>
+                <p class="sim-result__base" id="res-base"></p>
+                <table class="breakdown" id="res-table">
+                  <caption class="visually-hidden">目安の内訳（基準の額）</caption>
+                  <tbody>
+                    <tr><th scope="row">本体<span class="breakdown__sub" data-wall="（塗料・材料）"></span></th><td id="res-body-yen"></td></tr>
+                    <tr><th scope="row">工事<span class="breakdown__sub" data-wall="（足場・洗浄・塗装）"></span></th><td id="res-work-yen"></td></tr>
+                    <tr><th scope="row">処分費<span class="breakdown__sub" data-wall="（古い塗膜・養生材）"></span></th><td id="res-disp-yen"></td></tr>
+                    <tr><th scope="row">オプション</th><td id="res-opt-yen"></td></tr>
+                    <tr class="breakdown__sum"><th scope="row">合計</th><td id="res-sum-yen"></td></tr>
+                  </tbody>
+                </table>
+                <p class="sim-result__days"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg><span>工期の目安</span><strong class="nw" id="res-days"></strong></p>
+              </div>
+              <button type="button" class="btn-sub sim-result__add" id="btn-add" aria-disabled="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>リストに足す</button>
+              <p class="sim-result__count">リストに足した件数 <span class="nw" id="add-count">0 / 6</span></p>
+              <p class="msg-good" id="add-ok" hidden><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check-good"/></svg><span id="add-ok-t"></span></p>
+              <p class="field__err" id="add-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span id="add-err-t"></span></p>
+            </div>
+
+            <div class="sim-listbox card" id="sim-listbox">
+              <div class="sim-listbox__head">
+                <h3 id="h-list" tabindex="-1">リスト<span class="nw">（最大6件）</span></h3>
+                <p class="sim-listbox__n nw" id="list-n">0 / 6件</p>
+              </div>
+              <p class="sim-listbox__empty" id="list-empty">「リストに足す」で、いくつかの場所の合計が見られます。</p>
+              <ol class="sim-list" id="sim-list"></ol>
+              <div class="sim-total" id="sim-total" hidden>
+                <p class="sim-total__label">合計の目安</p>
+                <p class="sim-total__big"><span id="tot-range"></span><span class="sim-result__tax nw">（税込）</span></p>
+                <p class="sim-result__base" id="tot-base"></p>
+                <table class="breakdown">
+                  <caption class="visually-hidden">合計の内訳（基準の額）</caption>
+                  <tbody>
+                    <tr><th scope="row">本体</th><td id="tot-body-yen"></td></tr>
+                    <tr><th scope="row">工事</th><td id="tot-work-yen"></td></tr>
+                    <tr><th scope="row">処分費</th><td id="tot-disp-yen"></td></tr>
+                    <tr><th scope="row">オプション</th><td id="tot-opt-yen"></td></tr>
+                    <tr class="breakdown__sum"><th scope="row">合計</th><td id="tot-sum-yen"></td></tr>
+                  </tbody>
+                </table>
+                <p class="sim-result__days"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg><span>工期の目安</span><strong class="nw" id="tot-days"></strong></p>
+                <p class="note-13">工事を同時に進められる場合は短くなります</p>
+              </div>
+            </div>
+
+            <div class="sim-consult">
+              <button type="button" class="btn-main sim-consult__btn" id="btn-consult" aria-disabled="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>この内容で相談する</button>
+              <p class="sim-consult__msg" id="consult-msg" hidden>場所を選んで目安を出してから押してください</p>
+              <ul class="note">
+                <li>※ 単価は架空です<span class="nw">（デモ）</span>。金額は税込の目安です。</li>
+                <li>※ 現地調査で変わります。正式な金額はお見積もりでお出しします。</li>
+                <li>※ 補助金の対象かどうかは<span class="nw">お問い合わせ</span>ください。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 施工事例 -->
+    <section class="sec" id="works" aria-labelledby="h-works">
+      <div class="wrap">
+        <p class="sec__num">03</p>
+        <h2 class="sec__title" id="h-works" tabindex="-1">施工事例</h2>
+        <p class="sec__lead">札幌市とその周辺での工事の例です。事例はすべて架空です。写真の代わりに図で表しています。</p>
+        <fieldset class="chips" id="wfilter">
+          <legend class="visually-hidden">場所で絞り込む</legend>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="all" checked><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>すべて</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="kitchen"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>キッチン</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="bath"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>浴室</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="toilet"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>トイレ</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="window"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>窓の断熱</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="wall"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>外壁</label>
+          <label class="chip"><input class="visually-hidden" type="radio" name="wfilter" value="interior"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>内装</label>
+        </fieldset>
+        <p class="works__n" id="works-n" aria-live="polite">6件中 6件を表示</p>
+        <ul class="works" id="works-list">
+          <li class="work" data-place="kitchen">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-kitchen"/></svg><span class="work__tag">キッチン</span></div>
+            <div class="work__body">
+              <h3>壁付けのキッチンを、明るく使いやすく</h3>
+              <p class="work__where">札幌市 北区・<span class="nw">築28年</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約5日</dd></div><div><dt>費用</dt><dd class="nw">約103万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>吊り戸棚に手が届かず、床のきしみも気になっていた</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p>同じ位置で標準のシステムキッチンに入れ替え。床と壁も張り替えた</p>
+            </div>
+          </li>
+          <li class="work" data-place="bath">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-bath"/></svg><span class="work__tag">浴室</span></div>
+            <div class="work__body">
+              <h3>冬に寒いタイルの浴室を、ユニットバスに</h3>
+              <p class="work__where">札幌市 豊平区・<span class="nw">築35年</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約6日</dd></div><div><dt>費用</dt><dd class="nw">約133万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>冬の浴室が寒く、タイルの目地のカビが取れない</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p>タイルの浴室を解体し、標準のユニットバスに。手すりを<span class="nw">2か所</span></p>
+            </div>
+          </li>
+          <li class="work" data-place="toilet">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-toilet"/></svg><span class="work__tag">トイレ</span></div>
+            <div class="work__body">
+              <h3>1階と2階のトイレを、節水型に</h3>
+              <p class="work__where"><span class="nw">江別市</span>・<span class="nw">築22年</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約3日</dd></div><div><dt>費用</dt><dd class="nw">約54万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>水道代と、便器のまわりの掃除の手間</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p><span class="nw">2台</span>を節水型に入れ替え、床と壁紙も張り替えた</p>
+            </div>
+          </li>
+          <li class="work" data-place="window">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-window"/></svg><span class="work__tag">窓の断熱</span></div>
+            <div class="work__body">
+              <h3>結露する窓に、内窓を</h3>
+              <p class="work__where">札幌市 西区・<span class="nw">築30年</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約3日</dd></div><div><dt>費用</dt><dd class="nw">約75万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>冬の朝の窓の結露と、暖房が効きにくいこと</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p><span class="nw">10か所</span>の窓に樹脂の内窓。窓台に木の枠を足した</p>
+            </div>
+          </li>
+          <li class="work" data-place="wall">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-wall"/></svg><span class="work__tag">外壁</span></div>
+            <div class="work__body">
+              <h3>色あせた外壁を、塗り替え</h3>
+              <p class="work__where"><span class="nw">北広島市</span>・<span class="nw">築20年</span>・<span class="nw">32坪</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約15日</dd></div><div><dt>費用</dt><dd class="nw">約108万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>外壁の色あせと、目地のひび割れ</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p>シリコン系の塗料で塗り替え。目地も打ち替えた</p>
+            </div>
+          </li>
+          <li class="work" data-place="interior">
+            <div class="work__fig"><svg width="64" height="64" aria-hidden="true" focusable="false"><use href="#i-interior"/></svg><span class="work__tag">内装</span></div>
+            <div class="work__body">
+              <h3>使っていない和室を、洋室に</h3>
+              <p class="work__where">札幌市 東区・<span class="nw">築26年</span>・<span class="nw">6畳</span></p>
+              <dl class="work__facts"><div><dt>工期</dt><dd class="nw">約7日</dd></div><div><dt>費用</dt><dd class="nw">約68万円</dd></div></dl>
+              <p class="work__h">お悩み</p><p>和室を子ども部屋にしたいが、畳と押入れが使いにくい</p>
+              <svg class="work__arrow" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-down"/></svg>
+              <p class="work__h">やったこと</p><p>畳をフローリングに、押入れをクローゼットに。壁紙と照明も替えた</p>
+              <p class="work__note">和室を洋室にする工事などは、かんたん概算に無いため、個別にお見積もりします。</p>
+            </div>
+          </li>
+        </ul>
+        <p class="works__tax">費用はすべて税込の目安です。</p>
+      </div>
+    </section>
+
+    <!-- 5. 工事の流れ -->
+    <section class="sec sec--band" id="flow" aria-labelledby="h-flow">
+      <div class="wrap">
+        <p class="sec__num">04</p>
+        <h2 class="sec__title" id="h-flow" tabindex="-1">ご相談から工事まで</h2>
+        <p class="sec__lead">はじめての方にも分かるように、5つの段階で進めます。</p>
+        <ol class="flow">
+          <li><span class="flow__n" aria-hidden="true">1</span><div><h3>お問い合わせ</h3><p>このページのご相談の欄・お電話・LINE から。かんたん概算の結果をそのまま送れます。</p><p class="flow__t">いつでも</p></div></li>
+          <li><span class="flow__n" aria-hidden="true">2</span><div><h3>現地調査</h3><p>職人が伺い、寸法と、下地・配管の状態を見ます。費用はかかりません。</p><p class="flow__t"><span class="nw">約1時間</span>・無料</p></div></li>
+          <li><span class="flow__n" aria-hidden="true">3</span><div><h3>お見積もり</h3><p>本体・工事・処分費を分けた内訳つきでお出しします。比べてからお決めください。</p><p class="flow__t"><span class="nw">約1週間</span></p></div></li>
+          <li><span class="flow__n" aria-hidden="true">4</span><div><h3>工事</h3><p>近所へのごあいさつから始め、毎日片付けて帰ります。</p><p class="flow__t">場所により<span class="nw">1日〜2週間</span>ほど</p></div></li>
+          <li><span class="flow__n" aria-hidden="true">5</span><div><h3>アフター点検</h3><p>工事の1年後に伺い、不具合がないか確かめます。</p><p class="flow__t"><span class="nw">1年後</span>・無料</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. よくある質問 -->
+    <section class="sec" id="faq" aria-labelledby="h-faq">
+      <div class="wrap">
+        <p class="sec__num">05</p>
+        <h2 class="sec__title" id="h-faq" tabindex="-1">よくある質問</h2>
+        <div class="faq-list">
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>現地調査やお見積もりにお金はかかりますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>かかりません。札幌市とその周辺なら、現地調査もお見積もりも無料です。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>かんたん概算の金額で工事してもらえますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>かんたん概算は目安です。現地で下地や配管の状態を見てから、内訳つきの正式なお見積もりをお出しします。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>冬でも工事できますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>キッチン・浴室・トイレ・洗面・内窓など室内の工事は、冬もできます。外壁の塗り替えは気温と雪の都合で、おおむね春から秋に行います。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>工事のあいだも家に住めますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>ほとんどの工事は住みながらできます。浴室の工事中<span class="nw">（約4〜6日）</span>はお風呂が使えないため、日程をご相談しながら進めます。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>補助金は使えますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>対象になる場合があります。<span class="nw">お問い合わせ</span>ください。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>工事のあとに不具合が出たら？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>ご連絡いただければ伺います。工事の1年後には、こちらから点検に伺います。</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ご相談（問い合わせの見本） -->
+    <section class="sec sec--band" id="contact" aria-labelledby="h-contact">
+      <div class="wrap">
+        <p class="sec__num">06</p>
+        <h2 class="sec__title" id="h-contact" tabindex="-1">ご相談<span class="nw">（見本）</span></h2>
+        <p class="sec__lead">ご相談は無料です。このページは見本のため、送信はされません。</p>
+        <div class="contact">
+          <form class="contact__form card" id="contact-form" novalidate>
+            <p class="contact__nopi">このデモでは、お名前・ご連絡先は入れません（個人情報を集めないため）。実際のホームページでは、お名前とご連絡先の欄を付けます。</p>
+            <div class="field">
+              <label class="field__label" for="c-body">ご相談の内容<span class="field__req">必須</span></label>
+              <p class="field__hint" id="c-body-hint">「かんたん概算」の「この内容で相談する」を押すと、ここに概算の内容が入ります（今の内容は置き換わります）</p>
+              <textarea class="input textarea" id="c-body" rows="8" maxlength="800" autocomplete="off" aria-describedby="c-body-hint c-body-err" placeholder="例：2階のトイレを取り替えたい。来月の土日に見てほしい。"></textarea>
+              <p class="field__err" id="c-body-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span>ご相談の内容を入れてください（「かんたん概算」の結果を入れることもできます）</span></p>
+            </div>
+            <fieldset class="field field--way" id="c-way" aria-describedby="c-way-err">
+              <legend class="field__label">希望の連絡方法<span class="field__req">必須</span></legend>
+              <div class="chips chips--way">
+                <label class="chip"><input class="visually-hidden" type="radio" name="c-way" value="電話"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>電話</label>
+                <label class="chip"><input class="visually-hidden" type="radio" name="c-way" value="メール"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>メール</label>
+                <label class="chip"><input class="visually-hidden" type="radio" name="c-way" value="LINE"><svg class="chip__ck" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>LINE</label>
+              </div>
+              <p class="field__err" id="c-way-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span>希望の連絡方法を選んでください</span></p>
+            </fieldset>
+            <button type="submit" class="btn-main contact__send" id="c-send"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plane"/></svg>送信する<span class="nw">（デモ）</span></button>
+            <div class="msg-sent" id="c-sent" role="status">
+              <div id="c-sent-in" hidden>
+                <p class="msg-sent__h"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check-good"/></svg>デモのため送信されません</p>
+                <p class="msg-sent__b">実際のホームページでは、この内容が会社のメール・LINE に届き、選んだ方法（<span id="c-sent-way"></span>）でご連絡します。</p>
+              </div>
+            </div>
+          </form>
+
+          <div class="company card">
+            <h3>会社の案内</h3>
+            <dl class="company__dl">
+              <div><dt>会社名</dt><dd><span class="nw">ハルカゼ住まい工房</span><span class="nw">（架空の会社）</span></dd></div>
+              <div><dt>受け持つ地域</dt><dd>札幌市とその周辺（<span class="nw">江別市</span>・<span class="nw">北広島市</span>・<span class="nw">石狩市</span>など）</dd></div>
+              <div><dt>受付の時間</dt><dd><span class="nw">9:00〜18:00</span>（日曜・祝日はお休み）</dd></div>
+              <div><dt>住所</dt><dd>デモのため住所は載せていません</dd></div>
+              <div><dt>電話</dt><dd>デモのため載せていません</dd></div>
+              <div><dt>地図</dt><dd>載せていません<span class="nw">（デモ）</span></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">TENKA LAB より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">工務店・リフォーム店のホームページを、この形でお作りします。単価表と事例を会社に合わせて入れ替え、問い合わせが会社に届くようにします。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <h3>単価表は会社の Excel から</h3>
+            <ul><li>会社の Excel・スプレッドシートの単価表から、かんたん概算の値を作ります</li><li>値上げの時は表を直すだけ</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>
+            <h3>問い合わせはメール・LINE に</h3>
+            <ul><li>「この内容で相談する」の中身が、そのまま会社のメール・LINE に届きます</li><li>お名前・ご連絡先の欄を付けます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
+            <h3>事例と口コミは社長がスマホで</h3>
+            <ul><li>施工事例の追加・Google の口コミの紹介を、社長がスマホから更新できます（<a class="inline-link" href="../07-shop-update/">作品例⑦</a>と同じ仕組み）</li></ul>
+          </li>
+        </ul>
+        <p class="lab-price">費用の目安：ホームページ <span class="nw">5ページ</span> <span class="nw">150,000円</span>・<span class="nw">10ページ</span> <span class="nw">250,000円</span><span class="nw">（税込）</span>から。保守は<span class="nw">月4,000円</span>から。かんたん概算の仕組みの追加は、別にお見積もりします。</p>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">ハルカゼ住まい工房</span>と施工事例・金額はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <nav class="fixbar" id="fixbar" aria-label="すぐに使うボタン">
+    <a class="btn-sub" href="#sim">かんたん概算</a>
+    <a class="btn-main" href="#contact">無料で相談</a>
+  </nav>
+</body>
+</html>
