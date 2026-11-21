@@ -1,0 +1,483 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>個別指導 コノハズク学習室（デモ）申し込みフォームの直す前と直した後｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。学習塾の無料体験・資料請求のフォームを、よくある悪い例と、直した後で見くらべられる見本です。入力した内容は、どこにも送信・保存されません。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#27305A">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="個別指導 コノハズク学習室（デモ）申し込みフォームの直す前と直した後｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。学習塾の無料体験・資料請求のフォームを、よくある悪い例と、直した後で見くらべられる見本です。入力した内容は、どこにも送信・保存されません。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M7 10L7.5 3.5 12 8q2-.6 4 0l4.5-4.5L21 10q3 4 1.5 9-2 6-8.5 6t-8.5-6Q4 14 7 10z' fill='%238A7A6A' stroke='%2327305A' stroke-width='2' stroke-linejoin='round'/%3E%3Ccircle cx='10.5' cy='14.5' r='3.2' fill='%23E9B949' stroke='%2327305A' stroke-width='1.5'/%3E%3Ccircle cx='17.5' cy='14.5' r='3.2' fill='%23E9B949' stroke='%2327305A' stroke-width='1.5'/%3E%3Ccircle cx='10.5' cy='14.5' r='1.3' fill='%231E2230'/%3E%3Ccircle cx='17.5' cy='14.5' r='1.3' fill='%231E2230'/%3E%3Cpath d='M13 18.5h2l-1 2z' fill='%2327305A'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべてこの案件で描いたインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5h.01"/></g></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5h.01"/></g></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.5 4.5 8.5-9.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor"/></symbol>
+      <symbol id="i-done" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="20"/><path d="M14 24.5l7 7 13-14"/></g></symbol>
+      <!-- 実際のお仕事では の3つ：封筒と表・ふるい・円の印のついた用紙 -->
+      <symbol id="i-route" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="12" height="9" rx="1.5"/><path d="M2.5 5l5.5 4.5L13.5 5"/><rect x="10" y="12" width="12" height="9" rx="1.5"/><path d="M10 15.5h12M14.5 12v9"/></g></symbol>
+      <symbol id="i-sieve" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="7" rx="9" ry="3"/><path d="M3 7v3c0 1.7 4 3 9 3s9-1.3 9-3V7"/><path d="M8 16h.01M12 17.5h.01M16 16h.01M10 20.5h.01M14 20.5h.01"/></g></symbol>
+      <symbol id="i-paper" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h10l4 4v6"/><path d="M5 3v18h7"/><path d="M8.5 8.5h6M8.5 12.5h4"/><circle cx="17.5" cy="17.5" r="4.5"/><path d="M15.8 15.2l1.7 2.3 1.7-2.3M17.5 17.5v2.5M16 18.4h3"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。入力した内容は、どこにも送信・保存されません。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <path d="M7 10L7.5 3.5 12 8q2-.6 4 0l4.5-4.5L21 10q3 4 1.5 9-2 6-8.5 6t-8.5-6Q4 14 7 10z" fill="#8A7A6A" stroke="#27305A" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="10.5" cy="14.5" r="3.2" fill="#E9B949" stroke="#27305A" stroke-width="1.5"/>
+          <circle cx="17.5" cy="14.5" r="3.2" fill="#E9B949" stroke="#27305A" stroke-width="1.5"/>
+          <circle cx="10.5" cy="14.5" r="1.3" fill="#1E2230"/>
+          <circle cx="17.5" cy="14.5" r="1.3" fill="#1E2230"/>
+          <path d="M13 18.5h2l-1 2z" fill="#27305A"/>
+        </svg>
+        <span class="hd__name nw">個別指導 コノハズク学習室</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <p class="hero__kind"><span class="nw">個別指導 コノハズク学習室</span>の無料体験・資料請求</p>
+          <h1 class="h1" id="h-top" tabindex="-1">申し込みフォーム、<span class="nw">直す前と直した後</span></h1>
+          <p class="hero__lead">同じ申し込みのフォームを、よくある悪い例と、直した後で見くらべられます。直した点には番号を付けました。</p>
+          <div class="notice">
+            <svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-info"/></svg>
+            <div>
+              <p class="notice__main">入力した内容は、どこにも送信・保存されません。</p>
+              <p class="notice__sub">はじめから入っている名前・連絡先は架空の見本です。</p>
+            </div>
+          </div>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#demo" id="hero-cta"><span class="nw">直した後のフォームを試す</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></a>
+          </div>
+        </div>
+        <svg class="hero__art" viewBox="0 0 360 112" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="360" height="112" rx="16"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="360" height="112" fill="#DDE2EE"/>
+            <!-- ランプの灯り -->
+            <circle cx="322" cy="18" r="40" fill="#F6E7B8"/>
+            <!-- 枝 -->
+            <path d="M-4 80C30 76 70 74 112 78c16 2 30 6 42 12" fill="none" stroke="#27305A" stroke-width="2"/>
+            <path d="M120 79c6-6 14-9 22-9" fill="none" stroke="#27305A" stroke-width="2"/>
+            <!-- コノハズク（耳のような羽が2本） -->
+            <path d="M54 40L52 22 62 32q8-3 16 0l10-10-2 18q8 10 4 24-4 13-18 13T52 64q-4-14 2-24z" fill="#8A7A6A" stroke="#5C5046" stroke-width="1.5"/>
+            <path d="M62 60q8 5 16 0M63 66q7 4 14 0" fill="none" stroke="#5C5046" stroke-width="1.5"/>
+            <circle cx="62" cy="44" r="6" fill="#E9B949" stroke="#5C5046" stroke-width="1.5"/>
+            <circle cx="78" cy="44" r="6" fill="#E9B949" stroke="#5C5046" stroke-width="1.5"/>
+            <circle cx="62" cy="44" r="2.5" fill="#1E2230"/>
+            <circle cx="78" cy="44" r="2.5" fill="#1E2230"/>
+            <path d="M68 50h4l-2 4z" fill="#5C5046"/>
+            <path d="M62 76l-2 4M66 76v4M74 76v4M78 76l2 4" fill="none" stroke="#5C5046" stroke-width="1.5"/>
+            <!-- 開いたノート（右のページに □ とレ点の行が3つ） -->
+            <path d="M190 58l64-6v52l-64 4z" fill="#FFFFFF" stroke="#27305A" stroke-width="2"/>
+            <path d="M254 52l64 6v50l-64-4z" fill="#FFFFFF" stroke="#27305A" stroke-width="2"/>
+            <g fill="none" stroke="#B8C0D6" stroke-width="1">
+              <path d="M198 68l48-4M198 78l48-4M198 88l48-4M198 98l48-4"/>
+              <path d="M282 66l28 2M282 78l28 2M282 90l28 2"/>
+            </g>
+            <g fill="#FFFFFF" stroke="#27305A" stroke-width="1.5">
+              <rect x="264" y="60" width="9" height="9" rx="2"/>
+              <rect x="264" y="72" width="9" height="9" rx="2"/>
+              <rect x="264" y="84" width="9" height="9" rx="2"/>
+            </g>
+            <path d="M265.5 64.5l2.5 2.5 4-5M265.5 76.5l2.5 2.5 4-5" fill="none" stroke="#27305A" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2. 見くらべ -->
+    <section class="compare sec sec--band" id="demo" aria-labelledby="h-demo">
+      <div class="wrap">
+        <p class="sec__en">DEMO</p>
+        <h2 id="h-demo" class="sec__title" tabindex="-1">見くらべる</h2>
+        <p class="sec__lead">タブで切り替えます。どちらも試せますが、どこにも送られません。番号の札は、下の「直した点の一覧」と同じ番号です。</p>
+        <div class="compare__tools">
+          <label class="choice choice--inline is-on"><span class="choice__box"><input class="choice__input" type="checkbox" id="show-tags" checked autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">番号の札を出す</span></label>
+          <div class="tabs" role="tablist" aria-labelledby="h-demo">
+            <button type="button" role="tab" id="tab-before" class="tabs__tab" aria-controls="panel-before" aria-selected="false" tabindex="-1"><span class="nw">直す前（悪い例）</span></button>
+            <button type="button" role="tab" id="tab-after" class="tabs__tab" aria-controls="panel-after" aria-selected="true" tabindex="0"><span class="nw">直した後</span></button>
+          </div>
+        </div>
+        <noscript><p class="note">タブの切り替えと入力の確かめには JavaScript を使います。</p></noscript>
+
+        <div class="compare__grid">
+          <div class="compare__main">
+
+            <!-- 直す前（悪い例。わざとこう作っている） -->
+            <section role="tabpanel" id="panel-before" class="fcard" aria-labelledby="tab-before" hidden>
+              <p class="bad__lead">これは、よくある形を組み合わせて作った悪い例です。実在のページではありません。入力した内容は、どこにも送信・保存されません。</p>
+              <div class="bad__introw">
+                <span class="tag tag--bad">10<span class="visually-hidden">（悪い点10）</span></span>
+                <p class="bad__intro">このたびは、<span class="nw">個別指導 コノハズク学習室</span>のホームページをご覧いただき、誠にありがとうございます。当塾では、お子さま一人ひとりの学ぶ速さに合わせた授業を大切にしております。無料体験授業・資料請求をご希望の方は、下記のフォームに必要事項をご記入のうえ、送信ボタンを押してください。内容を確認のうえ、担当者よりご連絡いたします。なお、ご記入いただいた内容によっては、ご希望に添えない場合がございます。あらかじめご了承ください。</p>
+              </div>
+              <div class="bad__head">
+                <h3 id="h-bad" class="bad__title">お問い合わせフォーム</h3>
+                <span class="tag tag--bad">1<span class="visually-hidden">（悪い点1）</span></span>
+              </div>
+              <div class="bad__sumwrap">
+                <span class="tag tag--bad bad__sumtag">6<span class="visually-hidden">（悪い点6）</span></span>
+                <div id="bad-summary" class="bad__summary" hidden></div>
+              </div>
+              <p class="bad__refill"><button type="button" class="btn-sub" id="bad-refill"><span class="nw">見本の値を入れ直す</span></button></p>
+              <form id="bad-form" class="bad" novalidate autocomplete="off">
+                <div class="bad__row"><label class="visually-hidden" for="b-cname">お名前</label><input class="bad__input" id="b-cname" type="text" placeholder="お名前" value="コノハ 太郎（架空）" autocomplete="off"><span class="tag tag--bad bad__rowtag">2<span class="visually-hidden">（悪い点2）</span></span></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-ckana">ふりがな</label><input class="bad__input" id="b-ckana" type="text" placeholder="ふりがな" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-pname">保護者のお名前</label><input class="bad__input" id="b-pname" type="text" placeholder="保護者のお名前" value="コノハ 花子（架空）" autocomplete="off"><span class="tag tag--bad bad__rowtag">3<span class="visually-hidden">（悪い点3）</span></span></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-pkana">保護者のふりがな</label><input class="bad__input" id="b-pkana" type="text" placeholder="保護者のふりがな" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-birth">生年月日（例：20150401）</label><input class="bad__input" id="b-birth" type="text" placeholder="生年月日（例：20150401）" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-school">学校名</label><input class="bad__input" id="b-school" type="text" placeholder="学校名" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-grade">学年</label><input class="bad__input" id="b-grade" type="text" placeholder="学年" value="" autocomplete="off"><span class="tag tag--bad bad__rowtag">7<span class="visually-hidden">（悪い点7）</span></span></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-zip">郵便番号（ハイフンなし）</label><input class="bad__input" id="b-zip" type="text" placeholder="郵便番号（ハイフンなし）" value="000-0000" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-addr">ご住所</label><input class="bad__input" id="b-addr" type="text" placeholder="ご住所" value="架空県 架空市 1-2-3（架空）" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-tel">電話番号（半角数字のみ）</label><input class="bad__input" id="b-tel" type="text" placeholder="電話番号（半角数字のみ）" value="000-1234-5678" autocomplete="off"><span class="tag tag--bad bad__rowtag">4<span class="visually-hidden">（悪い点4）</span></span></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-mail">メールアドレス</label><input class="bad__input" id="b-mail" type="text" placeholder="メールアドレス" value="hanako@example.com" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-mail2">メールアドレス（確認）</label><input class="bad__input" id="b-mail2" type="text" placeholder="メールアドレス（確認）" value="" autocomplete="off"><span class="tag tag--bad bad__rowtag">8<span class="visually-hidden">（悪い点8）</span></span></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-subj">希望の教科</label><input class="bad__input" id="b-subj" type="text" placeholder="希望の教科" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-days">希望の曜日</label><input class="bad__input" id="b-days" type="text" placeholder="希望の曜日" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-how">当塾を知ったきっかけ</label><input class="bad__input" id="b-how" type="text" placeholder="当塾を知ったきっかけ" value="" autocomplete="off"></div>
+                <div class="bad__row"><label class="visually-hidden" for="b-note">ご要望</label><textarea class="bad__input bad__input--area" id="b-note" placeholder="ご要望" autocomplete="off"></textarea></div>
+                <div class="bad__btns">
+                  <button type="submit" class="bad__btn" id="bad-send">送信</button>
+                  <button type="button" class="bad__btn" id="bad-reset">リセット</button>
+                  <span class="tag tag--bad">5<span class="visually-hidden">（悪い点5）</span></span>
+                  <span class="tag tag--bad">9<span class="visually-hidden">（悪い点9）</span></span>
+                </div>
+                <p class="bad__ok" id="bad-ok" hidden>（<span class="nw">デモ</span>）誤りはありません。直す前のフォームでは、確認画面がないまま、このボタンで送られてしまいます。この<span class="nw">デモ</span>では送信していません。</p>
+              </form>
+            </section>
+
+            <!-- 直した後（3つのステップ・確認・完了） -->
+            <section role="tabpanel" id="panel-after" class="fcard" aria-labelledby="tab-after">
+              <p class="after__lead">無料体験授業・資料のお申し込み。3つのステップで申し込めます。</p>
+              <div class="steps-row" id="steps-row">
+                <p class="visually-hidden" id="steps-name">申し込みの進み具合</p>
+                <ol class="steps" aria-labelledby="steps-name">
+                  <li class="steps__item steps--now" aria-current="step"><span class="steps__dot">1</span> <span class="steps__name">お子さま</span></li>
+                  <li class="steps__item"><span class="steps__dot">2</span> <span class="steps__name">曜日と時間</span></li>
+                  <li class="steps__item"><span class="steps__dot">3</span> <span class="steps__name">連絡先</span></li>
+                  <li class="steps__item"><span class="steps__dot"></span> <span class="steps__name">確認</span></li>
+                </ol>
+                <span class="tag tag--fix">1<span class="visually-hidden">（直した点1）</span></span>
+              </div>
+
+              <form id="good-form" class="good" novalidate autocomplete="off">
+                <div class="good__summary" id="good-summary" hidden></div>
+
+                <!-- ステップ1 -->
+                <fieldset class="good__step" id="step-1">
+                  <legend class="visually-hidden">ステップ 1/3 お子さまのこと</legend>
+                  <h3 class="good__title" id="h-step-1" tabindex="-1"><span class="nw">ステップ 1/3</span> お子さまのこと</h3>
+
+                  <fieldset class="field field--group" id="g-kind">
+                    <legend class="field__head"><span class="field__label">申し込みの内容</span><span class="visually-hidden">（必須）</span><span class="req req--must" aria-hidden="true">必須</span></legend>
+                    <div class="choice-grid choice-grid--1">
+                      <label class="choice is-on"><span class="choice__box"><input class="choice__input" type="radio" name="kind" id="a-kind-trial" value="trial" checked autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face">無料体験授業（資料もお渡しします）</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="kind" id="a-kind-doc" value="doc" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face">資料だけ（メールでお送りします）</span></label>
+                    </div>
+                  </fieldset>
+
+                  <div class="field">
+                    <div class="field__head">
+                      <label for="a-grade" class="field__label">学年</label>
+                      <span class="req req--must">必須</span>
+                      <span class="tag tag--fix">2<span class="visually-hidden">（直した点2）</span></span>
+                    </div>
+                    <div class="sel-wrap">
+                      <select id="a-grade" class="sel" autocomplete="off" aria-required="true">
+                        <option value="" selected>選んでください</option>
+                        <optgroup label="小学生">
+                          <option value="e1">小学1年</option><option value="e2">小学2年</option><option value="e3">小学3年</option><option value="e4">小学4年</option><option value="e5">小学5年</option><option value="e6">小学6年</option>
+                        </optgroup>
+                        <optgroup label="中学生">
+                          <option value="j1">中学1年</option><option value="j2">中学2年</option><option value="j3">中学3年</option>
+                        </optgroup>
+                        <optgroup label="高校生">
+                          <option value="h1">高校1年</option><option value="h2">高校2年</option><option value="h3">高校3年</option>
+                        </optgroup>
+                      </select>
+                      <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+                    </div>
+                    <p class="field__error" id="e-grade" hidden></p>
+                  </div>
+
+                  <fieldset class="field field--group" id="g-subj">
+                    <legend class="field__head"><span class="field__label">希望の教科</span><span class="visually-hidden">（必須）</span><span class="req req--must" aria-hidden="true">必須</span></legend>
+                    <span class="tag tag--fix field__tag">7<span class="visually-hidden">（直した点7）</span></span>
+                    <p class="field__hint" id="h-subj">いくつでも選べます。</p>
+                    <div class="choice-grid choice-grid--2">
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="subj" id="a-subj-math" value="math" autocomplete="off" aria-describedby="h-subj"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">算数・数学</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="subj" id="a-subj-jpn" value="jpn" autocomplete="off" aria-describedby="h-subj"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">国語</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="subj" id="a-subj-eng" value="eng" autocomplete="off" aria-describedby="h-subj"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">英語</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="subj" id="a-subj-sci" value="sci" autocomplete="off" aria-describedby="h-subj"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">理科</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="subj" id="a-subj-soc" value="soc" autocomplete="off" aria-describedby="h-subj"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">社会</span></label>
+                    </div>
+                    <p class="field__error" id="e-subj" hidden></p>
+                  </fieldset>
+
+                  <div class="good__tagrow"><span class="tag tag--fix">10<span class="visually-hidden">（直した点10）</span></span></div>
+                  <div class="good__btns">
+                    <button type="submit" class="btn-main good__next" id="next-1"><span class="nw">次へ（2/3 ご希望の曜日と時間）</span></button>
+                  </div>
+                </fieldset>
+
+                <!-- ステップ2 -->
+                <fieldset class="good__step" id="step-2" hidden>
+                  <legend class="visually-hidden">ステップ 2/3 ご希望の曜日と時間</legend>
+                  <h3 class="good__title" id="h-step-2" tabindex="-1"><span class="nw">ステップ 2/3</span> ご希望の曜日と時間</h3>
+                  <p class="good__note" id="note-doc" hidden>資料だけのお申し込みでは、この画面は選ばなくても進めます。</p>
+
+                  <fieldset class="field field--group" id="g-days">
+                    <legend class="field__head"><span class="field__label">希望の曜日</span><span class="visually-hidden" id="rv-days">（必須）</span><span class="req req--must" id="r-days" aria-hidden="true">必須</span></legend>
+                    <p class="field__hint" id="h-days">いくつでも選べます。教室は日曜がお休みです（架空）。</p>
+                    <div class="choice-grid choice-grid--3">
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-mon" value="mon" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">月</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-tue" value="tue" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">火</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-wed" value="wed" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">水</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-thu" value="thu" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">木</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-fri" value="fri" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">金</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="checkbox" name="day" id="a-day-sat" value="sat" autocomplete="off" aria-describedby="h-days"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-check"/></svg></span><span class="choice__face">土</span></label>
+                    </div>
+                    <p class="field__error" id="e-days" hidden></p>
+                  </fieldset>
+
+                  <fieldset class="field field--group" id="g-time">
+                    <legend class="field__head"><span class="field__label">希望の時間帯</span><span class="visually-hidden" id="rv-time">（必須）</span><span class="req req--must" id="r-time" aria-hidden="true">必須</span></legend>
+                    <div class="choice-grid choice-grid--1">
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="time" id="a-time-t1" value="t1" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face nw">16:00〜17:30</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="time" id="a-time-t2" value="t2" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face nw">17:40〜19:10</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="time" id="a-time-t3" value="t3" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face nw">19:20〜20:50</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="time" id="a-time-any" value="any" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face">どれでもよい</span></label>
+                    </div>
+                    <p class="field__error" id="e-time" hidden></p>
+                  </fieldset>
+
+                  <div class="good__btns">
+                    <button type="submit" class="btn-main good__next" id="next-2"><span class="nw">次へ（3/3 連絡先）</span></button>
+                    <button type="button" class="btn-sub good__back" id="back-2"><span class="nw">戻る（1/3 お子さまのこと）</span></button>
+                  </div>
+                </fieldset>
+
+                <!-- ステップ3 -->
+                <fieldset class="good__step" id="step-3" hidden>
+                  <legend class="visually-hidden">ステップ 3/3 連絡先</legend>
+                  <h3 class="good__title" id="h-step-3" tabindex="-1"><span class="nw">ステップ 3/3</span> 連絡先</h3>
+                  <div class="good__note good__note--sample">
+                    <p>ここから下の見本の値は<span class="nw">架空</span>です。入力した内容は、どこにも送信・保存されません。</p>
+                    <button type="button" class="btn-sub" id="good-refill"><span class="nw">見本の値を入れ直す</span></button>
+                  </div>
+                  <div class="good__notice">
+                    <p class="good__a31">確かめてほしい所があれば、その欄のすぐ下に出ます。</p>
+                    <span class="tag tag--fix">6<span class="visually-hidden">（直した点6）</span></span>
+                  </div>
+
+                  <div class="field">
+                    <div class="field__head">
+                      <label for="a-name" class="field__label">保護者のお名前（呼び名）</label>
+                      <span class="req req--must">必須</span>
+                      <span class="tag tag--fix">3<span class="visually-hidden">（直した点3）</span></span>
+                    </div>
+                    <input id="a-name" class="field__input" type="text" value="コノハ 花子（架空）" autocomplete="off" aria-describedby="h-name" aria-required="true">
+                    <p class="field__hint" id="h-name">例：コノハ 花子。教室からお呼びするお名前です。20文字まで。</p>
+                    <p class="field__error" id="e-name" hidden></p>
+                  </div>
+
+                  <fieldset class="field field--group" id="g-via">
+                    <legend class="field__head"><span class="field__label">連絡の方法</span><span class="visually-hidden">（必須）</span><span class="req req--must" aria-hidden="true">必須</span></legend>
+                    <div class="choice-grid choice-grid--2">
+                      <label class="choice is-on"><span class="choice__box"><input class="choice__input" type="radio" name="via" id="a-via-mail" value="mail" checked autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face">メール</span></label>
+                      <label class="choice"><span class="choice__box"><input class="choice__input" type="radio" name="via" id="a-via-tel" value="tel" autocomplete="off"><svg class="choice__mark" width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-dot"/></svg></span><span class="choice__face">電話</span></label>
+                    </div>
+                  </fieldset>
+
+                  <div class="field">
+                    <div class="field__head">
+                      <label for="a-mail" class="field__label">メールアドレス</label>
+                      <span class="req req--must" id="r-mail">必須</span>
+                      <span class="tag tag--fix">8<span class="visually-hidden">（直した点8）</span></span>
+                    </div>
+                    <input id="a-mail" class="field__input" type="text" inputmode="email" value="hanako@example.com" autocomplete="off" aria-describedby="h-mail" aria-required="true">
+                    <div class="field__hintrow">
+                      <p class="field__hint" id="h-mail">例：<span class="nw">hanako@example.com</span>。1回だけ入れてください。欄を離れたときに確かめます。</p>
+                      <span class="tag tag--fix">5<span class="visually-hidden">（直した点5）</span></span>
+                    </div>
+                    <p class="field__error" id="e-mail" hidden></p>
+                  </div>
+
+                  <div class="field">
+                    <div class="field__head">
+                      <label for="a-tel" class="field__label">電話番号</label>
+                      <span class="req req--opt" id="r-tel">任意</span>
+                    </div>
+                    <input id="a-tel" class="field__input" type="tel" inputmode="tel" value="000-1234-5678" autocomplete="off" aria-describedby="h-tel">
+                    <div class="field__hintrow">
+                      <p class="field__hint" id="h-tel">例：<span class="nw">000-1234-5678</span>。ハイフンや空白があっても大丈夫です。</p>
+                      <span class="tag tag--fix">4<span class="visually-hidden">（直した点4）</span></span>
+                    </div>
+                    <p class="field__error" id="e-tel" hidden></p>
+                  </div>
+
+                  <div class="field">
+                    <div class="field__head">
+                      <label for="a-note" class="field__label">ご質問・ご要望</label>
+                      <span class="req req--opt">任意</span>
+                    </div>
+                    <textarea id="a-note" class="field__input field__input--area" autocomplete="off" aria-describedby="h-note"></textarea>
+                    <p class="field__hint" id="h-note">体験の前に聞いておきたいことがあれば。200文字まで。</p>
+                    <p class="field__error" id="e-note" hidden></p>
+                  </div>
+
+                  <div class="good__tagrow"><span class="tag tag--fix">9<span class="visually-hidden">（直した点9）</span></span></div>
+                  <div class="good__btns">
+                    <button type="submit" class="btn-main good__next" id="next-3"><span class="nw">無料体験を申し込む（確認へ）</span></button>
+                    <button type="button" class="btn-sub good__back" id="back-3"><span class="nw">戻る（2/3 ご希望の曜日と時間）</span></button>
+                  </div>
+                </fieldset>
+              </form>
+
+              <!-- 確認画面 -->
+              <section class="good__confirm" id="step-confirm" aria-labelledby="h-confirm" hidden>
+                <h3 class="good__title" id="h-confirm" tabindex="-1">入力した内容の確認</h3>
+                <p class="good__note good__note--confirm">まだどこにも送られていません。内容を確かめて、よければ下のボタンを押してください。<span class="nw">デモ</span>のため、押してもどこにも送られません。</p>
+                <div class="confirm" id="confirm-boxes"></div>
+                <div class="good__btns">
+                  <button type="button" class="btn-main" id="send-demo"><span class="nw">この内容で申し込む（デモ）</span></button>
+                  <p class="good__c2"><span class="nw">デモ</span>のため、押してもどこにも送られません。</p>
+                  <button type="button" class="btn-sub good__back" id="back-c"><span class="nw">戻る（3/3 連絡先）</span></button>
+                </div>
+              </section>
+
+              <!-- 完了画面 -->
+              <section class="good__done" id="step-done" aria-labelledby="h-done" hidden>
+                <svg class="done__mark" width="48" height="48" aria-hidden="true" focusable="false"><use href="#i-done"/></svg>
+                <h3 class="good__title" id="h-done" tabindex="-1">お申し込みありがとうございます（<span class="nw">デモ</span>）</h3>
+                <p class="done__box"><span class="nw">デモ</span>のため、どこにも送られていません。入力した内容は、このページを閉じると消えます。</p>
+                <p class="done__text">実際のページでは、ここに教室からの連絡の方法と目安を、お店の決まりに合わせて書きます。</p>
+                <div class="good__btns">
+                  <button type="button" class="btn-sub" id="restart"><span class="nw">最初からやり直す</span></button>
+                  <a class="btn-text" href="#fixes">直した点の一覧を見る</a>
+                </div>
+              </section>
+            </section>
+          </div>
+
+          <aside class="guide" id="guide" aria-labelledby="h-guide">
+            <h3 id="h-guide">直した後で直した点</h3>
+            <ol class="guide__list" id="guide-list">
+              <li><span class="tag tag--fix" aria-hidden="true">1</span><span>項目が多すぎる</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">2</span><span>必須か任意か分からない</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">3</span><span>欄の名前が消える</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">4</span><span>電話番号の形を厳しく縛る</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">5</span><span>送るまで何も言わない</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">6</span><span>エラーが遠く、あいまい</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">7</span><span>選べるものまで打たせる</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">8</span><span>メールを2回打たせる</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">9</span><span>押すと何が起きるか分からない</span></li>
+              <li><span class="tag tag--fix" aria-hidden="true">10</span><span>申し込む場所が遠い</span></li>
+            </ol>
+            <p class="guide__more"><a class="btn-text" href="#fixes">直した点の一覧を見る</a></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 直した点の一覧 -->
+    <section class="sec" id="fixes" aria-labelledby="h-fixes">
+      <div class="wrap">
+        <p class="sec__en">FIXES</p>
+        <h2 id="h-fixes" class="sec__title" tabindex="-1">直した点の一覧</h2>
+        <p class="sec__lead">番号は、上のフォームの札と同じです。</p>
+        <ol class="fixes">
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">1</span><h3>項目が多すぎる</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>入力する欄の数</dd></div><div><dt>なぜ</dt><dd>欄が多いと、最初に見ただけで面倒になり、あとで書こうとして閉じてしまいやすいからです。</dd></div><div><dt>どう直したか</dt><dd>体験の日を決めるのに要るものだけ、10項目にしぼりました。住所や生年月日は、体験の日に教室でうかがいます。3つのステップに分け、1画面の量を少なくしました。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">2</span><h3>必須か任意か分からない</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>欄の名前の横</dd></div><div><dt>なぜ</dt><dd>どこまで書けばよいか分からないと、全部埋めようとして疲れてしまうからです。</dd></div><div><dt>どう直したか</dt><dd>すべての欄に「必須」か「任意」の札を付けました。任意の欄は空のままでも進めます。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">3</span><h3>欄の名前が消える</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>欄の名前</dd></div><div><dt>なぜ</dt><dd>欄の中の薄い文字は、打ち始めると消えます。見直す時に、何の欄だったか分からなくなります。</dd></div><div><dt>どう直したか</dt><dd>欄の名前は、欄の上にいつも出しておきます。書き方の見本は、欄の下に「例：」として書きました。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">4</span><h3>電話番号の形を厳しく縛る</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>電話番号の欄</dd></div><div><dt>なぜ</dt><dd>ふだんどおりハイフンを入れただけで直されると、書く人は「何が悪いのか」と困ってしまうからです。</dd></div><div><dt>どう直したか</dt><dd>ハイフン・空白・かっこ・全角の数字があっても受け付け、中で数字だけにしてから確かめます。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">5</span><h3>送るまで何も言わない</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>確かめるタイミング</dd></div><div><dt>なぜ</dt><dd>最後にまとめて言われると、上まで戻って探し直すことになるからです。</dd></div><div><dt>どう直したか</dt><dd>欄から次へ移ったときに、その欄だけを確かめます。打っている途中では言いません。直したら、その場で文が消えます。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">6</span><h3>エラーが遠く、あいまい</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>エラーの出し方と言い方</dd></div><div><dt>なぜ</dt><dd>「形式が正しくありません」だけでは、どう直せばよいか分かりません。遠くに出ると気づかないこともあります。</dd></div><div><dt>どう直したか</dt><dd>欄のすぐ下に、何をどう直すかを書きます（例：『「@」が入っていません』）。「次へ」で止まった時は、上に件数を出し、最初の欄へ移ります。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">7</span><h3>選べるものまで打たせる</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>学年・教科・曜日・時間帯</dd></div><div><dt>なぜ</dt><dd>手で打つと手間がかかり、書き方もばらばらになって、教室の方も読み取りにくいからです。</dd></div><div><dt>どう直したか</dt><dd>学年は一覧から選び、教科と曜日はチェック、時間帯は1つを選ぶ形にしました。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">8</span><h3>メールを2回打たせる</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>メールアドレスの確認の欄</dd></div><div><dt>なぜ</dt><dd>同じものを2回打つのは手間で、1字違うだけで先に進めなくなるからです。</dd></div><div><dt>どう直したか</dt><dd>1回だけにしました。送る前の確認画面で、目で見直せます。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">9</span><h3>押すと何が起きるか分からない</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>最後のボタン</dd></div><div><dt>なぜ</dt><dd>「送信」だけでは、押すとすぐ送られるのか分かりません。隣の「リセット」を押し間違えると、全部消えてしまいます。</dd></div><div><dt>どう直したか</dt><dd>ボタンに「無料体験を申し込む（確認へ）」と、次に起きることを書きました。確認画面を入れ、全部消すボタンはなくしました。</dd></div></dl></li>
+          <li class="fixes__card"><div class="fixes__head"><span class="tag tag--bad" aria-hidden="true">10</span><h3>申し込む場所が遠い</h3></div>
+            <dl class="fixes__rows"><div><dt>どこを</dt><dd>ページの最初</dd></div><div><dt>なぜ</dt><dd>長いあいさつの後にフォームがあり、申し込む場所までたどり着く前にやめてしまいやすいからです。</dd></div><div><dt>どう直したか</dt><dd>前置きは1行にしました。最初のステップは3項目だけなので、ボタンまでがすぐです。</dd></div></dl></li>
+        </ol>
+        <p class="note">どれも、申し込みの途中でやめにくくするための工夫です。どれだけ増えるかは、お店やページによって違います。</p>
+        <p class="note">このデモでは見本の値のため止めていますが、実際のページでは、名前・連絡先にブラウザの自動入力が効くようにします。</p>
+      </div>
+    </section>
+
+    <!-- 4. 実際のお仕事では -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work" tabindex="-1">実際のお仕事では</h2>
+        <p class="lab-lead">いまのお申し込みフォームを拝見し、どこで迷いやすいかを番号つきでお伝えします。直した後のフォームを、お店のページの中にお作りします。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-route"/></svg>
+            <h3>届いた申し込みの行き先</h3>
+            <ul><li>申し込みの内容を、お店のメール・スプレッドシート・<span class="nw">LINE</span> など、ふだん見ている所に届くようにつなぎます</li><li>どこにつなぐかは、お店と決めます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sieve"/></svg>
+            <h3>いたずらの送信への備え</h3>
+            <ul><li>機械による大量の送信を減らす仕組みを入れます</li><li>入れ方は、届け先とあわせて決めます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-paper"/></svg>
+            <h3>費用の目安</h3>
+            <ul><li>料金表の範囲でお見積もりします</li><li>いまのフォームを直すだけか、ページごと作り直すかで変わります</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で決めていただくこと</h3>
+          <ul><li>個人情報の取り扱いの文（何に使うか・どれだけ置いておくか）。<span class="nw">TENKA LAB</span> は法的な判断をしません。実際のページでは、お店が決めた文を載せます</li><li>どの項目を聞くか（体験の日に教室で聞くものとの分け方）</li><li>申し込みのあと、いつ・どの方法で連絡するか</li></ul>
+          <p class="work-check__note">ページに載せる内容と、届いた情報の扱いは、お店が決めて責任を持ちます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">個別指導 コノハズク学習室</span>と、名前・連絡先の見本はすべて<span class="nw">架空</span>です。入力した内容は、どこにも送信・保存されません。</p>
+    <p><a class="btn" href="../../"><span class="nw">作品例を見る</span></a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
