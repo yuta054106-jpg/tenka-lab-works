@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ゲストハウス ヒサメノ（デモ）空室カレンダーと宿泊料金の目安｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。小さな宿の空室カレンダーと、泊数・人数で変わる宿泊料金の目安の見本です。空室・料金はすべて架空です。予約はできません。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#4F4136">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ゲストハウス ヒサメノ（デモ）空室カレンダーと宿泊料金の目安｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。小さな宿の空室カレンダーと、泊数・人数で変わる宿泊料金の目安の見本です。空室・料金はすべて架空です。予約はできません。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M6 13.5h16V25H6z' fill='%23FFFFFF' stroke='%234F4136' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M3 14L14 4.5 25 14' fill='%23FFFFFF' stroke='%234F4136' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.5 10.5L14 5l6.5 5.5c-1.5 1-2.5-.5-3.5.5s-2-.5-3 .3-2-.8-3 0-2-.8-3.5-.8z' fill='%23FFFFFF' stroke='%23CDBFAF' stroke-width='1.5' stroke-linejoin='round'/%3E%3Crect x='11' y='16' width='6' height='5' rx='1' fill='%23F2B54A'/%3E%3Cpath d='M2.5 3.5l1.5 3M6 2l1.5 3' stroke='%23A99A8C' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべてこの案件で描いたインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-free" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+      <symbol id="i-few" viewBox="0 0 24 24"><path d="M12 4.5l8 14H4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+      <symbol id="i-full" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-closed" viewBox="0 0 24 24"><path d="M4.5 12h15" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5h.01"/></g></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11.5" height="12" rx="2"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8.5a2 2 0 0 0 2 2h2.5"/></g></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="13" height="15" rx="2"/><path d="M3 9h13M8.5 9v10"/><path d="M13.5 21l.7-3 6-6 2.3 2.3-6 6z"/></g></symbol>
+      <symbol id="i-sync" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="8" height="8" rx="1.5"/><rect x="13.5" y="13" width="8" height="8" rx="1.5"/><path d="M13.5 6.5h1.5a3 3 0 0 1 3 3V11M16 9l2 2 2-2"/><path d="M10.5 17.5H9a3 3 0 0 1-3-3V13M8 15l-2-2-2 2"/></g></symbol>
+      <symbol id="i-door" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4.5A1.5 1.5 0 0 1 7.5 3h9A1.5 1.5 0 0 1 18 4.5V21"/><path d="M3 21h18"/><path d="M14.5 12.5v.01"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。空室・料金はすべて<span class="nw">架空</span>です。予約はできません。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <path d="M6 13.5h16V25H6z" fill="#FFFFFF" stroke="#4F4136" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M3 14L14 4.5 25 14" fill="#FFFFFF" stroke="#4F4136" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.5 10.5L14 5l6.5 5.5c-1.5 1-2.5-.5-3.5.5s-2-.5-3 .3-2-.8-3 0-2-.8-3.5-.8z" fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5" stroke-linejoin="round"/>
+          <rect x="11" y="16" width="6" height="5" rx="1" fill="#F2B54A"/>
+          <path d="M2.5 3.5l1.5 3M6 2l1.5 3" stroke="#A99A8C" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="hd__name nw">ゲストハウス ヒサメノ</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 360 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="360" height="120" rx="16"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="360" height="120" fill="#E9DFD2"/>
+            <!-- 氷雨の線 -->
+            <g fill="none" stroke="#A99A8C" stroke-width="2">
+              <path d="M18 10l3 7.4"/><path d="M60 22l3 7.4"/><path d="M96 8l3 7.4"/><path d="M128 30l3 7.4"/>
+              <path d="M140 6l3 7.4"/><path d="M246 12l3 7.4"/><path d="M262 34l3 7.4"/><path d="M300 8l3 7.4"/>
+              <path d="M336 22l3 7.4"/><path d="M344 50l3 7.4"/><path d="M110 46l3 7.4"/><path d="M14 44l3 7.4"/>
+            </g>
+            <!-- 雪の粒 -->
+            <g fill="#FFFFFF">
+              <circle cx="40" cy="16" r="2"/><circle cx="80" cy="10" r="1.5"/><circle cx="118" cy="20" r="2.5"/><circle cx="152" cy="34" r="1.5"/>
+              <circle cx="276" cy="18" r="2.5"/><circle cx="320" cy="36" r="2"/><circle cx="352" cy="10" r="1.5"/><circle cx="34" cy="34" r="1.5"/>
+            </g>
+            <!-- 母屋（2階建て）：煙突と煙 -->
+            <rect x="200" y="14" width="9" height="16" fill="#4F4136"/>
+            <g fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5">
+              <circle cx="211" cy="9" r="4"/><circle cx="221" cy="7" r="5"/><circle cx="233" cy="8" r="6"/>
+            </g>
+            <rect x="158" y="44" width="64" height="58" fill="#D9C3A5" stroke="#4F4136" stroke-width="2"/>
+            <path d="M150 46l16-20h48l16 20z" fill="#4F4136" stroke="#4F4136" stroke-width="2"/>
+            <path d="M160 33l7-8h46l7 8c-4 3-7-1-10 1.5s-7-1.5-10 1-7-1.5-10 1-7-1.5-10 1-7-1.5-10 1-6-1.5-10-.5z" fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5"/>
+            <rect x="166" y="52" width="18" height="13" rx="2" fill="#F2B54A" stroke="#4F4136" stroke-width="2"/>
+            <rect x="196" y="52" width="18" height="13" rx="2" fill="#B8A999" stroke="#4F4136" stroke-width="2"/>
+            <rect x="166" y="74" width="18" height="14" rx="2" fill="#F2B54A" stroke="#4F4136" stroke-width="2"/>
+            <rect x="194" y="73" width="22" height="16" rx="2" fill="#F2B54A" stroke="#4F4136" stroke-width="2"/>
+            <!-- 縁側の窓の中：こたつの天板とみかん -->
+            <path d="M197 84h16" fill="none" stroke="#4F4136" stroke-width="2"/>
+            <circle cx="202" cy="80.5" r="3" fill="#E07B2E"/><circle cx="208.5" cy="80.5" r="3" fill="#E07B2E"/>
+            <!-- 離れ（平屋） -->
+            <rect x="262" y="64" width="56" height="36" fill="#D9C3A5" stroke="#4F4136" stroke-width="2"/>
+            <path d="M254 66l14-14h44l14 14z" fill="#4F4136" stroke="#4F4136" stroke-width="2"/>
+            <path d="M262 58l7-7h42l7 7c-4 2.5-6-1-9 1.2s-6-1.4-9 1-6-1.4-9 1-6-1.4-9 1-6-1.4-9 .6z" fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5"/>
+            <rect x="270" y="72" width="16" height="12" rx="2" fill="#F2B54A" stroke="#4F4136" stroke-width="2"/>
+            <rect x="294" y="72" width="16" height="12" rx="2" fill="#B8A999" stroke="#4F4136" stroke-width="2"/>
+            <!-- 雪の地面（左が低く右が高い） -->
+            <path d="M0 106C120 104 240 99 360 94V120H0z" fill="#FFFFFF"/>
+            <path d="M0 106C120 104 240 99 360 94" fill="none" stroke="#CDBFAF" stroke-width="1.5"/>
+            <!-- 軒下の薪 -->
+            <g fill="#8A6A4F">
+              <circle cx="238" cy="97" r="3.5"/><circle cx="245" cy="97" r="3.5"/><circle cx="252" cy="97" r="3.5"/>
+              <circle cx="241.5" cy="90.5" r="3.5"/><circle cx="248.5" cy="90.5" r="3.5"/><circle cx="245" cy="84" r="3.5"/>
+            </g>
+            <!-- 雪をかぶった低い木 -->
+            <g stroke="#4F4136" stroke-width="2" fill="none"><path d="M44 92v12"/><path d="M88 94v10"/></g>
+            <path d="M44 50L26 92h36z" fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5"/>
+            <path d="M88 62L74 94h28z" fill="#FFFFFF" stroke="#CDBFAF" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <p class="hero__kind">小さな宿の空室と料金</p>
+          <h1 class="h1 nw" id="h-top" tabindex="-1">ゲストハウス ヒサメノ</h1>
+          <p class="hero__lead">相部屋・個室・和室・離れの、<span class="nw">4つ</span>のお部屋がある小さな宿です。カレンダーで空きを見て、泊まる日と人数を選ぶと、料金の目安が出ます。</p>
+          <p class="hero__intro">架空の町の、坂の上の宿。冬は談話室の薪ストーブに火を入れて、こたつにみかんを置いています<span class="nw">（架空）</span>。</p>
+          <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>空室・料金はすべて<span class="nw">架空</span>です。予約はできません。</span></p>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#calendar" id="hero-cta"><span class="nw">空室カレンダーを見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="plan sec--band">
+      <div class="wrap plan__grid">
+        <!-- 2. 空室カレンダー -->
+        <section id="calendar" class="sec plan__cal" aria-labelledby="h-cal">
+          <p class="sec__en">CALENDAR</p>
+          <h2 id="h-cal" class="sec__title" tabindex="-1">空室カレンダー</h2>
+          <p class="sec__lead">お部屋を選ぶと、<span class="nw">2026年12月</span>と<span class="nw">2027年1月</span>の空きが出ます。日付を押すと、その日がチェックインの日になります。</p>
+          <fieldset class="rooms">
+            <legend class="rooms__label">部屋の種類</legend>
+            <div class="rooms__grid">
+              <label class="room-opt"><input type="radio" class="room-opt__input visually-hidden" name="room" value="dorm"><span class="room-opt__face"><svg class="room-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="room-opt__text"><span class="room-opt__name nw">相部屋</span><span class="room-opt__cap nw">ベッド・4人まで</span></span></span></label>
+              <label class="room-opt"><input type="radio" class="room-opt__input visually-hidden" name="room" value="twin" checked><span class="room-opt__face"><svg class="room-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="room-opt__text"><span class="room-opt__name nw">個室</span><span class="room-opt__cap nw">2人まで</span></span></span></label>
+              <label class="room-opt"><input type="radio" class="room-opt__input visually-hidden" name="room" value="wa"><span class="room-opt__face"><svg class="room-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="room-opt__text"><span class="room-opt__name nw">和室</span><span class="room-opt__cap nw">4人まで</span></span></span></label>
+              <label class="room-opt"><input type="radio" class="room-opt__input visually-hidden" name="room" value="hanare"><span class="room-opt__face"><svg class="room-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="room-opt__text"><span class="room-opt__name nw">離れ</span><span class="room-opt__cap nw">一棟・6人まで</span></span></span></label>
+            </div>
+          </fieldset>
+          <p class="rooms__desc" id="room-desc"><span class="nw">個室（2人まで）</span>：ベッドが2つの個室です。3室あります。1室の料金です（架空）。</p>
+          <div class="cal">
+            <div class="cal__head">
+              <button type="button" class="btn-sub cal__prev" id="cal-prev" aria-disabled="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-prev"/></svg><span class="nw">前の月</span></button>
+              <h3 class="cal__month nw" id="cal-month">2026年12月</h3>
+              <button type="button" class="btn-sub cal__next" id="cal-next" aria-disabled="false"><span class="nw">次の月</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-next"/></svg></button>
+            </div>
+            <table class="cal__grid" id="cal-grid" role="grid" aria-labelledby="cal-room cal-month">
+              <thead><tr><th scope="col" abbr="日曜日">日</th><th scope="col" abbr="月曜日">月</th><th scope="col" abbr="火曜日">火</th><th scope="col" abbr="水曜日">水</th><th scope="col" abbr="木曜日">木</th><th scope="col" abbr="金曜日">金</th><th scope="col" abbr="土曜日">土</th></tr></thead>
+              <tbody id="cal-body"></tbody>
+            </table>
+            <span class="visually-hidden" id="cal-room">個室（2人まで）の空室、</span>
+            <noscript><p class="note">空室カレンダーと料金の目安の表示には JavaScript を使います。</p></noscript>
+            <ul class="cal__legend">
+              <li><svg class="cal__legend-mark" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-free"/></svg><span><span class="nw">空きあり</span></span></li>
+              <li><svg class="cal__legend-mark" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-few"/></svg><span><span class="nw">残りわずか</span>（個室・和室は残り<span class="nw">1室</span>、相部屋は残り<span class="nw">2ベッド</span>）</span></li>
+              <li><svg class="cal__legend-mark" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-full"/></svg><span><span class="nw">満室</span></span></li>
+              <li><svg class="cal__legend-mark" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-closed"/></svg><span><span class="nw">休館</span>（お休みの日）</span></li>
+              <li><span class="cal__legend-stay" aria-hidden="true"></span><span>太い枠：選んだ日程（泊まる夜）</span></li>
+            </ul>
+            <p class="cal__note">空室はすべて架空の決まった表示です。実際の空きではありません。</p>
+            <p class="cal__picked" id="cal-picked">日付を押すと、その日から泊まる日程になります。</p>
+            <button type="button" class="btn-sub cal__to-price" id="to-price"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-down"/></svg><span class="nw">料金の内訳を見る</span></button>
+          </div>
+        </section>
+
+        <!-- 3. 宿泊料金の目安 -->
+        <section id="price" class="sec plan__price" aria-labelledby="h-price">
+          <p class="sec__en">PRICE</p>
+          <h2 id="h-price" class="sec__title" tabindex="-1">宿泊料金の目安</h2>
+          <p class="sec__lead">チェックインの日・泊数・人数を選ぶと、<span class="nw">1泊</span>ごとの料金と合計が出ます。</p>
+          <p class="price__room">お部屋：<strong id="price-room" class="nw">個室（2人まで）</strong> <button type="button" class="inline-link price__reroom" id="reroom"><span class="nw">部屋を選び直す</span></button></p>
+          <div class="price__fields">
+            <div class="price__field price__field--in">
+              <label class="price__label" for="f-in">チェックインの日</label>
+              <div class="sel-wrap">
+                <select id="f-in" class="sel"><option value="">選んでください</option></select>
+                <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+              </div>
+            </div>
+            <div class="price__field">
+              <label class="price__label" for="f-n">泊数</label>
+              <div class="sel-wrap">
+                <select id="f-n" class="sel">
+                  <option value="1">1泊</option><option value="2">2泊</option><option value="3">3泊</option><option value="4">4泊</option><option value="5">5泊</option><option value="6">6泊</option><option value="7">7泊</option>
+                </select>
+                <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+              </div>
+            </div>
+            <div class="price__field">
+              <label class="price__label" for="f-p">人数</label>
+              <div class="sel-wrap">
+                <select id="f-p" class="sel" aria-describedby="p-hint">
+                  <option value="1">1人</option><option value="2" selected>2人</option><option value="3">3人</option><option value="4">4人</option><option value="5">5人</option><option value="6">6人</option>
+                </select>
+                <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+              </div>
+              <p id="p-hint" class="price__hint"><span class="nw">個室（2人まで）</span>は<span class="nw">2人まで</span>。</p>
+            </div>
+          </div>
+          <div class="card result" id="result"><p class="result__none">チェックインの日を選ぶと、ここに料金の目安が出ます。カレンダーの日付を押しても選べます。</p></div>
+          <h3 class="rates__title">お部屋ごとの<span class="nw">1泊</span>の料金<span class="nw">（税込・架空）</span></h3>
+          <table class="rates">
+            <thead><tr><th scope="col">お部屋</th><th scope="col">平日</th><th scope="col">休前日</th><th scope="col">年末年始</th></tr></thead>
+            <tbody id="rates-body"></tbody>
+          </table>
+          <p class="note">休前日の料金は、金曜・土曜の夜と、祝日の前の夜です（金曜の夜を休前日にするかは、宿によって違います）。年末年始は、<span class="nw">12月29日</span>から<span class="nw">1月3日</span>までの夜です。</p>
+          <p class="note">料金は税込の目安です<span class="nw">（架空）</span>。宿泊税などの税は別途で、実際の額はお店と確かめてください。</p>
+        </section>
+      </div>
+    </div>
+
+    <!-- 4. 予約のお問い合わせ -->
+    <section id="ask" class="sec" aria-labelledby="h-ask">
+      <div class="wrap">
+        <p class="sec__en">CONTACT</p>
+        <h2 id="h-ask" class="sec__title" tabindex="-1">予約のお問い合わせ</h2>
+        <p class="sec__lead">このデモでは予約はできません。選んだ日程を、お問い合わせの文の下書きにしました。コピーして使えます（送信はしません）。</p>
+        <div class="card draft">
+          <h3 class="draft__title" id="h-draft">お問い合わせ文の下書き</h3>
+          <p class="draft__text" id="draft-text">チェックインの日・泊数・人数を、料金の目安で選ぶと、ここに下書きが出ます。</p>
+          <button type="button" class="btn-main draft__copy" id="draft-copy" aria-disabled="true" aria-describedby="draft-done"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span class="nw">下書きをコピー</span></button>
+          <p class="draft__done" id="draft-done"></p>
+          <p class="draft__note">実際のお仕事では、ここから予約フォーム・電話・<span class="nw">LINE</span>・予約サイトにつなぎます。このデモには、名前や連絡先を入れる欄はありません。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">空室カレンダーと料金の目安を、宿のホームページの中にお作りします。泊まる方が「いつ空いているか」「何泊・何人でいくらくらいか」を、問い合わせる前に確かめられます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-edit"/></svg>
+            <h3>空室と料金の更新は、お店の手で</h3>
+            <ul><li>スプレッドシートや管理画面から、空き・残りわずか・満室・休館をお店の方が直せる形にします</li><li>平日・休前日・年末年始などの料金の表も、お店で書き換えられるようにします</li><li>直し方の手順書をお渡しします</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sync"/></svg>
+            <h3>予約サイトとの二重の管理を減らす</h3>
+            <ul><li>いまお使いの予約サイトの空きと、ページの空室がずれにくい運用をご相談します</li><li>予約サイトとの自動の連携は、サイトの仕組みによってできない場合があります。できる場合も、内容により別にお見積もりです</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-door"/></svg>
+            <h3>予約の入り口と、税の表示</h3>
+            <ul><li>このデモの「お問い合わせ文の下書き」の先は、実際のページでは予約フォーム・電話・<span class="nw">LINE</span>・予約サイトにつなぎます</li><li>宿泊税・入湯税などの税の表示は、自治体のきまりに合わせてお店と決めます</li><li>費用の目安：ホームページ <span class="nw">5ページ</span> <span class="nw">150,000円（税込）</span>から</li><li><span class="nw">LP 1枚</span> <span class="nw">80,000円（税込）</span>から</li><li>空室カレンダー・予約サイトとの連携は、内容によりお見積もり</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で確かめていただくこと</h3>
+          <ul><li>営業の許可など、宿のページに必要な表示（このデモは架空のお店のため載せていません。実際のページでは必要な表示を載せます）</li><li>空室と料金を、いつ・だれが直すか</li><li>キャンセルの決まりと、料金に含まれるもの（寝具・朝食など）</li></ul>
+          <p class="work-check__note">ページに出す空室・料金の内容は、お店が決めて責任を持ちます。<span class="nw">TENKA LAB</span> は内容を判断しません。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">ゲストハウス ヒサメノ</span>と、空室・料金はすべて<span class="nw">架空</span>です。予約はできません。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
