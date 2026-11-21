@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ピラティススタジオ ソラノネ（デモ）コース診断つきのLP｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。ピラティススタジオの LP に、5つの質問でおすすめのコースが分かる診断を付けた見本です。お店・コース・料金・お客様の声はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3A4868">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ピラティススタジオ ソラノネ（デモ）コース診断つきのLP｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。ピラティススタジオの LP に、5つの質問でおすすめのコースが分かる診断を付けた見本です。お店・コース・料金・お客様の声はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Ccircle cx='14' cy='14' r='6' fill='%233A4868'/%3E%3Ccircle cx='14' cy='14' r='9.5' fill='none' stroke='%233A4868' stroke-width='1.5'/%3E%3Cpath d='M1 14A13 13 0 0 1 27 14' fill='none' stroke='%233A4868' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-mat" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="16" width="25" height="8" rx="4"/><circle cx="8" cy="20" r="4"/><path d="M14 20h11"/></g></symbol>
+      <symbol id="i-machine" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="17" width="26" height="5" rx="2.5"/><rect x="13" y="11" width="10" height="6" rx="2"/><path d="M3 13c1-2.5 2-2.5 3 0s2 2.5 3 0 2-2.5 3 0"/><path d="M6 22v6M26 22v6"/></g></symbol>
+      <symbol id="i-gentle" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22c0-4 5-6 11-6s11 2 11 6-5 6-11 6-11-2-11-6z"/><path d="M10 22c2 1.2 4 1.6 6 1.6s4-.4 6-1.6"/><path d="M18.5 3.5a5 5 0 1 0 4.5 7.5 4 4 0 0 1-4.5-7.5z"/></g></symbol>
+      <symbol id="i-three" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="7" cy="18" r="4"/><circle cx="16" cy="13" r="4"/><circle cx="25" cy="18" r="4"/></g></symbol>
+      <symbol id="i-ticket" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h24v5a2.5 2.5 0 0 0 0 5v5H4v-5a2.5 2.5 0 0 0 0-5z"/><path d="M20 9v3M20 15v2M20 20v4"/></g></symbol>
+      <symbol id="i-hanger" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8.5a3 3 0 1 1 3 3c-.6 0-1 .5-1 1V14"/><path d="M15 14L3.5 23.5h25z"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#3A4868"/><path d="M5.5 10.3l3 3 6-6.3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-check-good" viewBox="0 0 20 20"><circle cx="10" cy="10" r="10" fill="#2E6B47"/><path d="M5.5 10.3l3 3 6-6.3" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-ck" viewBox="0 0 20 20"><path d="M4.5 10.3l3.5 3.5 7-7.3" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-right" viewBox="0 0 20 20"><path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-left" viewBox="0 0 20 20"><path d="M16 10H4M9 5l-5 5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 20 20"><path d="M4 10h12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24"><g fill="currentColor"><path d="M3 18v-5c0-4 2-7 6-8l.8 1.6C7.6 7.5 6.6 9 6.5 11H10v7z"/><path d="M13 18v-5c0-4 2-7 6-8l.8 1.6c-2.2.9-3.2 2.4-3.3 4.4H20v7z"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h22v14H14l-6 5v-5H5z"/><path d="M10 12.5h12M10 16.5h8"/></g></symbol>
+      <symbol id="i-chart" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 27h24"/><rect x="7" y="16" width="4" height="11"/><rect x="14" y="9" width="4" height="18"/><rect x="21" y="13" width="4" height="14"/></g></symbol>
+      <symbol id="i-tag" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h11l13 13-10 10L5 15z"/><circle cx="10.5" cy="10.5" r="2"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong><span class="nw">（架空のお店）</span>です。お店・コース・料金・お客様の声はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <circle cx="14" cy="14" r="6" fill="#3A4868"/>
+          <circle cx="14" cy="14" r="9.5" fill="none" stroke="#3A4868" stroke-width="1.5"/>
+          <path d="M1 14A13 13 0 0 1 27 14" fill="none" stroke="#3A4868" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="hd__name nw">ピラティススタジオ ソラノネ</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+      <p class="hd__price"><span class="nw">体験レッスン</span> <span class="nw">2,000円（架空）</span></p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <div class="hero__text">
+          <p class="hero__tag"><span class="nw">デモ（架空のお店）</span></p>
+          <h1 id="h-top" tabindex="-1"><span class="nw">はじめてでも、</span><br>自分のペースで続ける<span class="nw">ピラティス</span></h1>
+          <p class="hero__lead"><span class="nw">ピラティススタジオ ソラノネ</span>は、少人数の小さなスタジオです。<span class="nw">3つ</span>のコースのどれが合うか迷ったら、<span class="nw">5つ</span>の質問に答えるだけの「<span class="nw">コース診断</span>」をどうぞ。</p>
+          <ul class="hero__courses">
+            <li><span class="c-ic c-ic--mat"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-mat"/></svg></span><span class="hero__ct"><span class="hero__cn nw">はじめてのマット</span><span class="hero__cc">運動がひさしぶりの方に</span></span></li>
+            <li><span class="c-ic c-ic--machine"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-machine"/></svg></span><span class="hero__ct"><span class="hero__cn nw">マシンで整える</span><span class="hero__cc">肩や腰の重さが気になる方に</span></span></li>
+            <li><span class="c-ic c-ic--gentle"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-gentle"/></svg></span><span class="hero__ct"><span class="hero__cn nw">産後・やさしいペース</span><span class="hero__cc">体力に不安がある方に</span></span></li>
+          </ul>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#shindan" id="hero-cta"><span><span class="nw">30秒</span>で<span class="nw">コース診断</span></span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></a>
+            <p class="hero__note"><span class="nw">5つ</span>の質問に答えるだけ。答えは送信されません</p>
+          </div>
+        </div>
+        <svg class="hero__art" viewBox="0 0 400 300" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="400" height="300" rx="24"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)">
+            <rect x="0" y="0" width="400" height="300" fill="#DCE7F0"/>
+            <circle class="ring ring--in" cx="290" cy="96" r="62" fill="none" stroke="#9DB0C8" stroke-width="2"/>
+            <circle class="ring ring--out" cx="290" cy="96" r="82" fill="none" stroke="#9DB0C8" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/>
+            <circle class="ring ring--out" cx="290" cy="96" r="102" fill="none" stroke="#9DB0C8" stroke-width="2" stroke-dasharray="2 8" stroke-linecap="round"/>
+            <circle cx="290" cy="96" r="44" fill="#FFFFFF"/>
+            <rect x="0" y="236" width="400" height="64" fill="#ECE2D3"/>
+            <g stroke="#3A4868" stroke-width="1.5" fill="#BFD3C9">
+              <ellipse cx="58" cy="58" rx="22" ry="10" transform="rotate(-30 58 58)"/>
+              <ellipse cx="88" cy="40" rx="18" ry="8" transform="rotate(30 88 40)"/>
+            </g>
+            <g stroke="#3A4868" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="48" y="214" width="232" height="20" rx="10" fill="#D9D2EC"/>
+              <circle cx="58" cy="224" r="12" fill="#D9D2EC"/>
+              <path d="M232 188v48M356 188v48" fill="none"/>
+              <rect x="220" y="176" width="148" height="12" rx="6" fill="#FFFFFF"/>
+              <rect x="252" y="160" width="52" height="16" rx="6" fill="#DCE7F0"/>
+              <path d="M226 168c2.7-6 5.3-6 8 0s5.3 6 8 0 5.3-6 8 0" fill="none"/>
+              <circle cx="118" cy="196" r="18" fill="#ECE2D3"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 2. お悩み → 特徴 -->
+    <section class="sec" id="worry" aria-labelledby="h-worry">
+      <div class="wrap">
+        <p class="sec__en">WORRY</p>
+        <h2 class="sec__title" id="h-worry" tabindex="-1">こんなこと、ありませんか？</h2>
+        <ul class="worries">
+          <li>運動はひさしぶりで、ついていけるか不安</li>
+          <li>姿勢や体の硬さが、なんとなく気になる</li>
+          <li>座りっぱなしで、肩や腰が重く感じる</li>
+          <li>産後、体力に自信がなくなった</li>
+        </ul>
+        <p class="worries__after">どれか<span class="nw">1つ</span>でも当てはまったら、まずは<a class="inline-link" href="#shindan"><span class="nw">30秒</span>の診断</a>で、合いそうなコースを見てみてください。</p>
+
+        <div class="feature-block">
+          <p class="sec__en">FEATURE</p>
+          <h2 class="sec__title sec__title--long" id="h-feature"><span class="nw">ピラティススタジオ ソラノネ</span>の特徴</h2>
+          <ul class="features">
+            <li>
+              <span class="feat__ic"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-three"/></svg></span>
+              <h3>少人数のレッスン</h3>
+              <p><span class="nw">1つ</span>のレッスンは<span class="nw">3〜6人</span>まで。講師が一人ひとりの動きを見ながら進めます。</p>
+            </li>
+            <li>
+              <span class="feat__ic"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></span>
+              <h3>初回の体験は <span class="nw">2,000円</span></h3>
+              <p>どのコースも、はじめての方は<span class="nw">1回</span> <span class="nw">2,000円（税込）</span>で体験できます。その日に入会を決めなくて大丈夫です。</p>
+            </li>
+            <li>
+              <span class="feat__ic"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-hanger"/></svg></span>
+              <h3>着替えの部屋とロッカー</h3>
+              <p>仕事帰りでも寄れるように、着替えの部屋・鍵つきロッカー・ウェアとタオルの貸し出しがあります。</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. コース診断（主役） -->
+    <section class="sec sec--band" id="shindan" aria-labelledby="h-shindan">
+      <div class="wrap">
+        <p class="sec__en">CHECK</p>
+        <h2 class="sec__title" id="h-shindan" tabindex="-1"><span class="nw">30秒</span>で<span class="nw">コース診断</span></h2>
+        <p class="sec__lead"><span class="nw">5つ</span>の質問に答えると、<span class="nw">3つ</span>のコースから合いそうなものをおすすめします。</p>
+
+        <div class="quiz" id="quiz">
+          <!-- 問いの画面（結果のときは hidden） -->
+          <div class="quiz__q" id="quiz-q">
+            <div class="quiz__head">
+              <p class="quiz__progress" id="quiz-progress" aria-live="polite"><span class="nw">質問 1 / 5</span></p>
+              <div class="quiz__bar" id="quiz-bar" aria-hidden="true"><span class="is-done"></span><span></span><span></span><span></span><span></span></div>
+            </div>
+            <div class="quiz__body" id="quiz-body">
+              <h3 class="quiz__title" id="quiz-title" tabindex="-1">運動の経験は、どのくらいですか？</h3>
+              <p class="quiz__hint" id="quiz-hint" hidden>いちばん近いものを<span class="nw">1つ</span>選んでください</p>
+              <ul class="quiz__opts" id="quiz-opts">
+                <li><button type="button" class="q-opt" aria-pressed="false" aria-describedby="quiz-title" data-v="1"><span class="q-opt__n" aria-hidden="true">1</span><span class="q-opt__t">ほとんどない</span></button></li>
+                <li><button type="button" class="q-opt" aria-pressed="false" aria-describedby="quiz-title" data-v="2"><span class="q-opt__n" aria-hidden="true">2</span><span class="q-opt__t">ときどきしている（ヨガ・ジムなど）</span></button></li>
+                <li><button type="button" class="q-opt" aria-pressed="false" aria-describedby="quiz-title" data-v="3"><span class="q-opt__n" aria-hidden="true">3</span><span class="q-opt__t">産後で、しばらく休んでいる</span></button></li>
+              </ul>
+              <button type="button" class="btn-text quiz__back" id="quiz-back" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-left"/></svg><span><span class="nw">1つ前</span>の質問に戻る</span></button>
+            </div>
+          </div>
+
+          <!-- 結果の画面 -->
+          <div class="quiz__r" id="quiz-r" hidden>
+            <p class="quiz__r-label">診断の結果</p>
+            <h3 class="quiz__title" id="quiz-r-title" tabindex="-1">あなたに<span class="nw">おすすめ</span>のコース</h3>
+            <div class="quiz__best">
+              <span class="badge badge--best">おすすめ</span>
+              <div class="quiz__ch">
+                <span class="c-ic c-ic--56" id="best-ic"><svg width="32" height="32" aria-hidden="true" focusable="false"><use id="best-use" href="#i-mat"/></svg></span>
+                <p class="quiz__name nw" id="best-name"></p>
+              </div>
+              <p class="quiz__catch" id="best-catch"></p>
+              <p class="quiz__price"><span class="nw" id="best-times"></span> <span class="nw" id="best-yen"></span></p>
+              <p class="quiz__rh">おすすめの理由</p>
+              <ul class="quiz__reasons" id="best-reasons"></ul>
+            </div>
+            <div class="quiz__second">
+              <span class="badge badge--second nw">2番目の候補</span>
+              <div class="quiz__ch">
+                <span class="c-ic c-ic--40" id="second-ic"><svg width="24" height="24" aria-hidden="true" focusable="false"><use id="second-use" href="#i-mat"/></svg></span>
+                <p class="quiz__name2 nw" id="second-name"></p>
+              </div>
+              <p class="quiz__catch2" id="second-catch"></p>
+            </div>
+            <details class="quiz__score">
+              <summary>点数の内訳を見る（デモ用）</summary>
+              <ul class="score-list" id="score-list"></ul>
+              <p class="score-note">実際のお仕事では、点数を見せずに結果だけを出すこともできます。</p>
+            </details>
+            <div class="quiz__acts">
+              <a class="btn-main quiz__to-flow" href="#flow" id="to-flow"><span><span class="nw">体験レッスン</span>の流れを見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></a>
+              <div class="quiz__acts2">
+                <button type="button" class="btn-sub" id="quiz-again">もう一度診断する</button>
+                <button type="button" class="btn-text quiz__back" id="quiz-back-r"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-left"/></svg><span><span class="nw">1つ前</span>の質問に戻る</span></button>
+              </div>
+            </div>
+            <p class="note">診断はめやすです。<span class="nw">体験レッスン</span>で、講師といっしょにコースを決めることもできます。</p>
+            <p class="note">この結果は URL で開き直せます<span class="nw">（<span class="quiz__hash" id="quiz-hash"></span>）</span></p>
+          </div>
+        </div>
+        <p class="note quiz-note">※ <span class="nw">デモ（架空のお店）</span>の診断です。質問と点数は見本です。</p>
+        <p class="note quiz-note">※ 答えはこの画面の中だけで計算します。どこにも送信・保存しません（結果は URL の「#result=」の後ろにだけ入ります）。</p>
+      </div>
+    </section>
+
+    <!-- 4. コースと料金 -->
+    <section class="sec" id="course" aria-labelledby="h-course">
+      <div class="wrap">
+        <p class="sec__en">COURSE</p>
+        <h2 class="sec__title" id="h-course" tabindex="-1">コースと料金</h2>
+        <p class="sec__lead">どのコースも、はじめての方は<span class="nw">体験レッスン</span><span class="nw">（1回 2,000円）</span>から始められます。</p>
+        <ul class="courses">
+          <li class="course" id="course-mat">
+            <span class="badge badge--course" hidden>診断の<span class="nw">おすすめ</span></span>
+            <span class="c-ic c-ic--72 c-ic--mat"><svg width="40" height="40" aria-hidden="true" focusable="false"><use href="#i-mat"/></svg></span>
+            <div class="course__body">
+              <h3 class="nw">はじめてのマット</h3>
+              <p class="course__catch">運動がひさしぶりの方に</p>
+              <p class="course__price"><span class="nw course__times">月4回</span> <span class="nw"><span class="course__yen">9,800円</span><span class="course__tax">（税込）</span></span></p>
+              <dl class="course__dl">
+                <div><dt><span class="nw">1回</span></dt><dd class="nw">60分</dd></div>
+                <div><dt>定員</dt><dd class="nw">6人</dd></div>
+                <div><dt>使うもの</dt><dd>マット・小さなボール</dd></div>
+              </dl>
+              <p class="course__for">こんな方に</p>
+              <ul class="course__list">
+                <li><span class="nw">ピラティス</span>がはじめて</li>
+                <li>姿勢や体の硬さが気になる</li>
+                <li>みんなとマイペースに続けたい</li>
+              </ul>
+              <a class="btn-sub course__btn" href="#apply" aria-label="はじめてのマット の体験へ">このコースの体験へ</a>
+            </div>
+          </li>
+          <li class="course" id="course-machine">
+            <span class="badge badge--course" hidden>診断の<span class="nw">おすすめ</span></span>
+            <span class="c-ic c-ic--72 c-ic--machine"><svg width="40" height="40" aria-hidden="true" focusable="false"><use href="#i-machine"/></svg></span>
+            <div class="course__body">
+              <h3 class="nw">マシンで整える</h3>
+              <p class="course__catch">肩や腰の重さが気になる方に</p>
+              <p class="course__price"><span class="nw course__times">月4回</span> <span class="nw"><span class="course__yen">14,800円</span><span class="course__tax">（税込）</span></span></p>
+              <dl class="course__dl">
+                <div><dt><span class="nw">1回</span></dt><dd class="nw">50分</dd></div>
+                <div><dt>定員</dt><dd class="nw">3人</dd></div>
+                <div><dt>使うもの</dt><dd><span class="nw">ピラティス</span>のマシン</dd></div>
+              </dl>
+              <p class="course__for">こんな方に</p>
+              <ul class="course__list">
+                <li>デスクワークで座っている時間が長い</li>
+                <li>少人数でこまかく見てほしい</li>
+                <li>少し運動の経験がある</li>
+              </ul>
+              <a class="btn-sub course__btn" href="#apply" aria-label="マシンで整える の体験へ">このコースの体験へ</a>
+            </div>
+          </li>
+          <li class="course" id="course-gentle">
+            <span class="badge badge--course" hidden>診断の<span class="nw">おすすめ</span></span>
+            <span class="c-ic c-ic--72 c-ic--gentle"><svg width="40" height="40" aria-hidden="true" focusable="false"><use href="#i-gentle"/></svg></span>
+            <div class="course__body">
+              <h3 class="nw">産後・やさしいペース</h3>
+              <p class="course__catch">体力に不安がある方に</p>
+              <p class="course__price"><span class="nw course__times">月2回</span> <span class="nw"><span class="course__yen">6,800円</span><span class="course__tax">（税込）</span></span></p>
+              <dl class="course__dl">
+                <div><dt><span class="nw">1回</span></dt><dd class="nw">50分</dd></div>
+                <div><dt>定員</dt><dd class="nw">4人</dd></div>
+                <div><dt>使うもの</dt><dd>マット・クッション</dd></div>
+              </dl>
+              <p class="course__for">こんな方に</p>
+              <ul class="course__list">
+                <li>産後で、しばらく運動を休んでいる</li>
+                <li>体力に自信がない</li>
+                <li>体調に合わせてゆっくり進めたい</li>
+              </ul>
+              <a class="btn-sub course__btn" href="#apply" aria-label="産後・やさしいペース の体験へ">このコースの体験へ</a>
+            </div>
+          </li>
+        </ul>
+        <table class="price">
+          <caption>そのほかの料金<span class="nw">（架空・税込）</span></caption>
+          <tbody>
+            <tr><th scope="row"><span class="nw">体験レッスン</span>（全コース・<span class="nw">1回</span>）</th><td class="nw">2,000円</td></tr>
+            <tr><th scope="row">入会金</th><td>なし</td></tr>
+            <tr><th scope="row">ウェア・タオルの貸し出し</th><td>無料</td></tr>
+          </tbody>
+        </table>
+        <p class="note">※ お店・コース・料金はすべて架空です<span class="nw">（デモ）</span>。料金は税込です。</p>
+      </div>
+    </section>
+
+    <!-- 5. お客様の声（架空） -->
+    <section class="sec sec--line" id="voice" aria-labelledby="h-voice">
+      <div class="wrap">
+        <p class="sec__en">VOICE</p>
+        <h2 class="sec__title" id="h-voice">お客様の声<span class="nw">（架空）</span></h2>
+        <ul class="voices">
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>運動はひさしぶりで不安でしたが、<span class="nw">3人</span>だけのレッスンなので、分からない所をその場で聞けました。</p>
+            <p class="voice__who"><span class="nw">30代</span>・会社員・<span class="nw">マシンで整える（架空）</span></p>
+          </li>
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>体が硬くても、できる形を教えてもらえるので、まわりを気にせず続けられています。</p>
+            <p class="voice__who"><span class="nw">40代</span>・<span class="nw">はじめてのマット（架空）</span></p>
+          </li>
+          <li class="voice">
+            <svg class="voice__q" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+            <p>子どもを預けられる<span class="nw">月2回</span>だけでも通えるのが、ありがたいです。休みながらでいいと言ってもらえて、気が楽になりました。</p>
+            <p class="voice__who"><span class="nw">30代</span>・<span class="nw">産後・やさしいペース（架空）</span></p>
+          </li>
+        </ul>
+        <p class="note">※ お客様の声はすべて架空です<span class="nw">（デモ）</span>。感じ方には個人差があります。</p>
+      </div>
+    </section>
+
+    <!-- 6. 体験レッスンの流れ -->
+    <section class="sec sec--band" id="flow" aria-labelledby="h-flow">
+      <div class="wrap">
+        <p class="sec__en">FLOW</p>
+        <h2 class="sec__title" id="h-flow" tabindex="-1"><span class="nw">体験レッスン</span>の流れ</h2>
+        <p class="sec__lead">はじめての方も、手ぶらで来られます。</p>
+        <ol class="flow">
+          <li>
+            <span class="flow__n" aria-hidden="true">1</span>
+            <div>
+              <h3>申し込む</h3>
+              <p>診断で合いそうなコースを見てから、体験の日を選んで申し込みます。</p>
+              <p class="flow__t">約<span class="nw">1分</span></p>
+            </div>
+          </li>
+          <li>
+            <span class="flow__n" aria-hidden="true">2</span>
+            <div>
+              <h3><span class="nw">体験レッスン</span></h3>
+              <p>着替えのあと、講師が体調や気になることを伺ってからレッスンを始めます。終わったら、感じたことをいっしょに振り返ります。</p>
+              <p class="flow__t"><span class="nw">60分</span>・<span class="nw">2,000円（税込・架空）</span></p>
+            </div>
+          </li>
+          <li>
+            <span class="flow__n" aria-hidden="true">3</span>
+            <div>
+              <h3>続けるか決める</h3>
+              <p>その日に決めなくて大丈夫です。ほかのコースを体験してから選ぶこともできます。</p>
+              <p class="flow__t">無理な勧誘はしません</p>
+            </div>
+          </li>
+        </ol>
+        <p class="flow__more"><a class="btn-sub" href="#apply">申し込みへ進む</a></p>
+      </div>
+    </section>
+
+    <!-- 7. よくある質問 -->
+    <section class="sec" id="faq" aria-labelledby="h-faq">
+      <div class="wrap">
+        <p class="sec__en">FAQ</p>
+        <h2 class="sec__title" id="h-faq">よくある質問</h2>
+        <div class="faq-list">
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>体が硬くても大丈夫ですか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>大丈夫です。体の硬さに合わせて、動きの大きさや形を変えて行います。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>何を持っていけばいいですか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>飲み物だけで大丈夫です。動きやすいウェアとタオルは無料でお貸しします<span class="nw">（架空）</span>。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>産後、いつから参加できますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>産後の体の状態は人それぞれです。医師に運動してよいと言われてから、ご参加ください。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>痩せたり、肩こりが治ったりしますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>体の変化には個人差があり、お約束はできません。<span class="nw">ピラティススタジオ ソラノネ</span>では、体の動かし方を知り、続けやすいペースをいっしょに探すことを大切にしています。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>診断の結果と違うコースを選んでもいいですか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>はい、自由に選べます。診断はめやすです。体験のあとでコースを変えることもできます。</p></div></details>
+          <details class="faq"><summary><span class="faq__q" aria-hidden="true">Q</span><span>休んだ回は振り替えられますか？</span><svg class="faq__plus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg><svg class="faq__minus" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></summary><div class="faq__a"><span class="faq__al" aria-hidden="true">A</span><p>同じ月の中なら、前の日までにご連絡いただければ振り替えられます<span class="nw">（デモの架空のルール）</span>。</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 体験レッスンの申し込み（フォームなし） -->
+    <section class="sec sec--band" id="apply" aria-labelledby="h-apply">
+      <div class="wrap">
+        <p class="sec__en">TRIAL</p>
+        <h2 class="sec__title" id="h-apply" tabindex="-1"><span class="nw">体験レッスン</span>の申し込み</h2>
+        <p class="sec__lead">はじめての方は、どのコースも<span class="nw">1回</span> <span class="nw">2,000円（税込）</span>で体験できます。</p>
+        <div class="apply">
+          <p class="apply__diag" id="apply-diag" hidden><span class="nw">診断のおすすめ</span>：<span class="nw" id="apply-course"></span></p>
+          <p class="apply__none" id="apply-none">まだ診断していない方は、<a class="inline-link" href="#shindan"><span class="nw">30秒</span>の<span class="nw">コース診断</span></a>からどうぞ。</p>
+          <button type="button" class="btn-main apply__btn" id="apply-btn" aria-controls="apply-msg"><span><span class="nw">体験レッスン</span>を申し込む<span class="nw">（デモ）</span></span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+          <p class="apply__nopi">このデモでは、お名前・ご連絡先の入力はありません。</p>
+          <div class="apply__msg" id="apply-msg" role="status" hidden>
+            <p class="apply__msg-h"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check-good"/></svg><span>このデモでは送信しません</span></p>
+            <p class="apply__msg-b">実際のお仕事では、ここに予約フォーム・LINE・予約サービスをつなぎます（このデモでは送信しません）。</p>
+            <p class="apply__msg-c">診断の結果（<span class="nw">おすすめ</span>のコース）を予約の画面に引き継ぐこともできます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">TENKA LAB より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">教室・スタジオ・サロンの LP に、この形の診断を付けてお作りします。質問と点数はお店に合わせて決め、結果から予約までを<span class="nw">1本道</span>にします。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>
+            <h3>質問と点数は、店主に聞き取り</h3>
+            <ul><li>「どんなお客様に、どのコースを勧めているか」を<span class="nw">30分</span>ほど伺い、質問と点数の表にします</li><li>点数の表はお店に見せて、いっしょに直します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chart"/></svg>
+            <h3>結果ごとの申し込み数を計る</h3>
+            <ul><li>アクセス解析で「どの結果の人が、何人申し込んだか」を数えられるようにします</li><li>数を見て、質問や点数を直せます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg>
+            <h3>費用の目安</h3>
+            <ul><li>LP <span class="nw">1枚</span>＋<span class="nw">コース診断</span>：<span class="nw">120,000円（税込）</span>から（<span class="nw">LP だけなら</span><span class="nw">80,000円</span>から。内容によりお見積もり）</li><li>保守は<span class="nw">月4,000円</span>から</li></ul>
+          </li>
+        </ul>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">ピラティススタジオ ソラノネ</span>と、コース・料金・お客様の声はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <nav class="fixbar" id="fixbar" aria-label="すぐに使うボタン">
+    <a class="btn-sub" href="#shindan">コース診断</a>
+    <a class="btn-main" href="#apply">体験を申し込む</a>
+  </nav>
+</body>
+</html>
