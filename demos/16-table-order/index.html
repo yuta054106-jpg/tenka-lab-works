@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>定食とおばんざい ミトリ堂（デモ）テーブル注文｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。定食屋のテーブル注文の見本です。お客様が席のスマホで注文し、厨房・ホールの画面に届きます。お店・メニュー・価格はすべて架空です。">
+  <meta name="theme-color" content="#5B2433">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="定食とおばんざい ミトリ堂（デモ）テーブル注文｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。定食屋のテーブル注文の見本です。お客様が席のスマホで注文し、厨房・ホールの画面に届きます。お店・メニュー・価格はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='18' height='2' rx='1' fill='%232A1F1C'/%3E%3Crect x='3' y='6' width='5.4' height='12' fill='%235B2433'/%3E%3Crect x='9.3' y='6' width='5.4' height='12' fill='%235B2433'/%3E%3Crect x='15.6' y='6' width='5.4' height='12' fill='%235B2433'/%3E%3Ccircle cx='12' cy='12' r='1.8' fill='%23E3A53A'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- アイコン（design.md §14。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-ext" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></g></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-okc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.3l3 3 6-6.3"/></g></symbol>
+      <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="currentColor"/></symbol>
+      <symbol id="i-pot" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><path d="M3 11h18M10 8.5h4"/><path d="M12 6c-1.2-1.1 1.2-2.2 0-3.4"/></g></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></g></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></g></symbol>
+      <symbol id="i-ban" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M5.3 18.7L18.7 5.3"/></g></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5v6h6"/><path d="M4.6 10.5A8 8 0 1 1 6 17"/></g></symbol>
+      <symbol id="i-seat" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 27h14M5.5 27l3-15h3l3 15"/><rect x="7.5" y="16" width="5" height="5"/><rect x="20" y="6" width="9" height="18" rx="2"/><path d="M23 21h3"/></g></symbol>
+      <symbol id="i-pottab" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h12v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3z"/><path d="M2 15h14"/><path d="M9 12c-1-1 1-2 0-3.2"/><rect x="19" y="6" width="11" height="19" rx="2"/><path d="M22 11h5M22 15h5M22 19h3"/></g></symbol>
+      <symbol id="i-tagpen" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9l9 9-8 8-10-10z"/><circle cx="9" cy="10" r="1.6"/><path d="M19 29l1.2-4.3 7.3-7.3 3 3-7.3 7.3z"/></g></symbol>
+      <!-- 器の線画（§14-2。viewBox 36） -->
+      <symbol id="art-t" viewBox="0 0 36 36"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="25" width="30" height="7" rx="2"/><ellipse cx="18" cy="9" rx="5" ry="1.6"/><path d="M5.5 17.5h11a5.5 5.5 0 0 1-11 0z"/><path d="M7.5 17.5q3.5-4 7 0"/><path d="M19.5 17.5h11a5.5 5.5 0 0 1-11 0z"/><path d="M20.5 15.5a4.5 3.5 0 0 1 9 0"/><path d="M25 12v-1"/></g></symbol>
+      <symbol id="art-k" viewBox="0 0 36 36"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h26l-4 9H9z"/><path d="M13 29.5h10"/><path d="M9 17q4.5-8 9 0"/><path d="M18 17q4.5-6 9 0"/></g></symbol>
+      <symbol id="art-g" viewBox="0 0 36 36"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17h22a11 9 0 0 1-22 0z"/><path d="M13 29.5h10"/><path d="M14 13c-2-2 2-4 0-6.5M22 13c-2-2 2-4 0-6.5"/></g></symbol>
+      <symbol id="art-d" viewBox="0 0 36 36"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h12l-1.6 16H5.6z"/><path d="M20 8h11l-2 21h-7z"/><circle cx="24.5" cy="15" r="1.2"/><circle cx="26.5" cy="20.5" r="1"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。お店・メニュー・価格はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="4" width="18" height="2" rx="1" fill="#2A1F1C"/>
+          <rect x="3" y="6" width="5.4" height="12" fill="#5B2433"/><rect x="9.3" y="6" width="5.4" height="12" fill="#5B2433"/><rect x="15.6" y="6" width="5.4" height="12" fill="#5B2433"/>
+          <circle cx="12" cy="12" r="1.8" fill="#E3A53A"/>
+        </svg>
+        <span class="brand__name nw">定食とおばんざい ミトリ堂</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">テーブル注文（お客様のスマホと、厨房・ホールの注文一覧）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">席のスマホで注文、<br class="sp-only">厨房にそのまま届く</h1>
+      <p class="intro__lead">お客様は席でメニューを見て、数を選んで注文するだけ。厨房には卓の番号と品がすぐに並び、品ごとに「提供済み」を押せます。お会計はこれまでどおりレジで。</p>
+      <nav aria-label="手順">
+        <ol class="steps steps--4" id="steps">
+          <li class="step"><a href="#panel-guest" data-step="1"><span class="step__num" aria-hidden="true">1</span><span class="step__label">席のテーブル番号を<wbr>選ぶ</span></a></li>
+          <li class="step"><a href="#panel-guest" data-step="2"><span class="step__num" aria-hidden="true">2</span><span class="step__label">品を選んで<wbr>注文する</span></a></li>
+          <li class="step"><a href="#k-open" data-step="3"><span class="step__num" aria-hidden="true">3</span><span class="step__label">厨房に届き、<wbr>提供済みまで進める</span></a></li>
+          <li class="step"><a href="#k-tables" data-step="4"><span class="step__num" aria-hidden="true">4</span><span class="step__label">お帰りの後に<wbr>テーブルを空ける</span></a></li>
+        </ol>
+      </nav>
+      <div class="two-tabs">
+        <h2 class="two-tabs__h">2つのタブを並べて見る</h2>
+        <ul class="two-tabs__links">
+          <li><a class="text-link" href="?view=kitchen" target="_blank" rel="noopener">厨房・ホールの画面を別のタブで開く<svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-ext"/></svg></a></li>
+          <li><a class="text-link" href="?table=3" target="_blank" rel="noopener">お客様の画面（3番テーブル）を別のタブで開く<svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-ext"/></svg></a></li>
+        </ul>
+        <p class="sub sub--13">同じブラウザの中で、片方の操作がもう片方にすぐ出ます</p>
+      </div>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。お店・メニュー・価格はすべて架空です。</li>
+        <li>※ お名前・電話番号・メールの欄はありません。数はボタンで選びます。</li>
+        <li>※ 注文はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ お会計・お支払いはしません（実際のお店では、お会計はレジで行います）。</li>
+        <li id="note-nosave" role="note" hidden>※ この端末では保存できないため、2つのタブの間で注文は共有されません。このタブの中では最後まで動きます（再読み込みすると見本に戻ります）。</li>
+      </ul>
+    </section>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="画面" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-guest" aria-controls="panel-guest" aria-selected="true"><span><span class="nw">お客様の画面</span><wbr><span class="nw">（スマホ）</span></span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-kitchen" aria-controls="panel-kitchen" aria-selected="false" tabindex="-1"><span><span class="nw">厨房・ホールの</span><wbr><span class="nw">画面</span></span><span class="tabs__badge" id="tab-kitchen-badge" aria-hidden="true" hidden></span></button>
+      </div>
+
+      <!-- タブ1：お客様の画面（§6） -->
+      <section class="panel" role="tabpanel" id="panel-guest" aria-labelledby="tab-guest">
+        <div class="guest-wrap">
+          <div class="guest-frame" id="guest-frame">
+            <p class="g-demo">デモ（架空のお店）・価格は税込で、デモのため架空です</p>
+            <p class="g-shop"><span class="nw">定食とおばんざい ミトリ堂</span></p>
+
+            <!-- 卓の選択 -->
+            <section class="guest-scene" id="g-table" aria-labelledby="g-table-h">
+              <h2 class="g-h" id="g-table-h" tabindex="-1">テーブル番号を選んでください</h2>
+              <p class="sub g-lead">実際は、席の QR を読み取ると自動で入ります。デモでは番号を選んでください。</p>
+              <div class="table-pick" id="table-pick">
+                <button type="button" class="table-btn" data-table="1" aria-label="1番テーブル"><span class="table-btn__n"><span class="table-btn__d">1</span>番</span><span class="table-btn__s">テーブル</span></button>
+                <button type="button" class="table-btn" data-table="2" aria-label="2番テーブル"><span class="table-btn__n"><span class="table-btn__d">2</span>番</span><span class="table-btn__s">テーブル</span></button>
+                <button type="button" class="table-btn" data-table="3" aria-label="3番テーブル"><span class="table-btn__n"><span class="table-btn__d">3</span>番</span><span class="table-btn__s">テーブル</span></button>
+                <button type="button" class="table-btn" data-table="4" aria-label="4番テーブル"><span class="table-btn__n"><span class="table-btn__d">4</span>番</span><span class="table-btn__s">テーブル</span></button>
+                <button type="button" class="table-btn" data-table="5" aria-label="5番テーブル"><span class="table-btn__n"><span class="table-btn__d">5</span>番</span><span class="table-btn__s">テーブル</span></button>
+                <button type="button" class="table-btn" data-table="6" aria-label="6番テーブル"><span class="table-btn__n"><span class="table-btn__d">6</span>番</span><span class="table-btn__s">テーブル</span></button>
+              </div>
+              <p class="sub sub--13 g-after">このお店はテーブル 6卓です（デモ）</p>
+            </section>
+
+            <!-- メニュー -->
+            <section class="guest-scene" id="g-menu" aria-labelledby="g-menu-h" hidden>
+              <div class="g-head">
+                <h2 class="g-h nw" id="g-menu-h" tabindex="-1"></h2>
+                <button type="button" class="text-btn" id="btn-change-table">席を変える</button>
+              </div>
+              <p class="sub">お会計はレジでお願いします</p>
+              <button type="button" class="btn-sub g-hist-btn" id="btn-menu-hist" hidden></button>
+              <div class="cat-tabs" role="tablist" aria-label="メニューの分類" id="cat-tabs"></div>
+              <div class="cat-panel" role="tabpanel" id="cat-panel"></div>
+              <section class="cartbar" id="cartbar" aria-label="カート">
+                <div class="cartbar__sum" id="cart-sum"></div>
+                <button type="button" class="btn-main cartbar__go" id="btn-cart-go">注文の確認へ<svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+              </section>
+            </section>
+
+            <!-- 確認 -->
+            <section class="guest-scene" id="g-confirm" aria-labelledby="g-confirm-h" hidden>
+              <h2 class="g-h" id="g-confirm-h" tabindex="-1">ご注文の確認</h2>
+              <p class="g-sub nw" id="g-confirm-table"></p>
+              <ul class="cart-list" id="cart-list"></ul>
+              <div class="total-box" id="total-box" tabindex="-1" aria-live="polite"></div>
+              <p class="sub g-note">お会計はレジでお願いします（このデモでは会計・送信をしません）</p>
+              <button type="button" class="btn-main btn-order" id="btn-order"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>この内容で注文する</button>
+              <p class="notice" id="order-why" hidden></p>
+              <button type="button" class="btn-sub g-wide" id="btn-remove-soldout" hidden>品切れの品をカートから外す</button>
+              <button type="button" class="btn-sub g-wide" id="btn-confirm-back">メニューに戻る</button>
+            </section>
+
+            <!-- 完了 -->
+            <section class="guest-scene" id="g-done" aria-labelledby="g-done-h" hidden>
+              <div class="done-box g-done" role="status" id="g-done-box">
+                <div class="g-done__t"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg><h2 id="g-done-h" tabindex="-1">ご注文を受け付けました</h2></div>
+                <p class="g-done__no nw" id="g-done-no"></p>
+                <p class="g-done__table nw" id="g-done-table"></p>
+                <p class="visually-hidden" id="g-done-sr"></p>
+              </div>
+              <ul class="done-list" id="g-done-list"></ul>
+              <p class="done-total" id="g-done-total"></p>
+              <p class="sub">お料理ができましたら、お席までお持ちします。</p>
+              <p class="sub g-note">お会計はレジでお願いします（このデモでは会計・送信をしません）</p>
+              <button type="button" class="btn-main g-wide" id="btn-more"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>追加で注文する</button>
+              <button type="button" class="btn-sub g-wide" id="btn-done-hist">注文の履歴（このテーブル）</button>
+            </section>
+
+            <!-- 履歴 -->
+            <section class="guest-scene" id="g-history" aria-labelledby="g-history-h" hidden>
+              <h2 class="g-h" id="g-history-h" tabindex="-1">注文の履歴</h2>
+              <p class="g-sub" id="g-hist-sub"></p>
+              <div class="total-box total-box--hist" id="hist-total"></div>
+              <ul class="history" id="hist-list"></ul>
+              <p class="g-none" id="hist-none" hidden>このテーブルの注文はまだありません。</p>
+              <button type="button" class="btn-sub g-wide" id="btn-hist-back">メニューに戻る</button>
+            </section>
+          </div>
+
+          <aside class="demo-howto" aria-labelledby="h-howto">
+            <h3 id="h-howto">このデモの見方</h3>
+            <ul class="howto__list">
+              <li>席の QR の代わりに番号を選びます</li>
+              <li>注文は「厨房・ホールの画面」に届きます</li>
+            </ul>
+            <ul class="two-tabs__links">
+              <li><a class="text-link" href="?view=kitchen" target="_blank" rel="noopener">厨房・ホールの画面を別のタブで開く<svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-ext"/></svg></a></li>
+              <li><a class="text-link" href="?table=3" target="_blank" rel="noopener">お客様の画面（3番テーブル）を別のタブで開く<svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-ext"/></svg></a></li>
+            </ul>
+            <p class="sub howto__note">デモのため住所・電話は載せていません</p>
+          </aside>
+        </div>
+      </section>
+
+      <!-- タブ2：厨房・ホールの画面（§8） -->
+      <section class="panel" role="tabpanel" id="panel-kitchen" aria-labelledby="tab-kitchen" hidden>
+        <p class="k-note">デモ（架空のお店）です。注文はこのブラウザの中だけにあり、どこにも送信しません。</p>
+        <section class="summary summary--kitchen" aria-label="厨房の集計">
+          <div class="summary__box" id="sum-new-box" role="group" aria-labelledby="sum-new-l">
+            <p class="summary__label" id="sum-new-l">新規</p>
+            <p class="summary__val nw"><span class="summary__n" id="sum-new-n"></span><span class="summary__unit">件</span></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-cook-l">
+            <p class="summary__label" id="sum-cook-l">調理中</p>
+            <p class="summary__val nw"><span class="summary__n" id="sum-cook-n"></span><span class="summary__unit">件</span></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-wait-l">
+            <p class="summary__label" id="sum-wait-l">提供待ちの品</p>
+            <p class="summary__val nw"><span class="summary__n" id="sum-wait-n"></span><span class="summary__unit">点</span></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-closed-l">
+            <p class="summary__label" id="sum-closed-l">今日 締めた分</p>
+            <p class="summary__val nw"><span class="summary__n" id="sum-closed-n"></span><span class="summary__unit">回</span></p>
+            <p class="summary__note nw" id="sum-closed-yen"></p>
+          </div>
+        </section>
+
+        <div class="new-banner" id="new-banner" role="status" hidden>
+          <svg class="new-banner__bell" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+          <p class="new-banner__t" id="nb-text"></p>
+          <div class="new-banner__ops">
+            <button type="button" class="btn-sub btn-sm" id="nb-see">見る</button>
+            <button type="button" class="text-btn" id="nb-close">閉じる</button>
+          </div>
+        </div>
+
+        <div class="kitchen__main">
+          <div class="kitchen__left">
+            <section class="card" id="k-open" aria-labelledby="k-open-h">
+              <div class="card__head"><h2 id="k-open-h" tabindex="-1">まだの注文</h2><p class="sub" id="k-open-n"></p></div>
+              <div class="tickets" id="tickets"></div>
+              <p class="k-none" id="k-open-none" hidden>まだの注文はありません。お客様の画面で注文すると、ここに出ます。</p>
+            </section>
+            <details class="served-list" id="served-list">
+              <summary id="served-sum"></summary>
+              <ul class="served-list__ul" id="served-ul"></ul>
+            </details>
+          </div>
+          <div class="kitchen__side">
+            <section class="card" id="k-tables" aria-labelledby="k-tables-h">
+              <div class="card__head"><h2 id="k-tables-h" tabindex="-1">テーブルの合計（6卓）</h2></div>
+              <p class="sub sub--13 k-lead">その日の注文の足し算です。お会計はレジで行います（会計の参考）。</p>
+              <table class="table-sum" id="table-sum">
+                <caption class="visually-hidden">テーブルごとの注文の件数・合計・まだ出していない品の数</caption>
+                <colgroup><col class="c-t"><col class="c-n"><col><col class="c-w"><col class="c-op"></colgroup>
+                <thead><tr><th scope="col">テーブル</th><th scope="col">件数</th><th scope="col" class="num">合計</th><th scope="col">未提供</th><th scope="col" class="op">操作</th></tr></thead>
+                <tbody id="table-sum-body"></tbody>
+              </table>
+              <ul class="table-cards" id="table-cards"></ul>
+              <p class="closed-line" id="closed-line"></p>
+            </section>
+            <section class="card" id="k-soldout" aria-labelledby="k-soldout-h">
+              <div class="card__head"><h2 id="k-soldout-h" tabindex="-1">品切れの切り替え</h2></div>
+              <p class="sub sub--13 k-lead">品切れにすると、お客様の画面で注文できなくなります。</p>
+              <div class="soldout-list" id="soldout-list"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-undo"/></svg>見本に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の席の数・メニュー・注文の流れに合わせて作ります。お客様は席のスマホで注文するだけ、厨房とホールは手元のタブレットで確かめるだけにします。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-seat"/></svg>
+          <h3>席の QR と、多言語のメニュー</h3>
+          <ul class="dot-list">
+            <li>席ごとの QR の札を作り、印刷してお渡しします（テーブル番号は自動で入ります）</li>
+            <li>英語・中国語・韓国語などのメニューも作れます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-pottab"/></svg>
+          <h3>注文の保存先と、厨房の端末</h3>
+          <ul class="dot-list">
+            <li>注文はスプレッドシートや小さなサーバーに保存し、厨房・ホールのタブレットやパソコンで見られるようにします</li>
+            <li>レジとの連携は、お使いのレジに合わせて別にご相談します</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-tagpen"/></svg>
+          <h3>品切れ・メニューの更新はお店で</h3>
+          <ul class="dot-list">
+            <li>品切れ・価格・新しい品を、お店の方がスマホから直せる画面を作ります</li>
+            <li>やり方はお店の手順に合わせて決めます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe"><strong>費用は、席の数・メニューの数・つなぐ先によって変わるため、別にお見積もりします。</strong></p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">定食とおばんざい ミトリ堂</span>と、メニュー・価格・注文はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title"></h2>
+    <p class="confirm__body" id="cf-body"></p>
+    <div class="confirm__ops">
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok"></button>
+    </div>
+  </dialog>
+</body>
+</html>
