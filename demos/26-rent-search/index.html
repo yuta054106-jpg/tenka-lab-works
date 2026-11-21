@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>シラカゲ不動産（デモ）賃貸物件の一覧と絞り込み｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。街の不動産屋の賃貸物件を、家賃・間取り・駅からの徒歩・こだわりで絞り込める見本です。物件・駅・家賃はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F5257">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="シラカゲ不動産（デモ）賃貸物件の一覧と絞り込み｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。街の不動産屋の賃貸物件を、家賃・間取り・駅からの徒歩・こだわりで絞り込める見本です。物件・駅・家賃はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M6 13.5h16V25H6z' fill='%23FFFFFF' stroke='%231F5257' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M3 14L14 4.5 25 14' fill='%23FFFFFF' stroke='%231F5257' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.5 10.5L14 5l6.5 5.5c-1.5 1-2.5-.5-3.5.5s-2-.5-3 .3-2-.8-3 0-2-.8-3.5-.8z' fill='%23FFFFFF' stroke='%23B9C9CD' stroke-width='1.5' stroke-linejoin='round'/%3E%3Crect x='11' y='16' width='6' height='5' rx='1' fill='%23F0C46C'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-pet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 13c-3 0-5.5 3-5.5 5.2 0 1.6 1.3 2.3 2.8 2.3 1.2 0 1.8-.6 2.7-.6s1.5.6 2.7.6c1.5 0 2.8-.7 2.8-2.3C17.5 16 15 13 12 13z"/><circle cx="5" cy="10.5" r="1.8"/><circle cx="9" cy="6" r="1.8"/><circle cx="15" cy="6" r="1.8"/><circle cx="19" cy="10.5" r="1.8"/></g></symbol>
+      <symbol id="i-car" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.5v-4l2-5h12l2 5v4z"/><path d="M4 12.5h16"/><circle cx="8" cy="17.5" r="1.8"/><circle cx="16" cy="17.5" r="1.8"/></g></symbol>
+      <symbol id="i-floor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5"/><path d="M3.5 19.5h17"/></g></symbol>
+      <symbol id="i-bath" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12.5h8v2a3.5 3.5 0 0 1-3.5 3.5h-1a3.5 3.5 0 0 1-3.5-3.5z"/><path d="M4.5 18l-1 2M8.5 18l1 2"/><path d="M12.5 3v18"/><path d="M15 6.5h5v3.5h-5zM15.5 10c0 3 1.5 4.5 3 4.5v4.5"/></g></symbol>
+      <symbol id="i-new" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11L12 3.5 21 11"/><path d="M5.5 9v11.5h13V9"/><path d="M12 10.5l1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.3-2.4 1.3.5-2.6-1.9-1.8 2.6-.4z"/></g></symbol>
+      <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/></g><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 20 20"><path d="M10 4v12M5 11l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-up" viewBox="0 0 20 20"><path d="M10 16V4M5 9l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-x" viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5h8.5l4 4v15H6z"/><path d="M14.5 2.5v4h4"/><path d="M9 11h6.5M9 14.5h6.5M9 18h4"/></g></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5h12v10H3zM3 8h12M7.5 4.5v10"/><path d="M19.5 9.5l2 2-7 7-2.8.8.8-2.8z"/></g></symbol>
+      <symbol id="i-sync" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="7" height="7" rx="1.5"/><rect x="14.5" y="13" width="7" height="7" rx="1.5"/><path d="M9.5 7.5h5a3.5 3.5 0 0 1 3.5 3.5v2M16 11l2 2 2-2"/></g></symbol>
+      <symbol id="i-plan" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3.5" width="18" height="17" rx="1"/><path d="M3 9h18M12 9v11.5M12 14.5h9M7.5 9v4"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。物件・駅・家賃・「募集中」の表示はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <path d="M6 13.5h16V25H6z" fill="#FFFFFF" stroke="#1F5257" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M3 14L14 4.5 25 14" fill="#FFFFFF" stroke="#1F5257" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.5 10.5L14 5l6.5 5.5c-1.5 1-2.5-.5-3.5.5s-2-.5-3 .3-2-.8-3 0-2-.8-3.5-.8z" fill="#FFFFFF" stroke="#B9C9CD" stroke-width="1.5" stroke-linejoin="round"/>
+          <rect x="11" y="16" width="6" height="5" rx="1" fill="#F0C46C"/>
+        </svg>
+        <span class="hd__name nw">シラカゲ不動産</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 360 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="360" height="120" rx="16"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="360" height="120" fill="#DCE7EA"/>
+            <!-- 雪の粒 -->
+            <g fill="#FFFFFF">
+              <circle cx="34" cy="14" r="2"/><circle cx="78" cy="24" r="1.5"/><circle cx="104" cy="10" r="2.5"/><circle cx="150" cy="22" r="1.5"/>
+              <circle cx="172" cy="8" r="2"/><circle cx="236" cy="14" r="2.5"/><circle cx="258" cy="30" r="1.5"/><circle cx="300" cy="12" r="2"/>
+              <circle cx="330" cy="26" r="2.5"/><circle cx="344" cy="52" r="1.5"/><circle cx="56" cy="40" r="1.5"/><circle cx="318" cy="64" r="2"/>
+            </g>
+            <!-- 左の家（1階建て） -->
+            <rect x="94" y="62" width="52" height="32" fill="#E8DCC8" stroke="#1F5257" stroke-width="2"/>
+            <path d="M88 63l32-22 32 22z" fill="#1F5257" stroke="#1F5257" stroke-width="2"/>
+            <path d="M101 55l19-13 19 13c-3 2-5-1-8 1s-5-1-7 1-5-1-7 0-4-1-7 0z" fill="#FFFFFF" stroke="#B9C9CD" stroke-width="1.5"/>
+            <rect x="102" y="70" width="14" height="11" rx="2" fill="#F0C46C" stroke="#1F5257" stroke-width="2"/>
+            <rect x="124" y="70" width="14" height="11" rx="2" fill="#B9C9CD" stroke="#1F5257" stroke-width="2"/>
+            <!-- 真ん中の家（2階建て） -->
+            <rect x="172" y="40" width="56" height="54" fill="#E8DCC8" stroke="#1F5257" stroke-width="2"/>
+            <path d="M166 41l34-24 34 24z" fill="#1F5257" stroke="#1F5257" stroke-width="2"/>
+            <path d="M180 34l20-14 20 14c-3 2-5-1-8 1s-5-1-7 1-5-1-7 0-5-1-8 0z" fill="#FFFFFF" stroke="#B9C9CD" stroke-width="1.5"/>
+            <rect x="180" y="48" width="14" height="11" rx="2" fill="#B9C9CD" stroke="#1F5257" stroke-width="2"/>
+            <rect x="206" y="48" width="14" height="11" rx="2" fill="#F0C46C" stroke="#1F5257" stroke-width="2"/>
+            <rect x="180" y="70" width="14" height="11" rx="2" fill="#F0C46C" stroke="#1F5257" stroke-width="2"/>
+            <rect x="206" y="70" width="14" height="11" rx="2" fill="#B9C9CD" stroke="#1F5257" stroke-width="2"/>
+            <!-- 右の家（1階建て） -->
+            <rect x="254" y="62" width="52" height="32" fill="#E8DCC8" stroke="#1F5257" stroke-width="2"/>
+            <path d="M248 63l32-22 32 22z" fill="#1F5257" stroke="#1F5257" stroke-width="2"/>
+            <path d="M261 55l19-13 19 13c-3 2-5-1-8 1s-5-1-7 1-5-1-7 0-4-1-7 0z" fill="#FFFFFF" stroke="#B9C9CD" stroke-width="1.5"/>
+            <rect x="262" y="70" width="14" height="11" rx="2" fill="#F0C46C" stroke="#1F5257" stroke-width="2"/>
+            <rect x="284" y="70" width="14" height="11" rx="2" fill="#B9C9CD" stroke="#1F5257" stroke-width="2"/>
+            <!-- 雪の地面 -->
+            <path d="M0 93c30-3 60 2 90 0s60-3 90 0 60 3 90 0 60-2 90 1v27H0z" fill="#FFFFFF"/>
+            <path d="M0 93c30-3 60 2 90 0s60-3 90 0 60 3 90 0 60-2 90 1" fill="none" stroke="#B9C9CD" stroke-width="1.5"/>
+            <!-- ナナカマドの枝と実 -->
+            <g fill="none" stroke="#1F5257" stroke-width="2">
+              <path d="M20 110c8-20 18-40 46-62"/>
+              <path d="M34 82c8-2 14 0 20 4M44 66c-6-6-8-12-6-20"/>
+            </g>
+            <path d="M40 72c6-6 12-10 20-14 2 3-1 5-4 6s-6 3-9 6-5 4-7 2z" fill="#FFFFFF" stroke="#B9C9CD" stroke-width="1.5"/>
+            <g fill="#B8434E">
+              <circle cx="54" cy="88" r="3.5"/><circle cx="60" cy="86" r="3.5"/><circle cx="57" cy="93" r="3.5"/>
+              <circle cx="38" cy="45" r="3.5"/><circle cx="44" cy="42" r="3.5"/><circle cx="42" cy="49" r="3.5"/><circle cx="66" cy="47" r="3.5"/>
+            </g>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <p class="hero__kind">賃貸物件をさがす</p>
+          <h1 class="h1 nw" id="h-top" tabindex="-1">シラカゲ不動産</h1>
+          <p class="hero__lead"><span class="nw">ゆきあかり線</span>の4つの駅のまわりの賃貸物件を、家賃・間取り・駅からの徒歩で絞り込めます。</p>
+          <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>物件・駅・家賃・「募集中」の表示はすべて<span class="nw">架空</span>です。</span></p>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#filter" id="hero-cta"><span class="nw">条件で探す</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 条件で絞り込む -->
+    <section id="filter" class="sec sec--band" aria-labelledby="h-filter">
+      <div class="wrap">
+        <p class="sec__en">SEARCH</p>
+        <h2 id="h-filter" class="sec__title" tabindex="-1">条件で絞り込む</h2>
+        <p class="sec__lead">選ぶとすぐに一覧が変わります。家賃は、管理費を足した毎月の額で比べています。</p>
+        <div class="card search" id="search">
+          <div class="search__groups">
+            <div class="search__group">
+              <label class="search__label" for="f-rent">家賃の上限<span class="nw">（管理費込み）</span></label>
+              <div class="sel-wrap">
+                <select id="f-rent" class="sel">
+                  <option value="">指定なし</option>
+                  <option value="5">5万円以下</option>
+                  <option value="6">6万円以下</option>
+                  <option value="7">7万円以下</option>
+                  <option value="8">8万円以下</option>
+                  <option value="9">9万円以下</option>
+                  <option value="10">10万円以下</option>
+                </select>
+                <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+              </div>
+            </div>
+            <fieldset class="search__group">
+              <legend class="search__label">間取り<span class="nw">（いくつでも）</span></legend>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="lay" value="1r"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">1R</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="lay" value="1k"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">1K</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="lay" value="1ldk"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">1LDK</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="lay" value="2ldk"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">2LDK</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="lay" value="3ldk"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">3LDK</span></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="search__group">
+              <legend class="search__label">駅から徒歩</legend>
+              <div class="walks">
+                <label class="walk-opt"><input type="radio" class="walk-opt__input visually-hidden" name="walk" value="" checked><span class="walk-opt__face"><svg class="walk-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="nw">指定なし</span></span></label>
+                <label class="walk-opt"><input type="radio" class="walk-opt__input visually-hidden" name="walk" value="5"><span class="walk-opt__face"><svg class="walk-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="nw">5分以内</span></span></label>
+                <label class="walk-opt"><input type="radio" class="walk-opt__input visually-hidden" name="walk" value="10"><span class="walk-opt__face"><svg class="walk-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="nw">10分以内</span></span></label>
+                <label class="walk-opt"><input type="radio" class="walk-opt__input visually-hidden" name="walk" value="15"><span class="walk-opt__face"><svg class="walk-opt__dot" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle class="o" cx="10" cy="10" r="8.5"/><circle class="i" cx="10" cy="10" r="4"/></svg><span class="nw">15分以内</span></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="search__group" aria-describedby="opt-hint">
+              <legend class="search__label">こだわり</legend>
+              <p class="search__hint" id="opt-hint">選んだものを、すべて満たす物件だけを出します。</p>
+              <div class="chips">
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="opt" value="pet"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">ペット可</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="opt" value="park"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">駐車場あり</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="opt" value="floor2"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">2階以上</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="opt" value="bath"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">バストイレ別</span></span></label>
+                <label class="chip"><input type="checkbox" class="chip__input visually-hidden" name="opt" value="new10"><span class="chip__face"><svg class="chip__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><span class="chip__text nw">築10年以内</span></span></label>
+              </div>
+            </fieldset>
+          </div>
+          <p class="search__note">徒歩の分は、道路の距離 <span class="nw">80m</span> を<span class="nw">1分</span>（<span class="nw">1分未満</span>は切り上げ）として計算しています<span class="nw">（架空）</span>。</p>
+          <div class="search__foot">
+            <p class="count" id="count"><span class="nw">全18件中</span> <span class="count__n nw" id="count-n">18件</span></p>
+            <div class="search__sort">
+              <label class="search__label" for="f-sort">並べ替え</label>
+              <div class="sel-wrap">
+                <select id="f-sort" class="sel">
+                  <option value="cheap">家賃の安い順（管理費込み）</option>
+                  <option value="new">新しい順（築年数）</option>
+                  <option value="near">駅から近い順</option>
+                </select>
+                <svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+              </div>
+            </div>
+            <button type="button" class="btn-sub search__clear" id="f-clear"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-x"/></svg><span class="nw">条件をクリア</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 物件の一覧 -->
+    <section id="list" class="sec" aria-labelledby="h-list">
+      <div class="wrap">
+        <p class="sec__en">ROOMS</p>
+        <h2 id="h-list" class="sec__title" tabindex="-1">物件の一覧</h2>
+        <p class="sec__lead list__sum" id="list-sum">家賃の安い順（管理費込み）に <span class="nw">18件</span>を並べています。</p>
+        <p class="note list__note">家賃・管理費・初期費用・築年数・「募集中」の表示はすべて<span class="nw">架空</span>です。築年数は<span class="nw">2026年11月</span>時点です。</p>
+        <div class="list-grid">
+          <div class="list-main">
+            <ul class="props" id="props"></ul>
+            <div class="empty" id="empty" hidden></div>
+            <noscript><p class="note">物件の一覧の表示には JavaScript を使います。</p></noscript>
+          </div>
+          <aside class="detail" id="detail" aria-labelledby="d-title" hidden>
+            <div class="detail__in" id="detail-in">
+              <h2 class="detail__title" id="d-title" tabindex="-1">物件の詳細</h2>
+              <p class="detail__note">物件の「詳細と初期費用」を押すと、ここに出ます。</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 気になるリスト -->
+    <section id="fav" class="sec sec--band fav" aria-labelledby="h-fav">
+      <div class="wrap">
+        <p class="sec__en">FAVORITES</p>
+        <h2 id="h-fav" class="sec__title" tabindex="-1">気になるリスト<span class="nw" id="fav-n">（0件）</span></h2>
+        <p class="sec__lead">「気になる」を押した物件を、このブラウザの中だけに残します。送信はしません。</p>
+        <p class="fav__note" id="fav-nosave" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>このブラウザでは保存できないため、ページを閉じると気になるリストは消えます。</span></p>
+        <p class="fav__empty" id="fav-empty">まだありません。物件の「気になる」を押すと、ここに並びます。</p>
+        <ul class="fav__list" id="fav-list" hidden></ul>
+        <p class="note fav__more">実際のページでは、気になる物件をまとめて問い合わせられるようにできます。</p>
+      </div>
+    </section>
+
+    <!-- 5. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">物件の一覧と絞り込みを、お店のホームページの中にお作りします。ポータルサイトに載せている物件も、自社のページで探してもらえるようにできます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-edit"/></svg>
+            <h3>物件の更新は、担当者の手で</h3>
+            <ul><li>管理画面やスプレッドシートから、物件の追加・家賃の変更・募集の終わりを担当者が直せる形にします</li><li>直し方の手順書をお渡しします</li><li>募集が終わった物件は、一覧から下ろす操作を<span class="nw">1回</span>で済むようにします</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sync"/></svg>
+            <h3>ポータルとの二重入力を減らす</h3>
+            <ul><li>いまお使いのポータルサイトや物件の管理ソフトから、書き出せるデータ（<span class="nw">CSV</span> など）を確かめます</li><li>自社のページへ移す手間を減らす方法をご相談します（できる範囲はソフトによって異なります）</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-plan"/></svg>
+            <h3>写真・地図・間取り図</h3>
+            <ul><li>写真・間取り図はお店でご用意いただくか、撮影の手配をご相談します</li><li>地図は、物件の場所を出す細かさをお店と決めます</li><li>費用の目安：ホームページ <span class="nw">5ページ</span> <span class="nw">150,000円（税込）</span>。物件の一覧と絞り込み・管理画面をつける場合は、内容によりお見積もり</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で確かめていただくこと</h3>
+          <ul><li>免許番号・取引の態様（仲介など）・情報の更新日など、不動産の広告に必要な表示（このデモは架空のお店のため載せていません）</li><li>募集が終わった物件を、早めに一覧から下ろすこと</li><li>初期費用の計算のしかた（仲介手数料・保証会社・保険の扱い）</li></ul>
+          <p class="work-check__note">物件の表示の内容は、お店が決めて責任を持ちます。<span class="nw">TENKA LAB</span> は表示の内容を判断しません。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">シラカゲ不動産</span>と、物件・駅・家賃・「募集中」の表示はすべて<span class="nw">架空</span>です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <!-- 物件の詳細（〜1023px はこのシートに出す） -->
+  <dialog id="sheet" class="sheet" aria-labelledby="d-title">
+    <div class="sheet__bar">
+      <button type="button" class="btn-sub sheet__close" id="sheet-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-x"/></svg><span class="nw">閉じる</span></button>
+    </div>
+    <div class="sheet__body" id="sheet-body"></div>
+  </dialog>
+
+  <nav class="fixbar is-hide" id="fixbar" aria-label="すぐに使うボタン">
+    <p class="fixbar__sel" id="fixbar-sel" aria-hidden="true"><span class="nw">全18件中</span> <span class="nw" id="fixbar-n">18件</span></p>
+    <a class="btn-main" href="#filter"><span class="nw">条件を変える</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-up"/></svg></a>
+  </nav>
+</body>
+</html>
