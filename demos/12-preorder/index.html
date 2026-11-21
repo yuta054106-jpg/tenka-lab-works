@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>トキワダ（デモ）クリスマスケーキの予約と仕込み表｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。クリスマスケーキの予約を入れると、日ごとの残り数・仕込み表・当日の受け渡し表が自動でできる見本です。お店・商品・予約はすべて架空です。">
+  <meta name="theme-color" content="#4A3128">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="トキワダ（デモ）クリスマスケーキの予約と仕込み表｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。クリスマスケーキの予約を入れると、日ごとの残り数・仕込み表・当日の受け渡し表が自動でできる見本です。お店・商品・予約はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='11' width='18' height='10' rx='2' fill='%23F6E7C8' stroke='%234A3128' stroke-width='2'/%3E%3Cpath d='M3 15.5h18' stroke='%234A3128' stroke-width='1.5'/%3E%3Ccircle cx='12' cy='7.5' r='3' fill='%23D2445A'/%3E%3Cpath d='M12 4.6L10.6 3M12 4.6L13.4 3' stroke='%234A3128' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。お店・商品・予約はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="3" y="11" width="18" height="10" rx="2" fill="#F6E7C8" stroke="#4A3128" stroke-width="2"/>
+          <path d="M3 15.5h18" stroke="#4A3128" stroke-width="1.5"/>
+          <circle cx="12" cy="7.5" r="3" fill="#D2445A"/>
+          <path d="M12 4.6L10.6 3M12 4.6L13.4 3" stroke="#4A3128" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand__name">トキワダ</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">洋菓子｜クリスマスケーキの予約と仕込み表（12/22〜25 受け取り）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">予約を受けたら、<br class="sp-only"><span class="pc-only">　</span>仕込む数はもう出ている</h1>
+      <p class="intro__lead">受け取り日・時間帯・商品と個数を入れるだけ。日ごとの残り数が自動で減り、満数になれば受け付けません。受け取り日ごとの仕込み表と、当日の受け渡し表がそのままできます。</p>
+      <nav aria-label="手順">
+        <ol class="steps steps--4" id="steps">
+          <li class="step"><a href="#order-card" data-tab="order" data-go="order-card" data-focus="slot"><span class="step__num" aria-hidden="true">1</span><span class="step__label">予約を受けたら<wbr>その場で入力</span></a></li>
+          <li class="step"><a href="#order-card" data-tab="order" data-go="in-prods" data-focus="in-q-short4"><span class="step__num" aria-hidden="true">2</span><span class="step__label">残りの数が<wbr>自動で減る</span></a></li>
+          <li class="step"><a href="#prep-card" data-tab="prep" data-go="prep-card"><span class="step__num" aria-hidden="true">3</span><span class="step__label">受け取り日ごとの<wbr>仕込み数が出る</span></a></li>
+          <li class="step"><a href="#hand-card" data-tab="hand" data-go="hand-card"><span class="step__num" aria-hidden="true">4</span><span class="step__label">当日は<wbr>受け渡しにチェック</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。お店・商品・予約はすべて架空です。</li>
+        <li>※ 入力はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「最初の状態に戻す」で元に戻せます。</li>
+        <li>※ お名前は仮名で入れてください。電話番号・住所・メールの欄はありません。</li>
+        <li>※ アレルギーの対応はお店でご確認ください（このデモはメモ欄に書けるだけです）。</li>
+        <li id="note-nosave" hidden>※ この端末では保存できないため、再読み込みすると最初の状態に戻ります。</li>
+      </ul>
+    </section>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="作業" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-order" aria-controls="panel-order" aria-selected="true">予約の受付</button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-prep" aria-controls="panel-prep" aria-selected="false" tabindex="-1">仕込み表<span class="tabs__badge tabs__badge--warn" id="tab-prep-badge" aria-hidden="true" hidden></span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-hand" aria-controls="panel-hand" aria-selected="false" tabindex="-1"><span><span class="nw">当日の</span><wbr><span class="nw">受け渡し</span></span></button>
+      </div>
+
+      <!-- タブ1：予約の受付（§7） -->
+      <section class="panel" role="tabpanel" id="panel-order" aria-labelledby="tab-order">
+        <section class="summary summary--order" aria-label="予約の状況">
+          <div class="summary__box" role="group" aria-labelledby="sum-count-l">
+            <p class="summary__label" id="sum-count-l">予約</p>
+            <p class="summary__val"><span class="summary__n" id="sum-count-n"></span><span class="summary__unit">件</span></p>
+            <p class="summary__note" id="sum-count-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-qty-l">
+            <p class="summary__label" id="sum-qty-l">個数</p>
+            <p class="summary__val"><span class="summary__n" id="sum-qty-n"></span><span class="summary__unit">個</span></p>
+            <p class="summary__note">4日間の上限 <span class="nw">120個</span></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-sales-l">
+            <p class="summary__label" id="sum-sales-l">売上見込み</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="sum-sales-n"></span></p>
+            <p class="summary__note summary__note--text" id="sum-sales-note"></p>
+          </div>
+          <div class="summary__box summary__box--flag" role="group" id="sum-mark" aria-labelledby="sum-mark-l">
+            <p class="summary__label" id="sum-mark-l"><span class="summary__icon" id="sum-mark-icon"></span>枠の印</p>
+            <p class="summary__val summary__val--marks" id="sum-mark-val"></p>
+            <p class="summary__link" id="sum-mark-link-p"><a href="#prep-card" id="sum-mark-link">仕込み表で見る ›</a></p>
+          </div>
+        </section>
+
+        <div class="order-body">
+          <section class="card order-form" id="order-card" aria-labelledby="h-order">
+            <div class="card__head"><h2 id="h-order" tabindex="-1">予約を受ける</h2><p class="sub sub--13">1件＝1回の受け取り</p></div>
+            <form id="order-form" novalidate>
+              <div class="field">
+                <p class="field__label" id="in-date-l">受け取り日<span class="field__req">必須</span></p>
+                <div class="seg seg--2l" role="radiogroup" aria-labelledby="in-date-l" id="in-date"></div>
+                <p class="field__err" id="in-date-err" hidden></p>
+              </div>
+              <div class="field">
+                <p class="field__label" id="in-slot-l">受け取りの時間帯<span class="field__req">必須</span></p>
+                <div class="seg seg--2l" role="radiogroup" aria-labelledby="in-slot-l" id="in-slot"></div>
+                <p class="field__err" id="in-slot-err" hidden></p>
+              </div>
+              <fieldset class="field prods" id="in-prods">
+                <legend class="field__label">商品と個数<span class="field__req">1つ以上</span></legend>
+                <div class="prods__rows" id="in-prods-rows"></div>
+                <p class="field__err" id="in-prods-err" hidden></p>
+              </fieldset>
+              <p class="bill-line" id="in-bill" aria-live="off"></p>
+              <div class="field">
+                <label class="field__label" for="in-kana">お名前（仮名）<span class="field__req">必須</span></label>
+                <div class="kana-input"><input class="input" id="in-kana" type="text" maxlength="10" autocomplete="off" aria-describedby="in-kana-hint"><span class="kana-input__unit" aria-hidden="true">様</span></div>
+                <p class="field__hint" id="in-kana-hint">仮名（カタカナ1文字など）で入れてください。電話番号・住所の欄はありません<span class="nw">（デモ）</span></p>
+                <p class="field__err" id="in-kana-err" hidden></p>
+              </div>
+              <div class="field">
+                <p class="field__label" id="in-pay-l">支払い<span class="field__req">必須</span></p>
+                <div class="seg seg--pay" role="radiogroup" aria-labelledby="in-pay-l" id="in-pay"></div>
+              </div>
+              <div class="field">
+                <label class="field__label" for="in-memo">メモ（任意・60文字まで）</label>
+                <textarea class="input textarea" id="in-memo" rows="2" maxlength="60" aria-describedby="in-memo-hint"></textarea>
+                <p class="field__hint" id="in-memo-hint">ろうそく・メッセージプレートなど。アレルギーの対応はお店でご確認ください</p>
+              </div>
+              <button type="submit" class="btn-main order-form__add" id="add-btn"><span data-icon="plus20"></span>予約を受ける</button>
+            </form>
+          </section>
+
+          <section class="card list-card" id="list-card" aria-labelledby="h-list">
+            <div class="card__head"><h2 id="h-list" tabindex="-1">予約の一覧</h2><p class="sub" id="list-info"></p></div>
+            <div class="filters" role="group" aria-label="絞り込み">
+              <div class="filters__item filters__item--day">
+                <p class="field__label" id="f-day-l">受け取り日</p>
+                <div class="seg" role="radiogroup" aria-labelledby="f-day-l" id="f-day"></div>
+              </div>
+              <div class="filters__item filters__item--state">
+                <label class="field__label" for="f-state">状態</label>
+                <select class="select" id="f-state">
+                  <option value="active">取消を除く</option>
+                  <option value="pending">受け渡し前</option>
+                  <option value="handed">渡した</option>
+                  <option value="canceled">取消</option>
+                  <option value="all">すべて（取消を含む）</option>
+                </select>
+              </div>
+            </div>
+            <div id="list-area"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- タブ2：仕込み表（§8） -->
+      <section class="panel" role="tabpanel" id="panel-prep" aria-labelledby="tab-prep" hidden>
+        <section class="summary summary--prep" aria-label="仕込みの状況">
+          <div class="summary__box" role="group" aria-labelledby="p-qty-l">
+            <p class="summary__label" id="p-qty-l">4日間の個数</p>
+            <p class="summary__val"><span class="summary__n" id="p-qty-n"></span><span class="summary__unit">/ 120個</span></p>
+            <p class="summary__note" id="p-qty-note"></p>
+          </div>
+          <div class="summary__box summary__box--full" role="group" id="p-full" aria-labelledby="p-full-l">
+            <p class="summary__label" id="p-full-l"><span class="summary__icon" id="p-full-icon"></span>満数の枠</p>
+            <p class="summary__val"><span class="summary__n" id="p-full-n"></span></p>
+            <p class="summary__note summary__note--text" id="p-full-note"></p>
+          </div>
+          <div class="summary__box summary__box--few" role="group" id="p-few" aria-labelledby="p-few-l">
+            <p class="summary__label" id="p-few-l"><span class="summary__icon" id="p-few-icon"></span>残りわずかの枠</p>
+            <p class="summary__val"><span class="summary__n" id="p-few-n"></span></p>
+            <p class="summary__note summary__note--text" id="p-few-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="p-sales-l">
+            <p class="summary__label" id="p-sales-l">売上見込み</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="p-sales-n"></span></p>
+            <p class="summary__note summary__note--text" id="p-sales-note"></p>
+          </div>
+        </section>
+
+        <section class="card" id="prep-card" aria-labelledby="h-prep">
+          <div class="card__head"><h2 id="h-prep" tabindex="-1">仕込み表（受け取り日 × 商品）</h2><p class="sub sub--13">マスは 予約の個数 / 作れる上限。棒と % は上限に対する割合</p></div>
+          <div id="prep-area"></div>
+          <p class="sub sub--13 prep__note">上限（作れる数）はお店が決める値の例です。上限の 90% 以上を『残りわずか』、上限に届いたら『満数』とし、満数の商品は受け付けません。</p>
+        </section>
+
+        <section class="card" id="sales-card" aria-labelledby="h-sales">
+          <div class="card__head"><h2 id="h-sales" tabindex="-1">日別の売上見込み</h2><p class="sub sub--13">税込の価格の合計。取消は入れていません</p></div>
+          <div id="sales-area"></div>
+          <p class="sub sub--13 prep__note">当日払いは、受け取りの時にお店でいただく見込みの金額です。</p>
+        </section>
+
+        <section class="card" id="print-card" aria-labelledby="h-print">
+          <div class="card__head"><h2 id="h-print" tabindex="-1">印刷（A4 縦・日ごとに1枚）</h2></div>
+          <p class="out__desc">受け取り日ごとの仕込み表を、1日1枚で印刷します。ボタンや色の印は出ません。PDF にするには、印刷の画面で送信先を『PDF に保存』にします。</p>
+          <div class="field print-day">
+            <p class="field__label print-day__pc" id="p-day-seg-l">印刷する日</p>
+            <div class="seg print-day__pc" role="radiogroup" aria-labelledby="p-day-seg-l" id="p-day-seg"></div>
+            <label class="field__label print-day__sp" for="p-day">印刷する日</label>
+            <select class="select print-day__sp" id="p-day"></select>
+          </div>
+          <div class="out__row">
+            <button type="button" class="btn-main out__print" id="print-btn"><span data-icon="print20"></span>仕込み表を印刷・PDFで保存</button>
+          </div>
+          <p class="sub sub--13 out__peek-h">紙面の見本（上の部分）</p>
+          <div class="desk"><div class="paper" id="print-preview"></div></div>
+        </section>
+      </section>
+
+      <!-- タブ3：当日の受け渡し（§9） -->
+      <section class="panel" role="tabpanel" id="panel-hand" aria-labelledby="tab-hand" hidden>
+        <section class="card" id="hand-card" aria-labelledby="h-hand">
+          <div class="card__head"><h2 id="h-hand" tabindex="-1">当日の受け渡し</h2></div>
+          <div class="field hand-day">
+            <p class="field__label" id="h-day-l">受け取り日</p>
+            <div class="seg seg--2l" role="radiogroup" aria-labelledby="h-day-l" id="h-day"></div>
+          </div>
+          <div class="hand-top">
+            <div class="hand-band" id="hand-band"></div>
+            <button type="button" class="btn-sub hand-print" id="slip-btn"><span data-icon="print18"></span><span id="slip-btn-text">この日の予約票を印刷</span></button>
+          </div>
+          <div class="hand-slots" id="hand-slots"></div>
+        </section>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><span data-icon="undo18"></span>最初の状態に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の商品・上限の数・受け取りの時間帯に合わせて作ります。費用をかけずに始めるなら、Google フォーム＋スプレッドシート＋GAS がおすすめです（費用0円から）。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="8" y="3" width="16" height="26" rx="3" fill="none" stroke="#4A3128" stroke-width="2"/><path d="M11 9h10M11 14h6M11 19h8" fill="none" stroke="#4A3128" stroke-width="2" stroke-linecap="round"/><path d="M14 25h4" stroke="#4A3128" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>お客様の予約を Google フォームで</h3>
+          <ul class="dot-list">
+            <li>お客様の予約は Google フォーム（または店頭でスタッフが入力）</li>
+            <li>スプレッドシートに貯まり、GAS で残り数と仕込み表を自動で更新</li>
+            <li>満数になったら、その商品の受付を自動で止める</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="3" y="5" width="26" height="18" rx="2" fill="none" stroke="#4A3128" stroke-width="2"/><path d="M12 28h8M16 23v5" stroke="#4A3128" stroke-width="2" stroke-linecap="round"/><path d="M8 11h9M8 16h6" stroke="#4A3128" stroke-width="2" stroke-linecap="round"/><rect x="20" y="10" width="5" height="7" rx="1" fill="none" stroke="#4A3128" stroke-width="2"/></svg>
+          <h3>ホームページに「残り○個」</h3>
+          <ul class="dot-list">
+            <li>お店のホームページに日ごとの「残り○個」を出せます</li>
+            <li>仕込み表・予約票はボタン1つで印刷</li>
+            <li>当日の受け渡しはスマホでチェック</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe">オンライン決済・LINE でのお知らせは別途ご相談ください。食品表示・アレルギーの判断はお店でお願いします。材料の在庫（<a href="../09-stock/">作品例⑨</a>）とつなげることもできます。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。洋菓子 トキワダと商品・予約は架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="edit" id="edit" aria-labelledby="ed-title">
+    <div class="edit__head">
+      <h2 class="edit__title" id="ed-title" tabindex="-1">予約を直す</h2>
+      <button type="button" class="edit__x" id="ed-x" aria-label="閉じる"><span data-icon="close"></span></button>
+    </div>
+    <p class="edit__meta" id="ed-meta"></p>
+    <form class="edit__body" id="edit-form" novalidate>
+      <p class="field__err edit__top-err" id="ed-top-err" role="alert" hidden></p>
+      <p class="edit__state" id="ed-state" hidden></p>
+      <div class="field">
+        <p class="field__label" id="ed-date-l">受け取り日<span class="field__req">必須</span></p>
+        <div class="seg seg--2l" role="radiogroup" aria-labelledby="ed-date-l" id="ed-date"></div>
+        <p class="field__err" id="ed-date-err" hidden></p>
+      </div>
+      <div class="field">
+        <p class="field__label" id="ed-slot-l">受け取りの時間帯<span class="field__req">必須</span></p>
+        <div class="seg seg--2l" role="radiogroup" aria-labelledby="ed-slot-l" id="ed-slot"></div>
+        <p class="field__err" id="ed-slot-err" hidden></p>
+      </div>
+      <fieldset class="field prods" id="ed-prods">
+        <legend class="field__label">商品と個数<span class="field__req">1つ以上</span></legend>
+        <div class="prods__rows" id="ed-prods-rows"></div>
+        <p class="field__err" id="ed-prods-err" hidden></p>
+      </fieldset>
+      <p class="bill-line" id="ed-bill"></p>
+      <div class="field">
+        <label class="field__label" for="ed-kana">お名前（仮名）<span class="field__req">必須</span></label>
+        <div class="kana-input"><input class="input" id="ed-kana" type="text" maxlength="10" autocomplete="off"><span class="kana-input__unit" aria-hidden="true">様</span></div>
+        <p class="field__err" id="ed-kana-err" hidden></p>
+      </div>
+      <div class="field">
+        <p class="field__label" id="ed-pay-l">支払い<span class="field__req">必須</span></p>
+        <div class="seg seg--pay" role="radiogroup" aria-labelledby="ed-pay-l" id="ed-pay"></div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ed-memo">メモ（任意・60文字まで）</label>
+        <textarea class="input textarea" id="ed-memo" rows="2" maxlength="60"></textarea>
+      </div>
+      <div class="edit__ops">
+        <button type="submit" class="btn-main edit__save" id="ed-save">保存する</button>
+        <button type="button" class="btn-sub btn-danger" id="ed-del" aria-describedby="ed-del-note"><span data-icon="ban18"></span>この予約を取り消す</button>
+        <button type="button" class="btn-sub edit__restore" id="ed-restore" hidden><span data-icon="undo18"></span>取消を戻す</button>
+        <button type="button" class="confirm__cancel" id="ed-cancel">やめる</button>
+      </div>
+      <p class="sub sub--13 edit__del-note" id="ed-del-note" hidden>渡した予約は取り消せません（受け渡しのチェックを外すと取り消せます）</p>
+    </form>
+  </dialog>
+
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title"></h2>
+    <p class="confirm__body" id="cf-body"></p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok"></button>
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
