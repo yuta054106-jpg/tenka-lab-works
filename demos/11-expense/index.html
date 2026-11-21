@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ミズハラ堂（デモ）経費の記録と月の集計｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。レシートの経費をスマホで入れると、科目ごとの合計・10月との差・税理士さんに渡す CSV が自動でできる見本です。お店・支払先・金額はすべて架空です。">
+  <meta name="theme-color" content="#2C4A63">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ミズハラ堂（デモ）経費の記録と月の集計｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。レシートの経費をスマホで入れると、科目ごとの合計・10月との差・税理士さんに渡す CSV が自動でできる見本です。お店・支払先・金額はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 2h14v18l-1.75 2-1.75-2-1.75 2-1.75-2-1.75 2-1.75-2-1.75 2L5 20z' fill='%23FFFFFF' stroke='%232C4A63' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M8 7h8M8 10h8' stroke='%232C4A63' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='15.5' r='3' fill='%23C98A4B'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動くデモ</strong>（架空のお店）です。お店・支払先・金額はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M5 2h14v18l-1.75 2-1.75-2-1.75 2-1.75-2-1.75 2-1.75-2-1.75 2L5 20z" fill="#FFFFFF" stroke="#2C4A63" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M8 7h8M8 10h8" stroke="#2C4A63" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="12" cy="15.5" r="3" fill="#C98A4B"/>
+        </svg>
+        <span class="brand__name">ミズハラ堂</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">焼き菓子と喫茶｜経費の記録と月の集計（2026年11月）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">レシートは、その場で入れて<br class="sp-only"><span class="pc-only">　</span>月末には合計ができている</h1>
+      <p class="intro__lead">支払先と金額を入れて、科目を候補から選ぶだけ。科目ごとの合計・10月との差・税理士さんに渡す CSV が自動でできます。重複や科目の入れ忘れには印が付きます。</p>
+      <nav aria-label="手順">
+        <ol class="steps steps--5" id="steps">
+          <li class="step"><a href="#entry-card" data-tab="entry" data-go="entry-card" data-focus="in-payee"><span class="step__num" aria-hidden="true">1</span><span class="step__label">スマホでその場で入力</span></a></li>
+          <li class="step"><a href="#entry-card" data-tab="entry" data-go="entry-card" data-focus="in-cat"><span class="step__num" aria-hidden="true">2</span><span class="step__label">科目は候補から選ぶ</span></a></li>
+          <li class="step"><a href="#cat-card" data-tab="month" data-go="cat-card"><span class="step__num" aria-hidden="true">3</span><span class="step__label">月の合計が自動で出る</span></a></li>
+          <li class="step"><a href="#list-card" data-tab="entry" data-go="list-card"><span class="step__num" aria-hidden="true">4</span><span class="step__label">入れ忘れ・重複に気づける</span></a></li>
+          <li class="step"><a href="#csv-card" data-tab="output" data-go="csv-card"><span class="step__num" aria-hidden="true">5</span><span class="step__label">税理士さん用の CSV</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。お店・支払先・金額はすべて架空です。</li>
+        <li>※ 入力はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「最初の状態に戻す」で元に戻せます。</li>
+        <li>※ 科目の名前と分け方は例です。実際は税理士さんの指示に合わせて変えられます。経費になるかどうか・消費税の扱いは税理士さんにご確認ください。</li>
+        <li id="note-nosave" hidden>※ この端末では保存できないため、再読み込みすると最初の状態に戻ります。</li>
+      </ul>
+    </section>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="作業" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-entry" aria-controls="panel-entry" aria-selected="true">入力・一覧<span class="tabs__badge tabs__badge--warn" id="tab-entry-badge" aria-hidden="true" hidden></span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-month" aria-controls="panel-month" aria-selected="false" tabindex="-1">月の集計</button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-output" aria-controls="panel-output" aria-selected="false" tabindex="-1">出力</button>
+      </div>
+
+      <!-- タブ1：入力・一覧（§7） -->
+      <section class="panel" role="tabpanel" id="panel-entry" aria-labelledby="tab-entry">
+        <section class="summary summary--3" aria-label="11月の経費の状況">
+          <div class="summary__box" role="group" aria-labelledby="sum-total-l">
+            <p class="summary__label" id="sum-total-l">11月の経費</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="sum-total-n"></span></p>
+            <p class="summary__note" id="sum-total-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="sum-count-l">
+            <p class="summary__label" id="sum-count-l">件数</p>
+            <p class="summary__val"><span class="summary__n" id="sum-count-n"></span><span class="summary__unit">件</span></p>
+            <p class="summary__note">11/1〜11/30</p>
+          </div>
+          <div class="summary__box summary__box--flag" role="group" id="sum-flag" aria-labelledby="sum-flag-l">
+            <p class="summary__label" id="sum-flag-l"><span class="summary__icon" id="sum-flag-icon"></span>気づきの印</p>
+            <p class="summary__val"><span class="summary__n" id="sum-flag-n"></span></p>
+            <p class="summary__break" id="sum-flag-break"></p>
+            <p class="summary__link" id="sum-flag-link-p"><a href="#list-card" id="sum-flag-link">印のある記録だけ見る ›</a></p>
+          </div>
+        </section>
+
+        <div class="entry-body">
+          <section class="card entry" id="entry-card" aria-labelledby="h-entry">
+            <div class="card__head"><h2 id="h-entry" tabindex="-1">経費を入れる</h2><p class="sub sub--13">レシート1枚＝1件</p></div>
+            <form id="entry-form" novalidate>
+              <div class="field">
+                <label class="field__label" for="in-date">日付<span class="field__req">必須</span></label>
+                <input class="input" id="in-date" type="date" min="2026-11-01" max="2026-11-30" value="2026-11-30" aria-describedby="in-date-hint">
+                <p class="field__hint" id="in-date-hint">2026年11月の分だけ入れられます（デモ）</p>
+                <p class="field__err" id="in-date-err" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="in-payee">支払先<span class="field__req">必須</span></label>
+                <input class="input" id="in-payee" type="text" maxlength="30" autocomplete="off" list="payee-list">
+                <datalist id="payee-list"></datalist>
+                <p class="cat-hint" id="in-payee-hint" hidden></p>
+                <p class="field__err" id="in-payee-err" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="in-amount">金額（円・税込）<span class="field__req">必須</span></label>
+                <div class="yen-input"><input class="input" id="in-amount" type="text" inputmode="numeric" autocomplete="off" aria-describedby="in-amount-hint"><span class="yen-input__unit" aria-hidden="true">円</span></div>
+                <p class="field__hint" id="in-amount-hint">レシートの合計（税込）をそのまま入れます</p>
+                <p class="field__err" id="in-amount-err" hidden></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="in-cat">科目</label>
+                <select class="select" id="in-cat" aria-describedby="in-cat-hint"></select>
+                <p class="field__hint" id="in-cat-hint">科目の分け方は税理士さんの指示に合わせて変えられます</p>
+              </div>
+              <div class="field">
+                <p class="field__label" id="in-pay-l">支払方法<span class="field__req">必須</span></p>
+                <div class="seg seg--pay" role="radiogroup" aria-labelledby="in-pay-l" id="in-pay"></div>
+              </div>
+              <div class="field">
+                <label class="field__label" for="in-memo">メモ（任意・100文字まで）</label>
+                <textarea class="input textarea" id="in-memo" rows="2" maxlength="100"></textarea>
+              </div>
+              <button type="submit" class="btn-main entry__add" id="add-btn"><span data-icon="plus20"></span>追加する</button>
+            </form>
+          </section>
+
+          <section class="card list-card" id="list-card" aria-labelledby="h-list">
+            <div class="card__head"><h2 id="h-list" tabindex="-1">11月の記録</h2><p class="sub" id="list-info"></p></div>
+            <div class="filters" role="group" aria-label="絞り込み">
+              <div class="filters__item filters__item--cat">
+                <label class="field__label" for="f-cat">科目</label>
+                <select class="select" id="f-cat"></select>
+              </div>
+              <div class="filters__item filters__item--pay">
+                <p class="field__label" id="f-pay-l">支払方法</p>
+                <div class="seg" role="radiogroup" aria-labelledby="f-pay-l" id="f-pay"></div>
+              </div>
+              <div class="filters__item filters__item--flag">
+                <label class="check" for="f-flag"><input type="checkbox" id="f-flag"><span>印のあるものだけ</span></label>
+              </div>
+            </div>
+            <div id="list-area"></div>
+          </section>
+        </div>
+      </section>
+
+      <!-- タブ2：月の集計（§8） -->
+      <section class="panel" role="tabpanel" id="panel-month" aria-labelledby="tab-month" hidden>
+        <section class="summary summary--4" aria-label="11月の集計">
+          <div class="summary__box" role="group" aria-labelledby="m-total-l">
+            <p class="summary__label" id="m-total-l">11月の経費</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="m-total-n"></span></p>
+            <p class="summary__note" id="m-total-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="m-diff-l">
+            <p class="summary__label" id="m-diff-l">10月との差</p>
+            <p class="summary__val summary__val--delta"><span class="delta__i" id="m-diff-i"></span><span class="summary__n summary__n--yen" id="m-diff-n"></span></p>
+            <p class="summary__note summary__note--text" id="m-diff-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="m-cash-l">
+            <p class="summary__label" id="m-cash-l">現金で払った合計</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="m-cash-n"></span></p>
+            <p class="summary__note">レジから出たお金の目安</p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="m-left-l">
+            <p class="summary__label" id="m-left-l">手元に残る目安</p>
+            <p class="summary__val"><span class="summary__n summary__n--yen" id="m-left-n"></span></p>
+            <p class="summary__note">売上 − 経費。下の注記を参照</p>
+          </div>
+        </section>
+
+        <section class="card" id="cat-card" aria-labelledby="h-cat">
+          <div class="card__head"><h2 id="h-cat" tabindex="-1">科目ごとの合計（11月）</h2><p class="sub sub--13">棒の長さは、いちばん多い科目を端までとした長さ</p></div>
+          <div id="cat-area"></div>
+          <p class="sub sub--13 cat__note">割合は小数第2位を四捨五入しているため、足しても 100% にならないことがあります。10月は見本の合計だけを持っています（明細はありません）。</p>
+        </section>
+
+        <section class="card" id="pay-card" aria-labelledby="h-pay">
+          <div class="card__head"><h2 id="h-pay" tabindex="-1">支払方法ごとの合計</h2></div>
+          <div id="pay-area"></div>
+        </section>
+
+        <section class="card" id="left-card" aria-labelledby="h-left">
+          <div class="card__head"><h2 id="h-left" tabindex="-1">売上 − 経費 ＝ 手元に残る目安</h2></div>
+          <p class="left-line" id="left-line"></p>
+          <ul class="left__notes sub sub--13">
+            <li>売上は見本の固定の数字です（<a href="../03-dashboard/">作品例③ 売上ダッシュボード</a>の見本と同じ架空の数字）。</li>
+            <li>税金・減価償却は含みません。正式な利益は税理士さんの決算でご確認ください。</li>
+            <li>このデモの経費には人件費（給与）を入れていません（人件費は<a href="../06-attendance/">作品例⑥</a>・<a href="../10-shift/">作品例⑩</a>で扱っています）。</li>
+          </ul>
+        </section>
+      </section>
+
+      <!-- タブ3：出力（§9） -->
+      <section class="panel" role="tabpanel" id="panel-output" aria-labelledby="tab-output" hidden>
+        <section class="card" id="csv-card" aria-labelledby="h-csv">
+          <div class="card__head"><h2 id="h-csv" tabindex="-1">税理士さんに渡す CSV</h2></div>
+          <p class="out__desc">11月の全記録を、日付の古い順に1行1件で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+          <div class="out__row">
+            <button type="button" class="btn-main out__csv" id="csv-btn"><span data-icon="csv20"></span>CSV をダウンロード</button>
+            <p class="sub sub--13" id="csv-name"></p>
+          </div>
+          <p class="out__peek-h">CSV の中身（先頭5行）</p>
+          <pre class="csv-peek" id="csv-peek" tabindex="0" aria-label="CSV の中身（先頭5行）"></pre>
+          <details class="rules">
+            <summary>CSV の列と決まり</summary>
+            <table class="cols">
+              <caption class="visually-hidden">CSV の列</caption>
+              <thead><tr><th scope="col">順</th><th scope="col">列名</th><th scope="col">中身</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>日付</td><td>2026/11/02 の形</td></tr>
+                <tr><td>2</td><td>支払先</td><td>入力のまま（" で囲む）</td></tr>
+                <tr><td>3</td><td>科目</td><td>科目の名前。未選択は空</td></tr>
+                <tr><td>4</td><td>金額</td><td>整数（カンマ・¥なし）</td></tr>
+                <tr><td>5</td><td>支払方法</td><td>現金／カード／振込</td></tr>
+                <tr><td>6</td><td>メモ</td><td>入力のまま（改行あり）</td></tr>
+              </tbody>
+            </table>
+            <p class="sub">= + - @（半角）で始まる値は先頭に ' を付けます（Excel で式として動かないように）</p>
+          </details>
+        </section>
+
+        <section class="card" id="print-card" aria-labelledby="h-print">
+          <div class="card__head"><h2 id="h-print" tabindex="-1">印刷（A4 縦）</h2></div>
+          <p class="out__desc">科目ごとの合計表と、11月の明細を A4 縦で印刷します。ボタンや色の印は出ません。PDF にするには、印刷の画面で送信先を『PDF に保存』にします。</p>
+          <div class="out__row">
+            <button type="button" class="btn-sub out__print" id="print-btn"><span data-icon="print20"></span>印刷・PDFで保存</button>
+          </div>
+          <p class="sub sub--13 out__peek-h">紙面の見本（1ページ目の上の部分）</p>
+          <div class="desk"><div class="paper" id="print-preview"></div></div>
+        </section>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><span data-icon="undo18"></span>最初の状態に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の科目・支払方法・税理士さんの受け取りやすい形に合わせて作ります。費用をかけずに始めるなら、Google フォーム＋スプレッドシート＋GAS がおすすめです。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="8" y="3" width="16" height="26" rx="3" fill="none" stroke="#2C4A63" stroke-width="2"/><path d="M11 9h10M11 14h10M11 19h10M16 9v10" fill="none" stroke="#2C4A63" stroke-width="2" stroke-linecap="round"/><path d="M14 25h4" stroke="#2C4A63" stroke-width="2" stroke-linecap="round"/></svg>
+          <h3>Google フォーム＋スプレッドシート＋GAS（費用0円から）</h3>
+          <ul class="dot-list">
+            <li>スマホのフォームで、レシートをもらったその場で入力</li>
+            <li>スプレッドシートに貯まり、GAS で月の集計表と CSV を自動で作成</li>
+            <li>科目の名前・候補はお店と税理士さんに合わせて決めます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="4" y="6" width="24" height="20" rx="2" fill="none" stroke="#2C4A63" stroke-width="2"/><path d="M4 12h24M4 19h24M12 6v20M20 6v20" stroke="#2C4A63" stroke-width="2"/></svg>
+          <h3>Excel で作る</h3>
+          <ul class="dot-list">
+            <li>いまお使いの Excel の帳面を生かして作れます</li>
+            <li>月の集計と CSV をボタン1つで</li>
+            <li>お店のパソコンの中だけで動きます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe">レシートの写真の保存・読み取り（OCR）、銀行・カードの明細との連携は別途ご相談ください。経費になるかどうか・科目・消費税の扱いは、税理士さんにご確認ください。売上（<a href="../03-dashboard/">作品例③</a>）・人件費（<a href="../06-attendance/">作品例⑥</a>）とつなげることもできます。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。焼き菓子と喫茶 ミズハラ堂と支払先は架空で、金額もすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="edit" id="edit" aria-labelledby="ed-title">
+    <div class="edit__head">
+      <h2 class="edit__title" id="ed-title">記録を直す</h2>
+      <button type="button" class="edit__x" id="ed-x" aria-label="閉じる"><span data-icon="close"></span></button>
+    </div>
+    <p class="edit__meta" id="ed-meta"></p>
+    <form class="edit__body" id="edit-form" novalidate>
+      <div class="field">
+        <label class="field__label" for="ed-date">日付<span class="field__req">必須</span></label>
+        <input class="input" id="ed-date" type="date" min="2026-11-01" max="2026-11-30">
+        <p class="field__err" id="ed-date-err" hidden></p>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ed-payee">支払先<span class="field__req">必須</span></label>
+        <input class="input" id="ed-payee" type="text" maxlength="30" autocomplete="off" list="payee-list">
+        <p class="cat-hint" id="ed-payee-hint" hidden></p>
+        <p class="field__err" id="ed-payee-err" hidden></p>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ed-amount">金額（円・税込）<span class="field__req">必須</span></label>
+        <div class="yen-input"><input class="input" id="ed-amount" type="text" inputmode="numeric" autocomplete="off"><span class="yen-input__unit" aria-hidden="true">円</span></div>
+        <p class="field__err" id="ed-amount-err" hidden></p>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ed-cat">科目</label>
+        <select class="select" id="ed-cat"></select>
+      </div>
+      <div class="field">
+        <p class="field__label" id="ed-pay-l">支払方法<span class="field__req">必須</span></p>
+        <div class="seg seg--pay" role="radiogroup" aria-labelledby="ed-pay-l" id="ed-pay"></div>
+      </div>
+      <div class="field">
+        <label class="field__label" for="ed-memo">メモ（任意・100文字まで）</label>
+        <textarea class="input textarea" id="ed-memo" rows="2" maxlength="100"></textarea>
+      </div>
+      <div class="edit__ops">
+        <button type="submit" class="btn-main edit__save" id="ed-save">保存する</button>
+        <button type="button" class="btn-sub btn-danger" id="ed-del"><span data-icon="trash18"></span>この記録を削除する</button>
+        <button type="button" class="confirm__cancel" id="ed-cancel">やめる</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title"></h2>
+    <p class="confirm__body" id="cf-body"></p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok"></button>
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
