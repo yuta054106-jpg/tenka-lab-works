@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <title>TENKA LAB の制作実績と作品例｜店舗の集客LP・HPと売上管理シート</title>
-  <meta name="description" content="TENKA LAB の制作実績（実在のサイト2件）と、作品例・デモ20点（架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボード・売上管理シート・請求書と勤怠の自動集計、食堂のページ更新、卸のCSVから出荷伝票の一括作成、焼き菓子店の在庫・発注の管理、弁当店のシフト表づくり、焼き菓子店の経費の記録と月の集計、洋菓子店のクリスマスケーキの予約と仕込み表、工務店のホームページとリフォームの概算シミュレーター、パン屋のスマホのスタンプカード、定食屋のテーブル注文、ピラティススタジオのコース診断つきLP、書道教室の出欠と月謝の管理、理容室の順番待ちの受付と呼び出し。13店舗の経理を統括してきた経験をもとに、集客のページと売上・経費の管理シート・業務システムを仕上げます。作品例は実在のお店・お客様の実績ではありません。">
+  <meta name="description" content="TENKA LAB の制作実績（実在のサイト2件）と、作品例・デモ21点（架空のお店）。飲食店の予約LP、美容室のホームページ、整体院のAIチャット、教室の予約・問い合わせ管理、カフェの売上ダッシュボード・売上管理シート・請求書と勤怠の自動集計、食堂のページ更新、卸のCSVから出荷伝票の一括作成、焼き菓子店の在庫・発注の管理、弁当店のシフト表づくり、焼き菓子店の経費の記録と月の集計、洋菓子店のクリスマスケーキの予約と仕込み表、工務店のホームページとリフォームの概算シミュレーター、パン屋のスマホのスタンプカード、定食屋のテーブル注文、ピラティススタジオのコース診断つきLP、書道教室の出欠と月謝の管理、理容室の順番待ちの受付と呼び出し。13店舗の経理を統括してきた経験をもとに、集客のページと売上・経費の管理シート・業務システムを仕上げます。作品例は実在のお店・お客様の実績ではありません。">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yuta054106-jpg.github.io/tenka-lab-works/">
   <meta property="og:title" content="TENKA LAB の制作実績と作品例">
@@ -835,6 +835,40 @@
                     <a class="btn" href="demos/18-queue/">デモを触ってみる<span class="sr">（理容 トモリギの順番待ちの受付と呼び出し）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
                   </p>
                   <p class="card__small">記録はお使いのブラウザの中だけに保存され、どこにも送信されません。お店・番号・待ち時間はすべて架空です。音・通知は出しません。実際のお仕事では、店先の QR コードで自分のスマホから番号を取る、順番が近づいたら LINE でお知らせ、混み具合をホームページに出す、などにつなぎます。</p>
+                </div>
+              </div>
+            </article>
+            <article class="card" aria-labelledby="w21-title">
+              <div class="thumb thumb--dash">
+                <span class="thumb__chip">架空の洋食店</span>
+                <div class="frame-pc thumb__pc"><img src="assets/thumbs/21-recipe-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
+                <div class="frame-sp thumb__sp"><img src="assets/thumbs/21-recipe-sp.jpg" alt="" width="480" height="1000" loading="lazy" decoding="async"></div>
+              </div>
+              <div class="card__body">
+                <p class="card__kind">21 ／ メニューの原価計算と値付け（動くデモ）</p>
+                <h3 id="w21-title">洋食 <span class="nowrap">ミナトビ</span> <span class="nowrap">メニューの原価計算</span>と<span class="nowrap">値付け</span></h3>
+                <p class="card__sub">仕入れ値を変えると、影響のあるメニューの原価率がすぐ変わる。<span class="nowrap">値上げの目安も10円単位で</span></p>
+                <ul class="tags" aria-label="使った技術">
+                  <li>1皿の原価・原価率・粗利を自動で計算</li><li>仕入れ値の変更で影響のあるメニューを前後で比較</li><li>目標の原価率から売値の目安</li><li>CSV の書き出し・印刷</li>
+                </ul>
+                <details class="points">
+                  <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
+                  <div class="points__body">
+                    <h4>ねらい</h4>
+                    <p>食材の値上がりが続くなか、「どのメニューがいくら損しているか」「値上げをいくらにすればよいか」を、勘ではなく数字で決められるようにする飲食店向けの見本。</p>
+                    <h4>工夫した点</h4>
+                    <ul class="list">
+                      <li>歩留まり（使える量の割合）まで入れて、1g・1個あたりの値段から1皿の原価を出す。端数でずれないよう計算は整数で行う</li>
+                      <li>目標の原価率を超えたメニューには、色だけでなく「目標超え」の文字の札を付ける</li>
+                      <li>CSV は Excel でそのまま開け、数式として動かないよう無害化してある</li>
+                    </ul>
+                  </div>
+                </details>
+                <div class="card__foot">
+                  <p class="card__action">
+                    <a class="btn" href="demos/19-recipe-cost/">デモを触ってみる<span class="sr">（洋食 ミナトビのメニューの原価計算と値付け）</span><svg class="btn__arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8h13M9 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></a>
+                  </p>
+                  <p class="card__small">入れた値はお使いのブラウザの中だけに保存され、どこにも送信されません。お店・食材・値段はすべて架空です。消費税は10%だけで計算しています（デモの仮定）。実際のお仕事では、お店の Excel・スプレッドシートで同じ仕組みを作る、仕入れ先の請求書の CSV から値段を取り込む、などにつなぎます。</p>
                 </div>
               </div>
             </article>

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>洋食 ミナトビ（デモ）メニューの原価計算と値付け｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。洋食店のメニュー6品の原価・原価率・値付けの目安を、仕入れ値と使う量から計算する見本です。食材・値段・数字はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3E4A1F">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="洋食 ミナトビ（デモ）メニューの原価計算と値付け｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。洋食店のメニュー6品の原価・原価率・値付けの目安を、仕入れ値と使う量から計算する見本です。食材・値段・数字はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.6 14.5C4.2 14 3.2 11.9 3.7 10.1 4.3 8 6.5 7.1 8.3 7.7 8.9 5.5 10.3 4.2 12 4.2s3.1 1.3 3.7 3.5c1.8-.6 4 .3 4.6 2.4.5 1.8-.5 3.9-2.9 4.4z' fill='%23FAF7EF' stroke='%233E4A1F' stroke-width='2' stroke-linejoin='round'/%3E%3Crect x='6.5' y='14.5' width='11' height='5.5' rx='1' fill='%23FAF7EF' stroke='%233E4A1F' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- アイコン（design.md §18-2。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-over" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5L22 20.5H2z"/><path d="M12 9.5v5"/></g><circle cx="12" cy="17.6" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5"/><path d="M6 11l6-6 6 6"/></g></symbol>
+      <symbol id="i-tri-up" viewBox="0 0 24 24"><path d="M12 5l8 13H4z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+      <symbol id="i-tri-down" viewBox="0 0 24 24"><path d="M12 19L4 6h16z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+      <symbol id="i-eq" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-pencil" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 0l.5.5a2.1 2.1 0 0 1 0 3L8.5 19z"/><path d="M13.5 7l3.5 3.5"/></g></symbol>
+      <symbol id="i-okc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.3l3 3 6-6.3"/></g></symbol>
+      <symbol id="i-err" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.8v6.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-undo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5v6h6"/><path d="M4.6 10.5A8 8 0 1 1 6 17"/></g></symbol>
+      <symbol id="i-csv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M12 11v7M9 15l3 3 3-3"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H3v-8h18v8h-3"/><path d="M6 14h12v7H6z"/></g></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></g></symbol>
+      <symbol id="i-sheet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="18" rx="1"/><path d="M3 11h18M3 17h18M10 5v18"/><path d="M19 27l1-4 8-8 3 3-8 8z"/></g></symbol>
+      <symbol id="i-receipt" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v26l-3.5-2-3.5 2-3.5-2L5 29z"/><path d="M9 9h6M9 14h6M9 19h4"/><path d="M23 13l6 6M29 13l-6 6"/></g></symbol>
+      <symbol id="i-invoice" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h12l4 4v14H4z"/><path d="M8 11h8M8 15h8"/><path d="M13 26h15M24 22l4 4-4 4"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。食材・値段・数字はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6.6 14.5C4.2 14 3.2 11.9 3.7 10.1 4.3 8 6.5 7.1 8.3 7.7 8.9 5.5 10.3 4.2 12 4.2s3.1 1.3 3.7 3.5c1.8-.6 4 .3 4.6 2.4.5 1.8-.5 3.9-2.9 4.4z" fill="#FAF7EF" stroke="#3E4A1F" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="6.5" y="14.5" width="11" height="5.5" rx="1" fill="#FAF7EF" stroke="#3E4A1F" stroke-width="2"/>
+          <path d="M8 17h8" stroke="#3E4A1F" stroke-width="1"/>
+        </svg>
+        <span class="brand__name nw">洋食 ミナトビ</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">メニューの原価計算と値付け（お店の人の画面）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">1皿の原価と、<br class="sp-only">値上げの目安がすぐ分かる</h1>
+      <p class="intro__lead">食材の仕入れ値と、1皿に使う量を入れておくだけ。仕入れ値が変わると、その食材を使うメニューの原価率がすぐ変わり、目標の原価率にするための売値の目安も10円単位で出ます。</p>
+      <nav aria-label="手順">
+        <ol class="steps" id="steps">
+          <li class="step"><a href="#panel-list" data-step="list"><span class="step__num" aria-hidden="true">1</span><span class="step__label">メニューの原価率を見る</span></a></li>
+          <li class="step"><a href="#panel-recipe" data-step="recipe"><span class="step__num" aria-hidden="true">2</span><span class="step__label">レシピの使う量を確かめる</span></a></li>
+          <li class="step"><a href="#panel-ing" data-step="ing"><span class="step__num" aria-hidden="true">3</span><span class="step__label">仕入れ値の変化を入れる</span></a></li>
+          <li class="step"><a href="#panel-price" data-step="price"><span class="step__num" aria-hidden="true">4</span><span class="step__label">値上げの目安を見る</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。食材・値段・数字はすべて架空です。</li>
+        <li>※ 消費税は 10% だけで計算しています（デモの仮定）。仕入れ値は税抜で入れます。軽減税率・税込経理／税抜経理の選び方は、税理士さんにご確認ください。</li>
+        <li>※ 入れた値はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ 砂糖・塩・油などの少しの調味料は、デモでは原価に入れていません。</li>
+        <li id="note-nosave" role="note" hidden>※ この端末では保存できないため、入れた値はこのページを開いている間だけ残ります（再読み込みすると見本に戻ります）。</li>
+        <li id="note-broken" role="note" hidden>※ 保存されていた値が読めなかったため、見本の値に戻しました。</li>
+      </ul>
+    </section>
+
+    <!-- 目標の原価率の帯（§6） -->
+    <section class="target-bar" aria-label="目標の原価率">
+      <div class="target-bar__row">
+        <label class="field__label target-bar__label" for="in-target">目標の原価率（%）</label>
+        <div class="target-bar__ctrl">
+          <div class="input-wrap target-bar__input">
+            <input id="in-target" class="input" type="text" inputmode="numeric" autocomplete="off" aria-describedby="target-hint target-err" value="30">
+            <span class="input__unit" aria-hidden="true">%</span>
+          </div>
+          <div class="target-bar__btns" role="group" aria-label="目標の原価率を選ぶ">
+            <button type="button" class="pick-btn pick-btn--t" id="t-25" data-t="25" aria-pressed="false"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>25%</button>
+            <button type="button" class="pick-btn pick-btn--t" id="t-30" data-t="30" aria-pressed="true"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>30%</button>
+            <button type="button" class="pick-btn pick-btn--t" id="t-35" data-t="35" aria-pressed="false"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>35%</button>
+          </div>
+        </div>
+        <p class="field__hint target-bar__hint" id="target-hint">原価率がこの値を超えたメニューに「目標超え」が付きます</p>
+      </div>
+      <p class="field__err" id="target-err" hidden></p>
+    </section>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="画面" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-list" aria-controls="panel-list" aria-selected="true"><span class="nw">原価一覧</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-recipe" aria-controls="panel-recipe" aria-selected="false" tabindex="-1"><span class="nw">レシピ</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-ing" aria-controls="panel-ing" aria-selected="false" tabindex="-1"><span class="nw">食材の値段</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-price" aria-controls="panel-price" aria-selected="false" tabindex="-1"><span class="nw">値付け<span class="pc-only">の目安</span></span></button>
+      </div>
+
+      <!-- タブ1：原価一覧（§7） -->
+      <section class="panel" role="tabpanel" id="panel-list" aria-labelledby="tab-list">
+        <h2 class="panel__h" id="list-h" tabindex="-1">メニューの原価一覧</h2>
+        <section class="summary" aria-label="原価一覧の数">
+          <div class="summary__box summary__box--over" id="ls-over-box" role="group" aria-labelledby="ls-over-l">
+            <p class="summary__label" id="ls-over-l">目標超え</p>
+            <p class="summary__val nw"><span class="summary__n" id="ls-over-n"></span><span class="summary__unit">品</span></p>
+            <p class="summary__note" id="ls-over-note"></p>
+          </div>
+          <div class="summary__box" role="group" aria-labelledby="ls-max-l">
+            <p class="summary__label" id="ls-max-l">いちばん高い原価率</p>
+            <p class="summary__val nw"><span class="summary__n" id="ls-max-n"></span><span class="summary__unit">%</span></p>
+            <p class="summary__note summary__note--strong" id="ls-max-note"></p>
+          </div>
+        </section>
+        <div class="sort">
+          <p class="pick-label" id="sort-l">並べ替え</p>
+          <div class="sort__btns" role="group" aria-labelledby="sort-l">
+            <button type="button" class="pick-btn pick-btn--sort" id="sort-base" data-sort="base" aria-pressed="true"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg><span>見本の順</span></button>
+            <button type="button" class="pick-btn pick-btn--sort" id="sort-ratio" data-sort="ratio" aria-pressed="false"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg><span>原価率の<wbr>高い順</span></button>
+            <button type="button" class="pick-btn pick-btn--sort" id="sort-profit" data-sort="profit" aria-pressed="false"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg><span>粗利の<wbr>低い順</span></button>
+          </div>
+        </div>
+        <ul class="menu-cards" id="menu-cards"></ul>
+        <div class="table-box">
+          <table class="cost-table" id="cost-table">
+            <caption class="visually-hidden">メニューごとの売値・1皿の原価・原価率・粗利</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="c-menu">メニュー</th>
+                <th scope="col" class="c-price num">売値（税込）</th>
+                <th scope="col" class="c-cost num">1皿の原価</th>
+                <th scope="col" class="c-ratio num">原価率</th>
+                <th scope="col" class="c-profit num">粗利</th>
+                <th scope="col" class="c-tag">目標との比較</th>
+                <th scope="col" class="c-go lg"><span class="visually-hidden">レシピ</span></th>
+              </tr>
+            </thead>
+            <tbody id="cost-tbody"></tbody>
+          </table>
+        </div>
+        <section class="card" id="csv-card" aria-labelledby="csv-h">
+          <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
+          <p class="out__desc">6品の原価一覧を、1行に1品で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+          <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
+          <p class="sub sub--13 out__name" id="csv-name"></p>
+          <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
+          <pre class="csv-peek" id="csv-peek" role="group" tabindex="0" aria-labelledby="csv-peek-h"></pre>
+          <details class="rules">
+            <summary>CSV の列と決まり</summary>
+            <div class="rules__scroll">
+              <table class="cols">
+                <caption class="visually-hidden">CSV の列</caption>
+                <thead><tr><th scope="col">順</th><th scope="col">列名</th><th scope="col">中身</th></tr></thead>
+                <tbody id="csv-cols"></tbody>
+              </table>
+            </div>
+            <p class="sub">= + - @（半角）・タブ・改行で始まる値は先頭に ' を付けます（Excel で式として動かないように）。</p>
+          </details>
+        </section>
+      </section>
+
+      <!-- タブ2：レシピ（§8） -->
+      <section class="panel" role="tabpanel" id="panel-recipe" aria-labelledby="tab-recipe" hidden>
+        <h2 class="panel__h" id="recipe-h" tabindex="-1">メニューの中身（レシピ）</h2>
+        <div class="menu-pick">
+          <p class="pick-label" id="menu-pick-l">メニュー</p>
+          <div class="menu-pick__btns" role="group" aria-labelledby="menu-pick-l" id="menu-pick"></div>
+        </div>
+        <section class="recipe" aria-labelledby="recipe-h3">
+          <div class="recipe-sum" id="recipe-sum">
+            <div class="recipe-sum__head"><h3 class="sec-h" id="recipe-h3" tabindex="-1"></h3><span id="recipe-tag"></span></div>
+            <p class="sub" id="recipe-price"></p>
+            <dl class="recipe-nums">
+              <div><dt>1皿の原価</dt><dd id="rn-cost"></dd></div>
+              <div><dt>原価率</dt><dd id="rn-ratio"></dd></div>
+              <div><dt>粗利</dt><dd id="rn-profit"></dd></div>
+            </dl>
+          </div>
+          <table class="recipe-table" id="recipe-table">
+            <caption class="visually-hidden" id="recipe-cap"></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="c-name">食材</th>
+                <th scope="col" class="c-unit num">使える量あたり</th>
+                <th scope="col" class="c-use">使う量</th>
+                <th scope="col" class="c-cost num">原価（0.01円まで）</th>
+                <th scope="col" class="c-tag"><span class="visually-hidden">見本との比較</span></th>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr><td colspan="5" class="recipe-total" id="recipe-total"></td></tr>
+            </tfoot>
+          </table>
+          <p class="sub recipe-note">※ 内訳は 0.01円まで出し、合計を円で四捨五入します</p>
+        </section>
+      </section>
+
+      <!-- タブ3：食材の値段（§9） -->
+      <section class="panel" role="tabpanel" id="panel-ing" aria-labelledby="tab-ing" hidden>
+        <div>
+          <h2 class="panel__h" id="ing-h" tabindex="-1">食材の値段</h2>
+          <p class="panel-note">仕入れ値はデモのための架空の値段です（税抜）。実在の仕入れ先・相場とは関係ありません。</p>
+        </div>
+        <p class="explain">使える量あたり＝<span class="nw">仕入れ値÷</span><span class="nw">（仕入れの量×歩留まり）</span></p>
+        <table class="ing-table" id="ing-table">
+          <caption class="visually-hidden">食材ごとの仕入れ値・仕入れの量・歩留まり・使える量あたりの値段・使うメニュー</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="c-name">食材</th>
+              <th scope="col" class="c-p">仕入れ値</th>
+              <th scope="col" class="c-q">仕入れの量</th>
+              <th scope="col" class="c-y">歩留まり</th>
+              <th scope="col" class="c-unit num">使える量あたり</th>
+              <th scope="col" class="c-menus">使うメニュー</th>
+            </tr>
+          </thead>
+        </table>
+      </section>
+
+      <!-- タブ4：値付けの目安（§10） -->
+      <section class="panel" role="tabpanel" id="panel-price" aria-labelledby="tab-price" hidden>
+        <div>
+          <h2 class="panel__h" id="price-h" tabindex="-1">値付けの目安</h2>
+          <p class="sub price-lead" id="price-lead"></p>
+        </div>
+        <section class="summary summary--1" aria-label="値付けの目安の数">
+          <div class="summary__box summary__box--over" id="ps-box" role="group" aria-labelledby="ps-l">
+            <p class="summary__label" id="ps-l">値上げの案</p>
+            <p class="summary__val"><span class="nw"><span class="summary__n" id="ps-n"></span><span class="summary__unit">品</span></span> <span class="summary__names" id="ps-names"></span></p>
+          </div>
+        </section>
+        <ul class="price-cards" id="price-cards"></ul>
+        <div class="table-box">
+          <table class="price-table" id="price-table">
+            <caption class="visually-hidden" id="price-cap"></caption>
+            <thead>
+              <tr>
+                <th scope="col" class="c-menu">メニュー</th>
+                <th scope="col" class="c-cost num">1皿の原価</th>
+                <th scope="col" class="c-price num">いまの売値（税込）</th>
+                <th scope="col" class="c-ratio num">いまの原価率</th>
+                <th scope="col" class="c-sug num">目安の売値（税込）</th>
+                <th scope="col" class="c-diff num">差</th>
+                <th scope="col" class="c-tag"><span class="visually-hidden">目安との比較</span></th>
+              </tr>
+            </thead>
+            <tbody id="price-tbody"></tbody>
+          </table>
+        </div>
+        <p class="sub">※ この表は保存しません。売値は変わりません。</p>
+        <section class="card" id="print-card" aria-labelledby="print-h">
+          <div class="card__head"><h3 id="print-h">印刷（A4 縦）</h3></div>
+          <p class="out__desc">原価一覧と値付けの目安・食材の値段を、A4 縦の1枚に印刷します。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+          <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷・PDFで保存</button>
+        </section>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-undo"/></svg>見本に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の食材・レシピ・売値に合わせて作ります。いま使っている Excel やスプレッドシートのまま、同じ仕組みを組み込むこともできます。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
+          <h3>いまの表計算で、同じ計算を</h3>
+          <ul class="dot-list">
+            <li>お店の Excel・スプレッドシートに、原価と原価率と値付けの目安の計算を作れます</li>
+            <li>GAS で、仕入れの値段を一括で更新できます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg>
+          <h3>売れた数と掛けて、月の原価を</h3>
+          <ul class="dot-list">
+            <li>レジの売上の数と掛けて、月の原価と原価率を出せます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-invoice"/></svg>
+          <h3>請求書から値段を取り込む</h3>
+          <ul class="dot-list">
+            <li>仕入れ先の請求書の CSV から、食材の値段を取り込めます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe"><strong>費用は、使っている表とつなぐ先によって変わるため、別にお見積もりします。</strong></p>
+      <p class="work-tax">軽減税率・税込経理／税抜経理の選び方など、会計・税の判断は税理士さんにご確認ください。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">洋食 ミナトビ</span>と、食材・値段・数字はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <!-- 確認の窓（§13-5）。最初のフォーカスは「やめる」、Esc＝やめる -->
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title">見本に戻しますか</h2>
+    <p class="confirm__body" id="cf-body">食材の値段・使う量・目標の原価率を、見本の値に戻します。</p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok">戻す</button>
+      <button type="button" class="confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>

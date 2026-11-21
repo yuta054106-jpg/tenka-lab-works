@@ -1,0 +1,595 @@
+/* 洋食 ミナトビ（デモ）メニューの原価計算と値付け */
+/* 共通部品は ⑰（17-lesson）のクラス名と CSS のまま、入力欄は ⑪（11-expense）の .field・.input。:root の色の値を design.md §1-1 に替え、§1-2 の行動ボタンを1か所。新しい部品は §19-5 のクラス名 */
+:root {
+  --c-base: #FAF7EF;
+  --c-surface: #FFFFFF;
+  --c-soft: #F2EDE4;
+  --c-olive-bg: #EDEFE4;
+  --c-over-bg: #FBEBC8;
+  --c-main: #3E4A1F;
+  --c-text: #2E2A1F;
+  --c-accent: #A8341F;
+  --c-accent-dark: #8E2A19;
+  --c-on-accent: #FFFFFF;
+  --c-sub: #5E5E53;
+  --c-line: #DCD5C3;
+  --c-over: #6B4300;
+  --c-bad: #8E2A19;
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", "Meiryo", "Noto Sans JP", sans-serif;
+  --font-head: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", var(--font-body);
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, var(--font-body);
+
+  --pad-x: 16px;
+  --gap-block: 32px;
+  --pad-card: 16px;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(46, 42, 31, .06);
+  --tabs-h: 56px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--c-base);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.8;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+  word-break: auto-phrase;
+}
+h1, h2, h3, h4, p, ul, ol, dl, dd, dt { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+a { color: var(--c-main); }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--c-main); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--pad-x); }
+.sub { font-size: 14px; color: var(--c-sub); line-height: 1.6; }
+.sub--13 { font-size: 13px; }
+.nw { white-space: nowrap; }
+svg { flex: none; }
+[tabindex="-1"]:focus { outline: none; }
+[tabindex="-1"]:focus-visible { outline: 3px solid var(--c-main); }
+.card, .panel, [id$="-h"], [id$="-h3"], .ing-row, .recipe-row { scroll-margin-top: calc(var(--tabs-h) + 8px); }
+.intro__lead, .intro__notes, .work-card p, .confirm__body, .notice, .panel-note, .sub, .out__desc { text-wrap: pretty; }
+.pc-only { display: none; }
+.md-only, .lg-only { display: none; }
+
+/* ---------- TENKA LAB バー（作品例・デモ 共通） ---------- */
+.tl-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 40px; padding: 8px 16px; background: #1B2A41; color: #FFFFFF;
+  font-family: var(--font-body); font-size: 13px; line-height: 1.5; letter-spacing: .04em;
+}
+.tl-bar__text { margin: 0; }
+.tl-bar strong { font-weight: 700; }
+.tl-bar__back {
+  flex: none; position: relative; color: #FFFFFF; font-weight: 700;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.tl-bar__back:hover { color: #FFFFFF; text-decoration-thickness: 2px; }
+.tl-bar__back::before { content: ""; position: absolute; inset: -15px -8px; }
+.tl-bar__back::after { content: "→"; margin-left: 4px; }
+.tl-bar__back:focus-visible { outline: 3px solid #FFFFFF; outline-offset: 2px; }
+@media (min-width: 768px) { .tl-bar { padding: 8px 32px; } }
+
+/* ---------- ヘッダー ---------- */
+.site-header { padding: 16px 0; border-bottom: 1px solid var(--c-line); }
+.brand {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+  font-size: 19px; font-weight: 700; line-height: 1.4; color: var(--c-main);
+}
+.brand__name { font-family: var(--font-head); }
+.brand__logo { flex: none; }
+.brand__demo {
+  display: inline-flex; align-items: center; height: 20px; padding: 0 6px;
+  background: var(--c-text); color: #fff; border-radius: 4px;
+  font-family: var(--font-body); font-size: 12px; font-weight: 700; line-height: 1;
+}
+.brand__sub { margin-top: 4px; font-size: 14px; color: var(--c-sub); line-height: 1.6; }
+
+main { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
+main > * + * { margin-top: var(--gap-block); }
+main > .tabs-area { margin-top: 16px; }
+
+/* ---------- h1・リード・手順 ---------- */
+.page-title { font-family: var(--font-head); font-size: 22px; font-weight: 700; line-height: 1.4; color: var(--c-main); text-wrap: balance; }
+.intro__lead { margin-top: 12px; }
+.steps { display: grid; gap: 8px; margin-top: 24px; }
+.step a {
+  display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px;
+  background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 8px;
+  color: var(--c-text); text-decoration: none; font-size: 14px; font-weight: 700; line-height: 1.5;
+}
+.step a:hover { border-color: var(--c-main); }
+.step__label { word-break: keep-all; overflow-wrap: anywhere; }
+.step__num {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%; background: var(--c-main); color: #fff; font-size: 13px; font-weight: 700; line-height: 1;
+}
+.intro__notes { margin-top: 16px; font-size: 14px; color: var(--c-sub); line-height: 1.6; }
+
+/* ---------- カード ---------- */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-line); border-top: 4px solid var(--c-main);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: var(--pad-card); min-width: 0;
+}
+.card__head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px;
+  margin-bottom: 16px;
+}
+.card__head h2, .card__head h3 { font-size: 18px; line-height: 1.4; color: var(--c-main); }
+.card__link { margin-top: 24px; font-size: 14px; }
+
+/* ---------- ボタン ---------- */
+.btn-main {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; min-height: 52px; padding: 0 32px; border: 0; border-radius: 26px;
+  background: var(--c-accent); color: #fff; font-size: 16px; font-weight: 700; line-height: 1.3; cursor: pointer;
+}
+/* §1-2 行動ボタン（ケチャップの赤）は「CSV をダウンロード」「印刷・PDFで保存」「作品例を見る」の3つだけ */
+.btn-main, .site-footer .btn { background: var(--c-accent); color: var(--c-on-accent); border: 0; }
+.btn-main:hover, .btn-main:active, .site-footer .btn:hover, .site-footer .btn:active { background: var(--c-accent-dark); }
+.btn-sub {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 48px; padding: 0 20px; border: 2px solid var(--c-main); border-radius: 24px;
+  background: var(--c-surface); color: var(--c-main); font-size: 15px; font-weight: 700; line-height: 1.3; cursor: pointer;
+}
+.btn-sub:hover { background: var(--c-soft); }
+.text-link {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 48px;
+  color: var(--c-main); font-size: 15px; text-decoration: underline; text-underline-offset: 3px;
+}
+.text-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-height: 48px; min-width: 48px; padding: 0 8px;
+  border: 0; background: none; color: var(--c-main); font-size: 15px; font-weight: 700; line-height: 1.3;
+  text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap;
+}
+.dot-list li { position: relative; padding-left: 1em; }
+.dot-list li::before { content: "・"; position: absolute; left: 0; }
+
+/* 選択のボタン（並べ替え・メニュー・目標の 25/30/35。§3） */
+.pick-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 0; min-height: 48px; padding: 0 8px;
+  border: 1.5px solid var(--c-main); border-radius: 8px; background: var(--c-soft); color: var(--c-text);
+  font-size: 14px; font-weight: 700; line-height: 1.3; text-align: center; cursor: pointer;
+}
+.pick-btn:hover { background: var(--c-olive-bg); }
+.pick-btn__ic { display: none; }
+.pick-btn[aria-pressed="true"] { background: var(--c-main); color: #FFFFFF; }
+.pick-btn[aria-pressed="true"] .pick-btn__ic { display: block; }
+.pick-btn--sort { min-height: 56px; }
+.pick-btn--t { font-size: 16px; padding: 0 2px; gap: 2px; }
+.pick-label { margin-bottom: 6px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
+@media (prefers-reduced-motion: no-preference) {
+  .pick-btn { transition: background-color 120ms; }
+}
+
+/* ---------- 入力欄（⑪の .field・.input。§3） ---------- */
+.field__label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
+.field__hint { margin-top: 6px; font-size: 14px; color: var(--c-sub); line-height: 1.5; }
+.field__err { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 6px; margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--c-bad); line-height: 1.5; }
+.field__err-ic { margin-top: 3px; }
+.field__err-msg { grid-column: 2; }
+.field__prev { grid-column: 2; font-size: 13px; font-weight: 400; color: var(--c-sub); }
+.input-wrap { position: relative; }
+.input {
+  display: block; width: 100%; min-height: 48px; height: 48px; padding: 0 40px 0 12px; border: 1.5px solid var(--c-main); border-radius: 8px;
+  background: #FFFFFF; color: var(--c-text); font-size: 16px; line-height: 1.3; text-align: right;
+}
+.input[aria-invalid="true"] { border: 2px solid var(--c-bad); }
+.input__unit { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: var(--c-sub); pointer-events: none; }
+.cell-label { display: block; margin-bottom: 4px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
+
+/* ---------- 目標の原価率の帯（§6） ---------- */
+.target-bar { padding: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
+.target-bar__label { margin-bottom: 6px; }
+.target-bar__ctrl { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: center; }
+.target-bar__btns { display: grid; grid-template-columns: repeat(3, minmax(48px, 64px)); gap: 8px; }
+/* 〜399px は入力欄を 96px に詰め、25/30/35 のボタンに丸チェックと「30%」が入る幅を残す（impl_note 参照） */
+@media (max-width: 399px) { .target-bar__ctrl { grid-template-columns: 96px minmax(0, 1fr); } }
+.target-bar__hint { margin-top: 8px; }
+
+/* ---------- 上の数字（.summary） ---------- */
+.summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.summary--1 { grid-template-columns: minmax(0, 1fr); }
+.summary__box {
+  min-width: 0; min-height: 96px; padding: 12px 16px; background: var(--c-surface);
+  border: 1px solid var(--c-line); border-radius: 12px; display: flex; flex-direction: column;
+}
+.summary--1 .summary__box { min-height: 0; }
+.summary__label { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
+.summary__val { margin-top: 4px; line-height: 1.2; }
+.summary__n { font-size: 28px; font-weight: 700; }
+.summary__unit { margin-left: 4px; font-size: 15px; font-weight: 700; }
+.summary__names { font-size: 15px; font-weight: 700; line-height: 1.5; }
+.summary__note { margin-top: auto; padding-top: 4px; font-size: 13px; color: var(--c-sub); line-height: 1.4; }
+.summary__note--strong { font-weight: 700; color: var(--c-text); }
+/* 目標超え・値上げの案の箱（1品以上で卵の淡・左 4px カラメル・数 カラメル） */
+.summary__box--over.is-over { background: var(--c-over-bg); box-shadow: inset 4px 0 0 var(--c-over); }
+.summary__box--over.is-over .summary__n, .summary__box--over.is-over .summary__unit { color: var(--c-over); }
+
+/* ---------- タブ ---------- */
+.tabs {
+  position: sticky; top: 0; z-index: 20; display: flex; gap: 4px;
+  background: var(--c-base); border-bottom: 1px solid var(--c-line);
+}
+.tabs__tab {
+  flex: 1 1 0; display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  min-height: var(--tabs-h); padding: 4px 2px; border: 0; border-radius: 8px 8px 0 0; background: transparent;
+  color: var(--c-sub); font-size: 14px; font-weight: 700; line-height: 1.3; text-align: center; cursor: pointer;
+  box-shadow: inset 0 -4px 0 transparent; min-width: 0;
+}
+.tabs__tab:hover { background: var(--c-soft); }
+.tabs__tab[aria-selected="true"] { color: var(--c-main); background: var(--c-surface); box-shadow: inset 0 -4px 0 var(--c-main); }
+.tabs__tab:focus-visible { outline-offset: -3px; }
+.panel { padding-top: 24px; }
+.panel > * + * { margin-top: 24px; }
+.panel__h { font-family: var(--font-head); font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--c-main); }
+.panel-note { margin-top: 4px; font-size: 13px; color: var(--c-sub); line-height: 1.6; }
+.sec-h { font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--c-main); }
+.explain { padding: 12px 16px; background: var(--c-soft); border-radius: 8px; box-shadow: inset 4px 0 0 var(--c-main); font-size: 14px; line-height: 1.6; }
+
+/* ---------- 状態の札（§1-3） ---------- */
+.state-tag {
+  display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px 0 6px;
+  font-size: 13px; font-weight: 700; line-height: 1; white-space: nowrap; vertical-align: middle; border-radius: 4px;
+  font-family: var(--font-body); flex: none;
+}
+.state-tag--over { background: var(--c-over); color: #FFFFFF; border-radius: 4px; }
+.state-tag--ok { background: #FFFFFF; color: var(--c-main); border: 1.5px solid var(--c-main); border-radius: 12px; }
+.state-tag--raise { background: var(--c-over-bg); color: var(--c-over); border: 1.5px solid var(--c-over); border-radius: 4px; }
+.state-tag--keep { background: #FFFFFF; color: var(--c-sub); border: 1px solid var(--c-line); border-radius: 12px; padding: 0 8px; }
+.state-tag--edited { background: #FFFFFF; color: var(--c-main); border: 1px dashed var(--c-main); border-radius: 4px; }
+.trend { display: inline-flex; align-items: center; vertical-align: -2px; }
+
+/* ---------- 原価一覧（§7） ---------- */
+.sort__btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.sort__btns .pick-btn span { word-break: keep-all; }
+.menu-cards > * + * { margin-top: 8px; }
+.menu-card {
+  display: grid; gap: 4px; padding: 12px 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px;
+}
+.menu-card.is-over, .price-card.is-raise { background: var(--c-over-bg); box-shadow: inset 4px 0 0 var(--c-over); }
+.menu-card__head, .price-card__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; }
+.menu-card__name, .price-card__name { font-size: 17px; font-weight: 700; line-height: 1.3; white-space: nowrap; }
+.menu-card__ratio { line-height: 1.2; }
+.menu-card__l, .price-card__l { font-size: 13px; font-weight: 700; color: var(--c-sub); }
+.big-pct, .big-yen { font-size: 24px; font-weight: 700; }
+.pct-u { font-size: 16px; font-weight: 700; }
+.menu-card__nums { display: flex; flex-wrap: wrap; gap: 2px 16px; font-size: 14px; line-height: 1.5; }
+.menu-card__nums div { display: flex; gap: 6px; align-items: baseline; }
+.menu-card__nums dt { font-size: 13px; font-weight: 700; color: var(--c-sub); }
+.menu-card__nums dd { font-size: 16px; font-weight: 700; white-space: nowrap; }
+.menu-card__go { justify-self: start; padding-left: 0; gap: 6px; }
+.table-box { display: none; }
+.cost-table, .price-table, .recipe-table, .ing-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+
+/* 表（768px〜）。見出しの下と合計の上は帳簿の 2px の線（§3） */
+.cost-table, .price-table { table-layout: fixed; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; overflow: hidden; font-size: 15px; }
+.cost-table th, .cost-table td, .price-table th, .price-table td { padding: 4px 8px; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; line-height: 1.4; }
+.cost-table thead th, .price-table thead th { height: 48px; background: var(--c-soft); color: var(--c-sub); font-size: 13px; font-weight: 700; line-height: 1.3; border-bottom: 2px solid var(--c-main); }
+.cost-table tbody th, .cost-table tbody td, .price-table tbody th, .price-table tbody td { height: 56px; white-space: nowrap; }
+.cost-table tbody tr:last-child > *, .price-table tbody tr:last-child > * { border-bottom: 0; }
+.cost-table tbody th, .price-table tbody th { font-size: 17px; font-weight: 700; }
+.cost-table .num, .price-table .num { text-align: right; }
+.cost-table td, .price-table td { font-weight: 700; }
+.t-ratio { font-size: 22px; }
+.cost-table tr.is-over > *, .price-table tr.is-raise > * { background: var(--c-over-bg); }
+.cost-table tr.is-over > :first-child, .price-table tr.is-raise > :first-child { box-shadow: inset 4px 0 0 var(--c-over); }
+.cost-name-btn { padding-left: 0; font-size: 17px; }
+
+.out__desc { font-size: 14px; line-height: 1.7; }
+.out__btn { width: 100%; margin-top: 16px; }
+.out__name { margin-top: 8px; }
+.out__peek-h { margin-top: 24px; margin-bottom: 8px; font-size: 14px; font-weight: 700; }
+.csv-peek {
+  margin: 0; padding: 12px 16px; background: var(--c-olive-bg); border: 1px solid var(--c-main); border-radius: 8px; color: var(--c-text);
+  font-family: var(--font-mono); font-size: 13px; line-height: 1.6; white-space: pre; overflow-x: auto; max-width: 100%;
+}
+.rules { margin-top: 16px; }
+.rules summary {
+  display: flex; align-items: center; min-height: 48px; cursor: pointer;
+  font-size: 14px; font-weight: 700; color: var(--c-main);
+}
+.rules__scroll { overflow-x: auto; }
+.cols { border-collapse: collapse; font-size: 14px; margin: 4px 0 8px; }
+.cols th, .cols td { padding: 4px 10px; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: top; }
+.cols thead th { background: var(--c-soft); color: var(--c-sub); font-size: 13px; }
+
+/* ---------- レシピ（§8） ---------- */
+.menu-pick__btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.recipe > * + * { margin-top: 16px; }
+.recipe-sum { padding: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-top: 4px solid var(--c-main); border-radius: 12px; }
+.recipe-sum__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 8px; }
+.recipe-sum .sub { margin-top: 4px; }
+.recipe-nums { display: flex; flex-wrap: wrap; gap: 4px 20px; margin-top: 8px; }
+.recipe-nums div { display: flex; align-items: baseline; gap: 6px; }
+.recipe-nums dt { font-size: 13px; font-weight: 700; color: var(--c-sub); }
+.recipe-nums dd { font-size: 16px; font-weight: 700; }
+.recipe-note { margin-top: 8px; }
+
+/* 入力のある表（レシピ・食材）。スマホは tbody 1つを1枚のカードにする（入力欄を2つ作らないため） */
+.recipe-table, .ing-table { display: block; }
+.recipe-table thead, .ing-table thead { display: none; }
+.recipe-table tbody, .ing-table tbody { display: block; margin-top: 8px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; padding: 12px 16px; }
+.recipe-table tr, .ing-table tr { display: block; }
+.recipe-table th, .recipe-table td, .ing-table th, .ing-table td { display: block; padding: 0; text-align: left; font-weight: 400; }
+.recipe-table tbody tr:first-child {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name unit" "use cost" "tag tag"; gap: 4px 12px; align-items: end;
+}
+.recipe-table .c-name { grid-area: name; font-size: 17px; font-weight: 700; line-height: 1.3; align-self: center; }
+.recipe-table .c-unit { grid-area: unit; font-size: 14px; color: var(--c-sub); text-align: right; align-self: center; }
+.recipe-unit__l { display: none; }
+.recipe-table .c-use { grid-area: use; width: 144px; }
+.recipe-table .c-cost { grid-area: cost; font-size: 16px; font-weight: 700; text-align: right; padding-bottom: 12px; }
+.recipe-cost__l { font-size: 13px; color: var(--c-sub); }
+.recipe-table .c-tag { grid-area: tag; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.recipe-table .c-tag.is-empty { display: none; }
+.sample-note { font-size: 13px; color: var(--c-sub); }
+.recipe-table tfoot { display: block; margin-top: 8px; }
+.recipe-table tfoot tr, .recipe-table tfoot td { display: block; }
+.recipe-total { padding: 12px 16px !important; background: var(--c-soft); border-top: 3px double var(--c-main); border-radius: 0 0 8px 8px; font-weight: 700 !important; line-height: 1.6; }
+.err-row td { padding-top: 4px; }
+
+.ing-table tbody { position: relative; }
+.ing-table .ing-main {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "name unit" "menus menus" "p p" "q y"; gap: 8px 12px;
+}
+.ing-table .c-name { grid-area: name; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; align-self: center; }
+.ing-name { font-size: 17px; font-weight: 700; line-height: 1.3; }
+.ing-table .c-unit { grid-area: unit; font-size: 14px; font-weight: 700; text-align: right; align-self: center; }
+.ing-unit__l { display: none; }
+.ing-table .c-menus { grid-area: menus; font-size: 13px; color: var(--c-sub); line-height: 1.5; }
+.ing-table .c-p { grid-area: p; }
+.ing-table .c-q { grid-area: q; }
+.ing-table .c-y { grid-area: y; }
+.ing-table tbody.ing-row--editing { background: var(--c-olive-bg); box-shadow: inset 4px 0 0 var(--c-main); }
+
+/* 影響のあったメニューの箱（§9-4） */
+.impact-row td { padding-top: 12px; }
+.impact { padding: 12px 16px; background: var(--c-olive-bg); border-radius: 8px; box-shadow: inset 4px 0 0 var(--c-main); border: 1px solid var(--c-line); }
+.impact__h { font-size: 15px; font-weight: 700; line-height: 1.5; color: var(--c-main); }
+.impact__chg { margin-top: 4px; font-size: 14px; line-height: 1.6; }
+.impact__list { margin-top: 8px; }
+.impact__item { padding: 8px 0; border-top: 1px solid var(--c-line); }
+.impact__name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 16px; font-weight: 700; line-height: 1.4; }
+.impact__became { font-size: 13px; font-weight: 700; }
+.impact__cost { font-size: 14px; line-height: 1.6; }
+.impact__ratio { font-size: 14px; font-weight: 700; line-height: 1.6; }
+
+/* ---------- 値付けの目安（§10） ---------- */
+.price-lead { margin-top: 4px; }
+.price-cards > * + * { margin-top: 8px; }
+.price-card { display: grid; gap: 4px; padding: 12px 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
+.price-card__sug { line-height: 1.3; }
+.price-card__diff { font-size: 15px; font-weight: 700; line-height: 1.5; }
+.price-card__meta { font-size: 13px; color: var(--c-sub); line-height: 1.5; }
+
+/* ---------- 見本に戻す ---------- */
+.reset-btn { width: 100%; }
+
+/* ---------- 実際のお仕事では ---------- */
+.work-boxes { display: grid; gap: 16px; margin-top: 24px; }
+.work-box { padding: 20px; background: var(--c-base); border: 1px solid var(--c-line); border-radius: 8px; }
+.work-box svg { color: var(--c-main); }
+.work-box h3 { margin-top: 8px; font-size: 16px; line-height: 1.5; }
+.work-box .dot-list { margin-top: 8px; font-size: 15px; line-height: 1.7; }
+.work-safe { margin-top: 16px; font-size: 15px; line-height: 1.7; }
+.work-tax { margin-top: 8px; font-size: 15px; line-height: 1.7; }
+
+/* ---------- 確認の窓 ---------- */
+.confirm {
+  width: min(480px, calc(100% - 32px)); max-width: none; padding: 24px; border: 0; border-top: 4px solid var(--c-main);
+  border-radius: 12px; background: #FFFFFF; color: var(--c-text);
+}
+.confirm::backdrop { background: rgba(46, 42, 31, .5); }
+.confirm__title { font-size: 18px; font-weight: 700; color: var(--c-main); line-height: 1.4; }
+.confirm__body { margin-top: 12px; font-size: 15px; line-height: 1.7; }
+.confirm__ops { display: grid; gap: 8px; margin-top: 24px; }
+.confirm__ops .btn-sub { min-height: 56px; }
+.confirm__cancel {
+  min-height: 48px; padding: 0 16px; border: 0; background: none; color: var(--c-main);
+  font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+}
+
+/* ---------- 知らせ ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 30; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px; width: max-content; max-width: min(480px, calc(100% - 32px));
+  padding: 12px 16px; background: var(--c-main); color: #fff; border-radius: 8px; font-size: 15px; line-height: 1.5;
+}
+.toast.is-in { animation: toast-in 200ms ease-out both; }
+@keyframes toast-in { from { transform: translate(-50%, 8px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+/* ---------- フッター ---------- */
+.site-footer {
+  background: var(--c-main); color: var(--c-base); font-size: 15px; line-height: 1.8;
+  padding: 48px 16px; text-align: center;
+}
+.site-footer p + p { margin-top: 16px; }
+.site-footer :focus-visible { outline-color: #FFFFFF; }
+.btn {
+  display: flex; align-items: center; justify-content: center; width: 100%; max-width: 100%; min-height: 52px;
+  margin: 0 auto; border-radius: 26px; font-size: 16px; font-weight: 700; text-decoration: none;
+}
+.copy { font-size: 12px; }
+
+#print-root { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .toast.is-in { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- 768px 以上 ---------- */
+@media (min-width: 768px) {
+  :root { --pad-x: 32px; --gap-block: 48px; --pad-card: 24px; }
+  .sp-only { display: none; }
+  .pc-only { display: inline; }
+  .site-header { padding: 24px 0; }
+  .brand { font-size: 22px; }
+  .page-title { font-size: 28px; }
+  .panel__h { font-size: 22px; }
+  .card__head h2 { font-size: 20px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
+  .step a { min-height: 56px; }
+  .intro__lead, .intro__notes, .out__desc { max-width: 40em; }
+  .summary { gap: 16px; }
+  .summary__box { padding: 16px 20px; }
+  .summary__label { font-size: 14px; }
+  .summary__n { font-size: 32px; }
+  .tabs { justify-content: flex-start; }
+  .tabs__tab { flex: none; padding: 0 20px; font-size: 16px; }
+  .cell-label, .field__label { font-size: 14px; }
+
+  /* 目標の帯は1行（ラベル｜入力｜ボタン3つ｜説明） */
+  .target-bar__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+  .target-bar__label { margin-bottom: 0; }
+  .target-bar__ctrl { grid-template-columns: 112px auto; }
+  .target-bar__btns { grid-template-columns: repeat(3, 64px); }
+  .target-bar__hint { margin-top: 0; flex: 1 1 200px; }
+
+  .menu-cards, .price-cards { display: none; }
+  .table-box { display: block; }
+  .md-only { display: inline-flex; }
+  .cost-table .lg { display: none; }
+  .cost-table .c-menu { width: 184px; }
+  .cost-table .c-price { width: 104px; }
+  .cost-table .c-cost { width: 104px; }
+  .cost-table .c-ratio { width: 104px; }
+  .cost-table .c-profit { width: 96px; }
+  .cost-table .c-go { width: 148px; }
+  .price-table .c-menu { width: 132px; }
+  .price-table .c-cost { width: 76px; }
+  .price-table .c-price { width: 88px; }
+  .price-table .c-ratio { width: 76px; }
+  .price-table .c-sug { width: 92px; }
+  .price-table .c-diff { width: 76px; }
+  .price-table tbody th { font-size: 16px; }
+  .out__btn { width: 300px; }
+
+  .menu-pick__btns { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .recipe-sum { padding: 16px 24px; }
+  /* レシピの表（768px〜）。列の幅は 768〜1023px で詰めた（impl_note 参照） */
+  .recipe-table { display: table; table-layout: fixed; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
+  .recipe-table thead { display: table-header-group; }
+  .recipe-table tbody { display: table-row-group; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; }
+  .recipe-table tr, .recipe-table tbody tr:first-child { display: table-row; }
+  .recipe-table th, .recipe-table td { display: table-cell; padding: 4px 8px; vertical-align: middle; border-bottom: 1px solid var(--c-line); }
+  .recipe-table thead th { height: 48px; background: var(--c-soft); color: var(--c-sub); font-size: 13px; font-weight: 700; line-height: 1.3; border-bottom: 2px solid var(--c-main); }
+  .recipe-table thead .num { text-align: right; }
+  .recipe-table tbody tr:first-child > * { height: 64px; }
+  .recipe-table tbody tr.err-row > * { border-top: 0; }
+  .recipe-table tbody tr:first-child:has(+ .err-row:not([hidden])) > * { border-bottom: 0; }
+  .recipe-table .c-name { width: 168px; }
+  .recipe-table .c-unit { width: 124px; font-size: 15px; }
+  .recipe-table .c-use { width: 160px; }
+  .recipe-table .c-cost { width: 116px; padding-bottom: 4px; }
+  .recipe-cost__l { display: none; }
+  .recipe-table .c-tag, .recipe-table .c-tag.is-empty { display: table-cell; }
+  .recipe-table .c-tag > * { margin: 2px 0; }
+  .recipe-table .c-tag .sample-note { display: block; }
+  .recipe-table .err-row td { padding: 0 8px 8px 300px; }
+  .recipe-table tfoot { display: table-footer-group; }
+  .recipe-table tfoot tr { display: table-row; }
+  .recipe-table tfoot td { display: table-cell; border-bottom: 0; }
+  .recipe-total { border-radius: 0 0 12px 12px; text-align: right; }
+  .recipe-table .cell-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  /* 食材は 768〜1023px もカード。中の3つの欄を横に並べる */
+  .ing-table .ing-main { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-areas: "name name unit" "menus menus menus" "p q y"; }
+
+  .reset-btn { width: 240px; }
+  .confirm__ops { display: flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .work-boxes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .btn { width: 280px; }
+}
+
+/* ---------- 1024px 以上 ---------- */
+@media (min-width: 1024px) {
+  .cost-table .c-menu { width: 200px; }
+  .cost-table .c-price { width: 112px; }
+  .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .step { position: relative; }
+  .step + .step::before {
+    content: ""; position: absolute; left: -20px; top: 50%; width: 16px; height: 16px; margin-top: -8px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 8h11M9 4l4 4-4 4' fill='none' stroke='%235E5E53' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 16px 16px;
+  }
+  .md-only { display: none; }
+  .lg-only { display: inline; }
+  .cost-table .lg { display: table-cell; }
+  .price-table .c-menu { width: 180px; }
+  .price-table .c-cost { width: 104px; }
+  .price-table .c-price { width: 136px; }
+  .price-table .c-ratio { width: 112px; }
+  .price-table .c-sug { width: 144px; }
+  .price-table .c-diff { width: 104px; }
+  .price-table tbody th { font-size: 17px; }
+  .menu-pick__btns { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .recipe-table .c-name { width: 200px; }
+  .recipe-table .c-unit { width: 140px; }
+  .recipe-table .c-cost { width: 140px; }
+  .recipe-table .err-row td { padding-left: 348px; }
+  .unit-l { display: none; }
+
+  /* 食材の表（1024px〜） */
+  .ing-table { display: table; table-layout: fixed; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
+  .ing-table thead { display: table-header-group; }
+  .ing-table tbody { display: table-row-group; margin: 0; padding: 0; border: 0; border-radius: 0; background: none; }
+  .ing-table tbody.ing-row--editing { background: none; box-shadow: none; }
+  .ing-table tbody.ing-row--editing > tr > * { background: var(--c-olive-bg); }
+  .ing-table tbody.ing-row--editing > tr > :first-child { box-shadow: inset 4px 0 0 var(--c-main); }
+  .ing-table tr, .ing-table .ing-main { display: table-row; }
+  .ing-table th, .ing-table td { display: table-cell; padding: 4px 8px; vertical-align: middle; border-bottom: 1px solid var(--c-line); }
+  .ing-table thead th { height: 48px; background: var(--c-soft); color: var(--c-sub); font-size: 13px; font-weight: 700; line-height: 1.3; border-bottom: 2px solid var(--c-main); }
+  .ing-table thead .num { text-align: right; }
+  .ing-table .ing-main > * { height: 64px; }
+  .ing-table tbody tr:first-child:has(+ .err-row:not([hidden])) > *, .ing-table tbody tr:has(+ .impact-row:not([hidden])) > * { border-bottom: 0; }
+  .ing-table .c-name { display: table-cell; width: 160px; }
+  .ing-table .c-name .state-tag { margin-top: 2px; }
+  .ing-table .c-p { width: 160px; }
+  .ing-table .c-q { width: 140px; }
+  .ing-table .c-y { width: 112px; }
+  .ing-table .c-unit { width: 120px; font-size: 15px; }
+  .ing-table .c-menus { font-size: 14px; }
+  .ing-menus__l { display: none; }
+  .ing-table .err-row td { padding: 0 8px 8px 168px; }
+  .ing-table .impact-row td { padding: 0 8px 12px 8px; }
+  .ing-table .cell-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .impact__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
+}
+
+/* ---------- 印刷（A4 縦・1枚。§15） ---------- */
+@page { size: A4 portrait; margin: 12mm; }
+
+@media print {
+  html, body { background: #FFFFFF !important; }
+  body > *:not(#print-root) { display: none !important; }
+  #print-root { display: block !important; color: #000000; font-family: var(--font-body); }
+  #print-root .sheet { width: 186mm; font-size: 9pt; line-height: 1.3; color: #000000; }
+  #print-root .sheet__head { display: flex; align-items: center; gap: 4mm; margin: 0 0 2mm; }
+  #print-root .sheet__shop { position: relative; padding-right: 16mm; font-family: var(--font-head); font-size: 15pt; font-weight: 700; white-space: nowrap; }
+  #print-root .sheet__cond { font-size: 9pt; margin-bottom: 4mm; }
+  #print-root .sheet__h { margin: 4mm 0 1.5mm; font-size: 10pt; font-weight: 700; }
+  #print-root .stamp { position: absolute; right: 0; top: 50%; width: 12mm; height: 12mm; margin-top: -6mm; transform: rotate(-4deg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  #print-root table { width: 186mm; border-collapse: collapse; table-layout: fixed; border: 1pt solid #000000; }
+  #print-root th, #print-root td { height: 7mm; padding: 0 1.2mm; border-bottom: .5pt solid #BBBBBB; text-align: left; vertical-align: middle; font-size: 9pt; font-weight: 400; color: #000000; white-space: nowrap; overflow: hidden; }
+  #print-root tbody th { font-weight: 700; }
+  #print-root thead th { font-size: 8.5pt; font-weight: 700; border-bottom: 1pt solid #000000; }
+  #print-root .num { text-align: right; }
+  #print-root .sheet__ing td:last-child { white-space: normal; line-height: 1.2; font-size: 8pt; }
+  #print-root td.is-over { font-weight: 700; }
+  #print-root .sheet__foot { margin-top: 4mm; font-size: 8pt; text-align: center; }
+}
