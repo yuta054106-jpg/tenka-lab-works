@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>喫茶 カサネド（デモ）お客様アンケートの集計と見える化｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。喫茶のお客様アンケート60件を月ごとに集計し、5つの項目の平均と分布、また来たいと思う方の割合、時間帯ごとの違い、お客様の声を並べる見本です。回答はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3C2E2B">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="喫茶 カサネド（デモ）お客様アンケートの集計と見える化｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。喫茶のお客様アンケート60件を月ごとに集計し、5つの項目の平均と分布、また来たいと思う方の割合、時間帯ごとの違い、お客様の声を並べる見本です。回答はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cellipse cx='12' cy='19.5' rx='10' ry='2.5' fill='%23FFFFFF' stroke='%233C2E2B' stroke-width='2'/%3E%3Cpath d='M17 9.5h1.2a2.6 2.6 0 0 1 0 5.2H16' fill='none' stroke='%233C2E2B' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M4.5 7.5h12.5v4.2a6.25 6.25 0 0 1-12.5 0z' fill='%23FFFFFF' stroke='%233C2E2B' stroke-width='2' stroke-linejoin='round'/%3E%3Cellipse cx='10.75' cy='7.5' rx='5.2' ry='1.1' fill='%233C2E2B'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- アイコン（design.md §17-2。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-okc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.3l3 3 6-6.3"/></g></symbol>
+      <symbol id="i-err" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.8v6.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 5l8 13H4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+      <symbol id="i-flat" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 19L4 6h16z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></symbol>
+      <symbol id="i-low" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15"/><path d="M6 13l6 6 6-6"/></g></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5v6h6"/><path d="M4.6 10.5A8 8 0 1 1 6 17"/></g></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5L4 10l5 5"/><path d="M4 10h10a6 6 0 0 1 0 12h-3"/></g></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></g></symbol>
+      <symbol id="i-csv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M12 11v7M9 15l3 3 3-3"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H3v-8h18v8h-3"/><path d="M6 14h12v7H6z"/></g></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
+      <symbol id="i-sheet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="16" height="18" rx="1"/><path d="M3 11h16M3 17h16M9 5v18"/><path d="M22 20h8M26 16l4 4-4 4"/></g></symbol>
+      <symbol id="i-calsheet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="15" height="14" rx="2"/><path d="M3 11h15M8 4v4M13 4v4"/><rect x="14" y="16" width="15" height="12" rx="1"/><path d="M14 22h15M20 16v12"/></g></symbol>
+      <symbol id="i-bell" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22V15a8 8 0 0 1 16 0v7l2 3H6z"/><path d="M13 28h6"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。回答はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <ellipse cx="12" cy="19.5" rx="10" ry="2.5" fill="#FFFFFF" stroke="#3C2E2B" stroke-width="2"/>
+          <path d="M17 9.5h1.2a2.6 2.6 0 0 1 0 5.2H16" fill="none" stroke="#3C2E2B" stroke-width="2" stroke-linecap="round"/>
+          <path d="M4.5 7.5h12.5v4.2a6.25 6.25 0 0 1-12.5 0z" fill="#FFFFFF" stroke="#3C2E2B" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="10.75" cy="7.5" rx="5.2" ry="1.1" fill="#3C2E2B"/>
+        </svg>
+        <span class="brand__name nw">喫茶 カサネド</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">お客様アンケートの集計と見える化（お店の人の画面）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">集めたアンケートを、<br class="sp-only">点数とひとことで読む</h1>
+      <p class="intro__lead">お客様に答えてもらったアンケートを、月ごとに集計します。5つの項目の平均と点のばらつき、また来たいと思う方の割合、時間帯ごとの違いが、ひと目で分かります。お客様のひとことは、点数の低い順にも並べられます。</p>
+      <nav aria-label="手順">
+        <ol class="steps" id="steps">
+          <li class="step"><a href="#panel-answer" data-step="answer"><span class="step__num" aria-hidden="true">1</span><span class="step__label">お客様の画面で答えてみる</span></a></li>
+          <li class="step"><a href="#panel-sum" data-step="sum"><span class="step__num" aria-hidden="true">2</span><span class="step__label">月の集計を見る</span></a></li>
+          <li class="step"><a href="#panel-voice" data-step="voice"><span class="step__num" aria-hidden="true">3</span><span class="step__label">お客様の声を読む</span></a></li>
+          <li class="step"><a href="#panel-export" data-step="export"><span class="step__num" aria-hidden="true">4</span><span class="step__label">CSV・印刷で持ち出す</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。回答はすべて架空です。実在の方の情報は入力しないでください。</li>
+        <li>※ このデモの「今日」は 2026年12月1日 に決めてあります（日付が変わっても同じ結果になるように）。</li>
+        <li>※ 入れた回答はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ アンケートは無記名です。お名前・連絡先を聞く欄はありません。</li>
+        <li id="note-nosave" hidden><span role="note">※ この端末では保存できないため、入れた回答はこのページを開いている間だけ残ります（再読み込みすると見本に戻ります）。</span></li>
+        <li id="note-broken" hidden><span role="note">※ 保存されていた回答が読めなかったため、見本の回答に戻しました。</span></li>
+      </ul>
+    </section>
+
+    <!-- 今日の帯（§5-4） -->
+    <p class="today-bar" id="today-bar"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg><span class="today-bar__main" id="today-main"></span><span class="today-bar__note">（デモの日付）</span></p>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="画面" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-answer" aria-controls="panel-answer" aria-selected="true"><span class="tab-short nw">答える</span><span class="tab-long nw">アンケートに答える</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-sum" aria-controls="panel-sum" aria-selected="false" tabindex="-1"><span class="nw">集計</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-voice" aria-controls="panel-voice" aria-selected="false" tabindex="-1"><span class="tab-short nw">声</span><span class="tab-long nw">お客様の声</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-export" aria-controls="panel-export" aria-selected="false" tabindex="-1"><span class="tab-short nw">書き出し</span><span class="tab-long nw">CSV・印刷</span></button>
+      </div>
+
+      <!-- タブ1：アンケートに答える（§6。お客様の画面の見本） -->
+      <section class="panel" role="tabpanel" id="panel-answer" aria-labelledby="tab-answer">
+        <h2 class="panel__h" id="answer-h" tabindex="-1">アンケートに答える（お客様の画面の見本）</h2>
+        <p class="answer-demo">デモ（架空のお店）です。回答はすべて架空です。実在の方の情報は入力しないでください。</p>
+        <div class="answer-wrap">
+          <p class="answer-frame__label">お客様の画面の見本</p>
+          <div class="answer-frame">
+            <form class="answer-form" id="answer-form" novalidate>
+              <div class="answer-hello">
+                <p class="answer-hello__shop nw">喫茶 カサネド</p>
+                <p class="answer-hello__msg">ご来店ありがとうございました。1分ほどのアンケートにご協力ください。</p>
+                <p class="answer-hello__note">名前やご連絡先はうかがいません。</p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="a-date">ご来店日</label>
+                <input id="a-date" class="input input--date" type="text" inputmode="numeric" autocomplete="off" aria-describedby="a-date-hint err-a-date">
+                <p class="field__hint" id="a-date-hint">2026-12-01 の形</p>
+                <p class="field__err" id="err-a-date" hidden></p>
+              </div>
+              <fieldset class="score-set" id="fs-slot" aria-describedby="err-slot">
+                <legend class="q-legend">ご来店の時間帯</legend>
+                <div class="slot-pick">
+                  <label class="pick-btn pick-btn--slot" id="pk-morning"><input type="radio" name="slot" value="morning" id="slot-morning"><span class="pick-btn__main">朝</span><span class="pick-btn__sub nw">開店〜11時</span></label>
+                  <label class="pick-btn pick-btn--slot" id="pk-lunch"><input type="radio" name="slot" value="lunch" id="slot-lunch"><span class="pick-btn__main">昼</span><span class="pick-btn__sub nw">11〜14時</span></label>
+                  <label class="pick-btn pick-btn--slot" id="pk-afternoon"><input type="radio" name="slot" value="afternoon" id="slot-afternoon"><span class="pick-btn__main">午後</span><span class="pick-btn__sub nw">14〜17時</span></label>
+                  <label class="pick-btn pick-btn--slot" id="pk-night"><input type="radio" name="slot" value="night" id="slot-night"><span class="pick-btn__main">夜</span><span class="pick-btn__sub nw">17時〜閉店</span></label>
+                </div>
+                <p class="field__err" id="err-slot" hidden></p>
+              </fieldset>
+              <div id="score-sets"></div>
+              <div class="field">
+                <label class="field__label" for="a-comment">ひとこと（120字まで・なくてもかまいません）</label>
+                <textarea id="a-comment" class="input input--memo" aria-describedby="a-comment-note err-a-comment"></textarea>
+                <div class="memo-foot">
+                  <p class="memo-foot__note" id="a-comment-note">お名前・連絡先は書かないでください</p>
+                  <p class="memo-foot__count" id="a-comment-count"></p>
+                </div>
+                <p class="field__err" id="err-a-comment" hidden></p>
+              </div>
+              <button type="submit" class="btn-main" id="btn-answer"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>回答する</button>
+              <p class="field__err" id="err-form" hidden></p>
+            </form>
+            <div class="answer-done" id="answer-done" hidden>
+              <div class="thanks-box">
+                <h3 class="thanks-box__h" id="thanks-h" tabindex="-1">ありがとうございました</h3>
+                <p class="thanks-box__msg">いただいた声は、お店づくりに使わせていただきます。</p>
+              </div>
+              <p class="thanks-note" id="thanks-note"></p>
+              <div class="answer-done__ops">
+                <button type="button" class="btn-sub undo-btn" id="undo-btn"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-back"/></svg>この回答を取り消す</button>
+                <button type="button" class="btn-sub" id="btn-again">もう1件答える</button>
+                <button type="button" class="text-btn go-sum" id="btn-go-sum">集計を見る<svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- タブ2：月の集計（§7） -->
+      <section class="panel" role="tabpanel" id="panel-sum" aria-labelledby="tab-sum" hidden>
+        <h2 class="panel__h" id="sum-h" tabindex="-1">月の集計</h2>
+        <div class="field month-pick">
+          <label class="field__label" for="sum-month">月</label>
+          <select id="sum-month" class="input select"></select>
+        </div>
+        <p class="notice" id="sum-recent" hidden></p>
+        <dl class="summary sum-top">
+          <div class="summary__box st-n">
+            <dt class="summary__label">回答数</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="st-n"></span><span class="summary__unit">件</span></dd>
+            <dd class="summary__note" id="st-n-diff"></dd>
+          </div>
+          <div class="summary__box st-avg">
+            <dt class="summary__label">総合の平均</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="st-avg"></span></dd>
+            <dd class="summary__note" id="st-avg-diff"></dd>
+          </div>
+          <div class="summary__box st-d">
+            <dt class="summary__label">推奨と批判の差</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="st-d"></span></dd>
+            <dd class="summary__note" id="st-d-diff"></dd>
+          </div>
+        </dl>
+        <p class="lowest-line" id="st-low"></p>
+        <p class="notice" id="sum-none" hidden>この月の回答はありません</p>
+        <section class="sum-sec" id="sum-items" aria-labelledby="items-h">
+          <h3 class="sec-h" id="items-h">5つの項目</h3>
+          <div class="item-grid" id="item-grid"></div>
+          <p class="sub sub--13">※ 平均は、合計を回答数で割り、小数第2位を四捨五入しています（0.05 は切り上げ）。</p>
+        </section>
+        <div class="sum-two" id="sum-two">
+          <section class="sum-sec" id="sum-nps" aria-labelledby="nps-h">
+            <h3 class="sec-h" id="nps-h">また来たいと思うか</h3>
+            <ul class="nps" id="nps-list"></ul>
+            <p class="nps-diff" id="nps-diff"></p>
+            <p class="sub sub--13">※ 0〜10 のうち 9〜10 を推奨、7〜8 を中立、0〜6 を批判として数えます。割合は四捨五入のため、足して100%にならないことがあります。</p>
+          </section>
+          <section class="sum-sec" id="sum-slots" aria-labelledby="slots-h">
+            <h3 class="sec-h" id="slots-h">時間帯ごとの平均</h3>
+            <ul class="slot-cards" id="slot-cards"></ul>
+            <div class="slot-box" id="slot-box">
+              <table class="slot-table" id="slot-table">
+                <caption class="visually-hidden" id="slot-cap"></caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="c-slot">時間帯</th>
+                    <th scope="col" class="c-n num">回答数</th>
+                    <th scope="col" class="num">味</th>
+                    <th scope="col" class="num">提供の速さ</th>
+                    <th scope="col" class="num">接客</th>
+                    <th scope="col" class="num">居心地</th>
+                    <th scope="col" class="num">価格</th>
+                    <th scope="col" class="num">総合</th>
+                  </tr>
+                </thead>
+                <tbody id="slot-tbody"></tbody>
+              </table>
+            </div>
+            <p class="sub sub--13">※ 時間帯の表には、前の月との差を出していません。</p>
+          </section>
+        </div>
+      </section>
+
+      <!-- タブ3：お客様の声（§8） -->
+      <section class="panel" role="tabpanel" id="panel-voice" aria-labelledby="tab-voice" hidden>
+        <h2 class="panel__h" id="voice-h" tabindex="-1">お客様の声</h2>
+        <div class="voice-layout">
+          <div class="voice-filter">
+            <div class="field vf-month">
+              <label class="field__label" for="voice-month">月</label>
+              <select id="voice-month" class="input select"></select>
+            </div>
+            <div class="field vf-q">
+              <label class="field__label" for="voice-q">ことばで絞り込む</label>
+              <input id="voice-q" class="input" type="search" maxlength="20" autocomplete="off" placeholder="例：待、席、コーヒー">
+            </div>
+            <fieldset class="vf-sort">
+              <legend class="field__label">並べ方</legend>
+              <div class="sort-pick">
+                <label class="pick-btn pick-btn--check" id="pk-sort-new"><input type="radio" name="sort" value="new" id="sort-new" checked><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>新しい順</label>
+                <label class="pick-btn pick-btn--check" id="pk-sort-low"><input type="radio" name="sort" value="low" id="sort-low"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>点数の低い順</label>
+              </div>
+            </fieldset>
+            <label class="pick-btn pick-btn--check vf-todo" id="pk-todo"><input type="checkbox" id="voice-todo"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>まだ対応していない声だけ</label>
+          </div>
+          <div class="voice-main">
+            <p class="panel-note">社内メモはお店の人だけが見る欄です。</p>
+            <p class="voice-count" id="voice-count"></p>
+            <p class="notice" id="voice-none" hidden>当てはまる声はありません</p>
+            <div class="voice-list" id="voice-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- タブ4：CSV・印刷（§9） -->
+      <section class="panel" role="tabpanel" id="panel-export" aria-labelledby="tab-export" hidden>
+        <h2 class="panel__h" id="export-h" tabindex="-1">CSV・印刷</h2>
+        <div class="field month-pick">
+          <label class="field__label" for="export-month">月</label>
+          <select id="export-month" class="input select"></select>
+        </div>
+        <div class="export-grid">
+          <section class="card" id="csv-card" aria-labelledby="csv-h">
+            <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
+            <p class="out__desc">選んでいる月の回答を、1行に1件で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+            <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
+            <p class="sub out__none" id="csv-none" hidden>この月の回答はありません</p>
+            <p class="sub out__name" id="csv-name"></p>
+            <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
+            <pre class="csv-peek" id="csv-peek" role="group" tabindex="0" aria-labelledby="csv-peek-h"></pre>
+            <details class="rules">
+              <summary>CSV の列と決まり</summary>
+              <div class="rules__scroll">
+                <table class="cols">
+                  <caption class="visually-hidden">CSV の列</caption>
+                  <thead><tr><th scope="col">順</th><th scope="col">列名</th><th scope="col">中身</th></tr></thead>
+                  <tbody id="csv-cols"></tbody>
+                </table>
+              </div>
+              <p class="sub">= + - @（半角）・タブ・改行で始まる値は先頭に ' を付けます（Excel で式として動かないように）。</p>
+            </details>
+          </section>
+          <section class="card" id="print-card" aria-labelledby="print-h">
+            <div class="card__head"><h3 id="print-h">印刷（A4 縦1枚）</h3></div>
+            <p class="out__desc">選んでいる月の集計（回答数・5つの項目の平均と分布・また来たいと思う方の割合・時間帯ごとの平均・点数の低い声5件）を、A4 縦の1枚に印刷します。社内メモは紙に出しません。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+            <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷・PDFで保存</button>
+            <p class="sub out__none" id="print-none" hidden>この月の回答はありません</p>
+          </section>
+        </div>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-reset"/></svg>見本に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>お店の聞きたいこと（項目・時間帯・メニュー）に合わせて作ります。いまお使いの紙のアンケートや Googleフォームからの引っ越しもご相談ください。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
+          <h3>Googleフォームの回答をそのまま</h3>
+          <ul class="dot-list">
+            <li>お店の Googleフォーム・スプレッドシートの回答を読み込んで、同じ集計を出せます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-calsheet"/></svg>
+          <h3>毎月の集計を自動で</h3>
+          <ul class="dot-list">
+            <li>月が替わったら、集計の表と紙（PDF）を自動で作る形にできます（Google Apps Script など）</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+          <h3>低い点数が来たら店長に</h3>
+          <ul class="dot-list">
+            <li>点数の低い回答が来た時に、店長に知らせる形にできます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe"><strong>費用は、つなぐ先と機能によって変わるため、別にお見積もりします。</strong></p>
+      <p class="work-tax">アンケートは無記名のまま集めます。連絡先を集める場合は、同意の取り方と保存の方法をお店と決めて文書にします。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">喫茶 カサネド</span>と、回答はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <!-- 確認の窓（§12-5）。最初のフォーカスは「やめる」、Esc＝やめる -->
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title">見本に戻しますか</h2>
+    <p class="confirm__body" id="cf-body">答えた回答・対応済みの印・社内メモを、見本に戻します。</p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok">戻す</button>
+      <button type="button" class="btn-sub confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
