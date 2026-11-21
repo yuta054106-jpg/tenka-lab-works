@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>おむすびと豚汁 ヒナタギ（デモ）レジ締めの現金の数え表と日報｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。閉店後のレジ締めで、金種ごとの枚数を入れると合計と過不足がその場で出て、締めると日報にたまる見本です。曜日ごとの平均・過不足の理由・CSV・印刷つき。数字はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F2A25">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="おむすびと豚汁 ヒナタギ（デモ）レジ締めの現金の数え表と日報｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。閉店後のレジ締めで、金種ごとの枚数を入れると合計と過不足がその場で出て、締めると日報にたまる見本です。曜日ごとの平均・過不足の理由・CSV・印刷つき。数字はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.2c.9 0 1.6.5 2.1 1.3l6.6 11.6c1.1 1.9-.3 4.3-2.5 4.3H5.8c-2.2 0-3.6-2.4-2.5-4.3L9.9 4.5c.5-.8 1.2-1.3 2.1-1.3z' fill='%23FFFFFF' stroke='%231F2A25' stroke-width='2' stroke-linejoin='round'/%3E%3Crect x='9' y='13.4' width='6' height='7' fill='%231F2A25'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <!-- アイコン（design.md §17-2。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-okc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.3l3 3 6-6.3"/></g></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v9M7.5 12h9"/></g></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12h9"/></g></symbol>
+      <symbol id="i-err" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M12 6.8v6.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-reset" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5v6h6"/><path d="M4.6 10.5A8 8 0 1 1 6 17"/></g></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5L4 10l5 5"/><path d="M4 10h10a6 6 0 0 1 0 12h-3"/></g></symbol>
+      <symbol id="i-right" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></g></symbol>
+      <symbol id="i-csv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h9l5 5v13H5z"/><path d="M14 3v5h5"/><path d="M12 11v7M9 15l3 3 3-3"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H3v-8h18v8h-3"/><path d="M6 14h12v7H6z"/></g></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></g></symbol>
+      <symbol id="i-coins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6"/><path d="M5 10v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4"/><path d="M5 14v4c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5v-4"/></g></symbol>
+      <symbol id="i-sheet" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="16" height="18" rx="1"/><path d="M3 11h16M3 17h16M9 5v18"/><path d="M22 20h8M26 16l4 4-4 4"/></g></symbol>
+      <symbol id="i-paper" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h12l6 6v20H7z"/><path d="M19 3v6h6"/><path d="M16 13v10M12 19l4 4 4-4"/></g></symbol>
+      <symbol id="i-bell" viewBox="0 0 32 32"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22V15a8 8 0 0 1 16 0v7l2 3H6z"/><path d="M13 28h6"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong>TENKA LAB の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。数字はすべて架空です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap">
+      <p class="brand">
+        <svg class="brand__logo" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3.2c.9 0 1.6.5 2.1 1.3l6.6 11.6c1.1 1.9-.3 4.3-2.5 4.3H5.8c-2.2 0-3.6-2.4-2.5-4.3L9.9 4.5c.5-.8 1.2-1.3 2.1-1.3z" fill="#FFFFFF" stroke="#1F2A25" stroke-width="2" stroke-linejoin="round"/>
+          <rect x="9" y="13.4" width="6" height="7" fill="#1F2A25"/>
+        </svg>
+        <span class="brand__name nw">おむすびと豚汁 ヒナタギ</span>
+        <span class="brand__demo">デモ</span>
+      </p>
+      <p class="brand__sub">レジ締めの現金の数え表と日報（お店の人の画面）</p>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <section class="intro" aria-labelledby="h-intro">
+      <h1 id="h-intro" class="page-title">閉店後のレジ締めを、<br class="sp-only">数えるだけで日報に</h1>
+      <p class="intro__lead">お札と硬貨の枚数を入れると、金種ごとの金額と合計、レジの記録との過不足が、その場で出ます。締めると日報に1行ずつたまり、月の合計・曜日ごとの平均・過不足の回数と理由がひと目で分かります。</p>
+      <nav aria-label="手順">
+        <ol class="steps" id="steps">
+          <li class="step"><a href="#panel-close" data-step="close"><span class="step__num" aria-hidden="true">1</span><span class="step__label">今日の現金を数えて締める</span></a></li>
+          <li class="step"><a href="#panel-daily" data-step="daily"><span class="step__num" aria-hidden="true">2</span><span class="step__label">月の日報を見る</span></a></li>
+          <li class="step"><a href="#panel-review" data-step="review"><span class="step__num" aria-hidden="true">3</span><span class="step__label">曜日ごと・過不足の理由を振り返る</span></a></li>
+          <li class="step"><a href="#panel-export" data-step="export"><span class="step__num" aria-hidden="true">4</span><span class="step__label">CSV・印刷で持ち出す</span></a></li>
+        </ol>
+      </nav>
+      <ul class="intro__notes">
+        <li>※ デモ（架空のお店）です。数字はすべて架空です。実在のお店の売上やお名前は入力しないでください。</li>
+        <li>※ このデモの「今日」は 2026年12月1日 に決めてあります（日付が変わっても同じ結果になるように）。見本は 2026年11月の26日分（定休日は水曜）です。</li>
+        <li>※ 締めの記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ 金額はすべて税込の円で、1円単位の整数です。会計や税の判断はしません。</li>
+        <li id="note-nosave" hidden><span role="note">※ この端末では保存できないため、締めの記録はこのページを開いている間だけ残ります（再読み込みすると見本に戻ります）。</span></li>
+        <li id="note-broken" hidden><span role="note">※ 保存されていた記録が読めなかったため、見本の記録に戻しました。</span></li>
+      </ul>
+    </section>
+
+    <!-- 今日の帯（§5-4） -->
+    <p class="today-bar" id="today-bar"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg><span class="today-bar__main" id="today-main"></span><span class="today-bar__note">（デモの日付）</span></p>
+
+    <div class="tabs-area">
+      <div class="tabs" role="tablist" aria-label="画面" id="tabs">
+        <button type="button" role="tab" class="tabs__tab" id="tab-close" aria-controls="panel-close" aria-selected="true"><span class="tab-short nw">締め</span><span class="tab-long nw">今日の締め</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-daily" aria-controls="panel-daily" aria-selected="false" tabindex="-1"><span class="tab-short nw">日報</span><span class="tab-long nw">日報（月の一覧）</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-review" aria-controls="panel-review" aria-selected="false" tabindex="-1"><span class="nw">振り返り</span></button>
+        <button type="button" role="tab" class="tabs__tab" id="tab-export" aria-controls="panel-export" aria-selected="false" tabindex="-1"><span class="tab-short nw">書き出し</span><span class="tab-long nw">CSV・印刷</span></button>
+      </div>
+
+      <!-- タブ1：今日の締め（§6） -->
+      <section class="panel" role="tabpanel" id="panel-close" aria-labelledby="tab-close">
+        <h2 class="panel__h" id="close-h" tabindex="-1">今日の締め（現金を数える）</h2>
+        <p class="close-demo">デモ（架空のお店）です。レジの記録の数字は見本です。レジとはつながっていません。</p>
+        <form id="close-form" novalidate>
+          <div class="close-grid">
+            <section class="card close-reg" aria-labelledby="reg-h">
+              <div class="card__head"><h3 id="reg-h">締める日とレジの記録</h3></div>
+              <div class="field">
+                <label class="field__label" for="c-date">締める日</label>
+                <div class="date-row">
+                  <input id="c-date" class="input input--date" type="text" inputmode="numeric" autocomplete="off" aria-describedby="c-date-hint err-c-date">
+                  <span class="date-read" id="c-date-read"></span>
+                </div>
+                <p class="field__hint" id="c-date-hint">2026-12-01 の形</p>
+                <p class="field__hint" id="c-date-wed" hidden>水曜日は定休日です。臨時の営業として締めます</p>
+                <p class="field__err" id="err-c-date" hidden></p>
+              </div>
+              <h4 class="sub-h">レジの記録（レジの日報の数字。見本）</h4>
+              <div class="reg-fields">
+                <div class="field">
+                  <label class="field__label" for="c-reg">現金売上（レジの記録）</label>
+                  <div class="unit-row"><input id="c-reg" class="input input--yen" type="text" inputmode="numeric" autocomplete="off" aria-describedby="u-c-reg err-c-reg"><span class="unit" id="u-c-reg">円</span></div>
+                  <p class="field__err" id="err-c-reg" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="field__label" for="c-card">カード</label>
+                  <div class="unit-row"><input id="c-card" class="input input--yen" type="text" inputmode="numeric" autocomplete="off" aria-describedby="u-c-card err-c-card"><span class="unit" id="u-c-card">円</span></div>
+                  <p class="field__err" id="err-c-card" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="field__label" for="c-qr">QR（スマホ決済）</label>
+                  <div class="unit-row"><input id="c-qr" class="input input--yen" type="text" inputmode="numeric" autocomplete="off" aria-describedby="u-c-qr err-c-qr"><span class="unit" id="u-c-qr">円</span></div>
+                  <p class="field__err" id="err-c-qr" hidden></p>
+                </div>
+                <div class="field">
+                  <label class="field__label" for="c-cust">客数</label>
+                  <div class="unit-row"><input id="c-cust" class="input input--yen" type="text" inputmode="numeric" autocomplete="off" aria-describedby="u-c-cust err-c-cust"><span class="unit" id="u-c-cust">人</span></div>
+                  <p class="field__err" id="err-c-cust" hidden></p>
+                </div>
+              </div>
+              <p class="reg-total" id="reg-total"></p>
+            </section>
+
+            <section class="card close-count" aria-labelledby="count-h">
+              <div class="card__head"><h3 id="count-h" class="h-ic"><svg width="22" height="22" aria-hidden="true" focusable="false"><use href="#i-coins"/></svg>金種ごとの枚数</h3></div>
+              <p class="sub-label" id="sample-l">見本の枚数を入れる</p>
+              <div class="sample-btns" role="group" aria-labelledby="sample-l">
+                <button type="button" class="btn-sub btn-sm" id="smp-even">ぴったりの見本</button>
+                <button type="button" class="btn-sub btn-sm" id="smp-over">多い見本</button>
+                <button type="button" class="btn-sub btn-sm" id="smp-short">少ない見本</button>
+                <button type="button" class="btn-sub btn-sm" id="smp-clear">枚数を空にする</button>
+              </div>
+              <div class="count-table" id="count-table">
+                <div class="count-row count-row--head" aria-hidden="true"><span>金種</span><span class="num">枚数</span><span class="num">金額</span></div>
+                <!-- 10行は app.js が作る（§6-2 の順） -->
+                <div id="count-rows"></div>
+                <div class="count-total"><span class="nw">数えた現金</span><span class="count-total__v nw" id="count-total"></span></div>
+              </div>
+            </section>
+
+            <div class="close-right" id="close-right">
+              <div class="close-right__in" id="close-right-in">
+                <div class="close-result" id="close-result">
+                  <dl class="cr-rows">
+                    <div class="cr-row"><dt class="nw">数えた現金</dt><dd class="nw" id="cr-counted"></dd></div>
+                    <div class="cr-row"><dt class="nw">− 釣り銭準備金</dt><dd class="nw" id="cr-float"></dd></div>
+                    <div class="cr-row"><dt class="nw">＝ 現金売上（実際）</dt><dd class="nw" id="cr-actual"></dd></div>
+                    <div class="cr-row"><dt class="nw">現金売上（レジの記録）</dt><dd class="nw" id="cr-reg"></dd></div>
+                  </dl>
+                  <p class="cr-diff-l">過不足</p>
+                  <p class="diff-big nw" id="cr-diff"></p>
+                  <p class="cr-tag" id="cr-tag"></p>
+                  <p class="cr-wait" id="cr-wait" hidden></p>
+                </div>
+                <p class="notice" id="under-float" hidden>数えた現金が釣り銭準備金（30,000円）より少なくなっています。枚数を確かめてください</p>
+                <div class="reason-area" id="reason-area" hidden>
+                  <fieldset class="reason-set" id="c-reason-set" aria-describedby="err-reason">
+                    <legend class="field__label">過不足の理由</legend>
+                    <div class="reason-pick">
+                      <label class="pick-btn pick-btn--reason" id="pk-count"><input type="radio" name="reason" value="count" id="r-count"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>数え間違い</label>
+                      <label class="pick-btn pick-btn--reason" id="pk-change"><input type="radio" name="reason" value="change" id="r-change"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>釣り銭の渡し間違い</label>
+                      <label class="pick-btn pick-btn--reason" id="pk-register"><input type="radio" name="reason" value="register" id="r-register"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>レジの打ち間違い</label>
+                      <label class="pick-btn pick-btn--reason" id="pk-other"><input type="radio" name="reason" value="other" id="r-other"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>その他</label>
+                    </div>
+                    <p class="field__err" id="err-reason" hidden></p>
+                  </fieldset>
+                  <div class="field">
+                    <label class="field__label" for="c-note">ひとこと（60字まで）</label>
+                    <textarea id="c-note" class="input input--memo" aria-describedby="c-note-hint err-c-note"></textarea>
+                    <div class="memo-foot">
+                      <p class="memo-foot__note" id="c-note-hint">何があったか、次にどうするか。お客様のお名前・連絡先は書かないでください</p>
+                      <p class="memo-foot__count" id="c-note-count"></p>
+                    </div>
+                    <p class="field__err" id="err-c-note" hidden></p>
+                  </div>
+                </div>
+                <fieldset class="role-set" id="c-role-set" aria-describedby="err-role">
+                  <legend class="field__label">締めた人（役割）</legend>
+                  <div class="role-pick">
+                    <label class="pick-btn" id="pk-early"><input type="radio" name="role" value="early" id="role-early"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>早番</label>
+                    <label class="pick-btn" id="pk-late"><input type="radio" name="role" value="late" id="role-late"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>遅番</label>
+                    <label class="pick-btn" id="pk-manager"><input type="radio" name="role" value="manager" id="role-manager"><svg class="pick-btn__ic" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-okc"/></svg>店長</label>
+                  </div>
+                  <p class="field__err" id="err-role" hidden></p>
+                </fieldset>
+                <button type="submit" class="btn-main" id="btn-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>締める</button>
+              </div>
+            </div>
+
+            <section class="card close-float" aria-labelledby="float-h">
+              <div class="card__head"><h3 id="float-h">明日の釣り銭に残す目安</h3></div>
+              <div class="float-box">
+                <table class="float-table">
+                  <caption class="visually-hidden">明日の釣り銭に残す目安（金種ごと）</caption>
+                  <thead><tr><th scope="col">金種</th><th scope="col" class="num">数えた</th><th scope="col" class="num">残す</th><th scope="col" class="num">取り出す</th></tr></thead>
+                  <tbody id="float-tbody"></tbody>
+                </table>
+              </div>
+              <p class="float-sum" id="float-sum"></p>
+              <p class="notice" id="float-short" hidden></p>
+              <p class="sub sub--13">※ 残す目安は 千円札 15枚・500円玉 12枚・100円玉 60枚・50円玉 30枚・10円玉 100枚・5円玉 60枚・1円玉 200枚（合計 30,000円）です。</p>
+            </section>
+          </div>
+        </form>
+
+        <!-- 締めた後（§6-3） -->
+        <div class="close-done" id="close-done" hidden>
+          <div class="slip-box" id="slip-box">
+            <h3 class="slip-box__h" id="slip-h" tabindex="-1">締めました</h3>
+            <p class="slip-box__date" id="slip-date-line"></p>
+            <p class="slip-box__line" id="slip-l1"></p>
+            <p class="slip-box__line" id="slip-l2"></p>
+            <p class="slip-box__line" id="slip-l3"></p>
+            <p class="slip-box__line" id="slip-l4" hidden></p>
+            <p class="slip-box__note" id="slip-l5" hidden></p>
+          </div>
+          <p class="done-note" id="done-note"></p>
+          <div class="close-done__ops">
+            <button type="button" class="btn-sub" id="undo-btn"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-back"/></svg>この締めを取り消す</button>
+            <button type="button" class="btn-sub" id="btn-slip-now"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>この締めの控えを印刷</button>
+            <button type="button" class="btn-sub" id="btn-next">次の締めを入れる</button>
+            <button type="button" class="text-btn go-daily" id="btn-go-daily">日報を見る<svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-right"/></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- タブ2：日報（§7） -->
+      <section class="panel" role="tabpanel" id="panel-daily" aria-labelledby="tab-daily" hidden>
+        <h2 class="panel__h" id="daily-h" tabindex="-1">日報（月の一覧）</h2>
+        <div class="field month-pick">
+          <label class="field__label" for="daily-month">月</label>
+          <select id="daily-month" class="input select"></select>
+        </div>
+        <dl class="summary daily-summary">
+          <div class="summary__box ds-total">
+            <dt class="summary__label">売上合計（レジの記録）</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="ds-total"></span><span class="summary__unit">円</span></dd>
+            <dd class="summary__note" id="ds-total-note"></dd>
+          </div>
+          <div class="summary__box ds-days">
+            <dt class="summary__label">営業日数</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="ds-days"></span><span class="summary__unit">日</span></dd>
+            <dd class="summary__note" id="ds-days-note"></dd>
+          </div>
+          <div class="summary__box ds-cust">
+            <dt class="summary__label">客数・客単価</dt>
+            <dd class="summary__val nw"><span class="summary__n" id="ds-cust"></span><span class="summary__unit">人</span></dd>
+            <dd class="summary__note" id="ds-cust-note"></dd>
+          </div>
+          <div class="summary__box ds-diff">
+            <dt class="summary__label">過不足</dt>
+            <dd class="summary__val"><span class="nw"><span class="summary__n" id="ds-diff"></span><span class="summary__unit">回</span></span><span class="summary__m nw" id="ds-diff-sum"></span></dd>
+            <dd class="summary__note" id="ds-diff-note"></dd>
+          </div>
+        </dl>
+        <p class="notice" id="daily-none" hidden>この月の締めの記録はありません</p>
+        <section class="daily-sec" aria-labelledby="days-h">
+          <div class="sec-head">
+            <h3 class="sec-h" id="days-h">日ごとの記録</h3>
+            <p class="day-count" id="day-count"></p>
+          </div>
+          <div class="day-cards" id="day-cards"></div>
+          <div class="daily-box">
+            <table class="daily-table" id="daily-table">
+              <caption class="visually-hidden" id="daily-cap"></caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="c-date">日付</th>
+                  <th scope="col" class="c-role">締めた人</th>
+                  <th scope="col" class="c-total num">売上合計</th>
+                  <th scope="col" class="c-yen num">現金</th>
+                  <th scope="col" class="c-yen num">カード</th>
+                  <th scope="col" class="c-yen num">QR</th>
+                  <th scope="col" class="c-cust num">客数</th>
+                  <th scope="col" class="c-unit num">客単価</th>
+                  <th scope="col" class="c-diff">過不足</th>
+                </tr>
+              </thead>
+              <tbody id="daily-tbody"></tbody>
+              <tfoot id="daily-tfoot"></tfoot>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <!-- タブ3：振り返り（§8） -->
+      <section class="panel" role="tabpanel" id="panel-review" aria-labelledby="tab-review" hidden>
+        <h2 class="panel__h" id="review-h" tabindex="-1">振り返り（曜日ごと・過不足の理由）</h2>
+        <div class="field month-pick">
+          <label class="field__label" for="review-month">月</label>
+          <select id="review-month" class="input select"></select>
+        </div>
+        <p class="notice" id="review-none" hidden>この月の締めの記録はありません</p>
+        <div class="review-grid" id="review-grid">
+          <section class="review-sec" aria-labelledby="wd-h">
+            <h3 class="sec-h" id="wd-h">曜日ごとの平均</h3>
+            <p class="sub sub--13">※ その曜日の売上合計÷営業日数。1円未満は四捨五入（0.5 は切り上げ）</p>
+            <div class="wd-cards" id="wd-cards"></div>
+            <div class="wd-box">
+              <table class="wd-table" id="wd-table">
+                <caption class="visually-hidden" id="wd-cap"></caption>
+                <thead><tr><th scope="col" class="c-wd">曜日</th><th scope="col" class="c-n num">営業日数</th><th scope="col">平均売上</th><th scope="col">平均客数</th><th scope="col" class="c-unit num">客単価</th></tr></thead>
+                <tbody id="wd-tbody"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="review-sec" aria-labelledby="rs-h">
+            <h3 class="sec-h" id="rs-h">過不足の回数（理由別）</h3>
+            <p class="rs-lead" id="rs-lead"></p>
+            <p class="rs-lead2" id="rs-lead2"></p>
+            <ul class="reason-bars" id="reason-bars"></ul>
+            <p class="sub sub--13">※ 前の月との比較はしません（見本は1か月だけ）</p>
+          </section>
+        </div>
+      </section>
+
+      <!-- タブ4：CSV・印刷（§9） -->
+      <section class="panel" role="tabpanel" id="panel-export" aria-labelledby="tab-export" hidden>
+        <h2 class="panel__h" id="export-h" tabindex="-1">CSV・印刷</h2>
+        <div class="field month-pick">
+          <label class="field__label" for="export-month">月</label>
+          <select id="export-month" class="input select"></select>
+        </div>
+        <p class="notice" id="export-none" hidden>この月の締めの記録はありません</p>
+        <div class="export-grid">
+          <section class="card" id="csv-card" aria-labelledby="csv-h">
+            <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
+            <p class="out__desc">選んでいる月の日報を、1行に1日で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+            <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
+            <p class="sub out__name" id="csv-name"></p>
+            <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
+            <pre class="csv-peek" id="csv-peek" role="group" tabindex="0" aria-labelledby="csv-peek-h"></pre>
+            <details class="rules">
+              <summary>CSV の列と決まり</summary>
+              <div class="rules__scroll">
+                <table class="cols">
+                  <caption class="visually-hidden">CSV の列</caption>
+                  <thead><tr><th scope="col">順</th><th scope="col">列名</th><th scope="col">中身</th></tr></thead>
+                  <tbody id="csv-cols"></tbody>
+                </table>
+              </div>
+              <p class="sub">= + - @（半角）・タブ・改行で始まる文字の値は先頭に ' を付けます（Excel で式として動かないように）。</p>
+            </details>
+          </section>
+          <div class="print-col">
+            <section class="card" id="print-card" aria-labelledby="print-h">
+              <div class="card__head"><h3 id="print-h">日報を印刷（A4 縦1枚）</h3></div>
+              <p class="out__desc">選んでいる月の日報を、A4 縦1枚にまとめます。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+              <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>日報を印刷</button>
+            </section>
+            <section class="card" id="slip-card" aria-labelledby="slip-card-h">
+              <div class="card__head"><h3 id="slip-card-h">締めの控えを印刷（A4 縦1枚）</h3></div>
+              <div class="field">
+                <label class="field__label" for="slip-date">締めた日</label>
+                <select id="slip-date" class="input select"></select>
+              </div>
+              <button type="button" class="btn-main out__btn" id="btn-slip"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>締めの控えを印刷</button>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="reset-wrap">
+      <button type="button" class="btn-sub reset-btn" id="btn-reset"><svg width="18" height="18" aria-hidden="true" focusable="false"><use href="#i-reset"/></svg>見本に戻す</button>
+    </div>
+
+    <section class="card work-card" aria-labelledby="h-work">
+      <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
+      <p>いまお使いの締めの紙やレジの日報を見せていただき、項目と並びを合わせて作ります。金種・釣り銭準備金・締める人の分け方も、お店のやり方に合わせます。</p>
+      <div class="work-boxes">
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
+          <h3>毎日の日報をスプレッドシートに</h3>
+          <ul class="dot-list">
+            <li>締めるたびに、Google スプレッドシートに1行ずつためる形にできます（Google Apps Script など）</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-paper"/></svg>
+          <h3>月末に税理士さん用の CSV を</h3>
+          <ul class="dot-list">
+            <li>月が替わったら、税理士さんに渡す形の CSV を自動で作れます。列の名前・並びは税理士さんの指示に合わせます</li>
+          </ul>
+        </div>
+        <div class="work-box">
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+          <h3>過不足が続いたら店長に</h3>
+          <ul class="dot-list">
+            <li>過不足が何日か続いた時や、決めた金額を超えた時に、店長に知らせる形にできます</li>
+          </ul>
+        </div>
+      </div>
+      <p class="work-safe"><strong>費用は、つなぐ先と機能によって変わるため、別にお見積もりします。</strong></p>
+      <p class="work-tax">会計・税の判断（勘定科目や、過不足の帳簿のつけ方など）はしません。税理士さんの指示に合わせて作ります。</p>
+      <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden>
+    <span class="toast__text" id="toast-text"></span>
+  </div>
+
+  <footer class="site-footer">
+    <p>このページは TENKA LAB が作った動くデモです。<span class="nw">おむすびと豚汁 ヒナタギ</span>と、数字はすべて架空です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <!-- 確認の窓（§12-5）。最初のフォーカスは「やめる」、Esc＝やめる -->
+  <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
+    <h2 class="confirm__title" id="cf-title">見本に戻しますか</h2>
+    <p class="confirm__body" id="cf-body">締めた記録を消して、見本の 2026年11月の26日分に戻します。</p>
+    <div class="confirm__ops">
+      <button type="button" class="btn-sub confirm__ok" id="cf-ok">戻す</button>
+      <button type="button" class="btn-sub confirm__cancel" id="cf-cancel">やめる</button>
+    </div>
+  </dialog>
+
+  <div id="print-root" aria-hidden="true"></div>
+</body>
+</html>
