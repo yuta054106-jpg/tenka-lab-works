@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>焙煎所 アオシグレ（デモ）コーヒー豆のネットショップ：カートと送料の目安｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。小さな焙煎所のネットショップで、商品をカートに入れると、届け先の地域ごとの送料と合計の目安が出る見本です。商品・値段・送料はすべて架空です。注文・支払いはできません。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3A2520">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="焙煎所 アオシグレ（デモ）コーヒー豆のネットショップ：カートと送料の目安｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。小さな焙煎所のネットショップで、商品をカートに入れると、届け先の地域ごとの送料と合計の目安が出る見本です。商品・値段・送料はすべて架空です。注文・支払いはできません。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M7 11h14l-1 15H8z' fill='%23CFAE82' stroke='%233A2520' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M6.5 8h15v3h-15z' fill='%23CFAE82' stroke='%233A2520' stroke-width='2' stroke-linejoin='round'/%3E%3Cpath d='M14 8C13 4 15.5 1.5 20 1.5c.5 4.5-2 6.8-6 6.5z' fill='%237FAF6B' stroke='%235E8A4E' stroke-width='1.2' stroke-linejoin='round'/%3E%3Ccircle cx='23.5' cy='6.5' r='1.8' fill='%23FFFFFF' stroke='%239FB3A6' stroke-width='1.2'/%3E%3Ccircle cx='14' cy='18' r='3' fill='%237A4A33'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコンと商品の図（すべてこの案件で描いたインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.5h.01"/></g></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5.5 12.5l4.5 4.5 8.5-9.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="13" height="15" rx="2"/><path d="M3 9h13M8.5 9v10"/><path d="M13.5 21l.7-3 6-6 2.3 2.3-6 6z"/></g></symbol>
+      <symbol id="i-ship" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5L9.5 5 16 8.5v8L9.5 20 3 16.5z"/><path d="M3 8.5l6.5 3.5L16 8.5M9.5 12v8"/><path d="M17 12h5M19.5 9.5L22 12l-2.5 2.5"/></g></symbol>
+      <symbol id="i-yen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 7l3.5 5 3.5-5M12 12v5.5M9 13h6M9 15.8h6"/></g></symbol>
+
+      <!-- 商品の図（56×56。ラベルの丸は焙煎の印の色を currentColor で） -->
+      <symbol id="a-bag-s" viewBox="0 0 56 56"><g stroke-linecap="round" stroke-linejoin="round"><path d="M15 21h26l-1.5 29h-23z" fill="#CFAE82" stroke="#3A2520" stroke-width="2"/><path d="M14 14h28v7H14z" fill="#CFAE82" stroke="#3A2520" stroke-width="2"/><path d="M17.5 17.5h21" fill="none" stroke="#A98455" stroke-width="1.5"/><circle cx="28" cy="35" r="6" fill="currentColor"/></g></symbol>
+      <symbol id="a-bag-l" viewBox="0 0 56 56"><g stroke-linecap="round" stroke-linejoin="round"><path d="M14 11h28l-1.5 39h-25z" fill="#CFAE82" stroke="#3A2520" stroke-width="2"/><path d="M13 4h30v7H13z" fill="#CFAE82" stroke="#3A2520" stroke-width="2"/><path d="M16.5 7.5h23" fill="none" stroke="#A98455" stroke-width="1.5"/><circle cx="28" cy="29" r="6" fill="currentColor"/></g></symbol>
+      <symbol id="a-drip" viewBox="0 0 56 56"><g stroke-linecap="round" stroke-linejoin="round"><path d="M22 6h16v20H22z" fill="#CFAE82" stroke="#3A2520" stroke-width="2"/><path d="M24.5 10h11" fill="none" stroke="#A98455" stroke-width="1.5"/><path d="M8 22h40v28H8z" fill="#FFFFFF" stroke="#3A2520" stroke-width="2"/><path d="M8 30h40" fill="none" stroke="#3A2520" stroke-width="2"/><circle cx="28" cy="40" r="4" fill="#7A4A33"/></g></symbol>
+      <symbol id="a-gift" viewBox="0 0 56 56"><g stroke-linecap="round" stroke-linejoin="round"><path d="M6 16h44v34H6z" fill="#FFFFFF" stroke="#3A2520" stroke-width="2"/><path d="M4 10h48v6H4z" fill="#FFFFFF" stroke="#3A2520" stroke-width="2"/><path d="M22 10h12v40H22z" fill="#FFFFFF" stroke="#3A2520" stroke-width="1.5"/><path d="M25 24h6M25 30h6" fill="none" stroke="#3A2520" stroke-width="1.5"/></g></symbol>
+      <symbol id="a-dripper" viewBox="0 0 56 56"><g stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h40L36 38H20z" fill="#E8E1D6" stroke="#3A2520" stroke-width="2"/><path d="M22 18l4 14M28 18v14M34 18l-4 14" fill="none" stroke="#3A2520" stroke-width="1.5"/><path d="M20 38h16v4H20z" fill="#E8E1D6" stroke="#3A2520" stroke-width="2"/><path d="M8 46h40" fill="none" stroke="#3A2520" stroke-width="2"/><path d="M12 42h32v4H12z" fill="#E8E1D6" stroke="#3A2520" stroke-width="2"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。商品・値段・送料はすべて<span class="nw">架空</span>です。注文・支払いはできません。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+          <path d="M7 11h14l-1 15H8z" fill="#CFAE82" stroke="#3A2520" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M6.5 8h15v3h-15z" fill="#CFAE82" stroke="#3A2520" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 8C13 4 15.5 1.5 20 1.5c.5 4.5-2 6.8-6 6.5z" fill="#7FAF6B" stroke="#5E8A4E" stroke-width="1.2" stroke-linejoin="round"/>
+          <circle cx="23.5" cy="6.5" r="1.8" fill="#FFFFFF" stroke="#9FB3A6" stroke-width="1.2"/>
+          <circle cx="14" cy="18" r="3" fill="#7A4A33"/>
+        </svg>
+        <span class="hd__name nw">焙煎所 アオシグレ</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 360 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <defs><clipPath id="hero-clip"><rect x="0" y="0" width="360" height="120" rx="16"/></clipPath></defs>
+          <g clip-path="url(#hero-clip)" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="360" height="120" fill="#E7ECE4"/>
+            <!-- 雨の短い線（10本） -->
+            <g fill="none" stroke="#9FB3A6" stroke-width="1.5">
+              <path d="M150 8l-2 8"/><path d="M178 20l-2 8"/><path d="M206 6l-2 8"/><path d="M232 26l-2 8"/><path d="M258 10l-2 8"/>
+              <path d="M286 30l-2 8"/><path d="M312 8l-2 8"/><path d="M338 24l-2 8"/><path d="M196 40l-2 8"/><path d="M324 46l-2 8"/>
+            </g>
+            <!-- 枝と若葉（7枚） -->
+            <path d="M-4 14C30 18 60 22 92 34c14 5 26 12 36 20" fill="none" stroke="#3A2520" stroke-width="2"/>
+            <path d="M44 22c4 6 6 12 4 18" fill="none" stroke="#3A2520" stroke-width="2"/>
+            <path d="M86 32c-2 6-2 12 2 17" fill="none" stroke="#3A2520" stroke-width="2"/>
+            <g fill="#7FAF6B" stroke="#5E8A4E" stroke-width="1.5">
+              <path d="M18 17c-3 8 0 15 6 18 3-7 1-14-6-18z"/>
+              <path d="M34 19c6-6 13-7 19-3-5 6-12 7-19 3z"/>
+              <path d="M48 40c-6 4-8 11-5 17 6-3 8-10 5-17z"/>
+              <path d="M66 26c-1 8 3 14 9 16 2-7-2-14-9-16z"/>
+              <path d="M88 49c-6 3-8 10-6 16 7-2 9-9 6-16z"/>
+              <path d="M104 40c7-4 14-3 18 2-6 5-13 4-18-2z"/>
+              <path d="M126 53c-3 7-1 14 5 17 3-7 1-13-5-17z"/>
+            </g>
+            <!-- 葉の先のしずく（5つ） -->
+            <g fill="#FFFFFF" stroke="#9FB3A6" stroke-width="1.5">
+              <circle cx="24" cy="41" r="2.5"/><circle cx="43" cy="62" r="3"/><circle cx="76" cy="47" r="2"/><circle cx="82" cy="70" r="2.5"/><circle cx="131" cy="75" r="2"/>
+            </g>
+            <!-- 作業台 -->
+            <rect x="0" y="100" width="360" height="20" fill="#CFAE82"/>
+            <path d="M0 100h360" fill="none" stroke="#3A2520" stroke-width="2"/>
+            <!-- 袋3つ（高さ 44・52・60。ラベルは浅・中・深） -->
+            <g stroke="#3A2520" stroke-width="2">
+              <path d="M160 64h30l-1.5 36h-27z" fill="#CFAE82"/><path d="M159 56h32v8h-32z" fill="#CFAE82"/>
+              <path d="M200 56h34l-1.5 44h-31z" fill="#CFAE82"/><path d="M199 48h36v8h-36z" fill="#CFAE82"/>
+              <path d="M244 48h38l-1.5 52h-35z" fill="#CFAE82"/><path d="M243 40h40v8h-40z" fill="#CFAE82"/>
+            </g>
+            <g fill="none" stroke="#A98455" stroke-width="1.5"><path d="M163 60h24"/><path d="M203 52h28"/><path d="M247 44h32"/></g>
+            <circle cx="175" cy="82" r="6" fill="#B07A4C"/>
+            <circle cx="217" cy="78" r="6.5" fill="#7A4A33"/>
+            <circle cx="263" cy="74" r="7" fill="#3E2620"/>
+            <!-- 陶器のドリッパー -->
+            <g stroke="#3A2520" stroke-width="2">
+              <path d="M298 62h44l-13 24h-18z" fill="#E8E1D6"/>
+              <path d="M311 86h18v5h-18z" fill="#E8E1D6"/>
+              <path d="M302 91h36v9h-36z" fill="#E8E1D6"/>
+            </g>
+            <path d="M313 67l3 14M320 67v14M327 67l-3 14" fill="none" stroke="#3A2520" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <p class="hero__kind">小さな焙煎所のネットショップ</p>
+          <h1 class="h1 nw" id="h-top" tabindex="-1">焙煎所 アオシグレ</h1>
+          <p class="hero__lead">雨の多い町の、小さな焙煎所です<span class="nw">（架空）</span>。豆を選んで<span class="nw">カートに入れる</span>と、届け先の地域ごとの送料と、合計の目安が出ます。</p>
+          <p class="hero__intro">焙煎は週に<span class="nw">2回</span>、少しずつ。浅煎り・中煎り・深煎りの<span class="nw">3つ</span>の豆と、ドリップバッグ、<span class="nw">ギフトの箱</span>を置いています<span class="nw">（架空）</span>。</p>
+          <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>商品・値段・送料はすべて<span class="nw">架空</span>です。注文・支払いはできません。</span></p>
+          <div class="hero__act">
+            <a class="btn-main hero__btn" href="#shop" id="hero-cta"><span class="nw">商品を見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="store sec--band">
+      <div class="wrap store__grid">
+        <!-- 2. 商品 -->
+        <section id="shop" class="sec store__shop" aria-labelledby="h-shop">
+          <p class="sec__en">SHOP</p>
+          <h2 id="h-shop" class="sec__title" tabindex="-1">商品</h2>
+          <p class="sec__lead">値段はすべて税込の架空の値段です。挽き方を変えても値段は変わりません。</p>
+          <fieldset class="filter">
+            <legend class="filter__label">種類で絞る</legend>
+            <div class="filter__opts">
+              <label class="filter__opt"><input type="radio" class="filter__input visually-hidden" name="cat" value="all" checked><span class="filter__face nw">すべて</span></label>
+              <label class="filter__opt"><input type="radio" class="filter__input visually-hidden" name="cat" value="bean"><span class="filter__face nw">豆</span></label>
+              <label class="filter__opt"><input type="radio" class="filter__input visually-hidden" name="cat" value="drip"><span class="filter__face nw">ドリップバッグ</span></label>
+              <label class="filter__opt"><input type="radio" class="filter__input visually-hidden" name="cat" value="gift"><span class="filter__face nw">ギフト・器具</span></label>
+            </div>
+          </fieldset>
+          <p class="filter__count" id="shop-count">9品のうち 9品を表示しています</p>
+          <noscript><p class="note">カートと送料の計算には JavaScript を使います。</p></noscript>
+          <ul class="goods" aria-labelledby="h-shop">
+            <li class="item" data-id="am100" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--mid" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-s"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-am100"><span class="nw">あまおと ブレンド</span><span class="nw">（中煎り）</span></h3>
+                  <p class="item__vol nw" id="v-am100">100g</p>
+                  <p class="item__desc">毎日飲む一杯に。やわらかな苦みと甘み。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">900<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__grind"><label for="g-am100">挽き方<span class="visually-hidden">（あまおと ブレンド 100g）</span></label><div class="sel-wrap"><select id="g-am100" class="sel"><option value="w" selected>豆のまま</option><option value="m">中挽き</option><option value="c">粗挽き</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-am100">数量<span class="visually-hidden">（あまおと ブレンド 100g）</span></label><div class="sel-wrap"><select id="q-am100" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="am100" aria-describedby="n-am100 v-am100"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-am100" hidden></p>
+              <p class="item__msg" id="m-am100"></p>
+            </li>
+            <li class="item" data-id="am200" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--mid" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-l"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-am200"><span class="nw">あまおと ブレンド</span><span class="nw">（中煎り）</span></h3>
+                  <p class="item__vol nw" id="v-am200">200g</p>
+                  <p class="item__desc">同じ豆の、たっぷり入った袋です。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">1,700<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__grind"><label for="g-am200">挽き方<span class="visually-hidden">（あまおと ブレンド 200g）</span></label><div class="sel-wrap"><select id="g-am200" class="sel"><option value="w" selected>豆のまま</option><option value="m">中挽き</option><option value="c">粗挽き</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-am200">数量<span class="visually-hidden">（あまおと ブレンド 200g）</span></label><div class="sel-wrap"><select id="q-am200" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="am200" aria-describedby="n-am200 v-am200"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-am200" hidden></p>
+              <p class="item__msg" id="m-am200"></p>
+            </li>
+            <li class="item" data-id="et100" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--light" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-s"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-et100"><span class="nw">エチオピア（浅煎り）</span></h3>
+                  <p class="item__vol nw" id="v-et100">100g</p>
+                  <p class="item__desc">花のような香りと、明るい酸味。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">1,150<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__grind"><label for="g-et100">挽き方<span class="visually-hidden">（エチオピア 100g）</span></label><div class="sel-wrap"><select id="g-et100" class="sel"><option value="w" selected>豆のまま</option><option value="m">中挽き</option><option value="c">粗挽き</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-et100">数量<span class="visually-hidden">（エチオピア 100g）</span></label><div class="sel-wrap"><select id="q-et100" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="et100" aria-describedby="n-et100 v-et100"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-et100" hidden></p>
+              <p class="item__msg" id="m-et100"></p>
+            </li>
+            <li class="item item--out" data-id="et200" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--light" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-l"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-et200"><span class="nw">エチオピア（浅煎り）</span></h3>
+                  <p class="item__vol nw" id="v-et200">200g</p>
+                  <p class="item__desc">同じ豆の、たっぷり入った袋です。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">2,200<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--out nw">品切れ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__buy item__buy--out">
+                <button type="button" class="item__add item__add--out" data-act="out" data-id="et200" aria-disabled="true" aria-describedby="n-et200 v-et200"><span class="nw">品切れです</span></button>
+              </div>
+              <p class="item__msg" id="m-et200"></p>
+            </li>
+            <li class="item" data-id="br100" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--dark" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-s"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-br100"><span class="nw">ブラジル（深煎り）</span></h3>
+                  <p class="item__vol nw" id="v-br100">100g</p>
+                  <p class="item__desc">ナッツのようなこくと、しっかりした苦み。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">990<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__grind"><label for="g-br100">挽き方<span class="visually-hidden">（ブラジル 100g）</span></label><div class="sel-wrap"><select id="g-br100" class="sel"><option value="w" selected>豆のまま</option><option value="m">中挽き</option><option value="c">粗挽き</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-br100">数量<span class="visually-hidden">（ブラジル 100g）</span></label><div class="sel-wrap"><select id="q-br100" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="br100" aria-describedby="n-br100 v-br100"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-br100" hidden></p>
+              <p class="item__msg" id="m-br100"></p>
+            </li>
+            <li class="item" data-id="br200" data-cat="bean">
+              <div class="item__top">
+                <svg class="item__art item__art--dark" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-bag-l"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-br200"><span class="nw">ブラジル（深煎り）</span></h3>
+                  <p class="item__vol nw" id="v-br200">200g</p>
+                  <p class="item__desc">同じ豆の、たっぷり入った袋です。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">1,880<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__grind"><label for="g-br200">挽き方<span class="visually-hidden">（ブラジル 200g）</span></label><div class="sel-wrap"><select id="g-br200" class="sel"><option value="w" selected>豆のまま</option><option value="m">中挽き</option><option value="c">粗挽き</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-br200">数量<span class="visually-hidden">（ブラジル 200g）</span></label><div class="sel-wrap"><select id="q-br200" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="br200" aria-describedby="n-br200 v-br200"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-br200" hidden></p>
+              <p class="item__msg" id="m-br200"></p>
+            </li>
+            <li class="item" data-id="db10" data-cat="drip">
+              <div class="item__top">
+                <svg class="item__art" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-drip"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-db10"><span class="nw">ドリップバッグ 10袋の箱</span></h3>
+                  <p class="item__vol nw" id="v-db10">10g × 10袋</p>
+                  <p class="item__desc"><span class="nw">あまおと ブレンド</span>を<span class="nw">1杯</span>ずつ。カップにかけてお湯を注ぐだけです。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">1,600<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-db10">数量<span class="visually-hidden">（ドリップバッグ 10袋の箱）</span></label><div class="sel-wrap"><select id="q-db10" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="db10" aria-describedby="n-db10 v-db10"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-db10" hidden></p>
+              <p class="item__msg" id="m-db10"></p>
+            </li>
+            <li class="item" data-id="gift" data-cat="gift">
+              <div class="item__top">
+                <svg class="item__art" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-gift"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-gift"><span class="nw">ギフトの箱</span></h3>
+                  <p class="item__vol nw" id="v-gift">1箱</p>
+                  <p class="item__desc"><span class="nw">あまおと ブレンド</span>とブラジルの豆 各<span class="nw">100g</span>（中挽き）と、ドリップバッグ<span class="nw">5袋</span>。のしを付けられます（無料）。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">3,400<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--few nw">残り2点</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-gift">数量<span class="visually-hidden">（ギフトの箱）</span></label><div class="sel-wrap"><select id="q-gift" class="sel"><option value="1" selected>1</option><option value="2">2</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="gift" aria-describedby="n-gift v-gift"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-gift" hidden></p>
+              <p class="item__msg" id="m-gift"></p>
+            </li>
+            <li class="item" data-id="drp" data-cat="gift">
+              <div class="item__top">
+                <svg class="item__art" width="56" height="56" aria-hidden="true" focusable="false"><use href="#a-dripper"/></svg>
+                <div class="item__info">
+                  <h3 class="item__name" id="n-drp"><span class="nw">陶器のドリッパー</span></h3>
+                  <p class="item__vol nw" id="v-drp">1〜2杯用・1個</p>
+                  <p class="item__desc">手に持つと少し重い、白い<span class="nw">陶器のドリッパー</span>です。</p>
+                  <div class="item__meta">
+                    <p class="item__price"><span class="nw">2,600<span class="item__yen">円</span></span><span class="item__tax nw">（税込）</span></p>
+                    <span class="badge stock stock--ok nw">在庫あり</span>
+                  </div>
+                </div>
+              </div>
+              <div class="item__buy">
+                <div class="item__qty"><label for="q-drp">数量<span class="visually-hidden">（陶器のドリッパー）</span></label><div class="sel-wrap"><select id="q-drp" class="sel"><option value="1" selected>1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select><svg class="sel__icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></div></div>
+                <button type="button" class="btn-main item__add" data-act="add" data-id="drp" aria-describedby="n-drp v-drp"><span class="nw">カートに入れる</span></button>
+              </div>
+              <p class="item__incart" id="c-drp" hidden></p>
+              <p class="item__msg" id="m-drp"></p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- 3. カート（1024px〜 はこの欄。〜1023px は下のシートに出す） -->
+        <aside id="cartbox" class="cart store__cart" aria-labelledby="h-cart"></aside>
+      </div>
+    </div>
+
+    <!-- 4. 送料とお届け -->
+    <section id="ship" class="sec" aria-labelledby="h-ship">
+      <div class="wrap">
+        <p class="sec__en">SHIPPING</p>
+        <h2 id="h-ship" class="sec__title" tabindex="-1">送料とお届け</h2>
+        <p class="sec__lead">送料は、届け先の地域と荷物の大きさで決まります<span class="nw">（架空の配送料・税込）</span>。</p>
+        <table class="ship-table">
+          <caption>地域と荷物の大きさごとの送料<span class="nw">（架空・税込）</span></caption>
+          <thead><tr><th scope="col">届け先の地域</th><th scope="col"><span class="nw">小さい荷物</span></th><th scope="col"><span class="nw">大きい荷物</span></th></tr></thead>
+          <tbody>
+            <tr data-area="hokkaido"><th scope="row"><span class="nw">北海道</span></th><td><span class="nw">1,000円</span></td><td><span class="nw">1,400円</span></td></tr>
+            <tr data-area="tohoku"><th scope="row"><span class="nw">東北</span></th><td><span class="nw">800円</span></td><td><span class="nw">1,100円</span></td></tr>
+            <tr data-area="kanto"><th scope="row"><span class="nw">関東・中部</span></th><td><span class="nw">600円</span></td><td><span class="nw">900円</span></td></tr>
+            <tr data-area="kinki"><th scope="row"><span class="nw">近畿・中国・四国</span></th><td><span class="nw">700円</span></td><td><span class="nw">1,000円</span></td></tr>
+            <tr data-area="kyushu"><th scope="row"><span class="nw">九州</span></th><td><span class="nw">900円</span></td><td><span class="nw">1,200円</span></td></tr>
+            <tr data-area="okinawa"><th scope="row"><span class="nw">沖縄</span></th><td><span class="nw">1,500円</span></td><td><span class="nw">2,200円</span></td></tr>
+            <tr class="ship-table__ex"><td colspan="3">沖縄は送料無料の対象外です。商品の小計 <span class="nw">5,000円</span>以上で、大きさにかかわらず <span class="nw">800円</span>です。</td></tr>
+          </tbody>
+        </table>
+        <ul class="ship-rules">
+          <li><span class="nw">小さい荷物</span>：豆とドリップバッグが合わせて<span class="nw">4点</span>までの時。</li>
+          <li><span class="nw">大きい荷物</span>：豆とドリップバッグが<span class="nw">5点</span>以上の時か、<span class="nw">ギフトの箱</span>・ドリッパーが入っている時。</li>
+          <li><span class="nw">送料無料</span>：商品の小計が<span class="nw">5,000円</span>以上の時（沖縄を除く）。ギフト包装の<span class="nw">300円</span>は小計に含めません。</li>
+          <li>ギフト包装：1回のご注文につき<span class="nw">300円</span>です。</li>
+          <li>のし：<span class="nw">ギフトの箱</span>に付けられます（無料）。表書きは御礼・御祝・無地から選べます。</li>
+        </ul>
+        <p class="note">お届けまでの日数は、実際のお店の決まりと配送の状況によります。このデモでは日数を出していません。</p>
+      </div>
+    </section>
+
+    <!-- 5. ご注文の前に -->
+    <section id="before" class="sec sec--line" aria-labelledby="h-before">
+      <div class="wrap">
+        <p class="sec__en">NOTE</p>
+        <h2 id="h-before" class="sec__title" tabindex="-1">ご注文の前に</h2>
+        <div class="card before">
+          <p>このデモでは、注文・支払い・お届け先の入力はできません。入力する欄も置いていません。</p>
+          <p>実際のお仕事では、決済（クレジットカードなど）・お届け先の入力・注文のメールは、<span class="nw">BASE</span>・<span class="nw">STORES</span>・<span class="nw">Shopify</span> などのサービスか、お店と決めた仕組みにつなぎます（内容により別にお見積もり）。サービスの名前は例として挙げています。</p>
+          <p>特定商取引法に基づく表記・返品の決まり・個人情報の扱いは、実際のページでは、お店の情報で必要な表記を載せます。このデモは架空のお店のため載せていません。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work" tabindex="-1">実際のお仕事では</h2>
+        <p class="lab-lead">商品・カート・送料の計算を、お店のホームページの中にお作りします。<span class="nw">BASE</span>・<span class="nw">STORES</span> などの既製のショップを使う場合は、商品ページと見た目を整えます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-edit"/></svg>
+            <h3>商品と在庫の更新は、お店の手で</h3>
+            <ul><li>管理画面やスプレッドシートから、商品・値段・在庫（残りの数・品切れ）をお店の方が直せる形にします</li><li>直し方の手順書をお渡しします</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-ship"/></svg>
+            <h3>送料の表を、お店の決まりで</h3>
+            <ul><li>地域・荷物の大きさ・送料無料の基準・離島などの例外を、お店の配送の契約に合わせて表にします</li><li>ギフト包装・のしなどの選択も、同じ表で管理します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-yen"/></svg>
+            <h3>費用の目安</h3>
+            <ul><li>ホームページ <span class="nw">5ページ</span> <span class="nw">150,000円（税込）</span>から</li><li><span class="nw">LP 1枚</span> <span class="nw">80,000円（税込）</span>から</li><li>カート・決済のサービスとのつなぎは、内容によりお見積もり</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で決めていただくこと</h3>
+          <ul><li>特定商取引法に基づく表記と返品の決まり（<span class="nw">TENKA LAB</span> は法的な判断をしません。実際のページでは必要な表記を載せます）</li><li>税の表示（軽減税率の対象かどうか）と、値段・送料の決め方</li><li>在庫を、いつ・だれが直すか</li></ul>
+          <p class="work-check__note">ページに出す商品・値段・送料の内容は、お店が決めて責任を持ちます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">焙煎所 アオシグレ</span>と、商品・値段・送料はすべて<span class="nw">架空</span>です。注文・支払いはできません。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <!-- カート（〜1023px はこのシートに出す） -->
+  <dialog id="cart-sheet" class="sheet cart-sheet" aria-labelledby="h-cart">
+    <div class="sheet__bar">
+      <div class="cart-sheet__head" id="sheet-head"></div>
+      <button type="button" class="btn-sub sheet__close" id="sheet-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-x"/></svg><span class="nw">閉じる</span></button>
+    </div>
+    <div class="sheet__body" id="sheet-body"></div>
+  </dialog>
+
+  <div class="cartbar" id="cartbar">
+    <button type="button" class="btn-main cartbar__btn" id="cartbar-btn" data-act="open-sheet" aria-haspopup="dialog"><span class="nw" id="cartbar-text">カートを見る（0点）</span></button>
+  </div>
+</body>
+</html>
