@@ -578,7 +578,7 @@ main > .tabs-area { margin-top: 16px; }
   html, body { background: #FFFFFF !important; }
   body > *:not(#print-root) { display: none !important; }
   #print-root { display: block !important; color: #000000; font-family: var(--font-body); }
-  #print-root .sheet { width: 186mm; font-size: 9pt; line-height: 1.3; color: #000000; }
+  #print-root .sheet { width: 186mm; padding-top: 3.5mm; font-size: 9pt; line-height: 1.3; color: #000000; }
   #print-root .sheet__head { display: flex; align-items: center; gap: 4mm; margin: 0 0 2mm; }
   #print-root .sheet__shop { position: relative; padding-right: 16mm; font-family: var(--font-head); font-size: 15pt; font-weight: 700; white-space: nowrap; }
   #print-root .sheet__cond { font-size: 9pt; margin-bottom: 4mm; }
