@@ -55,8 +55,8 @@
     V5: '保護者のお名前（呼び名）を入れてください。',
     V6: '20文字以内で入れてください（いま{n}文字）。',
     V7: 'メールアドレスを入れてください（連絡の方法がメールのため）。',
-    V8: 'メールアドレスに「@」が入っていません。例：hanako@example.com',
-    V9: 'メールアドレスの形を確かめてください。例：hanako@example.com',
+    V8: 'メールアドレスに「@」が入っていません。下の例の形で入れてください。',
+    V9: 'メールアドレスの形を確かめてください。下の例の形で入れてください。',
     V10: 'メールアドレスが長すぎます。254文字以内で入れてください。',
     V11: '電話番号を入れてください（連絡の方法が電話のため）。',
     V12: '電話番号は数字で入れてください（ハイフンや空白はあっても大丈夫です）。',
@@ -374,7 +374,7 @@
     a.setAttribute('aria-selected', String(tab === 'after')); a.tabIndex = tab === 'after' ? 0 : -1
     $('panel-before').hidden = tab !== 'before'
     $('panel-after').hidden = tab !== 'after'
-    $('h-guide').textContent = tab === 'before' ? '直す前の悪い点' : '直した後で直した点'
+    $('h-guide').textContent = tab === 'before' ? '直す前の悪い点' : 'このフォームで直した点'
     var gt = document.querySelectorAll('#guide-list .tag')
     for (var i = 0; i < gt.length; i++) gt[i].className = 'tag ' + (tab === 'before' ? 'tag--bad' : 'tag--fix')
     if (opts.write && changed && location.hash !== '#' + tab) history.replaceState(null, '', '#' + tab)
