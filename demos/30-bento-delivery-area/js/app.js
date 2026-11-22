@@ -477,7 +477,7 @@
     box.appendChild(tot)
     var note
     if (zk === 'A') note = ['A区分は、配達料が無料です。']
-    else if (zk === 'B' && r.toFree > 0) note = ['あと', [r.toFree + '個'], 'で、配達料が無料になります（B区分は', ['20個以上'], 'で無料）。']
+    else if (zk === 'B' && r.toFree > 0) note = ['B区分は', ['20個以上'], 'で配達料が無料です。あと', [r.toFree + '個'], 'です。']
     else if (zk === 'B') note = [['20個以上'], 'なので、配達料は無料です。']
     else note = ['C区分の配達料は、個数にかかわらず', ['1,000円'], 'です。']
     box.appendChild(para('p', 'sum__note', note))
@@ -615,6 +615,8 @@
       change('wish')
     })
     $('hero-cta').addEventListener('click', function () { goTo('area') })
+    // ロゴはハッシュ（条件）を変えずにページの先頭へ
+    document.querySelector('.hd__logo').addEventListener('click', function (e) { e.preventDefault(); goTo('top') })
     $('zres-to-when').querySelector('button').addEventListener('click', function () { goTo('when') })
 
     window.addEventListener('hashchange', function () { applyHash(true) })
