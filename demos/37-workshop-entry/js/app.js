@@ -236,7 +236,8 @@
     var on = state.open === slot.id
     var b = btn('btn-sub btn-open' + (on ? ' is-on' : ''), on ? '表示中' : '名簿を見る', 'open', { slot: slot.id })
     b.setAttribute('aria-pressed', on ? 'true' : 'false')
-    b.setAttribute('aria-label', shortText(slot) + ' ' + kindOf(slot).name + 'の名簿を見る')
+    // 見える字「表示中」も名前に含める（音声入力で届くように）
+    b.setAttribute('aria-label', shortText(slot) + ' ' + kindOf(slot).name + 'の名簿を見る' + (on ? '（表示中）' : ''))
     return b
   }
 
@@ -314,7 +315,8 @@
     if (!c.today) {
       b1 = btn('btn-sub', '当日に押せます', 'come', { no: e.no })
       b1.disabled = true
-      b1.setAttribute('aria-label', e.no + ' の受付は当日（' + slot.dayShort + '）に押せます')
+      // 見える字「当日に押せます」をそのまま名前に含める
+      b1.setAttribute('aria-label', e.no + ' は当日に押せます（' + slot.dayShort + '）')
     } else if (e.at === null) {
       b1 = btn('btn-main', '来ました', 'come', { no: e.no })
       b1.setAttribute('aria-label', e.no + '（' + e.size + '人）が来ました')
@@ -487,7 +489,8 @@
         if (on) b.appendChild(icon('i-tick', 16))
         b.appendChild(el('span', null, on ? '選択中' : 'この回を選ぶ'))
         b.setAttribute('aria-pressed', on ? 'true' : 'false')
-        b.setAttribute('aria-label', shortText(s) + ' ' + kindOf(s).name + 'を選ぶ')
+        // 見える字「選択中」も名前に含める
+        b.setAttribute('aria-label', shortText(s) + ' ' + kindOf(s).name + 'を選ぶ' + (on ? '（選択中）' : ''))
       }
       var op = el('div', 'slot__op')
       op.appendChild(b)
@@ -677,9 +680,10 @@
     var s = slotOf(id)
     var c = calcOf(s)
     if (custState(c) === 'closed') return
+    // 選択中の回をもう一度押した時は人数を残す（別の回なら 1人 から）
+    if (state.pick !== id) state.ninzu = 1
     state.pick = id
     state.done = null
-    state.ninzu = 1
     render()
     focusSel('#entry-h')
     say(shortText(s) + ' の回を選びました。' + (custState(c) === 'wait' ? 'キャンセル待ちになります。' : '残り' + c.rest + '席です。'))
