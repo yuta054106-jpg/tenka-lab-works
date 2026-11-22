@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>売上をスマホで見る（デモ）｜パン工房 コムギトキ</title>
+  <meta name="description" content="いつものスプレッドシートに入れた売上を、スマホで見られる画面にした TENKA LAB の動くデモ（架空のお店）です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#5A3A12">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="売上をスマホで見る（デモ）｜パン工房 コムギトキ">
+  <meta property="og:description" content="いつものスプレッドシートに入れた売上を、スマホで見られる画面にした TENKA LAB の動くデモ（架空のお店）です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23FAF3E3'/%3E%3Cpath d='M12 21V6M12 9l-3.5-2.5M12 9l3.5-2.5M12 13l-3.5-2.5M12 13l3.5-2.5M12 17l-3.5-2.5M12 17l3.5-2.5' fill='none' stroke='%235A3A12' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/calc.js" defer></script>
+  <script src="js/view.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ページのアイコン（自作のインライン SVG） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14.5h18M9 4v16"/></g></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></g></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 11l8-7 8 7"/><path d="M6 9.5V20h12V9.5"/><path d="M12 19v-6M9.5 15.5L12 13l2.5 2.5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・売上・客数はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-wheat"/></svg>
+        <span class="hd__name nw">パン工房 コムギトキ</span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top">売上を、スマホで見る。</h1>
+        <p class="intro__lead">入力はいつものスプレッドシート、見るのはスマホ。閉店後に入れた売上と客数から、今月の合計・目標まで あと いくら・前月との比べを1画面で確かめる見本です。<span class="only-sm">下の表の数字を変えると、上のスマホの画面がその場で変わります。</span><span class="only-lg">左の表の数字を変えると、右のスマホの画面がその場で変わります。</span></p>
+        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。入力した内容はどこにも送られず、保存もされません。</p>
+        <p class="intro__now"><span class="nw">デモの今日：</span><span class="nw">2026年11月22日（日）</span><span class="nw">（日付は止めています）</span></p>
+      </div>
+    </section>
+
+    <!-- 見本の段：スマホの画面 → 入力シートの見本（1025px 以上は左右を入れ替える） -->
+    <div class="demo-sec">
+      <div class="wrap demo">
+        <section class="phone-area" aria-labelledby="h-phone">
+          <h2 class="phone-area__h" id="h-phone">スマホの画面（見本）</h2>
+          <div class="phone">
+            <span class="phone__notch" aria-hidden="true"></span>
+            <div class="phone__screen" id="phone-screen" tabindex="0" role="region" aria-label="スマホの画面（見本）">
+<!-- ==== スマホの画面 ここから（デモとひな形で同じ中身） ==== -->
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-wheat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V5"/><path d="M12 8.5C10.5 8.5 9 7.5 8.5 5.5 10.2 5.5 11.6 6.6 12 8.5zM12 8.5c1.5 0 3-1 3.5-3-1.7 0-3.1 1.1-3.5 3z"/><path d="M12 13c-1.5 0-3-1-3.5-3 1.7 0 3.1 1.1 3.5 3zM12 13c1.5 0 3-1 3.5-3-1.7 0-3.1 1.1-3.5 3z"/><path d="M12 17.5c-1.5 0-3-1-3.5-3 1.7 0 3.1 1.1 3.5 3zM12 17.5c1.5 0 3-1 3.5-3-1.7 0-3.1 1.1-3.5 3z"/><path d="M12 5V2.5"/></g></symbol>
+    <symbol id="i-prev" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-next" viewBox="0 0 16 16"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 2.5l6 10H2z" fill="currentColor"/></symbol>
+    <symbol id="i-down" viewBox="0 0 16 16"><path d="M8 13.5l6-10H2z" fill="currentColor"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 4.2v4.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8" cy="11.6" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 16 16"><path d="M6 3.5l4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+<div class="app" id="app">
+  <div class="app__bar">
+    <svg class="app__mark" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-wheat"/></svg>
+    <p class="app__title" id="app-title">売上</p>
+  </div>
+  <div class="app__month">
+    <button type="button" class="btn-sub app__mbtn" id="app-prev"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-prev"/></svg><span>前の月</span></button>
+    <h2 class="app__mname" id="app-month" tabindex="-1">読み込み中</h2>
+    <button type="button" class="btn-sub app__mbtn" id="app-next"><span>次の月</span><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-next"/></svg></button>
+  </div>
+  <p class="app__busy" id="app-busy" hidden>読み込み中です…</p>
+  <p class="app__fail" id="app-fail" hidden>読み込めませんでした。電波のよい所で［読み直す］を押してください。</p>
+  <div class="app__body" id="app-body"></div>
+  <div class="app__foot">
+    <p class="app__read" id="app-read"></p>
+    <button type="button" class="btn-sub app__reload" id="app-reload">読み直す</button>
+    <p class="app__note" id="app-note"></p>
+  </div>
+</div>
+<!-- ==== スマホの画面 ここまで ==== -->
+            </div>
+          </div>
+        </section>
+
+        <section class="sheet-area" aria-labelledby="h-sheet">
+          <h2 class="sec-h2" id="h-sheet">入力シートの見本</h2>
+          <p class="sheet-live" id="sheet-live" aria-hidden="true"><span class="sheet-live__t" id="sheet-live-t"></span><span class="sheet-live__err" id="sheet-live-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span id="sheet-live-n"></span></span></p>
+          <p class="sheet-lead">お店が入力するのは、この「売上」シートと「目標」シートだけです。1日1行、売上（税込）と客数を入れます。売上が空欄の日は休みとして数えます。数字を変えると、<span class="only-sm">上の</span><span class="only-lg">右の</span>スマホの画面がその場で変わります。</p>
+          <div class="sheet-btns">
+            <button type="button" class="btn-sub" id="err-example">誤りの例を入れる</button>
+            <button type="button" class="btn-sub" id="reset">最初に戻す</button>
+          </div>
+          <div class="sheet-tabs" role="tablist" aria-label="シートの切り替え">
+            <button type="button" class="sheet-tab" role="tab" id="tab-sales" aria-selected="true" aria-controls="panel-sales">売上</button>
+            <button type="button" class="sheet-tab" role="tab" id="tab-target" aria-selected="false" aria-controls="panel-target" tabindex="-1">目標</button>
+          </div>
+          <div class="sheet-panel" id="panel-sales" role="tabpanel" aria-labelledby="tab-sales">
+            <div class="sheet-filter" role="group" aria-label="表示する月">
+              <button type="button" class="btn-sub sheet-filter__b" id="f-11" aria-pressed="true">11月</button>
+              <button type="button" class="btn-sub sheet-filter__b" id="f-10" aria-pressed="false">10月</button>
+            </div>
+            <div class="sheet" id="sheet-sales" tabindex="0" role="region" aria-label="「売上」シートの見本">
+              <table class="sheet__table sheet__table--sales">
+                <caption class="visually-hidden">「売上」シート</caption>
+                <colgroup><col class="c-no"><col class="c-date"><col class="c-sales"><col class="c-cust"><col class="c-memo"></colgroup>
+                <thead>
+                  <tr><th scope="col">行</th><th scope="col">A 日付</th><th scope="col">B 売上（税込）</th><th scope="col">C 客数</th><th scope="col" class="c-memo">D メモ</th></tr>
+                </thead>
+                <tbody id="sales-body"></tbody>
+              </table>
+            </div>
+            <p class="sheet-note">今日（11月22日）より後の行は、まだ数えません。</p>
+            <p class="sheet-note">デモでは数字は保存されません。再読み込みで最初に戻ります。</p>
+          </div>
+          <div class="sheet-panel" id="panel-target" role="tabpanel" aria-labelledby="tab-target" hidden>
+            <div class="sheet" id="sheet-target">
+              <table class="sheet__table sheet__table--target">
+                <caption class="visually-hidden">「目標」シート</caption>
+                <colgroup><col class="c-no"><col class="c-ym"><col class="c-target"></colgroup>
+                <thead>
+                  <tr><th scope="col">行</th><th scope="col">A 年月</th><th scope="col">B 目標売上</th></tr>
+                </thead>
+                <tbody id="target-body"></tbody>
+              </table>
+            </div>
+            <p class="sheet-note">目標を空欄にすると、「目標が無い月」の表示を試せます。</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店の Google アカウントの中で使い続けられる形で作ります</h2>
+        <p class="lab-lead">スプレッドシートと画面は、お店の Google アカウントの中に置きます。月々の利用料はかかりません。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-grid"/></svg>
+            <h3>入力はいつものシート</h3>
+            <ul><li>レジの締めのあとに、売上（税込）と客数を1日1行入れます</li><li>レジとはつなぎません（手で入れる形です）</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>
+            <h3>見られるのはお店の人だけ</h3>
+            <ul><li>画面の公開の範囲は「自分のみ」か「お店のアカウントの人だけ」にします</li><li>誰でも見られる形にはしません</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-home"/></svg>
+            <h3>スマホのホーム画面から</h3>
+            <ul><li>ホーム画面に追加すると、1回押すだけで開けます</li><li>目標はシートでいつでも書き換えられます（定休日の曜日は、入れるときに合わせます）</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>見たい数字を足すときは</h3>
+          <ul><li>曜日ごと・品目ごとの売上など、見たい数字はお店に合わせてご相談します<span class="nw">（内容により</span><wbr><span class="nw">お見積もり）。</span></li></ul>
+          <p class="work-check__note">カフェ・お弁当・雑貨など、日ごとに売上を書き留めているお店なら同じ形で使えます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">パン工房 コムギトキ</span>は<span class="nw">架空</span>のお店で、売上・客数もすべて<span class="nw">架空</span>です。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+</body>
+</html>
