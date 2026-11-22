@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>返信の下書きキットの見本（デモ）｜焼き菓子とケーキ ミツカド舎</title>
+  <meta name="description" content="お取り寄せの問い合わせを貼ると、名前・電話・メール・住所・注文番号・日付・個数を置き換えてから、AI への頼み方の文を作る道具の見本です。アレルギーや送料は店長が決まった文で答えます（架空のお店）。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#4B2142">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="返信の下書きキットの見本（デモ）｜焼き菓子とケーキ ミツカド舎">
+  <meta property="og:description" content="お取り寄せの問い合わせを貼ると、名前・電話・メール・住所・注文番号・日付・個数を置き換えてから、AI への頼み方の文を作る道具の見本です。アレルギーや送料は店長が決まった文で答えます（架空のお店）。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%234B2142'/%3E%3Cpath d='M6 6h12v9H11l-4 3v-3H6z' fill='none' stroke='%23FFFFFF' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/calc.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ページのアイコン（自作の SVG） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-reply" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 5h16v11h-9l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></g></symbol>
+      <symbol id="w-ai" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21l-5-8 5-10 5 10z"/><path d="M12 13v8"/><circle cx="12" cy="11" r="1.4"/></g></symbol>
+      <symbol id="w-shop" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 6c-2-1.5-5-2-8-2v14c3 0 6 .5 8 2 2-1.5 5-2 8-2V4c-3 0-6 .5-8 2z"/><path d="M12 6v14"/></g></symbol>
+      <symbol id="i-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="8" y="8" width="12" height="13" rx="1.5"/><path d="M16 8V4.5A1.5 1.5 0 0 0 14.5 3h-9A1.5 1.5 0 0 0 4 4.5v11A1.5 1.5 0 0 0 5.5 17H8"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 11h6M9 15h6M9 19h3"/></g></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M14 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-kinds" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="8" height="7" rx="1"/><rect x="13" y="4" width="8" height="7" rx="1"/><rect x="3" y="13" width="8" height="7" rx="1"/><rect x="13" y="13" width="8" height="7" rx="1"/></g></symbol>
+      <symbol id="i-rule" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h7"/><path d="M15 17l2 2 4-4"/></g></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="2.5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の見本</strong><span class="nw">（架空のお店）</span>です。お店・例の文・名前・番号はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-reply"/></svg>
+        <span class="hd__names"><span class="hd__name nw">ミツカド舎</span><span class="hd__sub nw">返信の下書きキット（見本）</span></span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <!-- はじめに -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top"><span class="nw">届いた文を貼ると、</span><span class="nw">入れてはいけない所を</span><span class="nw">置き換えてから、</span><span class="nw">AI への頼み方の文を</span><span class="nw">作ります。</span></h1>
+        <p class="notice">このページは AI を動かしていません。AI に頼む前の下ごしらえと、ひな形の道具の見本です。</p>
+        <p class="intro__lead">AI 活用の診断（作品例43）で、<span class="nw">焼き菓子とケーキ ミツカド舎</span>に出した提案2「お取り寄せの返信とクチコミのお礼を、AI の下書きで速くする」を、実際に作った物の見本です。お店の AI の使い方ルールを、道具の側で守れるようにしました。</p>
+        <ol class="howto" aria-label="使い方の3手順">
+          <li class="howto__item"><span class="howto__no" aria-hidden="true">1</span><span class="howto__t">問い合わせの種類を選ぶ</span></li>
+          <li class="howto__arrow" aria-hidden="true"><svg width="24" height="24" focusable="false"><use href="#i-arrow"/></svg></li>
+          <li class="howto__item"><span class="howto__no" aria-hidden="true">2</span><span class="howto__t">届いた文を貼る</span></li>
+          <li class="howto__arrow" aria-hidden="true"><svg width="24" height="24" focusable="false"><use href="#i-arrow"/></svg></li>
+          <li class="howto__item"><span class="howto__no" aria-hidden="true">3</span><span class="howto__t">置き換えを確かめてコピーする</span></li>
+        </ol>
+        <p class="intro__note">デモ（架空のお店）。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は架空のお店で、実在のお店とは関係ありません。例の文・名前・番号はすべて架空です。</p>
+        <p class="intro__note">貼った文はこのページの中だけで扱い、どこにも送らず、保存もしません。</p>
+        <div class="intro__foot">
+          <a class="inline-link" href="../41-ai-shindan-report/">作品例43 AI 活用の診断の見本に戻る</a>
+          <button type="button" class="btn-sub" id="reset-all">最初に戻す</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 問い合わせの種類 -->
+    <section class="sec" id="kind" aria-labelledby="h-kind">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="step-no" aria-hidden="true">1</p>
+            <h2 class="chapter__h" id="h-kind" tabindex="-1">問い合わせの種類を選ぶ</h2>
+            <p class="state" id="st-kind"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">10通りのうち、近いものを1つ選びます。アレルギー・原材料・送料・日持ち・破損は、AI に頼まず店長が決まった文で答えます。</p>
+            <p class="note" id="kind-hint">種類を1つ選んでください。</p>
+            <fieldset class="kinds-set">
+              <legend class="visually-hidden">問い合わせの種類（10通り）</legend>
+              <div class="kinds" id="kinds"></div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 届いた文を貼る -->
+    <section class="sec" id="paste" aria-labelledby="h-paste">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="step-no" aria-hidden="true">2</p>
+            <h2 class="chapter__h" id="h-paste" tabindex="-1">届いた文を貼る</h2>
+            <p class="state" id="st-paste"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">お客様から届いた文を貼ると、名前・電話番号・メールアドレス・郵便番号と住所・注文番号・日付・個数を見つけて置き換えます。値段は置き換えません。</p>
+            <p class="note note--tight">見つけ漏れがあり得ます（空白で区切った番号・ひらがなだけの名前・「様」の付かない名前など）。最後は人の目で確かめます。</p>
+            <div class="samples">
+              <p class="samples__lab" id="samples-lab">例で試す</p>
+              <div class="samples__row" id="samples" role="group" aria-labelledby="samples-lab"></div>
+            </div>
+            <div class="bench">
+              <div class="bench__in">
+                <label class="field__lab" for="src-text">届いた文</label>
+                <p class="note note--tight" id="src-hint">お客様の文をそのまま貼れます。</p>
+                <textarea class="paste" id="src-text" rows="10" spellcheck="false" autocomplete="off" aria-describedby="src-hint"></textarea>
+              </div>
+              <div class="bench__out">
+                <p class="total" id="total"></p>
+                <dl class="found" id="found" aria-label="置き換えた数"></dl>
+                <h3 class="h3 h3--out">置き換えた後の文</h3>
+                <div class="result" id="result"></div>
+                <p class="note note--tight">最後は人の目で確かめます。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 頼み方の文（またはひな形） -->
+    <section class="sec" id="prompt" aria-labelledby="h-prompt">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="step-no" aria-hidden="true">3</p>
+            <h2 class="chapter__h" id="h-prompt" tabindex="-1">AI への頼み方の文</h2>
+            <p class="state" id="st-prompt"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">お店の決まりと、置き換えた後の文を組み立てました。コピーして、お店の AI サービスに貼ります。AI の答えは下書きです。</p>
+            <p class="note" id="prompt-wait">種類を選び、届いた文を貼ると、ここに頼み方の文ができます。</p>
+            <div class="out-ai" id="out-ai" hidden>
+              <h3 class="h3 h3--gap">AI への頼み方の文</h3>
+              <p class="copy-row"><button type="button" class="btn-act" id="copy-prompt"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg>頼み方の文をコピー</button></p>
+              <p class="copy-msg" id="msg-prompt" hidden></p>
+              <div class="prompt" id="prompt-box"></div>
+              <details class="more">
+                <summary class="more__sum">この種類のひな形も見る</summary>
+                <div class="tpl" id="tpl-ai"></div>
+              </details>
+            </div>
+            <div class="out-shop" id="out-shop" hidden>
+              <h3 class="h3 h3--gap">店長が確かめて使うひな形</h3>
+              <p class="shop-line">この種類は AI に頼みません。アレルギー・原材料・値段・日持ち・補償は、店の表を見て店長が答えます。</p>
+              <p class="copy-row"><button type="button" class="btn-act" id="copy-tpl"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg>ひな形をコピー</button></p>
+              <p class="copy-msg" id="msg-tpl" hidden></p>
+              <div class="tpl" id="tpl-shop"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 送る前の確認 -->
+    <section class="sec" id="check" aria-labelledby="h-check">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="step-no" aria-hidden="true">4</p>
+            <h2 class="chapter__h" id="h-check" tabindex="-1">送る前の確認</h2>
+            <p class="state" id="st-check"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">AI の下書きやひな形を直したら、送る前に5つを確かめます。このページの中だけの確認で、保存はしません。</p>
+            <div class="check-grid">
+              <fieldset class="checks-set">
+                <legend class="visually-hidden">送る前に確かめる5つ</legend>
+                <ul class="checks" id="checks"></ul>
+              </fieldset>
+              <div class="go-col">
+                <p class="reset-note" id="reset-note" hidden>文が変わったので、確認を外しました。</p>
+                <div class="go" id="go"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 使ったあとの記録 -->
+    <section class="sec" id="record" aria-labelledby="h-record">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="step-no" aria-hidden="true">5</p>
+            <h2 class="chapter__h" id="h-record" tabindex="-1">使ったあとの記録（見本）</h2>
+            <p class="chapter__meta" id="rec-period"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">使い始めて1か月の記録の見本です。数は架空です。見込みより少なかった所も、そのまま書きます。</p>
+            <div class="only-table" id="rec-table"></div>
+            <div class="only-cards" id="rec-cards"></div>
+            <p class="rec-sum" id="rec-sum"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 印刷 -->
+    <section class="sec" id="print" aria-labelledby="h-print">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <h2 class="chapter__h" id="h-print" tabindex="-1">印刷（ひな形10通り）</h2>
+          </div>
+          <div class="chapter__body">
+            <p class="note out-lead">ひな形の返信文10通りと、送る前の確認の5つを、A4 縦で印刷できます。貼った文と置き換えた後の文は印刷しません。</p>
+            <div class="btn-row">
+              <button type="button" class="btn-act" id="print-btn"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店の問い合わせに合わせて、種類とひな形を作り直します</h2>
+        <p class="lab-lead">この見本は10通りですが、実際はお店に届いた問い合わせを聞き取り、多い種類からひな形と頼み方の文を作ります。置き換えの決まりも、お店の注文番号の形に合わせます。AI 活用の診断の「自動化1本」として作れます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-kinds"/></svg>
+            <h3>種類とひな形をお店に合わせる</h3>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-rule"/></svg>
+            <h3>置き換えの決まりを注文番号の形に合わせる</h3>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg>
+            <h3>1か月後に記録を見て直す</h3>
+          </li>
+        </ul>
+        <div class="work-check">
+          <p class="work-check__note">AI の利用料は、お店が使う AI サービスの料金で、お店の契約・お店のご負担です。この道具そのものは月額0円で動きます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った見本です。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は<span class="nw">架空</span>のお店で、例の文・名前・番号もすべて<span class="nw">架空</span>です。AI は動かしていません。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+
+  <div id="print-root" class="print-root"></div>
+</body>
+</html>
