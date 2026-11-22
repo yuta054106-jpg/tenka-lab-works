@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>体験会の申込と当日の受付（デモ）｜陶房ツチアカリ</title>
+  <meta name="description" content="体験会の申込・定員・キャンセル待ち・当日の受付をまとめた、TENKA LAB の動くデモ（架空のお店）です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3A4441">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="体験会の申込と当日の受付（デモ）｜陶房ツチアカリ">
+  <meta property="og:description" content="体験会の申込・定員・キャンセル待ち・当日の受付をまとめた、TENKA LAB の動くデモ（架空のお店）です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%23F7F3ED'/%3E%3Cpath d='M5 6h14l-1.5 11a3 3 0 0 1-3 2.6h-5a3 3 0 0 1-3-2.6z' fill='none' stroke='%233A4441' stroke-width='2.2' stroke-linejoin='round'/%3E%3Cpath d='M7 10h10' stroke='%23A84F2E' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 28 28"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M5 6.5h18l-1.9 13.2a3.4 3.4 0 0 1-3.4 2.9h-7.4a3.4 3.4 0 0 1-3.4-2.9z"/><path d="M6.2 11.5h15.6"/><path d="M10.5 22.6v2h7v-2"/></g></symbol>
+      <symbol id="i-free" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="i-few" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></symbol>
+      <symbol id="i-full" viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5" fill="currentColor"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.2 7V5.2a2.8 2.8 0 0 1 5.6 0V7"/></g></symbol>
+      <symbol id="i-tick" viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13.5V3M3.5 7.5L8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/></g></symbol>
+      <symbol id="i-form" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></g></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15z"/><path d="M10 21h4"/></g></symbol>
+      <symbol id="i-list" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5l1.5 1.5L8 5.5M4 12.5L5.5 14 8 11.5M4 18.5L5.5 20 8 17.5"/><path d="M11 7h9M11 13h9M11 19h9"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・体験会・申込はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>
+        <span class="hd__name nw">陶房ツチアカリ</span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top"><span class="ib">体験会の申込から当日の受付まで、</span><span class="ib">1つの画面で。</span></h1>
+        <p class="intro__lead">回ごとの残り席、キャンセル待ちの順番、当日だれが来ていないかを、お店の人がひと目で確かめられる見本です。</p>
+        <p class="intro__note">お店・体験会・申込はすべて架空です。入力した内容はどこにも送られず、保存もされません。</p>
+        <div class="intro__row">
+          <p class="intro__now"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span class="nw">デモの今：</span><span class="nw">2026年12月6日（日）9:50</span><span class="nw">（時計は止めています）</span><span class="intro__clock" id="clock" hidden></span></span></p>
+          <button type="button" class="btn-sub reset" id="reset">最初に戻す</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- タブ -->
+    <div class="tabs">
+      <div class="wrap">
+        <div class="tabs__list" role="tablist" aria-label="見え方の切り替え">
+          <button type="button" class="tab" role="tab" id="tab-admin" aria-selected="true" aria-controls="panel-admin">お店の管理画面</button>
+          <button type="button" class="tab" role="tab" id="tab-cust" aria-selected="false" aria-controls="panel-cust" tabindex="-1">お客様の申込画面</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- パネル1：お店の管理画面 -->
+    <section class="panel" id="panel-admin" role="tabpanel" aria-labelledby="tab-admin" tabindex="0">
+      <div class="wrap">
+        <div class="panel__head">
+          <h2 class="panel__title">お店の管理画面</h2>
+          <p class="panel__lead">回を選ぶと名簿が開きます。キャンセルが出ると、待っている方が順番に「繰り上げ候補」になります。当日は［来ました］で受付します。</p>
+        </div>
+        <dl class="nums nums--all" id="all-nums"></dl>
+        <h3 class="visually-hidden">回の一覧</h3>
+        <div class="slots-table-wrap" id="slots-table"></div>
+        <ul class="slots slots--admin" id="slots-admin"></ul>
+        <div class="roster" id="roster"></div>
+      </div>
+    </section>
+
+    <!-- パネル2：お客様の申込画面 -->
+    <section class="panel" id="panel-cust" role="tabpanel" aria-labelledby="tab-cust" tabindex="0" hidden>
+      <div class="wrap">
+        <div class="panel__head">
+          <h2 class="panel__title">お客様の申込画面</h2>
+          <p class="panel__lead">お客様がスマホで回と人数を選んで申し込む画面の見本です。ここで申し込むと、お店の管理画面にすぐ出ます。</p>
+        </div>
+        <div class="cust">
+          <div class="cust__list">
+            <h3 class="visually-hidden">12月の体験会</h3>
+            <ul class="slots slots--cust" id="slots-cust"></ul>
+          </div>
+          <div class="cust__side">
+            <div class="entry" id="entry"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店の体験会に合わせて作ります</h2>
+        <p class="lab-lead">電話・DM・紙の名簿で数えている申込と受付を、お店の人とお客様が同じ数を見られるようにする見本です。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-form"/></svg>
+            <h3>申込の受け方</h3>
+            <ul><li>お名前・ご連絡先を入力していただき、<span class="nw">Googleスプレッドシート</span>（GAS）などに保存します</li><li>回・定員・料金はお店で書き換えられるようにします</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
+            <h3>お知らせの連絡</h3>
+            <ul><li>確認メール・前日のお知らせ・繰り上げのご連絡は、使えるサービスと費用を確かめてからご提案します<span class="nw">（内容により</span><wbr><span class="nw">お見積もり）</span></li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-list"/></svg>
+            <h3>当日の受付</h3>
+            <ul><li>スマホやタブレットで名簿を開き、来た方を押していくだけにします</li><li>まだ来ていない方が番号で分かります</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>事前のお支払いについて</h3>
+          <ul><li>事前決済は、お店がお使いの決済サービスに合わせてご相談します。</li></ul>
+          <p class="work-check__note">料理教室・試飲会・手作り教室など、1回ごとの体験会でも同じ形で作れます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">陶房ツチアカリ</span>は<span class="nw">架空</span>のお店で、体験会・申込・番号もすべて<span class="nw">架空</span>です。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+</body>
+</html>
