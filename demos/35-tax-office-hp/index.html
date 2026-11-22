@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ソラツム会計事務所（デモ）小さな会計事務所のホームページ｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空の事務所）。小さな会計事務所を例に、事業の形・売上・記帳・面談の回数を選ぶだけで月々と年間の料金の目安が出る、ホームページの見本です。料金はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#203A55">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ソラツム会計事務所（デモ）小さな会計事務所のホームページ｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空の事務所）。小さな会計事務所を例に、事業の形・売上・記帳・面談の回数を選ぶだけで月々と年間の料金の目安が出る、ホームページの見本です。料金はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23203A55'/%3E%3Cg fill='%238FD0B4'%3E%3Crect x='4' y='14' width='5' height='5'/%3E%3Crect x='9.5' y='9' width='5' height='5'/%3E%3Crect x='15' y='4' width='5' height='5'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す。人の姿・手・顔は描かない） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21h20"/><rect x="3.5" y="16" width="4.5" height="4.5"/><rect x="9" y="11.5" width="4.5" height="4.5"/><rect x="14.5" y="7" width="4.5" height="4.5"/><path d="M16.5 4.5h4.2a1.6 1.6 0 0 0-.3-3.1 2.3 2.3 0 0 0-3.9 3.1z" stroke-width="1.5"/></g></symbol>
+      <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7 11.2a3.65 3.65 0 0 0 0 7.3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-talk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h11v8H8.5L5 15v-3H3z"/><path d="M17 8h4v8h-2v3l-3.5-3H10v-2"/></g></symbol>
+      <symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M3 14.8h18M9 4v16M15 4v16"/></g></symbol>
+      <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5a2 2 0 0 1 2-2h12v15H7a2 2 0 0 0-2 2z"/><path d="M5 20a2 2 0 0 0 2 1h12v-3"/><path d="M9 3v15"/><path d="M12 8h4"/></g></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></g></symbol>
+      <symbol id="i-sprout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12C12 8.5 9.5 6 5 6c0 4 2.8 6 7 6z"/><path d="M12 10c0-3.5 2.6-5.8 7-5.8 0 4-2.8 5.8-7 5.8z"/><path d="M7 21h10"/></g></symbol>
+      <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/></g><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-next" viewBox="0 0 16 16"><path d="M3 5h10l-5 6z" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空の事務所）</span>です。料金・サービスの内容はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top" data-goto="h-top">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>
+        <span class="hd__name nw">ソラツム会計事務所</span>
+      </a>
+      <nav class="hd__nav" aria-label="ページ内のご案内">
+        <ul class="hd__list">
+          <li><a class="hd__link" href="#price" data-goto="h-price"><span class="nw">料金の目安</span></a></li>
+          <li><a class="hd__link" href="#service" data-goto="h-service"><span class="nw">サービス</span></a></li>
+          <li><a class="hd__link" href="#flow" data-goto="h-flow"><span class="nw">ご相談の流れ</span></a></li>
+          <li><a class="hd__link" href="#faq" data-goto="h-faq"><span class="nw">よくある質問</span></a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <p class="demo-band"><strong class="nw">デモ（架空の事務所）</strong><span class="nw">料金はすべて架空の目安です</span></p>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 480 360" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="480" height="360" rx="8" fill="#E9EFEE"/>
+            <!-- 窓と雲 -->
+            <rect x="40" y="32" width="200" height="160" rx="4" fill="#DCE8EF" stroke="#203A55" stroke-width="2"/>
+            <g fill="#FFFFFF">
+              <circle cx="72" cy="76" r="10"/><circle cx="86" cy="68" r="14"/><circle cx="100" cy="76" r="10"/><rect x="62" y="76" width="48" height="10" rx="5"/>
+              <circle cx="178" cy="146" r="8"/><circle cx="189" cy="139" r="11"/><circle cx="200" cy="146" r="8"/><rect x="170" y="146" width="36" height="8" rx="4"/>
+            </g>
+            <path d="M140 32V192M40 112H240" fill="none" stroke="#203A55" stroke-width="2"/>
+            <!-- 机 -->
+            <path d="M24 288H456" fill="none" stroke="#203A55" stroke-width="2"/>
+            <!-- 積んだ帳簿（下から3冊）と、空へ向かう小さな四角 -->
+            <rect x="276" y="256" width="152" height="32" rx="3" fill="#2F5274"/>
+            <rect x="288" y="224" width="132" height="32" rx="3" fill="#7FA3BF"/>
+            <rect x="280" y="192" width="144" height="32" rx="3" fill="#2F5274"/>
+            <path d="M292 272H412M304 240H404M296 208H408" fill="none" stroke="#FFFFFF" stroke-width="2"/>
+            <g fill="#FFFFFF" stroke="#203A55" stroke-width="2">
+              <rect x="316" y="170" width="12" height="12"/><rect x="336" y="150" width="12" height="12"/><rect x="356" y="130" width="12" height="12"/>
+            </g>
+            <!-- 開いた帳簿 -->
+            <g fill="#FFFFFF" stroke="#203A55" stroke-width="2">
+              <path d="M56 288L56 236Q104 224 152 236L152 288Z"/>
+              <path d="M248 288L248 236Q200 224 152 236L152 288Z"/>
+            </g>
+            <path d="M68 250H140M68 260H140M68 270H140M68 280H140M164 250H236M164 260H236M164 270H236M164 280H236" fill="none" stroke="#A9BCC9" stroke-width="2"/>
+            <!-- 試算表の紙と棒 -->
+            <rect x="176" y="208" width="88" height="80" rx="3" fill="#FFFFFF" stroke="#203A55" stroke-width="2"/>
+            <g fill="#6FB394"><rect x="190" y="256" width="12" height="20"/><rect x="214" y="244" width="12" height="32"/><rect x="238" y="232" width="12" height="44"/></g>
+            <path d="M186 220H254" fill="none" stroke="#A9BCC9" stroke-width="2"/>
+            <!-- 鉢 -->
+            <g fill="#5E9C7E"><ellipse cx="442" cy="252" rx="6" ry="12" transform="rotate(-25 442 252)"/><ellipse cx="448" cy="248" rx="6" ry="12"/><ellipse cx="454" cy="252" rx="6" ry="12" transform="rotate(25 454 252)"/></g>
+            <rect x="436" y="264" width="24" height="24" rx="3" fill="#C9B79C"/>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <h1 class="h1" id="h-top" tabindex="-1"><span class="ib">記帳から決算・申告まで。</span><br><span class="ib">小さな会社と個人事業の、</span><br><span class="ib">身近な相談先。</span></h1>
+          <p class="hero__lead">クラウド会計への入力から、月々の数字の確認、<span class="nw">年1回</span>の決算と申告まで。数字のことを、ひとつの窓口でご相談<span class="nw">いただけます</span>。</p>
+          <div class="hero__act"><button type="button" class="btn-main" id="hero-cta"><span class="nw">料金の目安を見る</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></button></div>
+          <p class="hero__note">選ぶだけで、月々と年間の目安が出ます<span class="nw">（税込・架空）</span>。</p>
+        </div>
+        <div class="hero__feat">
+          <h2 class="visually-hidden">3つの特長</h2>
+          <ul class="feat">
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-cloud"/></svg></span>
+              <div class="feat__body"><h3>クラウド会計の導入から一緒に</h3><p>まだ会計ソフトを入れていなくても大丈夫です。最初の設定と入力のしかたから、お手伝いします。</p></div>
+            </li>
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-talk"/></svg></span>
+              <div class="feat__body"><h3><span class="nw">月1回</span>の面談<span class="nw">（オンライン可）</span></h3><p>試算表を見ながら、気になることをその場でご相談<span class="nw">いただけます</span>。<span class="nw">3か月ごと</span>の面談も選べます。</p></div>
+            </li>
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-table"/></svg></span>
+              <div class="feat__body"><h3>料金の目安を、このページで</h3><p>事業の形・売上・記帳・面談の回数を選ぶと、月々と年間の目安が出ます。</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. サービス -->
+    <section class="sec sec--band" id="service" aria-labelledby="h-service">
+      <div class="wrap">
+        <h2 class="sec__title" id="h-service" tabindex="-1">サービス</h2>
+        <p class="sec__lead">小さな会社と個人事業の、毎月の記帳から<span class="nw">年1回</span>の決算まで。必要なところだけを選んでお頼み<span class="nw">いただけます</span>。</p>
+        <ul class="svc">
+          <li class="card svc__item">
+            <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-book"/></svg></span>
+            <h3>記帳の代行</h3>
+            <p>領収書や通帳の写しをお預かりして、クラウド会計に入力します。料金は月の取引の量で決まります。</p>
+          </li>
+          <li class="card svc__item">
+            <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-talk"/></svg></span>
+            <h3>月々の顧問<span class="nw">（相談・試算表）</span></h3>
+            <p>毎月か<span class="nw">3か月ごと</span>の面談で、試算表を一緒に見ます。面談の間も、気になることはご相談<span class="nw">いただけます</span>。</p>
+          </li>
+          <li class="card svc__item">
+            <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg></span>
+            <h3>決算と申告</h3>
+            <p>1年分の帳簿を整えて、決算書と申告書を作ります。提出までの日程も、こちらからご案内します。</p>
+          </li>
+          <li class="card svc__item">
+            <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-sprout"/></svg></span>
+            <h3>創業の手続きの相談</h3>
+            <p>開業の届け出や、個人事業から会社にするかどうかのご相談をお受けします。手続きの順番を一緒に整理します。</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. 料金の目安を出す -->
+    <section class="sec" id="price" aria-labelledby="h-price">
+      <div class="wrap">
+        <h2 class="sec__title" id="h-price" tabindex="-1">料金の目安を出す</h2>
+        <p class="sec__lead">4つを選ぶと、月々の顧問料・記帳代行料・決算と申告の料金と、年間の合計の目安が出ます。入力はいりません。</p>
+        <div class="price">
+          <div class="price__picks">
+            <fieldset class="pick" id="pick-form">
+              <legend class="pick__legend">事業の形</legend>
+              <div class="pick__opts pick__opts--2">
+                <label class="opt"><input type="radio" class="opt__input" name="form" value="kojin" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">個人事業</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="form" value="hojin"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">法人</span></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="pick" id="pick-sales">
+              <legend class="pick__legend">年間の売上</legend>
+              <div class="pick__opts">
+                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s1"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">1,000万円未満</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s2" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">1,000万〜3,000万円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s3"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">3,000万〜1億円</span></span></label>
+              </div>
+              <p class="pick__note">前の年の売上でお選びください。始めたばかりの時は、見込みで構いません。</p>
+            </fieldset>
+            <fieldset class="pick" id="pick-books">
+              <legend class="pick__legend">記帳</legend>
+              <div class="pick__opts pick__opts--desc">
+                <label class="opt"><input type="radio" class="opt__input" name="books" value="self" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">ご自分で</span><span class="opt__desc">クラウド会計に入力・<span class="nw">記帳代行料 0円</span></span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="books" value="few"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">事務所に任せる（少ない）</span><span class="opt__desc"><span class="nw">月の取引〜100件</span>・<span class="nw">月10,000円</span></span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="books" value="many"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">事務所に任せる（多い）</span><span class="opt__desc"><span class="nw">月の取引〜300件</span>・<span class="nw">月20,000円</span></span></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="pick" id="pick-meeting">
+              <legend class="pick__legend">面談の回数</legend>
+              <div class="pick__opts pick__opts--2">
+                <label class="opt"><input type="radio" class="opt__input" name="meeting" value="monthly" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">毎月</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="meeting" value="quarterly"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">3か月ごと</span></span></label>
+              </div>
+              <p class="pick__note">面談を毎月にすると、顧問料に<span class="nw">月5,000円</span><wbr><span class="nw">（税込・架空）</span>が足されます。面談はオンラインでも、事務所でもお受けします。</p>
+            </fieldset>
+          </div>
+
+          <div class="result-col">
+            <div class="result" id="result">
+              <p class="result__label">料金の目安<span class="nw">（税込・架空）</span></p>
+              <p class="result__total"><span class="result__tlabel">年間の合計の目安</span><span class="nw" id="r-annual">320,000<span class="result__yen">円</span></span></p>
+              <dl class="figs">
+                <div><dt>月々の顧問料</dt><dd class="nw" id="r-advisory">20,000円</dd></div>
+                <div><dt>記帳代行料<span class="nw">（月）</span></dt><dd class="nw" id="r-books">0円</dd></div>
+                <div><dt>決算と申告<span class="nw">（年1回）</span></dt><dd class="nw" id="r-closing">80,000円</dd></div>
+              </dl>
+              <h3 class="result__h">内訳</h3>
+              <dl class="result__dl" id="r-rows">
+                <div><dt>顧問料の基本<span class="result__sub">個人事業・売上 <span class="nw">1,000万〜3,000万円</span></span></dt><dd class="nw">15,000円／月</dd></div>
+                <div><dt>面談の回数：<span class="nw">毎月</span></dt><dd class="nw">＋5,000円／月</dd></div>
+                <div><dt>記帳の代行：<span class="nw">ご自分で</span></dt><dd class="nw">＋0円／月</dd></div>
+                <div><dt>決算と申告<span class="nw">（年1回）</span></dt><dd class="nw">80,000円</dd></div>
+              </dl>
+              <p class="result__calc" id="r-calc">年間の合計＝（<span class="nw">20,000円</span>＋<span class="nw">0円</span>）<span class="nw">×12か月</span>＋<span class="nw">80,000円</span>＝<span class="nw">320,000円</span></p>
+            </div>
+            <p class="result__note"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>正式なお見積もりは面談のあとにお出しします<span class="nw">（デモ）</span>。</span></p>
+            <p class="result__note2">従業員の人数や取引の内容によって、実際の料金は変わります。このページの金額は、すべて架空の目安です。</p>
+            <div class="price__cta"><button type="button" class="btn-main" id="est-cta" aria-haspopup="dialog" aria-controls="ask-dialog"><span class="btn-main__text"><span class="nw">この内容で</span><wbr><span class="nw">相談する</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ご相談の流れ -->
+    <section class="sec sec--band" id="flow" aria-labelledby="h-flow">
+      <div class="wrap">
+        <h2 class="sec__title" id="h-flow" tabindex="-1">ご相談の流れ</h2>
+        <p class="sec__lead"><span class="nw">お問い合わせ</span>から始めるまで、4つの段取りです。初回の面談で料金をお出しするので、契約の前に金額が分かります。</p>
+        <ol class="flow">
+          <li class="card flow__item">
+            <span class="flow__num" aria-hidden="true">1</span>
+            <h3><span class="nw">お問い合わせ</span></h3>
+            <p>このページのボタンから、ご相談の内容をお知らせください<span class="nw">（このデモでは</span><wbr><span class="nw">送信は</span><wbr><span class="nw">ありません）</span>。</p>
+          </li>
+          <li class="card flow__item">
+            <span class="flow__num" aria-hidden="true">2</span>
+            <h3>初回の面談<span class="nw">（無料・架空）</span></h3>
+            <p><span class="nw">60分ほど</span><wbr><span class="nw">（架空）</span>、いまの帳簿の様子とお困りのことを<span class="nw">うかがいます</span>。オンラインでも、事務所でもお受けします。</p>
+          </li>
+          <li class="card flow__item">
+            <span class="flow__num" aria-hidden="true">3</span>
+            <h3>お見積もり</h3>
+            <p>うかがった内容をもとに、月々の顧問料と決算の料金をお出しします。このページの目安と違う時は、その理由もお伝えします。</p>
+          </li>
+          <li class="card flow__item">
+            <span class="flow__num" aria-hidden="true">4</span>
+            <h3>ご契約・開始</h3>
+            <p>内容にご納得<span class="nw">いただけたら</span>、ご契約です。記帳の進め方と面談の日を決めて、始めます。</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. よくある質問 -->
+    <section class="sec" id="faq" aria-labelledby="h-faq">
+      <div class="wrap col">
+        <h2 class="sec__title" id="h-faq" tabindex="-1">よくある質問</h2>
+        <div class="faq">
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">途中から頼めますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>年の途中からでもお受けします。それまでの帳簿の様子を初回の面談で<span class="nw">うかがい、</span>どこから引き継ぐかを一緒に決めます。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">会計ソフトは何を使いますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>クラウド会計を使います。いまお使いのものがあれば、まずはそのままで構いません。まだ入れていない時は、導入と最初の設定からお手伝いします。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">訪問してもらえますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>面談は、オンラインか事務所でお受けしています。訪問をご希望の時は、場所と回数を<span class="nw">うかがって</span>お見積もりに含めます<span class="nw">（このページの</span>料金の目安には<span class="nw">入っていません）</span>。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">料金の目安と実際の料金は違いますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>違うことがあります。このページの目安は、選んだ4つの条件だけで出しています。従業員の人数や取引の内容によって変わるため、正式なお見積もりは面談のあとにお出しします。</p><p class="faq__link"><a class="inline-link" href="#price" data-goto="h-price" id="faq-to-price">料金の目安をもう一度見る</a></p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ご相談・お問い合わせ（フォームは作らない） -->
+    <section class="sec sec--band" id="contact" aria-labelledby="h-contact">
+      <div class="wrap col">
+        <div class="card contact">
+          <h2 class="sec__title" id="h-contact" tabindex="-1">ご相談・<span class="nw">お問い合わせ</span></h2>
+          <p class="contact__text">初回の面談は無料です<span class="nw">（架空）</span>。料金の目安を見てからでも、まだ何も決めていなくても、どうぞ<span class="nw">お問い合わせ</span>ください。</p>
+          <p class="contact__sum" id="ct-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万〜3,000万円</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
+          <p class="contact__total">年間の合計の目安 <span class="nw contact__yen" id="ct-annual">320,000円</span><wbr><span class="nw">（税込・架空）</span></p>
+          <div class="contact__act"><button type="button" class="btn-main" id="ask-cta" aria-haspopup="dialog" aria-controls="ask-dialog"><span class="nw">面談を申し込む（デモ）</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+          <p class="contact__link"><a class="inline-link" href="#price" data-goto="h-price" id="ct-to-price">条件を選び直す</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">料金の目安を<span class="nw">お問い合わせ</span>の前に見せると、相談のハードルが下がります。このページはその見本です。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>
+            <h3>料金表と文章</h3>
+            <ul><li>料金表とページの文章は、事務所にご用意・ご確認<span class="nw">いただきます</span></li><li>広告の決まりに合っているかの確認は、事務所の責任で行って<span class="nw">いただきます</span></li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+            <h3>フォーム・予約とのつなぎ</h3>
+            <ul><li>相談のボタンを、<span class="nw">お問い合わせ</span><wbr><span class="nw">フォーム</span>や面談の予約の仕組みにつなぎます</li><li>料金の目安で選んだ条件を、フォームに引き継ぐ形にもできます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <h3>選ぶ項目の追加</h3>
+            <ul><li>従業員の人数など、料金に効く質問を足せます</li><li>写真の撮影の手配は別のお見積もりです</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>公開のあとに</h3>
+          <ul><li>料金の改定やお知らせの更新を承ります<span class="nw">（内容により</span><wbr><span class="nw">お見積もり）</span></li></ul>
+          <p class="work-check__note">所在地・登録番号・代表者の表示は、事務所からいただいた内容をそのまま載せます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">ソラツム会計事務所</span>は<span class="nw">架空</span>の事務所で、料金・サービスの内容もすべて<span class="nw">架空</span>です。</p>
+    <p>デモのため事務所の所在地・登録番号・代表者の表示はありません。実際のお仕事では必ず載せます。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <dialog class="ask-dialog" id="ask-dialog" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+    <div class="ask-dialog__head"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><h2 class="ask-dialog__title" id="dlg-title" tabindex="-1"><span class="nw">お問い合わせ</span><wbr><span class="nw">（デモ）</span></h2></div>
+    <p class="ask-dialog__text" id="dlg-text">デモのため送信はありません<span class="nw">（実際のお仕事では、</span><wbr><span class="nw">お問い合わせ</span><wbr><span class="nw">フォーム</span>・予約の仕組みにつなぎます）</p>
+    <p class="ask-dialog__note">このページでは、何も送信しません。お名前や連絡先を入れる欄もありません。</p>
+    <div class="ask-dialog__sum">
+      <p class="ask-dialog__label">いま選んでいる条件</p>
+      <p class="ask-dialog__line" id="dlg-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万〜3,000万円</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
+      <p class="ask-dialog__line">年間の合計の目安 <span class="nw" id="dlg-annual">320,000円</span><wbr><span class="nw">（税込・架空）</span></p>
+    </div>
+    <div class="ask-dialog__act"><button type="button" class="btn-sub" id="dlg-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>閉じる</button></div>
+  </dialog>
+</body>
+</html>
