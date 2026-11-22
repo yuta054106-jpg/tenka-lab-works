@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>スープ工房 ユキノメ（デモ）冷凍スープの詰め合わせの商品LP｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。お取り寄せの冷凍スープを例に、届く中身・送料を入れた合計・お届けの目安・食べ方と保存・アレルゲンを、購入ボタンの手前で見せる商品LPの見本です。商品・価格・送料はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#7E2A1C">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="スープ工房 ユキノメ（デモ）冷凍スープの詰め合わせの商品LP｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。お取り寄せの冷凍スープを例に、届く中身・送料を入れた合計・お届けの目安・食べ方と保存・アレルゲンを、購入ボタンの手前で見せる商品LPの見本です。商品・価格・送料はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%237E2A1C'/%3E%3Ccircle cx='12' cy='12' r='5' fill='%23F0B556'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す。人の姿・手は描かない） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 15.5Q12 23 20.5 15.5"/><path d="M12 16V10"/><path d="M12 11.5C11 8.5 8 7.5 5.5 8.5 6.5 11 9.5 12.5 12 11.5z"/><path d="M12 10C13 7 15.5 6 18 6.8 17.2 9.5 14.5 10.8 12 10z"/><path d="M17 3.5h4M18 1.8l2 3.4M20 1.8l-2 3.4" stroke-width="1.4"/></g></symbol>
+      <symbol id="i-pot" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><path d="M2.5 12.5H5M19 12.5h2.5M4 11h16"/><path d="M10 8c-1.2-1.2 1.2-2.3 0-4M14 8c-1.2-1.2 1.2-2.3 0-4"/></g></symbol>
+      <symbol id="i-bag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v16H6z"/><path d="M6 8h12"/><path d="M9.5 13h5"/></g></symbol>
+      <symbol id="i-snow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/><path d="M10 4.5l2 2 2-2M10 19.5l2-2 2 2"/></g></symbol>
+      <symbol id="i-micro" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v14H3z"/><path d="M6 8.5h8v7H6z"/><circle cx="17.5" cy="10" r=".8"/><circle cx="17.5" cy="14" r=".8"/></g></symbol>
+      <symbol id="i-spoon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="8.5" cy="8.5" rx="3.5" ry="5" transform="rotate(-45 8.5 8.5)"/><path d="M11.5 11.5L20 20"/></g></symbol>
+      <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/></g><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+      <symbol id="i-yes" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="currentColor"/></symbol>
+      <symbol id="i-no" viewBox="0 0 16 16"><path d="M3 8h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。商品・価格・送料はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>
+        <span class="hd__name nw">スープ工房 ユキノメ</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 480 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="480" height="360" rx="24" fill="#F7EBDD"/>
+            <!-- 雪の結晶 -->
+            <g fill="none" stroke="#BFCDD6" stroke-width="2">
+              <path d="M14 24H34M19 15.34L29 32.66M29 15.34L19 32.66"/>
+              <path d="M448 40H464M452 33.07L460 46.93M460 33.07L452 46.93"/>
+              <path d="M442 336H462M447 327.34L457 344.66M457 327.34L447 344.66"/>
+            </g>
+            <!-- 木の盆 -->
+            <rect x="32" y="20" width="416" height="320" rx="28" fill="#EAD3B2"/>
+            <rect x="44" y="32" width="392" height="296" rx="20" fill="none" stroke="#7E2A1C" stroke-width="2"/>
+            <!-- 器のふち -->
+            <g fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2">
+              <circle cx="150" cy="104" r="60"/><circle cx="330" cy="104" r="60"/>
+              <circle cx="150" cy="256" r="60"/><circle cx="330" cy="256" r="60"/>
+            </g>
+            <!-- かぼちゃのポタージュ -->
+            <circle cx="150" cy="104" r="46" fill="#F0B556"/>
+            <path d="M128 104q22 -22 44 0q-22 18 -36 4" fill="none" stroke="#FFF6E6" stroke-width="3"/>
+            <g fill="#6E8B4E"><ellipse cx="140" cy="90" rx="4" ry="2.5"/><ellipse cx="166" cy="118" rx="4" ry="2.5" transform="rotate(30 166 118)"/><ellipse cx="132" cy="120" rx="4" ry="2.5" transform="rotate(-20 132 120)"/></g>
+            <!-- じゃがいもとベーコン -->
+            <circle cx="330" cy="104" r="46" fill="#EEDDB8"/>
+            <g fill="#DDBE76"><rect x="307" y="84" width="10" height="10" rx="2"/><rect x="339" y="108" width="10" height="10" rx="2" transform="rotate(15 344 113)"/><rect x="315" y="114" width="10" height="10" rx="2" transform="rotate(-10 320 119)"/></g>
+            <g fill="#C97462"><rect x="331" y="80" width="14" height="6" rx="2"/><rect x="342" y="94" width="14" height="6" rx="2" transform="rotate(20 349 97)"/><rect x="306" y="100" width="14" height="6" rx="2" transform="rotate(-15 313 103)"/></g>
+            <g fill="#6E8B4E"><circle cx="324" cy="92" r="2"/><circle cx="352" cy="84" r="2"/><circle cx="336" cy="126" r="2"/><circle cx="356" cy="118" r="2"/></g>
+            <!-- トマトと豆 -->
+            <circle cx="150" cy="256" r="46" fill="#D4553A"/>
+            <g fill="#F1E4C8"><ellipse cx="134" cy="240" rx="6" ry="4"/><ellipse cx="164" cy="246" rx="6" ry="4" transform="rotate(25 164 246)"/><ellipse cx="142" cy="272" rx="6" ry="4" transform="rotate(-15 142 272)"/><ellipse cx="170" cy="270" rx="6" ry="4"/></g>
+            <g fill="#8E5B3E"><ellipse cx="152" cy="232" rx="5" ry="3.5"/><ellipse cx="126" cy="258" rx="5" ry="3.5" transform="rotate(30 126 258)"/><ellipse cx="156" cy="260" rx="5" ry="3.5" transform="rotate(-20 156 260)"/></g>
+            <!-- きのこのクリーム -->
+            <circle cx="330" cy="256" r="46" fill="#E6D6BE"/>
+            <g fill="#F1E4C8"><rect x="310" y="244" width="4" height="8"/><rect x="340" y="236" width="4" height="8"/><rect x="326" y="270" width="4" height="8"/></g>
+            <g fill="#9A7354"><path d="M303 244A9 9 0 0 1 321 244Z"/><path d="M333 236A9 9 0 0 1 351 236Z"/><path d="M319 270A9 9 0 0 1 337 270Z"/></g>
+            <g fill="#B4875A"><circle cx="352" cy="262" r="4"/><circle cx="312" cy="268" r="4"/></g>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <h1 class="h1" id="h-top" tabindex="-1"><span class="ib">温めるだけの、</span><br><span class="ib">手づくりの冷凍スープ。</span></h1>
+          <p class="hero__sub">4つの味を、<span class="ib">詰め合わせで</span><span class="ib">お届けします。</span></p>
+          <p class="hero__lead">かぼちゃ、じゃがいもとベーコン、トマトと豆、きのこ。<span class="nw">スープ工房 ユキノメ</span>が1袋ずつ炊いて、冷凍でお送りします。寒い日の朝ごはんや、ひとりの夜ごはんに。</p>
+          <div class="hero__act"><button type="button" class="btn-main" id="hero-cta"><span class="nw">セットを選ぶ</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-down"/></svg></button></div>
+          <p class="hero__note">4袋 <span class="nw">3,600円</span>から<span class="nw">（税込・架空）</span>。送料は地域で変わります。</p>
+        </div>
+        <div class="hero__feat">
+          <h2 class="visually-hidden">3つの特長</h2>
+          <ul class="feat">
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-pot"/></svg></span>
+              <div class="feat__body"><h3>湯せんか電子レンジで、温めるだけ</h3><p>袋のまま湯せんで<span class="nw">約10分</span>、器に移して電子レンジで<span class="nw">約4分</span><span class="nw">（目安・架空）</span>。</p></div>
+            </li>
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-bag"/></svg></span>
+              <div class="feat__body"><h3><span class="nw">1袋250g</span>、<span class="nw">1人前ずつ</span></h3><p>食べたい分だけ、1袋ずつ取り出せます。</p></div>
+            </li>
+            <li class="card feat__item">
+              <span class="feat__icon"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-snow"/></svg></span>
+              <div class="feat__body"><h3>冷凍で<span class="nw">約2か月</span><span class="nw">（架空）</span>保存できます</h3><p>冷凍庫（<span class="nw">−18℃以下</span>）に入れておけば、作った日から<span class="nw">約2か月</span>が目安です。</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 4つの味 -->
+    <section class="sec sec--band" id="soups" aria-labelledby="h-soups">
+      <div class="wrap">
+        <h2 class="sec__title" id="h-soups" tabindex="-1">4つの味</h2>
+        <p class="sec__lead">どの味も<span class="nw">1袋250g</span>・<span class="nw">1人前</span>です。セットには4つの味が<span class="nw">同じ数ずつ</span>入ります。</p>
+        <ul class="soups">
+          <li class="card soup" data-soup="pumpkin">
+            <svg class="soup__art" viewBox="0 0 160 120" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round"><rect width="160" height="120" rx="12" fill="#F7EBDD"/><path d="M60 50q-6 -8 0 -16q6 -8 0 -16M80 50q-6 -8 0 -16q6 -8 0 -16M100 50q-6 -8 0 -16q6 -8 0 -16" fill="none" stroke="#7E2A1C" stroke-width="2"/><rect x="60" y="108" width="40" height="6" rx="3" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><path d="M24 64H136Q136 108 80 108Q24 108 24 64Z" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><ellipse cx="80" cy="64" rx="56" ry="10" fill="#F0B556" stroke="#7E2A1C" stroke-width="2"/><path d="M68 64q11 -5 22 0" fill="none" stroke="#FFF6E6" stroke-width="2"/><g fill="#6E8B4E"><ellipse cx="60" cy="63" rx="2" ry="1.3"/><ellipse cx="100" cy="65" rx="2" ry="1.3"/></g></g></svg>
+            <div class="soup__text">
+              <h3 class="soup__name">かぼちゃのポタージュ</h3>
+              <p class="soup__note">かぼちゃの甘みを、牛乳でのばした<span class="nw">なめらかな</span>ポタージュ。</p>
+              <p class="soup__gu"><span class="soup__label">主な具材</span><span class="nw">かぼちゃ</span>・<span class="nw">玉ねぎ</span></p>
+            </div>
+          </li>
+          <li class="card soup" data-soup="potato">
+            <svg class="soup__art" viewBox="0 0 160 120" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round"><rect width="160" height="120" rx="12" fill="#F7EBDD"/><path d="M60 50q-6 -8 0 -16q6 -8 0 -16M80 50q-6 -8 0 -16q6 -8 0 -16M100 50q-6 -8 0 -16q6 -8 0 -16" fill="none" stroke="#7E2A1C" stroke-width="2"/><rect x="60" y="108" width="40" height="6" rx="3" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><path d="M24 64H136Q136 108 80 108Q24 108 24 64Z" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><ellipse cx="80" cy="64" rx="56" ry="10" fill="#EEDDB8" stroke="#7E2A1C" stroke-width="2"/><g fill="#DDBE76"><rect x="58" y="60" width="5" height="5" rx="1"/><rect x="88" y="62" width="5" height="5" rx="1"/></g><g fill="#C97462"><rect x="72" y="60" width="7" height="3" rx="1"/><rect x="98" y="61" width="7" height="3" rx="1"/></g></g></svg>
+            <div class="soup__text">
+              <h3 class="soup__name">じゃがいもとベーコンのスープ</h3>
+              <p class="soup__note"><span class="nw">ほくほくの</span><span class="nw">じゃがいもに、</span>ベーコンの塩けを少し。</p>
+              <p class="soup__gu"><span class="soup__label">主な具材</span><span class="nw">じゃがいも</span>・<span class="nw">ベーコン</span>・<span class="nw">玉ねぎ</span></p>
+            </div>
+          </li>
+          <li class="card soup" data-soup="tomato">
+            <svg class="soup__art" viewBox="0 0 160 120" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round"><rect width="160" height="120" rx="12" fill="#F7EBDD"/><path d="M60 50q-6 -8 0 -16q6 -8 0 -16M80 50q-6 -8 0 -16q6 -8 0 -16M100 50q-6 -8 0 -16q6 -8 0 -16" fill="none" stroke="#7E2A1C" stroke-width="2"/><rect x="60" y="108" width="40" height="6" rx="3" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><path d="M24 64H136Q136 108 80 108Q24 108 24 64Z" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><ellipse cx="80" cy="64" rx="56" ry="10" fill="#D4553A" stroke="#7E2A1C" stroke-width="2"/><g fill="#F1E4C8"><ellipse cx="62" cy="63" rx="3" ry="2"/><ellipse cx="94" cy="65" rx="3" ry="2"/></g><g fill="#8E5B3E"><ellipse cx="78" cy="62" rx="2.5" ry="1.8"/><ellipse cx="106" cy="62" rx="2.5" ry="1.8"/></g></g></svg>
+            <div class="soup__text">
+              <h3 class="soup__name">トマトと豆のスープ</h3>
+              <p class="soup__note">トマトの酸味に、3種の豆。スプーンですくう、具の多い一杯。</p>
+              <p class="soup__gu"><span class="soup__label">主な具材</span><span class="nw">トマト</span>・<span class="nw">ひよこ豆</span>・<span class="nw">白いんげん豆</span>・<span class="nw">レンズ豆</span></p>
+            </div>
+          </li>
+          <li class="card soup" data-soup="kinoko">
+            <svg class="soup__art" viewBox="0 0 160 120" aria-hidden="true" focusable="false"><g stroke-linecap="round" stroke-linejoin="round"><rect width="160" height="120" rx="12" fill="#F7EBDD"/><path d="M60 50q-6 -8 0 -16q6 -8 0 -16M80 50q-6 -8 0 -16q6 -8 0 -16M100 50q-6 -8 0 -16q6 -8 0 -16" fill="none" stroke="#7E2A1C" stroke-width="2"/><rect x="60" y="108" width="40" height="6" rx="3" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><path d="M24 64H136Q136 108 80 108Q24 108 24 64Z" fill="#FFFFFF" stroke="#7E2A1C" stroke-width="2"/><ellipse cx="80" cy="64" rx="56" ry="10" fill="#E6D6BE" stroke="#7E2A1C" stroke-width="2"/><g fill="#F1E4C8"><rect x="63" y="61" width="2" height="4"/><rect x="91" y="60" width="2" height="4"/></g><g fill="#9A7354"><path d="M59.5 61A4.5 4.5 0 0 1 68.5 61Z"/><path d="M87.5 60A4.5 4.5 0 0 1 96.5 60Z"/></g><circle cx="78" cy="64" r="2" fill="#B4875A"/><circle cx="106" cy="63" r="2" fill="#B4875A"/></g></svg>
+            <div class="soup__text">
+              <h3 class="soup__name">きのこのクリームスープ</h3>
+              <p class="soup__note">3種のきのこを炒めて、生クリームでまとめました。仕上げに、砕いたくるみを少し。</p>
+              <p class="soup__gu"><span class="soup__label">主な具材</span><span class="nw">しめじ</span>・<span class="nw">まいたけ</span>・<span class="nw">マッシュルーム</span></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. セットを選ぶ -->
+    <section class="sec" id="set" aria-labelledby="h-set">
+      <div class="wrap">
+        <h2 class="sec__title" id="h-set" tabindex="-1">セットを選ぶ</h2>
+        <p class="sec__lead">セット・ギフト包装・お届け地域を選ぶと、届く中身と合計・お届けの目安が出ます。入力はいりません。</p>
+        <div class="set">
+          <div class="set__picks">
+            <fieldset class="pick" id="pick-set">
+              <legend class="pick__legend">セット</legend>
+              <div class="pick__opts pick__opts--3">
+                <label class="opt"><input type="radio" class="opt__input" name="set" value="s4"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">お試し4袋セット</span><span class="opt__desc">4種 × 1袋<span class="nw">（全4袋）</span></span><span class="opt__price nw">3,600円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="set" value="s8" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">8袋セット</span><span class="opt__desc">4種 × 2袋<span class="nw">（全8袋）</span></span><span class="opt__price nw">6,800円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="set" value="s12"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">12袋セット</span><span class="opt__desc">4種 × 3袋<span class="nw">（全12袋）</span></span><span class="opt__price nw">9,800円</span></span></label>
+              </div>
+            </fieldset>
+            <fieldset class="pick" id="pick-gift">
+              <legend class="pick__legend">ギフト包装</legend>
+              <div class="pick__opts pick__opts--2">
+                <label class="opt"><input type="radio" class="opt__input" name="gift" value="none" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">なし</span><span class="opt__price nw">0円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="gift" value="wrap"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">あり</span><span class="opt__price nw">＋330円</span></span></label>
+              </div>
+              <p class="pick__note">あり：箱を包装紙で包み、のしとメッセージカードをおつけします<span class="nw">（330円・税込（架空））</span>。</p>
+            </fieldset>
+            <fieldset class="pick" id="pick-region">
+              <legend class="pick__legend">お届け地域<span class="nw">（冷凍便）</span></legend>
+              <div class="pick__opts pick__opts--3">
+                <label class="opt"><input type="radio" class="opt__input" name="region" value="hokkaido"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">北海道</span><span class="opt__desc">送料</span><span class="opt__price nw">1,320円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="region" value="mainland" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">本州・四国・九州</span><span class="opt__desc">送料</span><span class="opt__price nw">1,100円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="region" value="okinawa"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">沖縄・離島</span><span class="opt__desc">送料</span><span class="opt__price nw">1,980円</span></span></label>
+              </div>
+              <p class="pick__note">冷凍便で1箱ずつお送りします。送料はセットの大きさによらず同じです。</p>
+            </fieldset>
+          </div>
+
+          <div class="result-col">
+            <div class="result" id="result">
+              <p class="result__label">いま選んでいる内容<span class="nw">（税込・架空）</span></p>
+              <p class="result__total"><span class="result__tlabel">合計</span> <span class="nw" id="r-total">7,900<span class="result__yen">円</span></span></p>
+              <div class="result__head">
+                <h3>届く中身</h3>
+                <p class="result__bags" id="r-bags"><span class="nw">全8袋</span>（<span class="nw">1袋250g</span>・<span class="nw">1人前</span>）</p>
+              </div>
+              <ul class="result__items" id="r-items">
+                <li><span class="result__soup">かぼちゃのポタージュ</span><span class="result__n nw">2袋</span></li>
+                <li><span class="result__soup">じゃがいもとベーコンのスープ</span><span class="result__n nw">2袋</span></li>
+                <li><span class="result__soup">トマトと豆のスープ</span><span class="result__n nw">2袋</span></li>
+                <li><span class="result__soup">きのこのクリームスープ</span><span class="result__n nw">2袋</span></li>
+              </ul>
+              <dl class="result__dl">
+                <div><dt id="r-goods-dt">商品代（<span class="nw">8袋セット</span>）</dt><dd class="nw" id="r-goods">6,800円</dd></div>
+                <div><dt>ギフト包装</dt><dd id="r-wrap"><span class="nw">0円</span><span class="nw">（なし）</span></dd></div>
+                <div><dt id="r-ship-dt">送料（冷凍便・<span class="nw">本州・四国・九州</span>）</dt><dd class="nw" id="r-ship">1,100円</dd></div>
+              </dl>
+              <div class="result__when">
+                <h3>お届けの目安</h3>
+                <p id="r-delivery">ご注文から<span class="nw">3〜5日</span>ほどでお届けします<span class="nw">（目安・架空）</span>。</p>
+              </div>
+              <p class="result__note">お届けの日にちを選ぶ機能は、このデモにはありません。</p>
+              <p class="result__note result__note--2">価格・送料・お届けの日数は、すべて架空です。</p>
+            </div>
+            <div class="set__cta"><button type="button" class="btn-main" id="set-cta" aria-haspopup="dialog" aria-controls="buy-dialog"><span class="btn-main__text"><span class="nw">この内容で</span><span class="nw">購入する</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 食べ方と保存 -->
+    <section class="sec sec--band" id="howto" aria-labelledby="h-howto">
+      <div class="wrap col">
+        <h2 class="sec__title" id="h-howto" tabindex="-1">食べ方と保存</h2>
+        <p class="sec__lead">冷凍のまま届きます。温め方は2通り。どちらも「温めるだけ」です。</p>
+        <ol class="steps">
+          <li class="card step">
+            <div class="step__top"><span class="step__num" aria-hidden="true">1</span><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-pot"/></svg></div>
+            <h3>湯せんで温める</h3>
+            <p class="step__text">袋のまま、冷凍のまま、沸いたお湯に入れて <span class="nw">約10分</span><span class="nw">（目安・架空）</span>。<span class="nw">袋の口は</span>開けません。</p>
+          </li>
+          <li class="card step">
+            <div class="step__top"><span class="step__num" aria-hidden="true">2</span><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-micro"/></svg></div>
+            <h3>または、<span class="ib">電子レンジで</span><span class="ib">温める</span></h3>
+            <p class="step__text">袋から耐熱の器に移し、ふんわりラップをして <span class="nw">600W</span> で <span class="nw">約4分</span><span class="nw">（目安・架空）</span>。袋のままレンジに入れません。</p>
+          </li>
+          <li class="card step">
+            <div class="step__top"><span class="step__num" aria-hidden="true">3</span><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-spoon"/></svg></div>
+            <h3>よく混ぜて、器へ</h3>
+            <p class="step__text">具が底に沈んでいるので、よく混ぜてから器に注ぎます。熱いので、やけどに気をつけて<span class="nw">お召し上がりください</span>。</p>
+          </li>
+        </ol>
+        <div class="keep">
+          <div class="keep__head"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-snow"/></svg><h3>保存のしかた</h3></div>
+          <ul class="keep__list">
+            <li>冷凍庫（<span class="nw">−18℃以下</span>）で保存します。</li>
+            <li>解凍したあとは、その日のうちに<span class="nw">お召し上がりください</span>。</li>
+            <li>一度とかしたものは、もう一度冷凍しないでください。</li>
+          </ul>
+        </div>
+        <p class="howto__note">温める時間は目安です<span class="nw">（架空）</span>。器や電子レンジによって変わります。</p>
+      </div>
+    </section>
+
+    <!-- 5. 原材料とアレルゲン -->
+    <section class="sec" id="allergen" aria-labelledby="h-allergen">
+      <div class="wrap col">
+        <h2 class="sec__title" id="h-allergen" tabindex="-1">原材料とアレルゲン</h2>
+        <p class="sec__lead">食品表示で特に示すことになっている8品目<span class="nw">（特定原材料）</span>を、味ごとにまとめました。</p>
+        <ul class="alg__legend" aria-label="記号の見方">
+          <li class="alg__lg alg__lg--yes"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg><span class="nw">含む</span></li>
+          <li class="alg__lg alg__lg--no"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg><span class="nw">含まない</span></li>
+        </ul>
+        <table class="alg" role="table" id="alg">
+          <caption class="visually-hidden">特定原材料8品目を含むかどうか（デモのため架空の表示）</caption>
+          <thead role="rowgroup"><tr role="row">
+            <td role="cell"></td>
+            <th scope="col" role="columnheader">乳</th><th scope="col" role="columnheader">小麦</th><th scope="col" role="columnheader">卵</th><th scope="col" role="columnheader">えび</th><th scope="col" role="columnheader">かに</th><th scope="col" role="columnheader">そば</th><th scope="col" role="columnheader">落花生</th><th scope="col" role="columnheader">くるみ</th>
+          </tr></thead>
+          <tbody role="rowgroup">
+            <tr role="row" data-soup="pumpkin">
+              <th scope="row" role="rowheader">かぼちゃのポタージュ</th>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">乳</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">小麦</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">卵</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">えび</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">かに</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">そば</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">落花生</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">くるみ</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+            </tr>
+            <tr role="row" data-soup="potato">
+              <th scope="row" role="rowheader">じゃがいもとベーコンのスープ</th>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">乳</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">小麦</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">卵</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">えび</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">かに</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">そば</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">落花生</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">くるみ</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+            </tr>
+            <tr role="row" data-soup="tomato">
+              <th scope="row" role="rowheader">トマトと豆のスープ</th>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">乳</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">小麦</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">卵</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">えび</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">かに</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">そば</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">落花生</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">くるみ</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+            </tr>
+            <tr role="row" data-soup="kinoko">
+              <th scope="row" role="rowheader">きのこのクリームスープ</th>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">乳</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">小麦</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">卵</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">えび</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">かに</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">そば</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--no"><span class="alg__item nw">落花生</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>含まない</span></td>
+              <td role="cell" class="alg__c alg__c--yes"><span class="alg__item nw">くるみ</span><span class="alg__val nw"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-yes"/></svg>含む</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alg__note"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><p>デモのため架空の表示です。実際の商品では、仕入れ先の規格書をもとにお店が確認した表示を載せます。</p></div>
+        <h3 class="alg__h">原材料名<span class="nw">（主なもの）</span></h3>
+        <dl class="alg__genzai">
+          <div><dt>かぼちゃのポタージュ</dt><dd>かぼちゃ、玉ねぎ、牛乳、生クリーム、バター、食塩</dd></div>
+          <div><dt>じゃがいもとベーコンのスープ</dt><dd>じゃがいも、牛乳、ベーコン<span class="nw">（豚肉を含む）</span>、玉ねぎ、小麦粉、バター、食塩</dd></div>
+          <div><dt>トマトと豆のスープ</dt><dd>トマト、ひよこ豆、白いんげん豆、レンズ豆、玉ねぎ、セロリ、オリーブ油、食塩</dd></div>
+          <div><dt>きのこのクリームスープ</dt><dd>しめじ、まいたけ、マッシュルーム、玉ねぎ、生クリーム、小麦粉、くるみ、バター、食塩</dd></div>
+        </dl>
+        <p class="alg__note2">豚肉など、8品目のほかの原材料は、上の原材料名でご確認いただけます。同じ場所で作っているほかの商品のことは、実際のお店ではここに書きます。</p>
+      </div>
+    </section>
+
+    <!-- 6. よくある質問 -->
+    <section class="sec sec--band" id="faq" aria-labelledby="h-faq">
+      <div class="wrap col">
+        <h2 class="sec__title" id="h-faq" tabindex="-1">よくある質問</h2>
+        <div class="faq">
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">ギフトで送れますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>送れます。お届け先を、ご注文の方と別にできます<span class="nw">（実際のお店では、</span>カートの画面で入れます）。「ギフト包装 あり」を選ぶと、箱を包装紙で包み、のしとメッセージカードをおつけします<span class="nw">（330円・税込（架空））</span>。金額の分かる明細は箱に入れません。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">届く日は選べますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>このデモでは、日にちを選ぶ機能はありません。実際のお店では、カートの画面で「お届け希望日」を選べるようにできます。日数の目安は、「セットを選ぶ」の結果に出ています。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">賞味期限はどのくらいですか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>冷凍（<span class="nw">−18℃以下</span>）で、作った日から<span class="nw">約2か月</span>です<span class="nw">（架空）</span>。袋に日付を書いてお届けします。解凍したあとは、その日のうちに<span class="nw">お召し上がりください</span>。</p></div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">アレルギーが心配です</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="faq__a"><p>「原材料とアレルゲン」の表で、8品目を含むかどうかを味ごとに確かめられます。表にない原材料や、作る場所のことが気になる時は、ご注文の前にお店へ<span class="nw">お問い合わせ</span>ください<span class="nw">（このデモには、</span><span class="nw">お問い合わせ先</span>はありません）。</p><p class="faq__link"><a class="inline-link" href="#allergen" id="to-allergen">原材料とアレルゲンの表を見る</a></p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ご購入 -->
+    <section class="sec" id="buy" aria-labelledby="h-buy">
+      <div class="wrap col">
+        <div class="card buy">
+          <h2 class="sec__title" id="h-buy" tabindex="-1">ご購入</h2>
+          <p class="buy__text">選んだ内容で、購入の手続きに進みます。</p>
+          <p class="buy__sum" id="buy-sum"><span class="nw">8袋セット</span>・<span class="nw">ギフト包装なし</span>・<span class="nw">本州・四国・九州</span></p>
+          <p class="buy__total">合計 <span class="nw buy__yen" id="buy-total">7,900円</span><span class="nw">（税込・架空）</span></p>
+          <div class="buy__act"><button type="button" class="btn-main" id="buy-cta" aria-haspopup="dialog" aria-controls="buy-dialog"><span class="btn-main__text"><span class="nw">この内容で</span><span class="nw">購入する</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+          <p class="buy__link"><a class="inline-link" href="#set" id="to-set">セットを選び直す</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">「何が届くか」「いくらで、いつ届くか」「どう食べるか・どう保存するか」を購入ボタンの手前に置くと、迷う時間が減ります。このページはその見本です。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bag"/></svg>
+            <h3>写真・商品説明・原材料の表示</h3>
+            <ul><li>写真・商品説明・原材料とアレルゲンの表示は、お店にご用意いただきます</li><li>表示の内容の確認は、お店の責任で行っていただきます<span class="nw">（仕入れ先の</span><span class="nw">規格書をもとに）</span></li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg>
+            <h3>カートとのつなぎ</h3>
+            <ul><li>購入ボタンを、お店のカート<span class="nw">（Shopify・</span><span class="nw">BASE など）</span>の商品ページにつなぎます</li><li>セット・包装・地域の選び方を、カートの設定に合わせます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-pot"/></svg>
+            <h3>構成案と見出し</h3>
+            <ul><li>中身・合計・食べ方・アレルゲンの順に並べる構成案をお出しします</li><li>見出しと文の長さを、スマホで読みやすく整えます</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>公開のあとに</h3>
+          <ul><li>アクセス解析を見て、読まれていない所・押されていないボタンを直す形にできます<span class="nw">（内容によりお見積もり）</span>。定期便・送料無料の条件などが要る時も、ご相談ください</li></ul>
+          <p class="work-check__note">価格・送料・原材料・アレルゲン・販売者の表記は、お店からいただいた内容をそのまま載せます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">スープ工房 ユキノメ</span>は<span class="nw">架空</span>のお店で、商品・価格・送料・原材料の表示もすべて<span class="nw">架空</span>です。</p>
+    <p>デモのため販売者の情報・特定商取引法の表記はありません。実際のお仕事では、どちらも載せます。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+
+  <div class="fixbar is-hide" id="fixbar">
+    <p class="fixbar__sum"><span id="fix-set" class="nw">8袋・包装なし</span><span class="fixbar__total nw">合計 <span class="nw" id="fix-total">7,900円</span></span></p>
+    <button type="button" class="btn-main" id="fix-cta" aria-haspopup="dialog" aria-controls="buy-dialog"><span class="nw">購入へ進む（デモ）</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button>
+  </div>
+
+  <dialog class="buy-dialog" id="buy-dialog" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+    <div class="buy-dialog__head"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><h2 class="buy-dialog__title" id="dlg-title" tabindex="-1">ご購入<span class="nw">（デモ）</span></h2></div>
+    <p class="buy-dialog__text" id="dlg-text">デモのため、ここから先はありません<span class="nw">（実際のお仕事では、</span>お店のカート〈<span class="nw">Shopify・BASE など</span>〉につなぎます）</p>
+    <p class="buy-dialog__note">このページでは、何も送信しません。お名前やお届け先を入れる欄もありません。</p>
+    <div class="buy-dialog__sum">
+      <p class="buy-dialog__label">いま選んでいる内容</p>
+      <p class="buy-dialog__line" id="dlg-sum"><span class="nw">8袋セット</span>・<span class="nw">ギフト包装なし</span>・<span class="nw">本州・四国・九州</span></p>
+      <p class="buy-dialog__line">合計 <span class="nw" id="dlg-total">7,900円</span><span class="nw">（税込・架空）</span></p>
+    </div>
+    <div class="buy-dialog__act"><button type="button" class="btn-sub" id="dlg-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>閉じる</button></div>
+  </dialog>
+</body>
+</html>
