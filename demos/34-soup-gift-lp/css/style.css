@@ -474,12 +474,14 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
   /* 手順は 1024px〜 で3列（768〜1023px で3列にすると1列が狭く、文が細かく折れるため） */
   .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
   .step { display: flex; flex-direction: column; }
-  /* 表（4行 × 8列） */
+  /* 表（4行 × 9列） */
   .alg { width: 100%; table-layout: fixed; border-collapse: collapse; background: #FFFFFF; }
   .alg thead th { height: 48px; padding: 8px 4px; background: var(--c-soft); font-size: 16px; font-weight: 700; text-align: center; border: 1px solid var(--c-line); letter-spacing: 0; }
-  .alg thead td { width: 176px; background: var(--c-soft); border: 1px solid var(--c-line); }
+  /* 9品目（カシューナッツを足した）：1列目 160px・カシューナッツの列 120px（7字×16px＋内側 4×2）・ほか8列は (880−160−120)÷8＝75px。セルの内側 4px で「含まない」64px が 67px に収まる */
+  .alg thead td { width: 160px; background: var(--c-soft); border: 1px solid var(--c-line); }
+  .alg thead th:last-child { width: 120px; }
   .alg th[scope="row"] { padding: 12px; text-align: left; font-size: var(--f-note); font-weight: 700; line-height: 1.5; border: 1px solid var(--c-line); }
-  .alg__c { padding: 12px 8px; text-align: center; vertical-align: middle; border: 1px solid var(--c-line); }
+  .alg__c { padding: 12px 4px; text-align: center; vertical-align: middle; border: 1px solid var(--c-line); }
   .alg__c .alg__item { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   .alg__val { flex-direction: column; gap: 4px; }
 }
