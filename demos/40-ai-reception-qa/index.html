@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 受付の答える範囲とテストの記録（デモ）｜ヨツツジ食堂</title>
+  <meta name="description" content="お店の AI 受付に渡す Q&amp;A の表・人へ回す一覧・誤回答テストの記録・月1回の見直しを見られる、TENKA LAB の見本（架空のお店）です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3B3350">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI 受付の答える範囲とテストの記録（デモ）｜ヨツツジ食堂">
+  <meta property="og:description" content="お店の AI 受付に渡す Q&amp;A の表・人へ回す一覧・誤回答テストの記録・月1回の見直しを見られる、TENKA LAB の見本（架空のお店）です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%233B3350'/%3E%3Cpath d='M7 5h11v14H7zM10 9h5M10 12h5' fill='none' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/calc.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ページのアイコン（自作の SVG） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3" width="15" height="18" rx="1.5"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="16" r="1"/><path d="M11 10h6M11 14h6"/></g></symbol>
+      <symbol id="i-answer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 14.5h7M9 18h4"/></g></symbol>
+      <symbol id="i-hand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><circle cx="8" cy="7" r="3"/><path d="M2.5 20c0-3.6 2.5-6 5.5-6s5.5 2.4 5.5 6"/><path d="M15 12h7M19 9l3 3-3 3"/></g></symbol>
+      <symbol id="s-pass" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="s-fixed" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13.5l4.5 4.5L15 9.5" stroke-width="2.5"/><path d="M21 6.5a3.5 3.5 0 1 1-1.5-2.9" stroke-width="2"/><path d="M20 1.8v2.4h-2.4" stroke-width="2"/></g></symbol>
+      <symbol id="s-todo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></g></symbol>
+      <symbol id="i-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-dl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 16v4h16v-4"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 11h6M9 15h6M9 19h3"/></g></symbol>
+      <symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14.5h18M9 4v16"/></g></symbol>
+      <symbol id="i-cycle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><path d="M15.5 15.5a3.5 3.5 0 1 1-1-2.5"/><path d="M15 11.5v1.8h-1.8"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の見本</strong><span class="nw">（架空のお店）</span>です。お店・質問・テストの結果はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>
+        <span class="hd__names"><span class="hd__name nw">ヨツツジ食堂</span><span class="hd__sub nw">AI 受付の設定の記録</span></span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top"><span class="nw">AI 受付に渡す、</span><span class="nw">答える範囲と</span><span class="nw">試した記録。</span></h1>
+        <p class="notice">AI の答えを再現する画面ではありません。設定代行でお渡しする表と記録の見本です。</p>
+        <p class="intro__lead">お店の公式アカウントのチャットに AI 受付を置く前に、私たちがお店と一緒に決めてお渡しするのは「何に答えるか」「何に答えさせず、お店の人へ回すか」「言い回しを変えて試した結果」の3つです。架空の定食屋「<span class="nw">ヨツツジ食堂</span>」を例に、その表と記録を1ページにまとめました。</p>
+        <p class="intro__note">デモ（架空のお店）。<span class="nw">ヨツツジ食堂</span>は架空のお店で、実在のお店とは関係ありません。</p>
+        <p class="intro__note">数字・テストの結果はすべて架空です。このページは AI を動かしておらず、どこにも通信しません。</p>
+        <p class="intro__note">値段は目安だけを書いています。アレルギーと料金の確定には、答えさせない見本です。</p>
+        <p class="intro__now"><span class="nw">記録の日：2026年11月4日（水）</span><span class="nw">（日付は止めています）</span></p>
+        <p class="intro__now"><span class="nw">Q&amp;A の作成 10月28日・</span><span class="nw">テストのやり直し 11月2日・</span><span class="nw">見直し 11月4日</span></p>
+        <dl class="facts" aria-label="ヨツツジ食堂の設定">
+          <div><dt class="visually-hidden">お店の種類</dt><dd>定食と持ち帰り弁当の食堂</dd></div>
+          <div><dt>席</dt><dd>20</dd></div>
+          <div><dt>駐車場</dt><dd>3台</dd></div>
+          <div><dt>定休日</dt><dd>水曜と第3木曜</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 表紙の帯 -->
+    <section class="cover-sec" aria-label="記録の要約">
+      <div class="wrap">
+        <div class="cover">
+          <div class="stat"><p class="stat__lab">答える範囲</p><p class="stat__num" id="cv-qa"></p><p class="stat__sub" id="cv-qa-sub"></p></div>
+          <div class="stat"><p class="stat__lab">答えさせない</p><p class="stat__num" id="cv-ho"></p><p class="stat__sub">決まった文を返して人へ回す</p></div>
+          <div class="stat"><p class="stat__lab">誤回答テスト</p><p class="stat__num" id="cv-test"></p><p class="stat__sub" id="cv-test-sub"></p></div>
+          <div class="stat"><p class="stat__lab">合格率</p><p class="stat__num" id="cv-rate"></p><p class="stat__sub" id="cv-rate-sub"></p></div>
+          <div class="stat"><p class="stat__lab">要修正</p><p class="stat__num is-seal" id="cv-todo"></p><p class="stat__sub">次の見直しで直す予定</p></div>
+          <p class="cover__reset"><button type="button" class="btn-sub" id="reset-all">最初に戻す</button></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 目次 -->
+    <nav class="toc-sec" id="toc" aria-label="このページの記録">
+      <div class="wrap">
+        <ol class="toc">
+          <li><a class="toc__a js-jump" href="#qa" data-h="h-qa"><span class="toc__no">記録 1</span>答える範囲の表</a></li>
+          <li><a class="toc__a js-jump" href="#handoff" data-h="h-handoff"><span class="toc__no">記録 2</span>答えさせない質問</a></li>
+          <li><a class="toc__a js-jump" href="#test" data-h="h-test"><span class="toc__no">記録 3</span>誤回答テスト</a></li>
+          <li><a class="toc__a js-jump" href="#review" data-h="h-review"><span class="toc__no">記録 4</span>月1回の見直し</a></li>
+        </ol>
+        <p class="toc__more"><a class="inline-link js-jump" href="#output" data-h="h-output">CSV と印刷へ</a></p>
+      </div>
+    </nav>
+
+    <!-- 記録 1 答える範囲の表 -->
+    <section class="sec" id="qa" aria-labelledby="h-qa">
+      <div class="wrap">
+        <div class="sheet">
+          <div class="sheet__head">
+            <p class="sheet__no">記録 1</p>
+            <h2 class="sheet__h" id="h-qa" tabindex="-1">答える範囲の表（Q&amp;A 30問）</h2>
+            <p class="sheet__meta">作成 2026-10-28・直し 2026-11-02</p>
+          </div>
+          <div class="sheet__body">
+            <p class="sheet__lead">AI 受付が答えてよい質問と、その答えの文です。答えの文はお店の店主が確かめ、確かめた日を「最終確認日」に残します。質問の例の「／」は、同じ答えを返す言い方です。</p>
+            <div class="chips" id="qa-cats" role="group" aria-label="分類で絞り込む"></div>
+            <div class="find">
+              <label class="find__lab" for="qa-q">質問・答えの文から探す</label>
+              <div class="find__row">
+                <span class="find__box">
+                  <svg class="find__icon" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+                  <input class="find__in" id="qa-q" type="search" autocomplete="off" aria-describedby="qa-q-hint">
+                </span>
+                <button type="button" class="btn-sub" id="qa-clear">絞り込みを解く</button>
+              </div>
+              <p class="note" id="qa-q-hint">空白で区切ると、すべての言葉を含む問だけを出します。</p>
+            </div>
+            <p class="count"><strong id="qa-n"></strong><span class="count__of">（30問のうち）</span></p>
+            <p class="empty" id="qa-empty" hidden></p>
+            <div class="only-table" id="qa-table"></div>
+            <div class="only-cards cards" id="qa-cards"></div>
+            <p class="note">値段は目安の幅だけを答えます。貸切・大口の料金は記録 2 の H2 で人へ回します。</p>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 記録 2 答えさせない質問の一覧 -->
+    <section class="sec" id="handoff" aria-labelledby="h-handoff">
+      <div class="wrap">
+        <div class="sheet">
+          <div class="sheet__head">
+            <p class="sheet__no">記録 2</p>
+            <h2 class="sheet__h" id="h-handoff" tabindex="-1">答えさせない質問の一覧（人へ回す）</h2>
+            <p class="sheet__meta" id="ho-meta"></p>
+          </div>
+          <div class="sheet__body">
+            <p class="sheet__lead">次の5つは、AI 受付に答えを作らせません。お客様の文に「合図の言葉」が入っていたら、Q&amp;A より先にこの一覧を見て、決まった文だけを返し、お店の人へ回します。</p>
+            <p class="legend-line"><span class="sig sig--added">食べられる</span><span>下線：11月2日のテストのあとに足した言葉</span></p>
+            <div class="only-table" id="ho-table"></div>
+            <div class="only-cards cards" id="ho-cards"></div>
+            <p class="note">返事の目安はお店の都合に合わせて決めます。ここに書いた時間は見本です。</p>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 記録 3 誤回答テストの記録 -->
+    <section class="sec" id="test" aria-labelledby="h-test">
+      <div class="wrap">
+        <div class="sheet">
+          <div class="sheet__head">
+            <p class="sheet__no">記録 3</p>
+            <h2 class="sheet__h" id="h-test" tabindex="-1">誤回答テストの記録（70件）</h2>
+            <p class="sheet__meta">試した日 2026-10-28・やり直し 2026-11-02</p>
+          </div>
+          <div class="sheet__body">
+            <p class="sheet__lead">Q&amp;A と同じ意味の質問を、言い回しを変えて70件試しました。期待する動きは「答える（どの問で）」か「人へ回す（どの分類へ）」です。外れたものは直して試し直し、まだ直していないものは「要修正」として残しています。</p>
+            <h3 class="h3">結果の要約</h3>
+            <div class="stats">
+              <div class="stat"><p class="stat__lab">合格率（修正後合格を含む）</p><p class="stat__num" id="ts-all"></p><p class="stat__sub" id="ts-all-sub"></p></div>
+              <div class="stat"><p class="stat__lab">1回目の合格率（含まない）</p><p class="stat__num" id="ts-first"></p><p class="stat__sub" id="ts-first-sub"></p></div>
+              <div class="stat"><p class="stat__lab">要修正</p><p class="stat__num is-seal" id="ts-todo"></p><p class="stat__sub" id="ts-todo-sub"></p></div>
+              <div class="stat"><p class="stat__lab">人へ回す質問に答えてしまった</p><p class="stat__num" id="ts-wrong"></p><p class="stat__sub" id="ts-wrong-sub"></p></div>
+            </div>
+            <h3 class="h3 h3--gap">見かた</h3>
+            <ul class="legend" id="ts-legend"></ul>
+            <div class="chips-set">
+              <p class="chips-set__lab" id="ts-r-lab">結果の絞り込み</p>
+              <div class="chips" id="ts-r" role="group" aria-label="結果で絞り込む"></div>
+              <p class="chips-set__lab" id="ts-e-lab">期待の絞り込み</p>
+              <div class="chips" id="ts-e" role="group" aria-label="期待する動きで絞り込む"></div>
+              <p class="chips-set__clear"><button type="button" class="btn-sub" id="ts-clear">絞り込みを解く</button></p>
+            </div>
+            <p class="count"><strong id="ts-n"></strong><span class="count__of">（70件のうち）</span></p>
+            <p class="empty" id="ts-empty" hidden>この組み合わせのテストはありません。</p>
+            <div class="only-table" id="ts-table"></div>
+            <div class="only-cards cards" id="ts-cards"></div>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 記録 4 月1回の見直し -->
+    <section class="sec" id="review" aria-labelledby="h-review">
+      <div class="wrap">
+        <div class="sheet">
+          <div class="sheet__head">
+            <p class="sheet__no">記録 4</p>
+            <h2 class="sheet__h" id="h-review" tabindex="-1">月1回の見直し（10月の分）</h2>
+            <p class="sheet__meta">見直しの日 2026-11-04</p>
+          </div>
+          <div class="sheet__body">
+            <p class="sheet__lead">10月に AI 受付が答えられなかった質問のうち、多かった8つです（数は架空）。1つずつ「Q&amp;A に足す」「人へ回すに足す」「今は足さない」を決めます。判断はこのページの中だけで変えられます。</p>
+            <h3 class="h3">判断の数</h3>
+            <div class="stats" id="rv-stats"></div>
+            <p class="forecast" id="rv-forecast"></p>
+            <div class="only-table" id="rv-table"></div>
+            <div class="only-cards cards" id="rv-cards"></div>
+            <p class="note" id="rv-total"></p>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSV・印刷 -->
+    <section class="sec" id="output" aria-labelledby="h-output">
+      <div class="wrap">
+        <h2 class="h2" id="h-output" tabindex="-1">CSV と印刷</h2>
+        <div class="out-box">
+          <p class="note out-box__lead">CSV は表計算ソフトでそのまま開ける形（BOM 付き UTF-8）です。絞り込みに関係なく全件を書き出します。印刷は A4 縦で、記録 1〜4 を順に出します。</p>
+          <div class="btn-row">
+            <button type="button" class="btn-act" id="csv-qa"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-dl"/></svg>Q&amp;A の CSV</button>
+            <button type="button" class="btn-act" id="csv-test"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-dl"/></svg>テストの記録の CSV</button>
+            <button type="button" class="btn-act" id="print-btn"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷する</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店の質問に合わせて、表と記録を作ります</h2>
+        <p class="lab-lead">答える範囲・答えさせない範囲・試す言い回しは、お店の方と一緒に決めます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <h3>答える範囲はお店と決める</h3>
+            <ul><li>30問は見本です。よく聞かれる質問を集め、答えの文はお店の方に確かめてもらい、確かめた日を残します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-hand"/></svg>
+            <h3>答えさせない範囲を先に決める</h3>
+            <ul><li>アレルギー・料金の確定・予約の確定などは、決まった文だけを返してお店の人へ回します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-cycle"/></svg>
+            <h3>試して、外れを残して、直す</h3>
+            <ul><li>言い回しを変えた質問で試し、外れたものと直し方を記録します。使い始めた後も月1回、答えられなかった質問を見直します</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>本番にするときは</h3>
+          <ul><li>本番にするときは：お店の公式アカウントのチャットに AI 受付を設定し、この表を答えの元として渡します。AI の利用料と、月1回の見直しの回数は、別にお見積もりします。</li></ul>
+          <p class="work-check__note">飲食に限らず、美容室・教室・整体院など、よく聞かれる質問が決まっているお店なら同じ形で作れます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った見本です。<span class="nw">ヨツツジ食堂</span>は<span class="nw">架空</span>のお店で、質問・答え・テストの結果もすべて<span class="nw">架空</span>です。AI は動かしていません。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+
+  <div id="print-root" class="print-root"></div>
+</body>
+</html>
