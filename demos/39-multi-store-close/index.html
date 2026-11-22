@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多店舗の月次締めボード（デモ）｜ヨモスガラ食堂</title>
+  <meta name="description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て催促できる、TENKA LAB の動くデモ（架空のお店）です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F4A3D">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="多店舗の月次締めボード（デモ）｜ヨモスガラ食堂">
+  <meta property="og:description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て催促できる、TENKA LAB の動くデモ（架空のお店）です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231F4A3D'/%3E%3Cpath d='M5 7h6v11H5zM13 7h6v11h-6zM7 10h2M7 13h2M15 10h2M15 13h2' fill='none' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/calc.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ページのアイコン（自作のインライン SVG） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-ledger" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 6c-2.5-1.5-5.5-2-9-2v15c3.5 0 6.5.5 9 2 2.5-1.5 5.5-2 9-2V4c-3.5 0-6.5.5-9 2z"/><path d="M12 6v15M6 9h3M6 12h3M6 15h3M15 9h3M15 12h3M15 15h3"/></g></symbol>
+      <symbol id="s-todo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+      <symbol id="s-doing" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></symbol>
+      <symbol id="s-wait" viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.5" fill="currentColor"/></symbol>
+      <symbol id="s-done" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="s-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L4 9l5 5"/><path d="M4 9h10a5 5 0 0 1 0 10h-3"/></g></symbol>
+      <symbol id="i-bang" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M3 14.5h18M9 4v16M15 4v16"/></g></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></g></symbol>
+      <symbol id="i-scale" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18h18"/><path d="M5 18v-4M9 18v-7M13 18v-4M17 18v-9"/><path d="M3 6h18" stroke-dasharray="2 2"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・数字・役職はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-ledger"/></svg>
+        <span class="hd__name nw">ヨモスガラ食堂 本部</span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top"><span class="nw">5店舗の月次締めを、</span><span class="nw">1枚で見る。</span></h1>
+        <p class="intro__lead">本部の経理が毎月はじめに追いかける「どの店の、どの締めが止まっているか」と「数字が基準を外れた店」を、1枚の台帳にまとめた見本です。下の「店の詳細」で状態を変えると、台帳・催促の一覧・完了率がその場で変わります。</p>
+        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。入力した内容はどこにも送られず、保存もされません。</p>
+        <p class="intro__note"><span class="nw">ヨモスガラ食堂</span>は架空のお店です。店名に使った地名は一般の地名で、実在のお店とは関係ありません。</p>
+        <p class="intro__note">金額は税抜です。</p>
+        <p class="intro__now"><span class="nw">デモの今日：</span><span class="nw">2026年11月6日（金）</span><span class="nw">（日付は止めています）</span></p>
+        <p class="intro__now"><span class="nw">対象：2026年10月の締め・</span><span class="nw">締めの期限 11月10日（火）まで</span> <span class="nw" id="intro-left">あと4日</span></p>
+      </div>
+    </section>
+
+    <!-- 要約の帯 -->
+    <section class="sum-sec" aria-label="今の締めの要約">
+      <div class="wrap">
+        <div class="sum">
+          <div class="sum__card"><p class="sum__lab">全体の完了率</p><p class="sum__num" id="sum-rate"></p><p class="sum__sub" id="sum-rate-sub"></p></div>
+          <div class="sum__card"><p class="sum__lab">催促</p><p class="sum__num" id="sum-nudge"></p><p class="sum__sub" id="sum-nudge-sub"></p></div>
+          <div class="sum__card"><p class="sum__lab">本部の確認待ち</p><p class="sum__num" id="sum-wait"></p><p class="sum__sub">本部 経理が見る番の項目</p></div>
+          <div class="sum__card"><p class="sum__lab">数字の目印</p><p class="sum__num" id="sum-mark"></p><p class="sum__sub" id="sum-mark-sub"></p></div>
+          <p class="sum__reset"><button type="button" class="btn-sub" id="reset-all">最初に戻す</button></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 締めの進み具合 -->
+    <section class="sec" id="board" aria-labelledby="h-board">
+      <div class="wrap">
+        <h2 class="h2" id="h-board"><span class="h2__no" aria-hidden="true">1</span>締めの進み具合</h2>
+        <p class="sec__lead">10月の締めの6項目を、店ごとに並べました。札の下の数は、その状態になってから止まっている日数です（完了は完了した日）。</p>
+        <ul class="legend" id="legend" aria-label="札の見方"></ul>
+        <div class="ledger">
+          <div class="only-table" id="board-table"></div>
+          <div class="only-cards cards" id="board-cards"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 催促の一覧 -->
+    <section class="sec" id="nudge" aria-labelledby="h-nudge">
+      <div class="wrap">
+        <h2 class="h2" id="h-nudge"><span class="h2__no" aria-hidden="true">2</span>催促の一覧</h2>
+        <p class="sec__lead">差し戻しにした項目と、期日まで2日以内なのに手が付いていない項目です。差し戻しが先、そのあと期日の近い順に並べています。</p>
+        <div class="ledger">
+          <p class="empty" id="nudge-empty" hidden>いま催促する項目はありません。</p>
+          <div class="only-table" id="nudge-table"></div>
+          <div class="only-cards cards" id="nudge-cards"></div>
+          <div class="nudge-panel" id="nudge-panel" hidden>
+            <h3 class="h3" id="nudge-h" tabindex="-1"></h3>
+            <p class="note">送信はしません。コピーして、いつもの連絡の方法（メール・チャットなど）に貼ってください。人の名前は入れず、役職名だけにしています。</p>
+            <p class="warn-text" id="nudge-miss" hidden></p>
+            <textarea class="nudge-text" id="nudge-text" readonly></textarea>
+            <div class="btn-row">
+              <button type="button" class="btn-act" id="nudge-copy">文面をコピー</button>
+              <button type="button" class="btn-sub" id="nudge-close">閉じる</button>
+              <p class="note" id="nudge-copied"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 数字の確かめ -->
+    <section class="sec" id="check" aria-labelledby="h-check">
+      <div class="wrap">
+        <h2 class="h2" id="h-check"><span class="h2__no" aria-hidden="true">3</span>数字の確かめ</h2>
+        <p class="sec__lead">本部の基準を外れた数字に「!」を付けました。境目ちょうどの値は基準の内側とします。「仮」は、元になる締めの項目がまだ完了していない数字です（あとで変わる見込みがあります）。</p>
+        <div class="ledger">
+          <div class="std">
+            <h3 class="h3">本部の基準</h3>
+            <div class="std__rows">
+              <div class="std__row">
+                <div class="std__f"><label for="std-costT">原価率の目標</label><input id="std-costT" type="text" inputmode="decimal" value="32" aria-describedby="std-costT-u std-cost-hint std-costT-err"><span class="std__u" id="std-costT-u">%</span></div>
+                <div class="std__f"><label for="std-costW">幅 ±</label><input id="std-costW" type="text" inputmode="decimal" value="3" aria-describedby="std-costW-u std-cost-hint std-costW-err"><span class="std__u" id="std-costW-u">pt</span></div>
+                <p class="std__hint" id="std-cost-hint"></p>
+                <p class="std__err" id="std-costT-err" hidden></p>
+                <p class="std__err" id="std-costW-err" hidden></p>
+              </div>
+              <div class="std__row">
+                <div class="std__f"><label for="std-labor">人件費率の上限</label><input id="std-labor" type="text" inputmode="decimal" value="30" aria-describedby="std-labor-u std-labor-err"><span class="std__u" id="std-labor-u">% を超えたら印</span></div>
+                <p class="std__err" id="std-labor-err" hidden></p>
+              </div>
+              <div class="std__row">
+                <div class="std__f"><label for="std-fl">FL比率の上限</label><input id="std-fl" type="text" inputmode="decimal" value="60" aria-describedby="std-fl-u std-fl-hint std-fl-err"><span class="std__u" id="std-fl-u">% を超えたら印</span></div>
+                <p class="std__hint" id="std-fl-hint">FL＝原価＋人件費の対売上</p>
+                <p class="std__err" id="std-fl-err" hidden></p>
+              </div>
+              <div class="std__row">
+                <div class="std__f"><label for="std-yoy">前年比の幅</label><input id="std-yoy" type="text" inputmode="decimal" value="15" aria-describedby="std-yoy-u std-yoy-hint std-yoy-err"><span class="std__u" id="std-yoy-u">± %</span></div>
+                <p class="std__hint" id="std-yoy-hint"></p>
+                <p class="std__err" id="std-yoy-err" hidden></p>
+              </div>
+            </div>
+            <p class="std__reset"><button type="button" class="btn-sub" id="std-reset">基準を最初に戻す</button></p>
+          </div>
+          <div class="only-table" id="check-table"></div>
+          <div class="only-cards cards" id="check-cards"></div>
+          <p class="note">合計の率は、5店の合計の原価（人件費）÷ 5店の合計の売上です。店の率を平均した値ではありません。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 店の詳細 -->
+    <section class="sec" id="detail" aria-labelledby="h-detail">
+      <div class="wrap">
+        <h2 class="h2" id="h-detail"><span class="h2__no" aria-hidden="true">4</span>店の詳細</h2>
+        <p class="sec__lead">店を選ぶと、6項目の状態を変えられます（このページの中だけ）。差し戻しにすると、理由を入れる欄が出ます。</p>
+        <div class="ledger">
+          <div class="store-pick" id="store-pick" role="group" aria-label="店を選ぶ"></div>
+          <div class="detail">
+            <div class="detail__items">
+              <h3 class="h3" id="det-items-h" tabindex="-1"></h3>
+              <ul class="items" id="det-items"></ul>
+            </div>
+            <div class="detail__nums">
+              <h3 class="h3" id="det-num-h" tabindex="-1"></h3>
+              <dl class="nums" id="det-nums"></dl>
+              <p class="note" id="det-prov" hidden></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 5店の合計と CSV・印刷 -->
+    <section class="sec" id="total" aria-labelledby="h-total">
+      <div class="wrap">
+        <h2 class="h2" id="h-total"><span class="h2__no" aria-hidden="true">5</span>5店の合計と CSV・印刷</h2>
+        <div class="ledger">
+          <dl class="total" id="total-dl"></dl>
+          <p class="note" id="total-avg"></p>
+          <div class="btn-row">
+            <button type="button" class="btn-act" id="csv-btn">CSV を保存</button>
+            <button type="button" class="btn-act" id="print-btn">印刷する</button>
+          </div>
+          <p class="note">CSV は表計算ソフトでそのまま開ける形（BOM 付き UTF-8）です。印刷は A4 横です。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">店の数と締めの項目に合わせて作ります</h2>
+        <p class="lab-lead">締めの項目・期日・担当の役職・本部の基準は、会社のやり方に合わせて決めます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-grid"/></svg>
+            <h3>締めの項目は会社ごとに</h3>
+            <ul><li>6つは見本です。項目の数・期日・担当の役職は、いまの締めの手順に合わせて決めます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>
+            <h3>催促は文面をつくるところまで</h3>
+            <ul><li>送るのは本部の方です。いつもの連絡の方法に貼って使えます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-scale"/></svg>
+            <h3>数字の基準は本部で変えられる</h3>
+            <ul><li>原価率・人件費率・FL比率・前年比の基準を画面で変えられます。「仮」の数字も分かります</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>本番にするときは</h3>
+          <ul><li>本番にするときは：各店の入力を共通の保存先とログインにして、店ごとに自分の店だけを入力できる形にします。売上の取込や会計とのつなぎは、別にお見積もりします。</li></ul>
+          <p class="work-check__note">飲食に限らず、小売・美容など、店ごとに月の締めがある会社なら同じ形で使えます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">ヨモスガラ食堂</span>は<span class="nw">架空</span>のお店で、店名・数字・役職もすべて<span class="nw">架空</span>です。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+
+  <div id="print-root" class="print-root"></div>
+</body>
+</html>
