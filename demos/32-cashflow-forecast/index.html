@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>カフェ ユメツム（デモ）資金繰りの見通し｜TENKA LAB</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。カフェの入金と支払いの予定から、6週間先までの残高を日ごとに出し、いちばん低い日と安全ラインを下回る日を見る見本です。お店・取引先・金額・予定はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#6B4A34">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="カフェ ユメツム（デモ）資金繰りの見通し｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。カフェの入金と支払いの予定から、6週間先までの残高を日ごとに出し、いちばん低い日と安全ラインを下回る日を見る見本です。お店・取引先・金額・予定はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9h12l-1.5 10h-9z' fill='%236B4A34'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="hatch-key" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M-1 7L7 -1M5 7L7 5M-1 1L1 -1" stroke="#A33A2A" stroke-width="1.5" fill="none"/></pattern>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/></g><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-in" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v7h16v-7"/><path d="M12 3v11M7.5 9.5L12 14l4.5-4.5"/></g></symbol>
+      <symbol id="i-out" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v7h16v-7"/><path d="M12 15V4M7.5 8.5L12 4l4.5 4.5"/></g></symbol>
+      <symbol id="i-swap" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 10h8l-2.5-2.5M16.5 14h-8l2.5 2.5"/></g></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 6.8v6.4"/></g><circle cx="12" cy="16.9" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/></symbol>
+      <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h13v12H3zM3 8h13M3 12h13M8 4v12"/><path d="M18 13v8M15 18l3 3 3-3"/></g></symbol>
+      <symbol id="i-stairs" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h4v-4h4v-4h4v10h6"/><path d="M3 20h18" stroke-dasharray="3 3"/></g></symbol>
+      <symbol id="i-talk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H10l-4 4v-4H4z"/><path d="M8 9h8M8 12h5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・取引先・金額・予定はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <a class="hd__logo" href="#top">
+        <svg class="hd__mark" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M4 10h12l-1.6 9.5h-8.8z" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M15.6 12h1.9a2.3 2.3 0 0 1 0 4.6h-2.6" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 7c-.8-1 .8-2 0-3M12 7c-.8-1 .8-2 0-3" fill="none" stroke="#6B4A34" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="hd__name nw">カフェ ユメツム</span>
+        <span class="hd__demo">デモ</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- 1. ファーストビュー -->
+    <section class="hero" id="top" aria-labelledby="h-top">
+      <div class="wrap hero__in">
+        <svg class="hero__art" viewBox="0 0 360 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-linejoin="round">
+            <rect x="0" y="0" width="360" height="120" rx="16" fill="#EDE3D6"/>
+            <!-- 6週間の予定表の紙（7列×6段） -->
+            <rect x="24" y="18" width="132" height="84" rx="4" fill="#FFFFFF" stroke="#CFC5BA" stroke-width="1.5"/>
+            <g stroke="#D9C7B4" stroke-width="1.5" fill="none">
+              <path d="M24 32h132M24 46h132M24 60h132M24 74h132M24 88h132"/>
+              <path d="M42.9 18v84M61.7 18v84M80.6 18v84M99.4 18v84M118.3 18v84M137.1 18v84"/>
+            </g>
+            <circle cx="109" cy="81" r="6" fill="none" stroke="#A33A2A" stroke-width="2"/>
+            <!-- 階段の線と安全ラインの破線 -->
+            <path d="M176 92H320" fill="none" stroke="#A33A2A" stroke-width="2" stroke-dasharray="6 4"/>
+            <path d="M176 70H194V60H212V50H230V36H250V64H268V84H288V74H306V68H320" fill="none" stroke="#6B4A34" stroke-width="3"/>
+            <circle cx="278" cy="84" r="4.5" fill="#FFFFFF" stroke="#6B4A34" stroke-width="2.5"/>
+            <!-- 鉛筆 -->
+            <g transform="rotate(-40 324 100)">
+              <rect x="306" y="95" width="38" height="10" rx="2" fill="#E2B23C" stroke="#3B2F28" stroke-width="1.5"/>
+              <path d="M306 95l-9 5 9 5z" fill="#FFFFFF" stroke="#3B2F28" stroke-width="1.5"/>
+              <path d="M300 98.3l-3 1.7 3 1.7z" fill="#3B2F28"/>
+            </g>
+          </g>
+        </svg>
+        <div class="hero__text">
+          <p class="hero__tag nw">デモ（架空のお店）</p>
+          <p class="hero__kind">カフェの事務｜資金繰りの見通し</p>
+          <h1 class="h1 nw" id="h-top">カフェ ユメツム</h1>
+          <p class="hero__lead">入金と支払いの予定を日付の順に積み上げて、6週間先までの口座の残高を日ごとに出します。いちばん低い日と、安全ラインを下回る日がひと目で分かります。「もしも」を選ぶと、入金が遅れた時などの見通しに切り替わります。</p>
+          <p class="hero__link"><a class="inline-link" href="#whatif" id="to-whatif">もしもを試す</a></p>
+          <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>お店・取引先・金額・予定はすべて<span class="nw">架空</span>です。</span></p>
+          <p class="hero__today">デモの今日：<span class="nw">2026年12月1日（火）</span>（端末の時計は使っていません）</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. まとめのタイル -->
+    <section id="summary" class="sec summary" aria-labelledby="h-summary">
+      <div class="wrap">
+        <p class="sec__en">SUMMARY</p>
+        <h2 id="h-summary" class="sec__title">6週間のまとめ</h2>
+        <p class="sec__lead"><span class="nw">12月1日（火）</span>から<span class="nw">1月11日（月）</span>までの<span class="nw">42日</span>です。</p>
+        <ul class="tiles" id="tiles"></ul>
+      </div>
+    </section>
+
+    <div class="board">
+      <!-- 3. 残高の推移 -->
+      <section id="chart" class="sec chart" aria-labelledby="h-chart">
+        <div class="wrap">
+          <p class="sec__en">CHART</p>
+          <h2 id="h-chart" class="sec__title">残高の推移</h2>
+          <p class="sec__lead">日の終わりの残高です。同じ日の入金と支払いは、足し引きした後の残高だけを見ています。</p>
+          <div class="chart__fig" id="chart-fig"></div>
+          <ul class="chart__legend" id="legend"></ul>
+          <details class="days">
+            <summary class="days__summary"><span class="days__title">日ごとの残高を表で見る<span class="nw">（<span id="days-n">18行</span>）</span></span><svg class="days__chev" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+            <div class="days__body">
+              <table class="tbl tbl--days">
+                <caption class="visually-hidden">日ごとの残高。予定の無い日は、前の日と同じ残高です。</caption>
+                <thead><tr><th scope="col" class="c-range">期間</th><th scope="col" class="c-bal">残高</th><th scope="col" class="c-st">状態</th></tr></thead>
+                <tbody id="tb-days"></tbody>
+              </table>
+            </div>
+          </details>
+          <p class="chart__note">土日・年末年始も予定の日のまま数えています。実際は銀行の休みで前後します。</p>
+        </div>
+      </section>
+
+      <!-- 4. もしも（主役） -->
+      <section id="whatif" class="sec wi sec--band" aria-labelledby="h-whatif">
+        <div class="wrap">
+          <div class="wi__box">
+            <p class="sec__en">WHAT IF</p>
+            <h2 id="h-whatif" class="sec__title" tabindex="-1">もしも</h2>
+            <p class="sec__lead">選ぶと、すぐに見通しが変わります。いくつでも重ねられます。</p>
+            <ul class="wi__list">
+              <li><button type="button" class="wi__btn" id="wi-late" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">取引先A</span> <span class="nw">雑貨店（架空）</span>の入金が<span class="nw">1週間</span>遅れたら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月28日（月）</span>の <span class="nw">80,000円</span>が、<span class="nw">1月4日（月）</span>に</span></button></li>
+              <li><button type="button" class="wi__btn" id="wi-sales" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title">12月の店の売上の入金が1割少なかったら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc">12月中のカード・QR 決済・現金の入金<span class="nw">10件</span>が1割少なく（合わせて <span class="nw">−91,000円</span>）</span></button></li>
+              <li><button type="button" class="wi__btn" id="wi-equip" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">設備の買い替え</span><span class="nw">（架空 150,000円）</span>を<span class="nw">12月14日</span>に払ったら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月14日（月）</span>に <span class="nw">150,000円</span>の支払いを足す</span></button></li>
+              <li><button type="button" class="wi__btn" id="wi-delay" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">仕入れ先A</span> <span class="nw">製菓材料店（架空）</span>への支払いを<span class="nw">1週間</span>後ろにできたら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月31日（木）</span>の <span class="nw">300,000円</span>が、<span class="nw">1月7日（木）</span>に（相談できた場合の仮の形）</span></button></li>
+            </ul>
+            <div class="wi__now">
+              <h3>今の見通し</h3>
+              <dl class="wi__dl">
+                <div><dt>いちばん低い日</dt><dd id="now-low" class="wi__num"></dd></div>
+                <div><dt>安全ラインを下回る日</dt><dd id="now-below" class="wi__num"></dd></div>
+                <div><dt>6週間の終わり</dt><dd id="now-final" class="wi__num"></dd></div>
+              </dl>
+              <p class="wi__none" id="now-none">安全ラインを下回る日はありません。</p>
+            </div>
+            <div class="wi__changes">
+              <h3>動いた予定</h3>
+              <ul id="changes"></ul>
+            </div>
+            <div class="hint" id="hint" hidden>
+              <h3 class="hint__title" id="hint-title"></h3>
+              <p class="hint__lead">この日より前に、動かせるかもしれない予定です（架空の例）。</p>
+              <ul class="hint__list" id="hint-list"></ul>
+              <p class="hint__note">どの予定を動かすかは、お店と相手先で決めることです。資金の手当てや税のことは、お店と専門家の方で判断するものです。</p>
+            </div>
+            <p class="wi__reset"><button type="button" class="btn-sub" id="reset"><span class="nw">最初に戻す</span></button></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 5. 予定の一覧 -->
+    <section id="items" class="sec items" aria-labelledby="h-items">
+      <div class="wrap">
+        <p class="sec__en">SCHEDULE</p>
+        <h2 id="h-items" class="sec__title">予定の一覧</h2>
+        <p class="sec__lead"><span class="nw">12月1日（火）</span>から<span class="nw">1月11日（月）</span>までの、入金と支払いの予定です（日付の順）。</p>
+        <div class="items__head">
+          <p class="items__count" id="items-count"></p>
+          <p class="items__total" id="items-total"></p>
+        </div>
+        <table class="tbl tbl--items">
+          <caption class="visually-hidden">予定の一覧。12月1日（火）から1月11日（月）までの、入金と支払いの予定です（日付の順）。</caption>
+          <thead><tr><th scope="col" class="c-day">日付</th><th scope="col" class="c-name">内容</th><th scope="col" class="c-io">入金・支払い</th><th scope="col" class="c-amt">金額</th></tr></thead>
+          <tbody id="tb-items"></tbody>
+        </table>
+        <p class="items__note">予定と金額はこのページの中だけで計算し、保存も送信もしません。再読み込みで最初の見通しに戻ります。</p>
+      </div>
+    </section>
+
+    <!-- 6. 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+        <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+        <p class="lab-lead">入金と支払いの予定を表に入れるだけで、先の残高と注意の日が出る形にします。月末になってから慌てないための見本です。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <h3>予定を入れると残高が出る</h3>
+            <ul><li>Googleスプレッドシート（GAS）か Excel で、予定の行を足すと日ごとの残高と、安全ラインを下回る日が出る表にできます</li><li>毎月決まった支払いは、繰り返しの予定として入れられます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-stairs"/></svg>
+            <h3>入金の確認とつなげる</h3>
+            <ul><li>入金の確認の表（請求と通帳の突き合わせ）と同じブックにして、入った入金を予定から実績に替える形にできます</li><li>遅れている入金は、見通しにも遅れとして出せます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-talk"/></svg>
+            <h3>もしもを足す</h3>
+            <ul><li>お店でよくある「ずれ」を、もしもの切り替えとして足せます</li><li>お店の数字に合わせて、安全ラインの高さも決められます</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お店で決めていただくこと</h3>
+          <ul><li>安全ラインをいくらにするか</li><li>どの支払いの日を相談できるか</li><li>資金の手当てや税のことは、お店と専門家の方で判断するものです</li></ul>
+          <p class="work-check__note">銀行や会計ソフトとのつなぎは、使える条件と費用を確かめてから決めます<span class="nw">（内容によりお見積もり）</span>。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">カフェ ユメツム</span>と取引先・仕入れ先は<span class="nw">架空</span>で、金額・予定もすべて<span class="nw">架空</span>です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
