@@ -382,7 +382,7 @@ var Calc38 = (function () {
       if (x.state === 'future') return
       var r = { date: fmtMD(x.date), today: x.today, cells: [] }
       if (x.state === 'sales') r.cells = [fmtNum(x.sales), x.customers === null ? '—' : fmtNum(x.customers), x.diffGoal === null ? '—' : fmtSignedYen(x.diffGoal)]
-      else if (x.state === 'error') r.cells = ['確かめてください', '—', '—']
+      else if (x.state === 'error') r.cells = ['要確認', '—', '—']
       else r.cells = ['休み', '—', '—']
       if (h.dailyGoal === null) r.cells.pop()
       r.state = x.state

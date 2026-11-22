@@ -150,7 +150,7 @@
 .app__ctable thead th { white-space: nowrap; }
 .app__table th[scope="row"], .app__ctable th[scope="row"] { text-align: left; font-weight: 400; white-space: nowrap; }
 .app__table thead th:first-child { text-align: left; }
-.app__table td { white-space: nowrap; }
+.app__table td, .app__table thead th { white-space: nowrap; }
 .app__table .is-closed td, .app__table .is-error td { color: var(--c-sub); }
 .app__table .is-error td:nth-child(2) { color: var(--c-warn); font-size: 14px; font-weight: 700; white-space: normal; text-align: left; }
 .app__today { display: block; color: var(--c-sub); font-size: 14px; line-height: 1.3; }
