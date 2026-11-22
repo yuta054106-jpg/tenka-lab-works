@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>作業ボードと進み具合のお知らせ（デモ）｜ミチカゼ自動車整備</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段がすぐ出る見本です。お店・車・作業はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#17324D">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="作業ボードと進み具合のお知らせ（デモ）｜ミチカゼ自動車整備">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段がすぐ出る見本です。お店・車・作業はすべて架空です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%2317324D'/%3E%3Cpath d='M6 18L18 6' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M14 20l4-7 4 7z' fill='%23FFD100'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- アイコン（すべて自作のインライン SVG。<use> で使い回す） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-logo" viewBox="0 0 24 24"><path d="M15 2.5a5 5 0 0 0-4.7 6.7L3.4 16.1a2.1 2.1 0 0 0 3 3l6.9-6.9A5 5 0 0 0 20 7.5l-3.1 3.1-2.9-.6-.6-2.9 3.1-3.1A5 5 0 0 0 15 2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.5 22.5l3.75-6.5 3.75 6.5z" fill="#FFD100" stroke="#1A2129" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+      <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3L22 20.5H2z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M12 9.5v5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="currentColor"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5h4"/></g></symbol>
+      <symbol id="i-next" viewBox="0 0 16 16"><path d="M2.5 8h10M8.5 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-back" viewBox="0 0 16 16"><path d="M13.5 8h-10M7.5 4l-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/></g><circle cx="12" cy="7.4" r="1.3" fill="currentColor"/></symbol>
+      <symbol id="i-board" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="2.5" y="3.5" width="19" height="17" rx="1.5"/><path d="M8.8 3.5v17M15.2 3.5v17"/><path d="M4.5 7h2.3M4.5 10h2.3M10.8 7h2.4M17.2 7h2.3M17.2 10h2.3M17.2 13h2.3" stroke-linecap="round"/></g></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2"/><path d="M10.5 18.5h3"/><path d="M9 8.5h6M9 12h4"/></g></symbol>
+      <symbol id="i-table" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M3 14.8h18M9 4v16M15 4v16"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空のお店）</span>です。お店・車・作業はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap wrap--board hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>
+        <span class="hd__name nw">ミチカゼ自動車整備</span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap wrap--board">
+        <h1 class="h1" id="h-top"><span class="ib">預かった車の進み具合を、</span><span class="ib">ボード1枚で。</span></h1>
+        <p class="intro__lead">お店の人はカードを右の列へ進めるだけ。お客様向けの表示にも、同じ進み具合がすぐ出ます。</p>
+        <p class="intro__note">お店・車・作業はすべて架空です。何も送信せず、保存もしません。</p>
+        <p class="intro__now"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span class="nw">デモの今：</span><span class="nw">2026年11月24日（火）15:00</span><span class="nw">（時計は止めています）</span></span></p>
+      </div>
+    </section>
+
+    <!-- タブ -->
+    <div class="tabs">
+      <div class="wrap wrap--board">
+        <div class="tabs__list" role="tablist" aria-label="見え方の切り替え">
+          <button type="button" class="tab" role="tab" id="tab-board" aria-selected="true" aria-controls="panel-board">お店の作業ボード</button>
+          <button type="button" class="tab" role="tab" id="tab-cust" aria-selected="false" aria-controls="panel-cust" tabindex="-1">お客様向けの表示</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- パネル1：お店の作業ボード -->
+    <section class="panel" id="panel-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0">
+      <div class="wrap wrap--board">
+        <h2 class="panel__title">お店の作業ボード</h2>
+        <p class="panel__lead">カードの［次へ］で右の列へ、［戻す］で左の列へ移します。お渡しの予定まで1時間を切った車には「急ぎ」の印が付きます。</p>
+
+        <div class="summary">
+          <h3 class="visually-hidden">列ごとの台数</h3>
+          <ul class="counts" id="counts"></ul>
+          <div class="summary__row">
+            <p class="today" id="today"></p>
+            <p class="urgent-sum" id="urgent-sum"></p>
+            <button type="button" class="btn-sub reset" id="reset">最初に戻す</button>
+          </div>
+        </div>
+
+        <div class="board" id="board"></div>
+      </div>
+    </section>
+
+    <!-- パネル2：お客様向けの表示 -->
+    <section class="panel" id="panel-cust" role="tabpanel" aria-labelledby="tab-cust" tabindex="0" hidden>
+      <div class="wrap wrap--board">
+        <h2 class="panel__title">お客様向けの表示</h2>
+        <p class="panel__lead">お客様が受付番号で、お車の進み具合を見る画面の見本です（実際のお仕事では、受付の時にお渡しする <span class="nw">QR コード</span>から開きます）。</p>
+        <div class="pick">
+          <label class="pick__label" for="cust-no">受付番号を選んでください</label>
+          <span class="select">
+            <select id="cust-no"></select>
+            <svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
+          </span>
+        </div>
+        <div class="cust" id="cust-out"></div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では（TENKA LAB の層） -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap wrap--board">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店に合わせて作ります</h2>
+        <p class="lab-lead">ホワイトボードと電話で回している進み具合を、お店とお客様が同じ画面で見られるようにする見本です。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-board"/></svg>
+            <h3>ボードを動かす</h3>
+            <ul><li>お店の人はスマホ・タブレットでボードを動かします</li><li>列の数と名前はお店の作業に合わせて決めます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
+            <h3>お客様の見方</h3>
+            <ul><li>受付の時にお渡しする <span class="nw">QR コード</span>から、進み具合を見ていただく形にできます</li><li>お名前は出さず、受付番号だけで表示します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <h3>データの置き場</h3>
+            <ul><li>Googleスプレッドシート（GAS）などに保存します</li><li>いまお使いの表があれば、そこから始められます</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>お渡しの連絡について</h3>
+          <ul><li><span class="nw">LINE・SMS</span> でのお渡しの連絡は、使える条件と費用を確かめてからご提案します<span class="nw">（内容により</span><wbr><span class="nw">お見積もり）</span></li></ul>
+          <p class="work-check__note">自転車・家電・時計の修理、クリーニングのお店でも同じ形で作れます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">ミチカゼ自動車整備</span>は<span class="nw">架空</span>のお店で、車・作業・時刻もすべて<span class="nw">架空</span>です。</p>
+    <p><a class="btn" href="../../">作品例を見る</a></p>
+    <p class="copy">© TENKA LAB</p>
+  </footer>
+</body>
+</html>
