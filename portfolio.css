@@ -594,3 +594,130 @@ a { color: var(--c-main); }
   .brand { font-size: 18px; letter-spacing: .08em; }
   .site-nav a { padding: 0 6px; }
 }
+
+/* ---------- 作品例の絞り込み（portfolio-filter-design.md／ヨウタンワ 2026-11-22） ---------- */
+/* JS が無いときは .filter が hidden のまま＝今と同じ全件表示 */
+:root { --c-control-line: #7A808C; }   /* 押せる部品の輪郭（背景比 3.7:1） */
+.filter[hidden], .filter__reset[hidden], .filter__bottom[hidden],
+.works .card[hidden], .works .group[hidden], .filter__empty[hidden] { display: none; }
+.filter { margin-top: var(--sp-3); }
+.filter__label {
+  color: var(--c-text);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  max-width: 100%;
+  margin-top: var(--sp-1);
+}
+.filter__chip {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 0 16px 0 12px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-control-line);
+  border-radius: 999px;
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.filter__mark {
+  position: relative;
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--c-control-line);
+  border-radius: 50%;
+}
+.filter__count {
+  margin-left: 6px;
+  color: var(--c-sub);
+  font-size: 13px;
+  font-weight: 400;
+}
+@media (hover: hover) {
+  .filter__chip:hover { background: var(--c-tag); border-color: var(--c-main); }
+}
+/* 選択中：色の反転＋丸印がチェックに変わる＋aria-pressed（色だけに頼らない） */
+.filter__chip[aria-pressed="true"],
+.filter__chip[aria-pressed="true"]:hover {
+  background: var(--c-main);
+  border-color: var(--c-main);
+  color: #FFFFFF;
+}
+.filter__chip[aria-pressed="true"] .filter__count { color: var(--c-on-dark-sub); }
+.filter__chip[aria-pressed="true"] .filter__mark { border-color: #FFFFFF; }
+.filter__chip[aria-pressed="true"] .filter__mark::after {
+  content: "";
+  position: absolute;
+  left: 4.5px;
+  top: 1.5px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--c-main);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.filter__status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--sp-1);
+  margin-top: var(--sp-2);
+}
+.filter__status {
+  color: var(--c-sub);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.filter__reset {
+  min-height: 44px;
+  margin: 0;
+  padding: 0 var(--sp-1);
+  background: none;
+  border: 0;
+  color: var(--c-main);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.filter__bottom { margin-top: var(--sp-4); text-align: center; }
+.filter__reset-bottom { font-family: inherit; cursor: pointer; }
+.filter__empty {
+  padding: var(--sp-3);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+}
+.filter__empty .btn { margin-top: var(--sp-2); font-family: inherit; cursor: pointer; }
+/* 1つ目のグループが消えたとき、2つ目の上の余白を見出し直下の値にそろえる */
+.works__head + .group[hidden] + .group { margin-top: var(--sp-6); }
+.card.is-in { animation: filter-in .2s ease; }
+@keyframes filter-in { from { opacity: 0; } to { opacity: 1; } }
+@media (min-width: 768px) {
+  .filter__reset-bottom, .filter__empty .btn { width: auto; min-width: 320px; }
+}
+@media (min-width: 1024px) {
+  .works__head + .group[hidden] + .group { margin-top: var(--sp-8); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .filter__chip { transition: none; }
+  .card.is-in { animation: none; }
+}

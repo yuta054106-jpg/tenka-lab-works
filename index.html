@@ -113,6 +113,16 @@
         <p class="label">SAMPLES</p>
         <h2 id="works-title" class="works__title">作品例・デモ（架空のお店）</h2>
         <p class="group__lead">店名・人名・数字はすべて架空です。実在のお店・お客様の実績ではありません。</p>
+
+        <!-- やりたいことで絞り込む（JS が hidden を外し、チップを作る。JS が無ければ出ない） -->
+        <div class="filter" id="works-filter" hidden>
+          <p class="filter__label" id="works-filter-label">やりたいことで絞り込む</p>
+          <div class="filter__chips" role="group" aria-labelledby="works-filter-label"></div>
+          <p class="filter__status-row">
+            <span class="filter__status" role="status" aria-live="polite" aria-atomic="true">すべての作品例 44件を表示しています</span>
+            <button type="button" class="filter__reset" hidden>すべて見る</button>
+          </p>
+        </div>
       </div>
 
       <!-- グループ1：集客のページ -->
@@ -123,7 +133,7 @@
 
           <div class="cards cards--2">
             <!-- 01 北燈 -->
-            <article class="card" aria-labelledby="w1-title">
+            <article class="card" aria-labelledby="w1-title" data-cat="page reserve">
               <div class="thumb thumb--restaurant">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/01-restaurant-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -159,7 +169,7 @@
             </article>
 
             <!-- 02 ユキアカリ -->
-            <article class="card" aria-labelledby="w2-title">
+            <article class="card" aria-labelledby="w2-title" data-cat="page">
               <div class="thumb thumb--salon">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/02-salon-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -205,7 +215,7 @@
 
           <div class="cards cards--2">
             <!-- 03 ソラユイ -->
-            <article class="card" aria-labelledby="w3-title">
+            <article class="card" aria-labelledby="w3-title" data-cat="reserve customer">
               <div class="thumb thumb--chat">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/03-chat-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -242,7 +252,7 @@
             </article>
 
             <!-- 04 ソラマメ -->
-            <article class="card" aria-labelledby="w4-title">
+            <article class="card" aria-labelledby="w4-title" data-cat="reserve">
               <div class="thumb thumb--demo">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/04-reservation-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -279,7 +289,7 @@
             </article>
 
             <!-- 05 ユメツム 売上ダッシュボード -->
-            <article class="card" aria-labelledby="w5-title">
+            <article class="card" aria-labelledby="w5-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/05-dashboard-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -316,7 +326,7 @@
             </article>
 
             <!-- 06 ユメツム 売上管理シート -->
-            <article class="card" aria-labelledby="w6-title">
+            <article class="card" aria-labelledby="w6-title" data-cat="money">
               <div class="thumb thumb--sheet">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="sheet" aria-hidden="true">
@@ -361,7 +371,7 @@
             </article>
 
 <!-- 07 ユメツム 請求書の自動作成 -->
-            <article class="card" aria-labelledby="w7-title">
+            <article class="card" aria-labelledby="w7-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/07-invoice-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -398,7 +408,7 @@
             </article>
 
 <!-- 08 ユメツム 勤怠・出勤簿の自動集計 -->
-            <article class="card" aria-labelledby="w8-title">
+            <article class="card" aria-labelledby="w8-title" data-cat="staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/08-attendance-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -435,7 +445,7 @@
             </article>
 
 <!-- 09 ユキマド お店のページ更新 -->
-            <article class="card" aria-labelledby="w9-title">
+            <article class="card" aria-labelledby="w9-title" data-cat="page staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/09-shop-update-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -471,7 +481,7 @@
               </div>
             </article>
 <!-- 10 コハクノ食品 CSVから伝票を一括作成 -->
-            <article class="card" aria-labelledby="w10-title">
+            <article class="card" aria-labelledby="w10-title" data-cat="staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/10-csv-slip-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -507,7 +517,7 @@
               </div>
             </article>
 <!-- 11 ハルツグ 在庫・発注の管理 -->
-            <article class="card" aria-labelledby="w11-title">
+            <article class="card" aria-labelledby="w11-title" data-cat="stock">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/11-stock-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -543,7 +553,7 @@
               </div>
             </article>
 <!-- 12 ツグミヤ シフト表づくり -->
-            <article class="card" aria-labelledby="w12-title">
+            <article class="card" aria-labelledby="w12-title" data-cat="staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/12-shift-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -578,7 +588,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w13-title">
+            <article class="card" aria-labelledby="w13-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/13-expense-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -613,7 +623,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w14-title">
+            <article class="card" aria-labelledby="w14-title" data-cat="reserve stock">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/14-preorder-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -648,7 +658,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w15-title">
+            <article class="card" aria-labelledby="w15-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の会社</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/15-reform-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -683,7 +693,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w16-title">
+            <article class="card" aria-labelledby="w16-title" data-cat="customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/16-stampcard-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -718,7 +728,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w17-title">
+            <article class="card" aria-labelledby="w17-title" data-cat="reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/17-table-order-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -753,7 +763,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w18-title">
+            <article class="card" aria-labelledby="w18-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/18-shindan-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -788,7 +798,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w19-title">
+            <article class="card" aria-labelledby="w19-title" data-cat="money customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の教室</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/19-lesson-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -823,7 +833,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w20-title">
+            <article class="card" aria-labelledby="w20-title" data-cat="reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の理容室</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/20-queue-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -858,7 +868,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w21-title">
+            <article class="card" aria-labelledby="w21-title" data-cat="stock">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の洋食店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/21-recipe-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -893,7 +903,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w22-title">
+            <article class="card" aria-labelledby="w22-title" data-cat="customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の美容室</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/22-salon-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -928,7 +938,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w23-title">
+            <article class="card" aria-labelledby="w23-title" data-cat="customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の喫茶店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/23-survey-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -963,7 +973,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w24-title">
+            <article class="card" aria-labelledby="w24-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のおむすび店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/24-close-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -998,7 +1008,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w25-title">
+            <article class="card" aria-labelledby="w25-title" data-cat="staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のそば店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/25-hygiene-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1033,7 +1043,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w26-title">
+            <article class="card" aria-labelledby="w26-title" data-cat="page staff">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のラーメン店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/26-recruit-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1068,7 +1078,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w27-title">
+            <article class="card" aria-labelledby="w27-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のスープカレー店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/27-menu-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1103,7 +1113,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w28-title">
+            <article class="card" aria-labelledby="w28-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の不動産屋</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/28-rent-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1138,7 +1148,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w29-title">
+            <article class="card" aria-labelledby="w29-title" data-cat="page reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の宿</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/29-inn-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1173,7 +1183,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w30-title">
+            <article class="card" aria-labelledby="w30-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/30-coffee-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1208,7 +1218,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w31-title">
+            <article class="card" aria-labelledby="w31-title" data-cat="page reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/31-form-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1243,7 +1253,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w32-title">
+            <article class="card" aria-labelledby="w32-title" data-cat="page reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/32-bento-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1278,7 +1288,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w33-title">
+            <article class="card" aria-labelledby="w33-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/33-payment-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1313,7 +1323,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w34-title">
+            <article class="card" aria-labelledby="w34-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/34-cashflow-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1348,7 +1358,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w35-title">
+            <article class="card" aria-labelledby="w35-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の事業者</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/35-care-travel-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1383,7 +1393,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w36-title">
+            <article class="card" aria-labelledby="w36-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/36-soup-gift-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1418,7 +1428,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w37-title">
+            <article class="card" aria-labelledby="w37-title" data-cat="page">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空の事務所</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/37-tax-office-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1453,7 +1463,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w38-title">
+            <article class="card" aria-labelledby="w38-title" data-cat="staff customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/38-garage-board-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1488,7 +1498,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w39-title">
+            <article class="card" aria-labelledby="w39-title" data-cat="reserve">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/39-workshop-entry-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1523,7 +1533,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w40-title">
+            <article class="card" aria-labelledby="w40-title" data-cat="money">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/40-phone-sales-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1558,7 +1568,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w41-title">
+            <article class="card" aria-labelledby="w41-title" data-cat="money stock">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/41-multi-store-close-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1593,7 +1603,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w42-title">
+            <article class="card" aria-labelledby="w42-title" data-cat="ai customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/42-ai-reception-qa-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1628,7 +1638,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w43-title">
+            <article class="card" aria-labelledby="w43-title" data-cat="ai">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/43-ai-shindan-report-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1663,7 +1673,7 @@
                 </div>
               </div>
             </article>
-            <article class="card" aria-labelledby="w44-title">
+            <article class="card" aria-labelledby="w44-title" data-cat="ai customer">
               <div class="thumb thumb--dash">
                 <span class="thumb__chip">架空のお店</span>
                 <div class="frame-pc thumb__pc"><img src="assets/thumbs/44-reply-draft-kit-pc.jpg" alt="" width="1200" height="750" loading="lazy" decoding="async"></div>
@@ -1699,6 +1709,7 @@
               </div>
             </article>
           </div>
+          <p class="filter__bottom" hidden><button type="button" class="btn btn--sub filter__reset-bottom">すべての作品例を見る（44件）</button></p>
         </div>
       </div>
     </section>
@@ -1719,5 +1730,6 @@
       <p><small>&copy; TENKA LAB</small></p>
     </div>
   </footer>
+  <script src="portfolio-filter.js" defer></script>
 </body>
 </html>
