@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 活用の診断の納品物の見本（デモ）｜焼き菓子とケーキ ミツカド舎</title>
+  <meta name="description" content="小さなお菓子屋さんの15の作業を月の時間と額で並べた棚卸表・提案書・AI の使い方ルール・1か月後のふりかえり表を見られる、TENKA LAB の見本（架空のお店）です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#4B2142">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI 活用の診断の納品物の見本（デモ）｜焼き菓子とケーキ ミツカド舎">
+  <meta property="og:description" content="小さなお菓子屋さんの15の作業を月の時間と額で並べた棚卸表・提案書・AI の使い方ルール・1か月後のふりかえり表を見られる、TENKA LAB の見本（架空のお店）です。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%234B2142'/%3E%3Cpath d='M7 5h11v14H7zM10 10h5M10 13h5M10 16h3' fill='none' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/calc.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- ページのアイコン（自作の SVG） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-report" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="10" cy="6" r=".8"/><circle cx="14" cy="6" r=".8"/><path d="M8 11h8M8 14h8M8 17h5"/></g></symbol>
+      <symbol id="w-ai" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21l-5-8 5-10 5 10z"/><path d="M12 13v8"/><circle cx="12" cy="11" r="1.4"/></g></symbol>
+      <symbol id="w-sheet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></g></symbol>
+      <symbol id="w-change" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M4 8h14M14 4l4 4-4 4"/><path d="M20 16H6M10 12l-4 4 4 4"/></g></symbol>
+      <symbol id="w-keep" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M7.5 12h9"/></g></symbol>
+      <symbol id="i-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-dl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 16v4h16v-4"/></g></symbol>
+      <symbol id="i-print" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 11h6M9 15h6M9 19h3"/></g></symbol>
+      <symbol id="i-hear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 14.5h7M9 18h4"/></g></symbol>
+      <symbol id="i-bars" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 6h16M4 12h11M4 18h6"/></g></symbol>
+      <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/><circle cx="12" cy="15.5" r="2.5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の見本</strong><span class="nw">（架空のお店）</span>です。お店・作業・時間・金額はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <p class="hd__logo">
+        <svg class="hd__mark" width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-report"/></svg>
+        <span class="hd__names"><span class="hd__name nw">ミツカド舎</span><span class="hd__sub nw">AI 活用の診断（見本）</span></span>
+      </p>
+      <p class="hd__demo nw">デモ（架空のお店）</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
+
+    <!-- イントロ -->
+    <section class="intro" aria-labelledby="h-top">
+      <div class="wrap">
+        <h1 class="h1" id="h-top"><span class="nw">15の作業を、</span><span class="nw">月の時間とお金で</span><span class="nw">並べました。</span></h1>
+        <p class="notice">AI の診断を自動で行う画面ではありません。聞き取りのあとにお渡しする書類の見本です。</p>
+        <p class="intro__lead">AI 活用の診断では、お店の作業を1つずつ聞き取り、「月に何時間・何円ぶんか」を並べてから、AI を使うかどうかも含めて効く順に選びます。お渡しするのは、業務の棚卸表・提案書・AI の使い方ルール・1か月後のふりかえり表の4つです。架空のお菓子屋さん「<span class="nw">焼き菓子とケーキ ミツカド舎</span>」を例に、その4つを1ページにまとめました。</p>
+        <p class="intro__note">デモ（架空のお店）。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は架空のお店で、実在のお店とは関係ありません。</p>
+        <p class="intro__note">時間・金額はすべて架空の見込みです。減る時間と額は推測で、約束するものではありません。</p>
+        <p class="intro__note">このページは AI を動かしておらず、どこにも通信しません。</p>
+        <dl class="facts" aria-label="ミツカド舎の設定">
+          <div><dt class="visually-hidden">お店の種類</dt><dd>焼き菓子とケーキの店</dd></div>
+          <div><dt class="visually-hidden">店舗</dt><dd>2店舗（本店・駅前の小さな売り場）</dd></div>
+          <div><dt class="visually-hidden">スタッフ</dt><dd>スタッフ9人</dd></div>
+          <div><dt class="visually-hidden">お取り寄せ</dt><dd>お取り寄せあり</dd></div>
+          <div><dt>いまの道具：</dt><dd>表計算ソフト・レジ・お店の公式アカウント・お店の AI サービス（無料版を店主が少し）</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 表紙の帯 -->
+    <section class="cover-sec" aria-label="診断の要約">
+      <div class="wrap">
+        <div class="cover">
+          <div class="cover__grid">
+            <div class="stat"><p class="stat__lab">診断日</p><p class="stat__num">11<span class="stat__u">月</span>13<span class="stat__u">日</span></p><p class="stat__sub">2026年（金）・聞き取り60分</p></div>
+            <div class="stat"><p class="stat__lab">棚卸した作業</p><p class="stat__num" id="cv-n"></p><p class="stat__sub">AI が向くのは 4つ</p></div>
+            <div class="stat"><p class="stat__lab">月の合計</p><p class="stat__num" id="cv-h"></p><p class="stat__sub" id="cv-h-sub"></p></div>
+            <div class="stat"><p class="stat__lab">月の見込み額</p><p class="stat__num" id="cv-yen"></p><p class="stat__sub" id="cv-yen-sub"></p></div>
+            <div class="stat"><p class="stat__lab">提案3つで減る見込み</p><p class="stat__num is-main" id="cv-save"></p><p class="stat__sub" id="cv-save-sub"></p></div>
+          </div>
+          <p class="cover__reset"><button type="button" class="btn-sub" id="reset-all">最初に戻す</button></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 目次 -->
+    <nav class="toc-sec" id="toc" aria-label="このページの書類">
+      <div class="wrap">
+        <ol class="toc">
+          <li><a class="toc__a js-jump" href="#tasks" data-h="h-tasks"><span class="toc__no">1</span>棚卸表</a></li>
+          <li><a class="toc__a js-jump" href="#proposals" data-h="h-proposals"><span class="toc__no">2</span>提案書</a></li>
+          <li><a class="toc__a js-jump" href="#rules" data-h="h-rules"><span class="toc__no">3</span>使い方ルール</a></li>
+          <li><a class="toc__a js-jump" href="#review" data-h="h-review"><span class="toc__no">4</span>ふりかえり</a></li>
+        </ol>
+        <p class="toc__more"><a class="inline-link js-jump" href="#output" data-h="h-output">CSV と印刷へ</a></p>
+      </div>
+    </nav>
+
+    <!-- 1 業務の棚卸表 -->
+    <section class="sec" id="tasks" aria-labelledby="h-tasks">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="chapter__no" aria-hidden="true">1</p>
+            <h2 class="chapter__h" id="h-tasks" tabindex="-1">業務の棚卸表（15作業）</h2>
+            <p class="chapter__meta">聞き取り 2026-11-06（60分）・確認 2026-11-10（メッセージ）</p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">店主・店長・スタッフに聞き取った15の作業です。「月の時間」は 回数 × 1回の分、「月の額」は 月の時間 × 時給 で出しています。向いているやり方には、AI を使わない方がよいものもそのまま書いています。</p>
+            <p class="strong-line">AI が向くのは 15のうち 4つです。いちばん時間がかかっているのは、AI ではなく表で片づく作業（5つで月27.8時間）でした。</p>
+
+            <div class="wage">
+              <label class="wage__lab" for="wage">時給（架空の一律）</label>
+              <div class="wage__row">
+                <span class="wage__box"><input class="wage__in" id="wage" type="text" inputmode="numeric" autocomplete="off" value="1200" aria-describedby="wage-hint wage-err"><span class="wage__unit" aria-hidden="true">円</span></span>
+                <span class="chips" id="wage-quick" role="group" aria-label="時給の早押し"></span>
+              </div>
+              <p class="note note--tight" id="wage-hint">800〜3,000円の10円きざみ。お店の時給に変えると、額だけが計算し直されます。</p>
+              <p class="wage__err" id="wage-err" hidden></p>
+            </div>
+
+            <h3 class="h3 h3--gap">向いているやり方</h3>
+            <ul class="legend" id="legend"></ul>
+
+            <div class="chips-set">
+              <p class="chips-set__lab">並べ替え</p>
+              <div class="chips" id="sort" role="group" aria-label="並べ替え"></div>
+              <p class="note note--tight chips-set__note">時給が一律なので、時間の順と額の順は同じになります。</p>
+              <p class="chips-set__lab">やり方</p>
+              <div class="chips" id="filter" role="group" aria-label="やり方で絞り込む"></div>
+            </div>
+            <p class="order" id="order"></p>
+            <p class="count"><strong id="task-n"></strong><span class="count__of">（15作業のうち）</span></p>
+            <div class="only-table" id="task-table"></div>
+            <div class="only-cards" id="task-cards"></div>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 提案書 -->
+    <section class="sec" id="proposals" aria-labelledby="h-proposals">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="chapter__no" aria-hidden="true">2</p>
+            <h2 class="chapter__h" id="h-proposals" tabindex="-1">提案書（効く順に3つ）</h2>
+            <p class="chapter__meta" id="pr-meta"></p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">棚卸表から、減る見込みが大きく、お店の月額の費用が小さく、間違えても戻しやすいものを3つ選びました。1つ目を、診断に含まれる「自動化1本」として私たちが作ります。2つ目と3つ目は、お店で進めるか、別にご相談ください。</p>
+            <div class="sum-box">
+              <p class="sum-box__line">3つ合わせて減る見込み：<span class="sum-box__num" id="pr-sum"></span><span class="nw">（推測）</span></p>
+              <p class="note note--tight">見込みは聞き取りからの推測です。1か月後のふりかえり（4）で実際と比べます。</p>
+            </div>
+            <div class="proposals" id="pr-list"></div>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 AI の使い方ルール -->
+    <section class="sec" id="rules" aria-labelledby="h-rules">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="chapter__no" aria-hidden="true">3</p>
+            <h2 class="chapter__h" id="h-rules" tabindex="-1">AI の使い方ルールのひな形</h2>
+            <p class="chapter__meta">A4 1枚</p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">提案2で AI を使う前に、お店で決めておくことです。お店の事情に合わせて書き換えて、休憩室に貼れる1枚にします。決めた項目に「店で決めた」を付けられます（このページの中だけで、保存はしません）。</p>
+            <p class="decided"><span id="rule-n"></span><span class="decided__all" id="rule-all" hidden>すべて決まりました。貼り出す前に店主が読み直します。</span></p>
+            <div class="rule-sheet">
+              <div class="rule-sheet__top">
+                <h3 class="rule-sheet__h">ミツカド舎　AI の使い方ルール（ひな形）</h3>
+                <p class="rule-sheet__size">A4 1枚・ひな形</p>
+              </div>
+              <p class="rule-sheet__date">決めた日：____年__月__日　見直し：月1回（ふりかえりの日）</p>
+              <ol class="rules" id="rule-list"></ol>
+            </div>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 1か月後のふりかえり -->
+    <section class="sec" id="review" aria-labelledby="h-review">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <p class="chapter__no" aria-hidden="true">4</p>
+            <h2 class="chapter__h" id="h-review" tabindex="-1">1か月後のふりかえり（見本）</h2>
+            <p class="chapter__meta">2026-12-18（架空）</p>
+          </div>
+          <div class="chapter__body">
+            <p class="lead">提案1を使い始めて1か月後に、見込みと実際を比べる表の見本です。実際の数は架空です。見込みより少なかった所も、そのまま書きます。</p>
+            <div class="only-table" id="rv-table"></div>
+            <div class="only-cards" id="rv-cards"></div>
+            <h3 class="h3 h3--gap">提案1をどうするか</h3>
+            <ul class="judge">
+              <li class="judge__box">続ける</li>
+              <li class="judge__box is-on"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-chk"/></svg>直して続ける<span class="visually-hidden">（選んだもの）</span></li>
+              <li class="judge__box">やめる</li>
+            </ul>
+            <p class="judge__why">減った時間は見込みより44分少なめでした。焼き数の表で、曜日と天気の補正を手で直す回数が多かったためです。補正の列を足して続けます。発注の数の計算は見込みどおりなので、そのまま続けます。</p>
+            <h3 class="h3 h3--gap">次にすること</h3>
+            <ul class="dots">
+              <li>焼き数の表に「補正」の列を足す（店長と30分）</li>
+              <li>提案2を始めるかを決める（使い方ルールの8項目が決まってから）</li>
+              <li>次のふりかえり（お店で）：<span class="nw">2027-01-15</span></li>
+            </ul>
+            <p class="back"><a class="inline-link" href="#toc">目次へ戻る</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CSV・印刷 -->
+    <section class="sec" id="output" aria-labelledby="h-output">
+      <div class="wrap">
+        <div class="chapter">
+          <div class="chapter__head">
+            <h2 class="chapter__h" id="h-output" tabindex="-1">CSV と印刷</h2>
+          </div>
+          <div class="chapter__body">
+            <p class="note out-lead">CSV は表計算ソフトでそのまま開ける形（BOM 付き UTF-8）です。並べ替え・絞り込みに関係なく15作業を番号順で書き出し、額はいまの時給で計算します。印刷は A4 縦で、使い方ルールは1枚に収めます。</p>
+            <div class="btn-row">
+              <button type="button" class="btn-act" id="csv-tasks"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-dl"/></svg>棚卸表の CSV</button>
+              <button type="button" class="btn-act" id="csv-props"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-dl"/></svg>提案の CSV</button>
+              <button type="button" class="btn-act" id="print-btn"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 実際のお仕事では -->
+    <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+      <div class="wrap">
+        <p class="lab-tag">実際のお仕事では</p>
+        <h2 class="lab-title" id="h-work">お店の作業を聞き取って、効く順に選びます</h2>
+        <p class="lab-lead">AI を使うかどうかも含めて、月の時間とお金で決めます。</p>
+        <ul class="work-3">
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-hear"/></svg>
+            <h3>聞き取りと棚卸</h3>
+            <ul><li>店主・店長・スタッフの方に作業を聞き、回数と1回の分から月の時間と額を出します</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bars"/></svg>
+            <h3>効く順に3つの提案と1本目</h3>
+            <ul><li>減る見込み・お店の月額の費用・戻しやすさで選び、1本目は私たちが作ります。AI を使わない方がよい作業は、そう書きます</li></ul>
+          </li>
+          <li>
+            <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg>
+            <h3>ルールと1か月後のふりかえり</h3>
+            <ul><li>AI を使う前に使い方ルールを決め、1か月後に見込みと実際を比べて、続ける・直す・やめるを決めます</li></ul>
+          </li>
+        </ul>
+        <div class="work-check">
+          <h3>本番にするときは</h3>
+          <ul><li>本番にするときは：聞き取りはお店の実際の作業で行い、時給や回数はお店から伺った数で計算します。2つ目からの自動化は、別にお見積もりします。AI のサービスの月額・利用料は、お店の契約・お店のご負担です。</li></ul>
+          <p class="work-check__note">お菓子屋さんに限らず、飲食・美容室・教室など、スタッフ数人のお店なら同じ形で作れます。</p>
+        </div>
+        <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>このページは <span class="nw">TENKA LAB</span> が作った見本です。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は<span class="nw">架空</span>のお店で、作業・時間・金額もすべて<span class="nw">架空</span>です。AI は動かしていません。</p>
+      <p><a class="btn" href="../../">作品例を見る</a></p>
+      <p class="copy">© TENKA LAB</p>
+    </div>
+  </footer>
+
+  <div id="print-root" class="print-root"></div>
+</body>
+</html>
