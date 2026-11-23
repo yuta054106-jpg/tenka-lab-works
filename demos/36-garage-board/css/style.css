@@ -314,7 +314,8 @@ p, li { text-wrap: pretty; }
   .lane__list, .lane__list[hidden] { display: grid !important; }
   .lane__head { min-height: 40px; }
   .select { width: 320px; }
-  .steps { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  /* 段の数は車ごとに5か6（部品待ちを通った車だけ6）。同じ幅で横に並べる */
+  .steps { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; }
   .step { position: relative; align-items: flex-start; flex-direction: column; gap: 4px; padding: 8px 10px; }
   /* 済のレ点は右上に置き、段の名の高さを ほかの段とそろえる */
   .step--done { padding-right: 30px; }

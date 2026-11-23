@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>作業ボードと進み具合のお知らせ（デモ）｜ミチカゼ自動車整備</title>
-  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段がすぐ出る見本です。お店・車・作業はすべて架空です。">
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段が出る見本です（このページの中だけで動きます）。お店・車・作業はすべて架空です。">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#17324D">
   <meta property="og:type" content="website">
   <meta property="og:title" content="作業ボードと進み具合のお知らせ（デモ）｜ミチカゼ自動車整備">
-  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段がすぐ出る見本です。お店・車・作業はすべて架空です。">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。小さな整備工場を例に、預かった車をボードの列で進めると、お客様向けの進み具合の表示にも同じ段が出る見本です（このページの中だけで動きます）。お店・車・作業はすべて架空です。">
   <meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/assets/thumbs/38-garage-board-pc.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='4' fill='%2317324D'/%3E%3Cpath d='M6 18L18 6' stroke='%23FFFFFF' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M14 20l4-7 4 7z' fill='%23FFD100'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -56,7 +56,7 @@
     <section class="intro" aria-labelledby="h-top">
       <div class="wrap wrap--board">
         <h1 class="h1" id="h-top"><span class="ib">預かった車の進み具合を、</span><span class="ib">ボード1枚で。</span></h1>
-        <p class="intro__lead">お店の人はカードを右の列へ進めるだけ。お客様向けの表示にも、同じ進み具合がすぐ出ます。</p>
+        <p class="intro__lead">お店の人はカードを次の工程へ進めるだけ。お客様向けの表示にも、同じ進み具合が出ます。このページ内でタブを切り替えると、操作の結果を確かめられます。</p>
         <p class="intro__note">お店・車・作業はすべて架空です。何も送信せず、保存もしません。</p>
         <p class="intro__now"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span class="nw">デモの今：</span><span class="nw">2026年11月24日（火）15:00</span><span class="nw">（時計は止めています）</span></span></p>
       </div>
@@ -76,7 +76,7 @@
     <section class="panel" id="panel-board" role="tabpanel" aria-labelledby="tab-board" tabindex="0">
       <div class="wrap wrap--board">
         <h2 class="panel__title">お店の作業ボード</h2>
-        <p class="panel__lead">カードの［次へ］で右の列へ、［戻す］で左の列へ移します。お渡しの予定まで1時間を切った車には「急ぎ」の印が付きます。</p>
+        <p class="panel__lead">カードの［次へ］で次の工程へ、［戻す］で前の工程へ移します。お渡しの予定まで60分以内か、予定を過ぎた車（準備完了の車を除く）には「急ぎ」の印が付きます。</p>
 
         <div class="summary">
           <h3 class="visually-hidden">列ごとの台数</h3>
@@ -96,9 +96,9 @@
     <section class="panel" id="panel-cust" role="tabpanel" aria-labelledby="tab-cust" tabindex="0" hidden>
       <div class="wrap wrap--board">
         <h2 class="panel__title">お客様向けの表示</h2>
-        <p class="panel__lead">お客様が受付番号で、お車の進み具合を見る画面の見本です（実際のお仕事では、受付の時にお渡しする <span class="nw">QR コード</span>から開きます）。</p>
+        <p class="panel__lead">架空のサンプルを選んで、お客様が見る進み具合の画面を確かめる見本です（実際のお仕事では、受付の時に車ごとの閲覧リンクをお渡しし、その車の進み具合だけを表示します）。</p>
         <div class="pick">
-          <label class="pick__label" for="cust-no">受付番号を選んでください</label>
+          <label class="pick__label" for="cust-no">架空のサンプルを選ぶ（受付番号）</label>
           <span class="select">
             <select id="cust-no"></select>
             <svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg>
@@ -118,17 +118,17 @@
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-board"/></svg>
             <h3>ボードを動かす</h3>
-            <ul><li>お店の人はスマホ・タブレットでボードを動かします</li><li>列の数と名前はお店の作業に合わせて決めます</li></ul>
+            <ul><li>お店の人はスマホ・タブレットでボードを動かします</li><li>列の数と名前はお店の作業に合わせて決めます</li><li>追加の作業は、お客様の同意を記録してから進めます</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>
             <h3>お客様の見方</h3>
-            <ul><li>受付の時にお渡しする <span class="nw">QR コード</span>から、進み具合を見ていただく形にできます</li><li>お名前は出さず、受付番号だけで表示します</li></ul>
+            <ul><li>受付の時に車ごとの閲覧リンク（他人に当てられにくい長い文字列・有効期限つき）をお渡しし、その車の進み具合だけを表示します</li><li>リンクをなくされた時は、お店で無効にできます。お名前は出しません</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
             <h3>データの置き場</h3>
-            <ul><li>Googleスプレッドシート（GAS）などに保存します</li><li>いまお使いの表があれば、そこから始められます</li></ul>
+            <ul><li>Google スプレッドシートなどに保存し、必要に応じて Google Apps Script で連携します</li><li>いまお使いの表があれば、そこから始められます</li></ul>
           </li>
         </ul>
         <div class="work-check">

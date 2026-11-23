@@ -9,17 +9,19 @@
   // ---------- 固定データ（すべて架空） ----------
   var COLS = fz(['受付', '点検中', '部品待ち', '作業中', '仕上げの確認', 'お渡しできます'])
   var LAST = COLS.length - 1
+  // 部品待ちの列。お客様向けの工程には、この列を実際に通った車だけ出す
+  var PARTS = 2
   // デモの今：2026-11-24（火）15:00。11/24 0:00 からの分。翌日は +1440
   var NOW = 900
   var DAY = 1440
   // due＝お渡しの予定、col＝最初の列、parts＝部品の入荷予定（無ければ null）
   var CARS = fz([
     fz({ no: 'M-1101', kind: '軽自動車', job: 'オイル交換', due: 930, col: 3, parts: null }),
-    fz({ no: 'M-1102', kind: 'ワゴン', job: '車検', due: 1020, col: 1, parts: null }),
+    fz({ no: 'M-1102', kind: 'ワゴン', job: '車検のお預かり', due: 1020, col: 1, parts: null }),
     fz({ no: 'M-1103', kind: '軽自動車', job: 'タイヤ交換（冬用へ）', due: 960, col: 4, parts: null }),
     fz({ no: 'M-1104', kind: 'セダン', job: 'ブレーキの点検', due: 961, col: 3, parts: null }),
     fz({ no: 'M-1105', kind: '軽トラック', job: 'バッテリーの交換', due: 870, col: 4, parts: null }),
-    fz({ no: 'M-1106', kind: 'ミニバン', job: '車検', due: 2100, col: 2, parts: 1980 }),
+    fz({ no: 'M-1106', kind: 'ミニバン', job: '車検のお預かり', due: 2100, col: 2, parts: 1980 }),
     fz({ no: 'M-1107', kind: 'コンパクトカー', job: 'エアコンの点検', due: 1080, col: 0, parts: null }),
     fz({ no: 'M-1108', kind: 'ワゴン', job: 'オイル交換', due: 840, col: 5, parts: null }),
     fz({ no: 'M-1109', kind: '軽自動車', job: 'ワイパーとライトの交換', due: 810, col: 5, parts: null }),
@@ -35,13 +37,22 @@
     '作業が終わり、最後の確認をしています。',
     'お渡しの準備ができました。受付で受付番号をお伝えください。'
   ])
-  var PARTS_NONE_MSG = '入荷の予定が決まりしだい、ここに出ます。'
+  var PARTS_NONE_MSG = '入荷予定は未定です。'
   var SORRY_MSG = 'お渡しの予定の時刻を過ぎています。お待たせしており、申し訳ありません。'
 
   // ---------- 決まり（純粋な関数） ----------
+  // 急ぎ：お渡し予定まで60分以内か、予定を過ぎた車（準備完了の車を除く）
   function isUrgent (car, col) { return col !== LAST && car.due - NOW <= 60 }
   function isToday (car) { return car.due < DAY }
   function pad2 (n) { return (n < 10 ? '0' : '') + n }
+  // お客様向けに出す工程（列の番号の並び）。部品待ちは、通った車（via が true）だけ
+  function custSteps (via) {
+    var out = []
+    COLS.forEach(function (_, i) { if (i !== PARTS || via) out.push(i) })
+    return out
+  }
+  // 入荷予定日だけ（時刻は出さない）。900 →「今日（11月24日）」、1980 →「明日（11月25日）」
+  function fmtDay (m) { return m < DAY ? '今日（11月24日）' : '明日（11月25日）' }
   // 900 →「今日 15:00」、1980 →「明日 9:00」
   function fmtTime (m) {
     var day = m < DAY ? '今日' : '明日'
@@ -63,7 +74,7 @@
   }
 
   // 検査用の出口（凍結した定数と純粋な関数だけ）
-  root.__demo36 = fz({ COLS: COLS, NOW: NOW, CARS: CARS, isUrgent: isUrgent, isToday: isToday, fmtTime: fmtTime, urgentNote: urgentNote })
+  root.__demo36 = fz({ COLS: COLS, NOW: NOW, CARS: CARS, isUrgent: isUrgent, isToday: isToday, fmtTime: fmtTime, fmtDay: fmtDay, urgentNote: urgentNote, custSteps: custSteps })
   if (typeof document === 'undefined') return
 
   // ---------- 画面 ----------
@@ -90,9 +101,13 @@
   }
 
   // ---------- 状態（画面の中だけ。保存しない） ----------
-  var state = { col: {}, open: [], pick: '' }
+  // via＝部品待ちの列を通ったか（車ごとの記録。最初から部品待ちにいる車だけ true）
+  var state = { col: {}, via: {}, open: [], pick: '' }
   function resetState () {
-    CARS.forEach(function (c) { state.col[c.no] = c.col })
+    CARS.forEach(function (c) {
+      state.col[c.no] = c.col
+      state.via[c.no] = c.col === PARTS
+    })
     state.open = COLS.map(function () { return true })
     state.pick = ''
   }
@@ -192,7 +207,7 @@
     var no = el('p', 'car__no', car.no)
     no.id = idNo
     a.append(no, el('p', 'car__kind', car.kind), el('p', 'car__job', car.job), line('car__due', 'お渡しの予定', fmtTime(car.due)))
-    if (col === 2) a.appendChild(line('car__parts', '部品の入荷予定', car.parts === null ? '未定' : fmtTime(car.parts)))
+    if (col === PARTS) a.appendChild(line('car__parts', '部品の入荷予定', car.parts === null ? '未定' : fmtTime(car.parts)))
     if (urgent) {
       var u = el('p', 'car__urg')
       var tag = el('span', 'tag-urgent')
@@ -223,14 +238,14 @@
     })
     $('counts').replaceChildren.apply($('counts'), counts)
     var today = 0
-    var done = 0
+    var ready = 0
     var urgent = 0
     CARS.forEach(function (c) {
       var col = state.col[c.no]
-      if (isToday(c)) { today++; if (col === LAST) done++ }
+      if (isToday(c)) { today++; if (col === LAST) ready++ }
       if (isUrgent(c, col)) urgent++
     })
-    $('today').replaceChildren(nw('今日お渡し予定'), ' ', el('strong', 'today__num nw', today + '台'), ' のうち ', nw('済'), ' ', el('strong', 'today__num nw', done + '台'))
+    $('today').replaceChildren(nw('今日お渡し予定'), ' ', el('strong', 'today__num nw', today + '台'), ' のうち ', nw('お渡し準備完了'), ' ', el('strong', 'today__num nw', ready + '台'))
     var us = $('urgent-sum')
     us.className = 'urgent-sum' + (urgent ? '' : ' urgent-sum--zero')
     us.replaceChildren()
@@ -239,12 +254,13 @@
   }
 
   // ---------- お客様向けの表示 ----------
-  function step (i, col) {
+  // k＝表示の何段目（0から）、now＝いまの段（表示の段の番号）
+  function step (i, k, now) {
     var li = el('li', 'step')
-    if (i < col) {
+    if (k < now) {
       li.classList.add('step--done')
       li.append(icon('i-tick', 18, 'step__tick'))
-    } else if (i === col) {
+    } else if (k === now) {
       li.classList.add('step--now')
       li.setAttribute('aria-current', 'step')
     } else {
@@ -252,10 +268,10 @@
     }
     var body = el('span', 'step__body')
     var nm = el('span', 'step__name')
-    nm.append(el('span', 'step__num', String(i + 1)), COLS[i])
+    nm.append(el('span', 'step__num', String(k + 1)), COLS[i])
     body.appendChild(nm)
-    if (i < col) body.appendChild(el('span', 'visually-hidden', '（済み）'))
-    if (i === col) body.appendChild(el('span', 'step__here', 'いまここ'))
+    if (k < now) body.appendChild(el('span', 'visually-hidden', '（済み）'))
+    if (k === now) body.appendChild(el('span', 'step__here', 'いまここ'))
     li.appendChild(body)
     return li
   }
@@ -265,7 +281,7 @@
     if (sel.value !== state.pick) sel.value = state.pick
     var car = carOf(state.pick)
     if (!car) {
-      out.replaceChildren(el('p', 'cust__empty', '受付番号を選ぶと、お車の進み具合が出ます。'))
+      out.replaceChildren(el('p', 'cust__empty', 'サンプルを選ぶと、お車の進み具合が出ます。'))
       return
     }
     var col = state.col[car.no]
@@ -274,15 +290,17 @@
     h.append('受付番号 ', nw(car.no))
     var due = el('p', 'cust__due')
     due.append(el('span', 'car__lab', 'お渡しの予定'), ' ', el('strong', 'nw', fmtTime(car.due)))
-    var sh = el('h4', 'visually-hidden', '進み具合（6段）')
+    var list = custSteps(state.via[car.no])
+    var now = list.indexOf(col)
+    var sh = el('h4', 'visually-hidden', '進み具合（' + list.length + '段）')
     var ol = el('ol', 'steps')
-    COLS.forEach(function (_, i) { ol.appendChild(step(i, col)) })
+    list.forEach(function (i, k) { ol.appendChild(step(i, k, now)) })
     var msg = el('div', 'cust__msg' + (col === LAST ? ' cust__msg--ready' : ''))
     if (col === LAST) msg.appendChild(icon('i-tick', 24))
     var mp = el('p', null, STEP_MSG[col])
-    if (col === 2) {
+    if (col === PARTS) {
       if (car.parts === null) mp.append(PARTS_NONE_MSG)
-      else mp.append('入荷予定：', nw(fmtTime(car.parts)))
+      else mp.append('入荷予定日：', nw(fmtDay(car.parts)))
     }
     msg.appendChild(mp)
     box.append(h, el('p', 'cust__what', car.kind + '・' + car.job), due, sh, ol, msg)
@@ -308,6 +326,8 @@
     if (!car || to < 0 || to > LAST) return
     var was = isUrgent(car, from)
     state.col[no] = to
+    // 部品待ちを通ったことを記録する（戻しても消さない。最初に戻すで消える）
+    if (to === PARTS) state.via[no] = true
     // 行き先の列が畳まれていたら開く（畳んだ列の中ではフォーカスを戻せず、body に落ちるため）
     state.open[to] = true
     render()
@@ -334,7 +354,8 @@
     var car = carOf(state.pick)
     if (!car) return
     var col = state.col[car.no]
-    say(car.no + ' はいま、6段のうち' + (col + 1) + '段目「' + COLS[col] + '」です。')
+    var list = custSteps(state.via[car.no])
+    say(car.no + ' はいま、' + list.length + '段のうち' + (list.indexOf(col) + 1) + '段目「' + COLS[col] + '」です。')
   }
 
   // ---------- タブ ----------
