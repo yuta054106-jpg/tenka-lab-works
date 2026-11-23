@@ -203,6 +203,8 @@
     return { v: s }
   }
   var PHONE_RE = /\d(?:[-‐−–ー()]*\d){9,}/
+  // メールの宛先らしい文字（NFKC で全角の ＠ も @ になる）
+  var MAIL_RE = /@/
   // メモに入っていてはいけない文字（制御文字・行／段落の区切り）
   var CTRL_RE = /[\u0000-\u001F\u007F-\u009F\u2028\u2029]/
   var CTRL_G = /[\u0000-\u001F\u007F-\u009F\u2028\u2029]/g
@@ -212,6 +214,7 @@
     var n = Array.from(s).length
     if (n > 200) return { e: 'long', n: n }
     if (PHONE_RE.test(s.normalize('NFKC'))) return { e: 'phone' }
+    if (MAIL_RE.test(s.normalize('NFKC'))) return { e: 'mail' }
     return { v: s }
   }
   function parseTh (text) {
@@ -228,7 +231,11 @@
   }
   function yenMsg (k, e) { return e === 'empty' ? ML[k] + 'の金額を入れてください' : e === 'big' ? ML[k] + 'の金額は 100,000円までにしてください' : ML[k] + 'の金額は 0円以上の整数で入れてください' }
   var COLOR_MSG = { empty: 'カラーの時は色番号を入れてください', long: '色番号は16文字までにしてください', form: '色番号は英字・数字と - / . + で、英字か数字から始めてください' }
-  function memoMsg (r) { return r.e === 'long' ? 'メモは200字までにしてください（いま ' + r.n + '字）' : '電話番号のような数字（10桁以上）はメモに保存できません。電話番号などは書かないでください' }
+  function memoMsg (r) {
+    if (r.e === 'long') return 'メモは200字までにしてください（いま ' + r.n + '字）'
+    if (r.e === 'mail') return '@ を含む文字（メールの宛先など）はメモに保存できません。実在の方のお名前・連絡先は書かないでください'
+    return '電話番号のような数字（10桁以上）はメモに保存できません。電話番号などは書かないでください'
+  }
   function thMsg (k, e) { return e === 'empty' ? ML[k] + 'の目安を入れてください' : ML[k] + 'の目安は 1〜365 の整数で入れてください' }
   var MAX_MSG = '記録は500件までです。古い記録の整理は実際のお仕事でご相談ください'
 
@@ -273,7 +280,7 @@
       if (typeof r.staff !== 'string' || STAFF_K.indexOf(r.staff) < 0) return null
       if (typeof r.color !== 'string') return null
       if (own(amt, 'color') ? !COLOR_RE.test(r.color) : r.color !== '') return null
-      if (typeof r.memo !== 'string' || Array.from(r.memo).length > 200 || r.memo !== r.memo.trim() || CTRL_RE.test(r.memo) || PHONE_RE.test(r.memo.normalize('NFKC'))) return null
+      if (typeof r.memo !== 'string' || Array.from(r.memo).length > 200 || r.memo !== r.memo.trim() || CTRL_RE.test(r.memo) || PHONE_RE.test(r.memo.normalize('NFKC')) || MAIL_RE.test(r.memo.normalize('NFKC'))) return null
       st.records.push({ id: r.id, cid: r.cid, date: r.date, amt: amt, staff: r.staff, color: r.color, memo: r.memo })
     }
     if (!isObj(d.contacts)) return null
@@ -676,6 +683,8 @@
     showToast('記録を足しました', CN[rec.cid] + '様の記録を足しました。' + rec.date + ' ' + menuLabel(rec) + ' ' + yen(total(rec)) + '。来店 ' + visitCount(S, rec.cid) + '回')
     $('undo-btn').focus()
   })
+  // JavaScript が動かない時に既定の送信（URL に選んだ項目が乗る）をしないよう、HTML ではボタンを disabled にしてある。送信を止める処理を登録した後に有効にする
+  $('btn-add').disabled = false
 
   // ---------- 直前に足した記録を取り消す（§7-5） ----------
   function lastAdded () {
@@ -804,6 +813,7 @@
     setText($('karte-last'), inf.last ? [add(el('span'), ['最後の来店 ', nw(inf.last.date), nw('（経過 ' + inf.el + '日）')]), kt ? stateTag(kt) : null] : '記録はありません')
     $('karte-due').textContent = dueText(inf)
     var lc = lastColor(S, cid)
+    $('last-color-l').textContent = lc ? '前回のカラー（' + lc.date + '）' : '前回のカラー'
     setText($('last-color'), lc ? [el('span', 'last-box__code mono nw', lc.color), ' ', el('span', 'last-box__when', lc.date + ' のカラー')] : el('span', 'last-box__empty', 'カラーの記録はありません'))
     $('last-memo-l').textContent = inf.last ? '前回のメモ（' + inf.last.date + '）' : '前回のメモ'
     setText($('last-memo'), inf.last && inf.last.memo ? inf.last.memo : el('span', 'last-box__nomemo', 'メモはありません'))
