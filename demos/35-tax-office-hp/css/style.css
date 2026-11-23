@@ -1,5 +1,5 @@
 /* ソラツム会計事務所（デモ）小さな会計事務所のホームページ */
-/* 共通部品（TENKA LAB バー・ヘッダー・フッター・ボタン・選ぶボタン・結果の箱・よくある質問・案内の dialog・実際のお仕事では）は、デモ34 と同じクラス名と作り。色・角丸は決め直した */
+/* 共通部品（TENKA LAB バー・ヘッダー・フッター・ボタン・選ぶボタン・結果の箱・よくある質問・案内の dialog・実際のお仕事では）は、ほかの作品例と同じクラス名と作り。色・角丸は決め直した */
 :root {
   --c-base: #F6F8F7;
   --c-surface: #FFFFFF;
@@ -175,6 +175,7 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
 }
 .svc__item h3 { margin-top: 12px; }
 .svc__item p { margin-top: 4px; font-size: var(--f-body); line-height: 1.8; max-width: 36em; }
+.svc__item .svc__tag { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
 
 /* ---------- 料金の目安を出す ---------- */
 .price__picks { display: grid; gap: 32px; min-width: 0; }
@@ -183,6 +184,9 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
 .pick__opts { display: grid; gap: 8px; }
 .pick__opts--2 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .pick__note { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.7; max-width: 36em; }
+/* 試算対象外の条件（選ぶボタンのそば。色だけに頼らず「試算対象外：」の字で伝える） */
+.pick__out { padding-left: 12px; border-left: 4px solid var(--c-main); }
+.pick__out strong { color: var(--c-text); }
 .opt { position: relative; display: block; min-width: 0; }
 /* 見えないが残す（キーボードと読み上げで使う）。ボタン全体が押せる面 */
 .opt__input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; z-index: 1; }
@@ -236,8 +240,12 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
   font-size: var(--f-body); font-weight: 700; line-height: 1.7;
 }
 .result__note svg { width: 24px; height: 24px; margin-top: .25em; color: var(--c-main); }
+/* 結果の箱の中の最後：この試算に含まれるもの・含まれないもの */
+.result__scope { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.7; letter-spacing: 0; }
 .result__note2 { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.7; }
 .price__cta { margin-top: 16px; }
+/* 申込みのボタンのすぐ下：押す前に、何が起きないかを伝える */
+.cta-note { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
 
 /* ---------- ご相談の流れ ---------- */
 .flow { display: grid; gap: 16px; }
@@ -428,8 +436,8 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
   .hero__in { grid-template-columns: minmax(0, 1fr) 400px; column-gap: 48px; }
   .hero__art { width: 400px; height: 300px; }
 }
-/* 画面の高さが結果の列（約 890px）＋上下の余白より低い時は貼り付けない */
-@media (min-width: 1024px) and (max-height: 939px) {
+/* 画面の高さが結果の列（最大 約 1,100px。試算に含まれるもの・申込みの注記を足した後）＋上下の余白より低い時は貼り付けない */
+@media (min-width: 1024px) and (max-height: 1199px) {
   .result-col { position: static; }
 }
 

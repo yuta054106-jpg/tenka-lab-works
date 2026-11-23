@@ -131,27 +131,31 @@
     <section class="sec sec--band" id="service" aria-labelledby="h-service">
       <div class="wrap">
         <h2 class="sec__title" id="h-service" tabindex="-1">サービス</h2>
-        <p class="sec__lead">小さな会社と個人事業の、毎月の記帳から<span class="nw">年1回</span>の決算まで。必要なところだけを選んでお頼み<span class="nw">いただけます</span>。</p>
+        <p class="sec__lead">小さな会社と個人事業の、毎月の記帳から<span class="nw">年1回</span>の決算まで。必要なところだけを選んでお頼み<span class="nw">いただけます</span>（下の料金の目安は、顧問と決算・申告を組み合わせた場合です）。</p>
         <ul class="svc">
           <li class="card svc__item">
             <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-book"/></svg></span>
             <h3>記帳の代行</h3>
-            <p>領収書や通帳の写しをお預かりして、クラウド会計に入力します。料金は月の取引の量で決まります。</p>
+            <p>領収書や通帳の写しをお預かりして、クラウド会計に入力します。料金は月の取引の件数で決まります。</p>
+            <p class="svc__tag">架空のサービス例</p>
           </li>
           <li class="card svc__item">
             <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-talk"/></svg></span>
             <h3>月々の顧問<span class="nw">（相談・試算表）</span></h3>
             <p>毎月か<span class="nw">3か月ごと</span>の面談で、試算表を一緒に見ます。面談の間も、気になることはご相談<span class="nw">いただけます</span>。</p>
+            <p class="svc__tag">架空のサービス例</p>
           </li>
           <li class="card svc__item">
             <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg></span>
             <h3>決算と申告</h3>
             <p>1年分の帳簿を整えて、決算書と申告書を作ります。提出までの日程も、こちらからご案内します。</p>
+            <p class="svc__tag">架空のサービス例</p>
           </li>
           <li class="card svc__item">
             <span class="svc__icon"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-sprout"/></svg></span>
-            <h3>創業の手続きの相談</h3>
-            <p>開業の届け出や、個人事業から会社にするかどうかのご相談をお受けします。手続きの順番を一緒に整理します。</p>
+            <h3>開業・法人化の<span class="nw">税務相談</span></h3>
+            <p>開業や、個人事業から会社にするときの税務のご相談をお受けし、届け出を一緒に整理します。会社の設立登記は、司法書士にご相談ください。</p>
+            <p class="svc__tag">架空のサービス例</p>
           </li>
         </ul>
       </div>
@@ -175,18 +179,21 @@
               <legend class="pick__legend">年間の売上</legend>
               <div class="pick__opts">
                 <label class="opt"><input type="radio" class="opt__input" name="sales" value="s1"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">1,000万円未満</span></span></label>
-                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s2" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">1,000万〜3,000万円</span></span></label>
-                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s3"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">3,000万〜1億円</span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s2" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name"><span class="nw">1,000万円以上</span><span class="nw">3,000万円未満</span></span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="sales" value="s3"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name"><span class="nw">3,000万円以上</span><span class="nw">1億円以下</span></span></span></label>
               </div>
               <p class="pick__note">前の年の売上でお選びください。始めたばかりの時は、見込みで構いません。</p>
+              <p class="pick__note pick__out" id="out-sales"><strong>試算対象外：</strong>年間の売上が<span class="nw">1億円を超える</span>場合は、このページでは目安を出せません。面談で<span class="nw">お見積もり</span>します。</p>
             </fieldset>
             <fieldset class="pick" id="pick-books">
               <legend class="pick__legend">記帳</legend>
               <div class="pick__opts pick__opts--desc">
                 <label class="opt"><input type="radio" class="opt__input" name="books" value="self" checked><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">ご自分で</span><span class="opt__desc">クラウド会計に入力・<span class="nw">記帳代行料 0円</span></span></span></label>
-                <label class="opt"><input type="radio" class="opt__input" name="books" value="few"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">事務所に任せる（少ない）</span><span class="opt__desc"><span class="nw">月の取引〜100件</span>・<span class="nw">月10,000円</span></span></span></label>
-                <label class="opt"><input type="radio" class="opt__input" name="books" value="many"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">事務所に任せる（多い）</span><span class="opt__desc"><span class="nw">月の取引〜300件</span>・<span class="nw">月20,000円</span></span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="books" value="few"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name"><span class="nw">事務所に任せる</span><span class="nw">（月100件以下）</span></span><span class="opt__desc"><span class="nw">記帳代行料</span> <span class="nw">月10,000円</span></span></span></label>
+                <label class="opt"><input type="radio" class="opt__input" name="books" value="many"><span class="opt__body"><span class="opt__mark" aria-hidden="true"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name"><span class="nw">事務所に任せる</span><span class="nw">（月101〜300件）</span></span><span class="opt__desc"><span class="nw">記帳代行料</span> <span class="nw">月20,000円</span></span></span></label>
               </div>
+              <p class="pick__note">件数は、1か月の取引（領収書・通帳の入出金などの行）の数でお選びください。</p>
+              <p class="pick__note pick__out" id="out-books"><strong>試算対象外：</strong>記帳の代行で月の取引が<span class="nw">301件以上</span>の場合は、このページでは目安を出せません。面談で<span class="nw">お見積もり</span>します。</p>
             </fieldset>
             <fieldset class="pick" id="pick-meeting">
               <legend class="pick__legend">面談の回数</legend>
@@ -209,16 +216,17 @@
               </dl>
               <h3 class="result__h">内訳</h3>
               <dl class="result__dl" id="r-rows">
-                <div><dt>顧問料の基本<span class="result__sub">個人事業・売上 <span class="nw">1,000万〜3,000万円</span></span></dt><dd class="nw">15,000円／月</dd></div>
+                <div><dt>顧問料の基本<span class="result__sub">個人事業・売上 <span class="nw">1,000万円以上</span><span class="nw">3,000万円未満</span></span></dt><dd class="nw">15,000円／月</dd></div>
                 <div><dt>面談の回数：<span class="nw">毎月</span></dt><dd class="nw">＋5,000円／月</dd></div>
                 <div><dt>記帳の代行：<span class="nw">ご自分で</span></dt><dd class="nw">＋0円／月</dd></div>
                 <div><dt>決算と申告<span class="nw">（年1回）</span></dt><dd class="nw">80,000円</dd></div>
               </dl>
               <p class="result__calc" id="r-calc">年間の合計＝（<span class="nw">20,000円</span>＋<span class="nw">0円</span>）<span class="nw">×12か月</span>＋<span class="nw">80,000円</span>＝<span class="nw">320,000円</span></p>
+              <p class="result__scope" id="r-scope">この試算は、顧問と決算・申告を組み合わせた場合の目安です<span class="nw">（顧問12か月・</span><wbr><span class="nw">記帳代行12か月・</span><wbr><span class="nw">決算と申告1回）</span>。消費税の申告・訪問の費用は含みません<span class="nw">（架空）</span>。</p>
             </div>
-            <p class="result__note"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>正式なお見積もりは面談のあとにお出しします<span class="nw">（デモ）</span>。</span></p>
+            <p class="result__note"><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>初回面談の内容をもとに、契約前に<span class="nw">お見積もり</span>を<span class="nw">お出しします</span><span class="nw">（デモ）</span>。</span></p>
             <p class="result__note2">従業員の人数や取引の内容によって、実際の料金は変わります。このページの金額は、すべて架空の目安です。</p>
-            <div class="price__cta"><button type="button" class="btn-main" id="est-cta" aria-haspopup="dialog" aria-controls="ask-dialog"><span class="btn-main__text"><span class="nw">この内容で</span><wbr><span class="nw">相談する</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+            <div class="price__cta"><button type="button" class="btn-main" id="est-cta" aria-haspopup="dialog" aria-controls="ask-dialog" aria-describedby="est-cta-note"><span class="btn-main__text"><span class="nw">申込み画面を</span><wbr><span class="nw">試す</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><p class="cta-note" id="est-cta-note">予約・送信はありません</p></div>
           </div>
         </div>
       </div>
@@ -228,7 +236,7 @@
     <section class="sec sec--band" id="flow" aria-labelledby="h-flow">
       <div class="wrap">
         <h2 class="sec__title" id="h-flow" tabindex="-1">ご相談の流れ</h2>
-        <p class="sec__lead"><span class="nw">お問い合わせ</span>から始めるまで、4つの段取りです。初回の面談で料金をお出しするので、契約の前に金額が分かります。</p>
+        <p class="sec__lead"><span class="nw">お問い合わせ</span>から始めるまで、4つの段取りです。初回面談の内容をもとに、契約前に<span class="nw">お見積もり</span>を<span class="nw">お出しします</span>。</p>
         <ol class="flow">
           <li class="card flow__item">
             <span class="flow__num" aria-hidden="true">1</span>
@@ -238,12 +246,12 @@
           <li class="card flow__item">
             <span class="flow__num" aria-hidden="true">2</span>
             <h3>初回の面談<span class="nw">（無料・架空）</span></h3>
-            <p><span class="nw">60分ほど</span><wbr><span class="nw">（架空）</span>、いまの帳簿の様子とお困りのことを<span class="nw">うかがいます</span>。オンラインでも、事務所でもお受けします。</p>
+            <p><span class="nw">約60分</span><wbr><span class="nw">（架空）</span>、帳簿の状況とご相談の内容を<span class="nw">うかがいます</span>。オンラインでも、事務所でもお受けします。</p>
           </li>
           <li class="card flow__item">
             <span class="flow__num" aria-hidden="true">3</span>
             <h3>お見積もり</h3>
-            <p>うかがった内容をもとに、月々の顧問料と決算の料金をお出しします。このページの目安と違う時は、その理由もお伝えします。</p>
+            <p>初回面談の内容をもとに、契約前に<span class="nw">お見積もり</span>を<span class="nw">お出しします</span><span class="nw">（月々の顧問料と</span><wbr><span class="nw">決算の料金）</span>。このページの目安と違う時は、その理由もお伝えします。</p>
           </li>
           <li class="card flow__item">
             <span class="flow__num" aria-hidden="true">4</span>
@@ -273,7 +281,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">料金の目安と実際の料金は違いますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
-            <div class="faq__a"><p>違うことがあります。このページの目安は、選んだ4つの条件だけで出しています。従業員の人数や取引の内容によって変わるため、正式なお見積もりは面談のあとにお出しします。</p><p class="faq__link"><a class="inline-link" href="#price" data-goto="h-price" id="faq-to-price">料金の目安をもう一度見る</a></p></div>
+            <div class="faq__a"><p>違うことがあります。このページの目安は、選んだ4つの条件だけで出しています。従業員の人数や取引の内容によって変わるため、初回面談の内容をもとに、契約前に<span class="nw">お見積もり</span>を<span class="nw">お出しします</span>。</p><p class="faq__link"><a class="inline-link" href="#price" data-goto="h-price" id="faq-to-price">料金の目安をもう一度見る</a></p></div>
           </details>
         </div>
       </div>
@@ -284,10 +292,10 @@
       <div class="wrap col">
         <div class="card contact">
           <h2 class="sec__title" id="h-contact" tabindex="-1">ご相談・<span class="nw">お問い合わせ</span></h2>
-          <p class="contact__text">初回の面談は無料です<span class="nw">（架空）</span>。料金の目安を見てからでも、まだ何も決めていなくても、どうぞ<span class="nw">お問い合わせ</span>ください。</p>
-          <p class="contact__sum" id="ct-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万〜3,000万円</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
+          <p class="contact__text">初回の面談は<span class="nw">約60分</span>で、帳簿の状況とご相談の内容をうかがいます<span class="nw">（無料・架空）</span>。料金の目安を見てからでも、まだ何も決めていなくても、<span class="nw">どうぞ</span><span class="nw">お問い合わせ</span>ください。</p>
+          <p class="contact__sum" id="ct-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万円以上</span><span class="nw">3,000万円未満</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
           <p class="contact__total">年間の合計の目安 <span class="nw contact__yen" id="ct-annual">320,000円</span><wbr><span class="nw">（税込・架空）</span></p>
-          <div class="contact__act"><button type="button" class="btn-main" id="ask-cta" aria-haspopup="dialog" aria-controls="ask-dialog"><span class="nw">面談を申し込む（デモ）</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></div>
+          <div class="contact__act"><button type="button" class="btn-main" id="ask-cta" aria-haspopup="dialog" aria-controls="ask-dialog" aria-describedby="ask-cta-note"><span class="nw">申込み画面を試す（デモ）</span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button><p class="cta-note" id="ask-cta-note">予約・送信はありません</p></div>
           <p class="contact__link"><a class="inline-link" href="#price" data-goto="h-price" id="ct-to-price">条件を選び直す</a></p>
         </div>
       </div>
@@ -298,7 +306,7 @@
       <div class="wrap">
         <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
         <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
-        <p class="lab-lead">料金の目安を<span class="nw">お問い合わせ</span>の前に見せると、相談のハードルが下がります。このページはその見本です。</p>
+        <p class="lab-lead"><span class="nw">お問い合わせ</span>の前に、月額と年間費用の目安を確かめられる仕組みです。このページは、架空の会計事務所を題材にした自主制作の<span class="nw">デモ</span>です。</p>
         <ul class="work-3">
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>
@@ -319,7 +327,7 @@
         <div class="work-check">
           <h3>公開のあとに</h3>
           <ul><li>料金の改定やお知らせの更新を承ります<span class="nw">（内容により</span><wbr><span class="nw">お見積もり）</span></li></ul>
-          <p class="work-check__note">所在地・登録番号・代表者の表示は、事務所からいただいた内容をそのまま載せます。</p>
+          <p class="work-check__note">所在地・登録番号・代表者の表示など、適用される掲載事項を事務所と確認して掲載します。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
       </div>
@@ -328,7 +336,7 @@
 
   <footer class="site-footer">
     <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。<span class="nw">ソラツム会計事務所</span>は<span class="nw">架空</span>の事務所で、料金・サービスの内容もすべて<span class="nw">架空</span>です。</p>
-    <p>デモのため事務所の所在地・登録番号・代表者の表示はありません。実際のお仕事では必ず載せます。</p>
+    <p>デモのため事務所の所在地・登録番号・代表者の表示はありません。実際のお仕事では、適用される掲載事項を事務所と確認して掲載します。</p>
     <p><a class="btn" href="../../">作品例を見る</a></p>
     <p class="copy">© TENKA LAB</p>
   </footer>
@@ -339,7 +347,7 @@
     <p class="ask-dialog__note">このページでは、何も送信しません。お名前や連絡先を入れる欄もありません。</p>
     <div class="ask-dialog__sum">
       <p class="ask-dialog__label">いま選んでいる条件</p>
-      <p class="ask-dialog__line" id="dlg-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万〜3,000万円</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
+      <p class="ask-dialog__line" id="dlg-sum"><span class="nw">個人事業</span>・<span class="nw">売上 1,000万円以上</span><span class="nw">3,000万円未満</span>・<span class="nw">記帳 ご自分で</span>・<span class="nw">面談 毎月</span></p>
       <p class="ask-dialog__line">年間の合計の目安 <span class="nw" id="dlg-annual">320,000円</span><wbr><span class="nw">（税込・架空）</span></p>
     </div>
     <div class="ask-dialog__act"><button type="button" class="btn-sub" id="dlg-close"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-close"/></svg>閉じる</button></div>

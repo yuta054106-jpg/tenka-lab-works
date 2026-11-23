@@ -11,15 +11,17 @@
     fz({ id: 'kojin', name: '個人事業' }),
     fz({ id: 'hojin', name: '法人' })
   ])
+  // 売上の区分（円・両端を含む）。重ならず、すき間もない。1億円を超える売上は試算対象外
   var SALES = fz([
-    fz({ id: 's1', name: '1,000万円未満' }),
-    fz({ id: 's2', name: '1,000万〜3,000万円' }),
-    fz({ id: 's3', name: '3,000万〜1億円' })
+    fz({ id: 's1', name: '1,000万円未満', min: 0, max: 9999999 }),
+    fz({ id: 's2', name: '1,000万円以上3,000万円未満', min: 10000000, max: 29999999 }),
+    fz({ id: 's3', name: '3,000万円以上1億円以下', min: 30000000, max: 100000000 })
   ])
+  // 記帳の区分（月の取引の件数・両端を含む）。ご自分での記帳は件数によらない。月301件以上の記帳代行は試算対象外
   var BOOKS = fz([
-    fz({ id: 'self', name: 'ご自分で', desc: 'クラウド会計に入力・記帳代行料 0円', fee: 0 }),
-    fz({ id: 'few', name: '事務所に任せる（少ない）', desc: '月の取引〜100件・月10,000円', fee: 10000 }),
-    fz({ id: 'many', name: '事務所に任せる（多い）', desc: '月の取引〜300件・月20,000円', fee: 20000 })
+    fz({ id: 'self', name: 'ご自分で', desc: 'クラウド会計に入力・記帳代行料 0円', fee: 0, min: null, max: null }),
+    fz({ id: 'few', name: '事務所に任せる（月100件以下）', desc: '記帳代行料 月10,000円', fee: 10000, min: 0, max: 100 }),
+    fz({ id: 'many', name: '事務所に任せる（月101〜300件）', desc: '記帳代行料 月20,000円', fee: 20000, min: 101, max: 300 })
   ])
   var MEETINGS = fz([
     fz({ id: 'monthly', name: '毎月', add: 5000 }),
@@ -59,6 +61,15 @@
       annual: monthly * MONTHS + closing
     })
   }
+  // 境界の確かめ用：売上（円）・記帳代行の月の件数から区分を選ぶ。どれにも入らなければ null（試算対象外）
+  function salesIdOf (yen) {
+    for (var i = 0; i < SALES.length; i++) if (yen >= SALES[i].min && yen <= SALES[i].max) return SALES[i].id
+    return null
+  }
+  function booksIdOf (count) {
+    for (var i = 0; i < BOOKS.length; i++) if (BOOKS[i].min !== null && count >= BOOKS[i].min && count <= BOOKS[i].max) return BOOKS[i].id
+    return null
+  }
   // 3けた区切りは自前（0 以上の整数）
   function fmtYen (n) {
     var s = String(n)
@@ -78,7 +89,7 @@
   // 検査用の出口（凍結した定数と純粋な関数だけ）
   root.__demo35 = fz({
     FORMS: FORMS, SALES: SALES, BOOKS: BOOKS, MEETINGS: MEETINGS, ADVISORY_BASE: ADVISORY_BASE, CLOSING: CLOSING, MONTHS: MONTHS,
-    calc: calc, fmtYen: fmtYen, fmtAdd: fmtAdd, fmtPerMonth: fmtPerMonth, srSummary: srSummary
+    calc: calc, salesIdOf: salesIdOf, booksIdOf: booksIdOf, fmtYen: fmtYen, fmtAdd: fmtAdd, fmtPerMonth: fmtPerMonth, srSummary: srSummary
   })
   if (typeof document === 'undefined') return
 
@@ -91,6 +102,14 @@
     return e
   }
   function nw (text) { return el('span', 'nw', text) }
+  // 長い区分の名前は「以上」の後か「（」の前でだけ折ってよい（それぞれの中では折らない）。prefix は最初の塊に付ける
+  function nwParts (prefix, text) {
+    var i = text.indexOf('以上')
+    if (i > 0) return [nw(prefix + text.slice(0, i + 2)), nw(text.slice(i + 2))]
+    i = text.indexOf('（')
+    if (i > 0) return [nw(prefix + text.slice(0, i)), nw(text.slice(i))]
+    return [nw(prefix + text)]
+  }
   function all (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)) }
   var reduced = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -134,9 +153,9 @@
       if (c) state[k] = c.value
     })
   }
-  // 要約：個人事業・売上 1,000万〜3,000万円・記帳 ご自分で・面談 毎月
+  // 要約：個人事業・売上 1,000万円以上3,000万円未満・記帳 ご自分で・面談 毎月
   function sumLine (c) {
-    return [nw(c.formName), '・', nw('売上 ' + c.salesName), '・', nw('記帳 ' + c.booksName), '・', nw('面談 ' + c.meetingName)]
+    return [nw(c.formName), '・'].concat(nwParts('売上 ', c.salesName), ['・'], nwParts('記帳 ', c.booksName), ['・', nw('面談 ' + c.meetingName)])
   }
   function row (dtParts, ddText) {
     var d = el('div')
@@ -154,11 +173,11 @@
     $('r-books').textContent = fmtYen(c.books)
     $('r-closing').textContent = fmtYen(c.closing)
     var sub = el('span', 'result__sub')
-    sub.replaceChildren(c.formName + '・売上 ', nw(c.salesName))
+    sub.replaceChildren.apply(sub, [c.formName + '・売上 '].concat(nwParts('', c.salesName)))
     $('r-rows').replaceChildren(
       row(['顧問料の基本', sub], fmtPerMonth(fmtYen(c.base))),
       row(['面談の回数：', nw(c.meetingName)], fmtPerMonth(fmtAdd(c.add))),
-      row(['記帳の代行：', nw(c.booksName)], fmtPerMonth(fmtAdd(c.books))),
+      row(['記帳の代行：'].concat(nwParts('', c.booksName)), fmtPerMonth(fmtAdd(c.books))),
       row(['決算と申告', nw('（年1回）')], fmtYen(c.closing))
     )
     $('r-calc').replaceChildren('年間の合計＝（', nw(fmtYen(c.advisory)), '＋', nw(fmtYen(c.books)), '）', nw('×12か月'), '＋', nw(fmtYen(c.closing)), '＝', nw(t))
