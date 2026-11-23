@@ -151,7 +151,7 @@ main > .today-bar { margin-top: 24px; }
 /* §1-3 行動ボタン（青磁の面・墨の文字・深煎りの枠）は「回答する」「CSV をダウンロード」「印刷・PDFで保存」「作品例を見る」の4つだけ */
 .btn-main, .site-footer .btn { background: var(--c-accent); color: var(--c-on-accent); border: 2px solid var(--c-main); }
 .btn-main:hover, .btn-main:active, .site-footer .btn:hover, .site-footer .btn:active { background: var(--c-accent-dark); }
-.btn-main[aria-disabled="true"], .btn-main[aria-disabled="true"]:hover, .btn-main[aria-disabled="true"]:active {
+.btn-main[aria-disabled="true"], .btn-main[aria-disabled="true"]:hover, .btn-main[aria-disabled="true"]:active, .btn-main:disabled, .btn-main:disabled:hover {
   background: var(--c-soft); color: var(--c-sub); border: 1.5px dashed var(--c-sub); cursor: not-allowed;
 }
 .btn-sub {
@@ -523,7 +523,7 @@ main > .today-bar { margin-top: 24px; }
   }
   .item-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .sum-two { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; }
-  .slot-table .c-slot { width: 96px; }
+  .slot-table .c-slot { width: 116px; }
   .slot-table .c-n { width: 64px; }
   .slot-table th, .slot-table td { padding: 4px 6px; }
   .voice-layout { grid-template-columns: 296px minmax(0, 1fr); column-gap: 32px; align-items: start; }
@@ -548,6 +548,7 @@ main > .today-bar { margin-top: 24px; }
   #print-root .sheet__sum { font-size: 10pt; font-weight: 700; margin-bottom: 3mm; line-height: 1.5; }
   #print-root .sheet__h { margin: 3mm 0 1.5mm; font-size: 10pt; font-weight: 700; }
   #print-root .sheet__nps { margin: 2mm 0 0; font-size: 9pt; }
+  #print-root .sheet__note { margin: 1mm 0 0; font-size: 8pt; }
   #print-root .stamp { position: absolute; right: 0; top: 50%; width: 12mm; height: 12mm; margin-top: -6mm; transform: rotate(-4deg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   #print-root table { width: 186mm; border-collapse: collapse; table-layout: fixed; border: 1pt solid #000000; }
   #print-root th, #print-root td { height: 7mm; padding: 0 1.2mm; border-bottom: .5pt solid #BBBBBB; text-align: left; vertical-align: middle; font-size: 9pt; font-weight: 400; color: #000000; white-space: nowrap; overflow: hidden; }
