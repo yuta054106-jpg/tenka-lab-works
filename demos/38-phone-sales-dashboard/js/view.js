@@ -299,6 +299,7 @@ var View38 = (function () {
       p.appendChild(el('span', null, cl.diff))
       s.appendChild(p)
     }
+    if (cl.diffNote) s.appendChild(el('p', 'app__note', cl.diffNote))
     s.appendChild(el('p', 'app__note', cl.note))
     return s
   }

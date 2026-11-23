@@ -447,10 +447,17 @@ var Calc38 = (function () {
       prevUnit: !p ? '—' : p.custDays === 0 ? '未入力' : p.unit === null ? '—' : fmtYen(p.unit),
       prevDays: p ? p.custDays + '日分' : '—',
       diff: null,
+      diffNote: null,
       note: '客単価（税込）＝ 売上（税込）÷ 客数（円未満は四捨五入）。客数が空欄の日と、売上があって客数が0人の日は外しています。'
     }
+    // 差：数えた日数が同じなら客数と客単価。日数が違うと客数の合計は比べられないので、客単価の差だけ出して理由を添える
     if (p && p.unit !== null && h.unit !== null) {
-      o.diff = '客数 ' + fmtSignedYen(h.customers - p.customers) + '人・客単価 ' + fmtSignedYen(h.unit - p.unit) + '円'
+      if (h.custDays === p.custDays) {
+        o.diff = '客数 ' + fmtSignedYen(h.customers - p.customers) + '人・客単価 ' + fmtSignedYen(h.unit - p.unit) + '円'
+      } else {
+        o.diff = '客単価 ' + fmtSignedYen(h.unit - p.unit) + '円'
+        o.diffNote = '数えた日数が違うため、客数の差は出していません。'
+      }
     }
     return o
   }
