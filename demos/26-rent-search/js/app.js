@@ -372,6 +372,8 @@
     ul.hidden = !list.length
     var n = list.length
     $('count-n').textContent = fmtCount(n)
+    // 件数は描いた後に出す（JavaScript が動かない時は、一覧が空なのに件数だけ出ないよう HTML では隠している）
+    $('count').hidden = false
     $('fixbar-n').textContent = fmtCount(n)
     var sum = $('list-sum')
     clear(sum)
@@ -478,8 +480,8 @@
     line(add(el('span'), '合計の目安'), '', c.total, 'cost__total')
     t.appendChild(tb)
     box.appendChild(t)
-    box.appendChild(el('p', 'detail__strong', '目安です。実際の金額はお問い合わせください。'))
-    box.appendChild(add(el('p', 'detail__extra'), '仲介手数料は上限の額で計算しています。借りる方の負担は、原則は家賃', nw('0.5か月分'), '＋消費税で、事前に承諾した場合に', nw('1か月分'), '＋消費税までです。日割りの家賃・火災保険・保証会社・鍵の交換などは別途です。実際のページでは、ここから問い合わせフォーム・電話・LINE につなぎます（このデモにはありません）。'))
+    box.appendChild(el('p', 'detail__strong', '架空の物件の目安です。'))
+    box.appendChild(add(el('p', 'detail__extra'), '仲介手数料は上限の額で計算しています。借りる方の負担は、原則は家賃', nw('0.5か月分'), '＋消費税で、仲介の依頼を受けるときに借りる方が承諾した場合に', nw('1か月分'), '＋消費税までです。貸す方・借りる方から受け取る仲介手数料の合計も、原則は家賃', nw('1か月分'), '＋消費税までです。日割りの家賃・火災保険・保証会社・鍵の交換などは別途です。実際のページでは、ここから問い合わせフォーム・電話・LINE につなぎます（このデモにはありません）。'))
     box.appendChild(favButton(p, 'detail__fav'))
     container.appendChild(box)
     return h

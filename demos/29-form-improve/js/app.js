@@ -1,5 +1,6 @@
 // 個別指導 コノハズク学習室（デモ）申し込みフォームの直す前と直した後
 // 送信・保存は一切しない（form に送り先なし・submit は最初に preventDefault・通信なし・ブラウザへの保存なし）
+// 送信のボタン（type="submit"）は HTML で disabled。submit を止める処理を登録した後にだけ外す（JavaScript が動かない時に既定の送信を起こさない）
 // ハッシュは #before／#after の2つだけを書く。入力値はどこにも書かない
 // 表示はすべて createElement・textContent・createTextNode
 ;(function () {
@@ -62,6 +63,7 @@
     V12: '電話番号は数字で入れてください（ハイフンや空白はあっても大丈夫です）。',
     V13: '電話番号のけた数を確かめてください（0から始まる10けたか11けた）。',
     V14: '200文字以内で入れてください（いま{n}文字）。',
+    V15: '資料をメールでお送りするため、メールアドレスを入れてください。',
     GE0: '{n}か所、確かめてほしい所があります。',
     BE0: '入力内容に誤りがあります。',
     BE1: '未入力の項目があります：',
@@ -98,9 +100,10 @@
     return OK
   }
   var MAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  function checkMail (s, via) {
+  // 資料だけ（kind === 'doc'）の時は、資料をメールで送るため、連絡の方法が電話でもメールが要る
+  function checkMail (s, via, kind) {
     var t = clean(s)
-    if (t === '') return via === 'mail' ? ng('V7') : OK
+    if (t === '') return via === 'mail' ? ng('V7') : kind === 'doc' ? ng('V15') : OK
     if (t.indexOf('@') < 0) return ng('V8')
     if (!MAIL_RE.test(t)) return ng('V9')
     if (t.length > 254) return ng('V10')
@@ -133,7 +136,7 @@
       case 'days': return checkDays(v.days, v.kind)
       case 'time': return checkTime(v.time, v.kind)
       case 'name': return checkName(v.name)
-      case 'mail': return checkMail(v.mail, v.via)
+      case 'mail': return checkMail(v.mail, v.via, v.kind)
       case 'tel': return checkTel(v.tel, v.via)
       case 'note': return checkNote(v.note)
     }
@@ -520,7 +523,7 @@
     var trial = v.kind === 'trial'
     setReq('days', trial); setReq('time', trial)
     $('note-doc').hidden = trial
-    setReq('mail', v.via === 'mail'); setReq('tel', v.via === 'tel')
+    setReq('mail', v.via === 'mail' || v.kind === 'doc'); setReq('tel', v.via === 'tel')
     renderMainLabels()
   }
   function renderMainLabels () {
@@ -688,6 +691,10 @@
   }
 
   function init () {
+    // 両方の form：送らない（最初の行で止める。入力のチェックより先）
+    $('bad-form').addEventListener('submit', function (e) { e.preventDefault(); badSubmit() })
+    $('good-form').addEventListener('submit', function (e) { e.preventDefault(); mainAction() })
+
     wrapWords(document.body)
 
     // 読み込み直しでブラウザが欄の中身を戻しても、開いた時は見本の値から始める
@@ -696,10 +703,6 @@
     live = {}
     goodFill(ALL_KEYS)
     showStep(1)
-
-    // 両方の form：送らない（最初の行で止める）
-    $('bad-form').addEventListener('submit', function (e) { e.preventDefault(); badSubmit() })
-    $('good-form').addEventListener('submit', function (e) { e.preventDefault(); mainAction() })
 
     document.addEventListener('click', function (e) {
       var t = e.target && e.target.closest ? e.target : null
@@ -787,7 +790,7 @@
       var v = goodValues()
       if (t.name === 'kind') {
         syncDepends()
-        ;['days', 'time'].forEach(function (k) { if (errShown(k)) recheck(k, v) })
+        ;['days', 'time', 'mail'].forEach(function (k) { if (errShown(k)) recheck(k, v) })
       } else if (t.name === 'via') {
         syncDepends()
         ;['mail', 'tel'].forEach(function (k) { if (errShown(k)) recheck(k, v) })
@@ -806,6 +809,10 @@
     var r = applyHash(false)
     // 不正なハッシュがページ内の id と同じでも、開いた時はスクロールを動かさない
     if (r.rewrite) window.scrollTo(0, 0)
+
+    // 送信を止める処理を登録し、準備がすべて済んだので、送信のボタンを押せるようにする
+    var subs = document.querySelectorAll('#bad-form button[type="submit"], #good-form button[type="submit"]')
+    for (var i = 0; i < subs.length; i++) subs[i].disabled = false
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init)

@@ -176,9 +176,9 @@
               </div>
             </fieldset>
           </div>
-          <p class="search__note">徒歩の分は、道路の距離 <span class="nw">80m</span> を<span class="nw">1分</span>（<span class="nw">1分未満</span>は切り上げ）として計算しています<span class="nw">（架空）</span>。</p>
+          <p class="search__note">このデモは<span class="nw">架空</span>の徒歩の分数を出しています。実際の広告では、道路の距離 <span class="nw">80m</span> を<span class="nw">1分</span>（<span class="nw">1分未満</span>は切り上げ）とします。</p>
           <div class="search__foot">
-            <p class="count" id="count"><span class="nw">全18件中</span> <span class="count__n nw" id="count-n">18件</span></p>
+            <p class="count" id="count" hidden><span class="nw">全18件中</span> <span class="count__n nw" id="count-n"></span></p>
             <div class="search__sort">
               <label class="search__label" for="f-sort">並べ替え</label>
               <div class="sel-wrap">
@@ -201,7 +201,7 @@
       <div class="wrap">
         <p class="sec__en">ROOMS</p>
         <h2 id="h-list" class="sec__title" tabindex="-1">物件の一覧</h2>
-        <p class="sec__lead list__sum" id="list-sum">家賃の安い順（管理費込み）に <span class="nw">18件</span>を並べています。</p>
+        <p class="sec__lead list__sum" id="list-sum" hidden></p>
         <p class="note list__note">家賃・管理費・初期費用・築年数・「募集中」の表示はすべて<span class="nw">架空</span>です。築年数は<span class="nw">2026年11月</span>時点です。</p>
         <div class="list-grid">
           <div class="list-main">
@@ -242,7 +242,7 @@
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-edit"/></svg>
             <h3>物件の更新は、担当者の手で</h3>
-            <ul><li>管理画面やスプレッドシートから、物件の追加・家賃の変更・募集の終わりを担当者が直せる形にします</li><li>直し方の手順書をお渡しします</li><li>募集が終わった物件は、一覧から下ろす操作を<span class="nw">1回</span>で済むようにします</li></ul>
+            <ul><li>管理画面やスプレッドシートから、物件の追加・家賃の変更・募集の終わりを担当者が直せる形にします</li><li>直し方の手順書をお渡しします</li><li>募集が終わった物件は、自社サイトの一覧・詳細から下ろす操作を<span class="nw">1回</span>で済むようにします（ポータルなど他の掲載先は、別に取り下げが要ります）</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sync"/></svg>
@@ -257,7 +257,7 @@
         </ul>
         <div class="work-check">
           <h3>お店で確かめていただくこと</h3>
-          <ul><li>免許番号・取引の態様（仲介など）・情報の更新日など、不動産の広告に必要な表示（このデモは架空のお店のため載せていません）</li><li>募集が終わった物件を、早めに一覧から下ろすこと</li><li>初期費用の計算のしかた（仲介手数料・保証会社・保険の扱い）</li></ul>
+          <ul><li>免許番号・取引の態様（仲介など）・情報の更新日など、不動産の広告に必要な表示（このデモは架空のお店のため載せていません）</li><li>募集が終わった物件の広告を、自社サイト（詳細ページを含む）と各掲載先から速やかに取り下げること</li><li>初期費用の計算のしかた（仲介手数料・保証会社・保険の扱い）</li></ul>
           <p class="work-check__note">物件の表示の内容は、お店が決めて責任を持ちます。<span class="nw">TENKA LAB</span> は表示の内容を判断しません。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
@@ -280,7 +280,7 @@
   </dialog>
 
   <nav class="fixbar is-hide" id="fixbar" aria-label="すぐに使うボタン">
-    <p class="fixbar__sel" id="fixbar-sel" aria-hidden="true"><span class="nw">全18件中</span> <span class="nw" id="fixbar-n">18件</span></p>
+    <p class="fixbar__sel" id="fixbar-sel" aria-hidden="true"><span class="nw">全18件中</span> <span class="nw" id="fixbar-n"></span></p>
     <a class="btn-main" href="#filter"><span class="nw">条件を変える</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-up"/></svg></a>
   </nav>
 </body>

@@ -137,6 +137,7 @@
     if (q.kind === 'cap' || q.kind === 'range') return TXT.A2b
     var r = ROOMS[s.room]
     var head = [
+      '（TENKA LAB のデモの文例・架空の宿）',
       'ゲストハウス ヒサメノ 御中',
       '',
       q.kind === 'ok' ? '次の日程で、空きと料金を確かめたくご連絡しました。' : '次の日程を考えています。',
@@ -447,7 +448,7 @@
       var per = el('p', 'total__per')
       add(per, '1人あたり ', nw(fmtYen(q.per)), el('span', 'total__note nw', '（1円未満は切り上げ）'))
       card.appendChild(per)
-      card.appendChild(el('p', 'note result__note', '料金は税込の目安です（架空）。宿泊税などの税は別途で、実際の額はお店と確かめてください。'))
+      card.appendChild(el('p', 'note result__note', '料金は税込の目安です（架空）。相部屋は人数分のベッド、ほかは1室の料金です。子ども料金・宿泊税・入湯税は、この試算に含めていません。'))
     }
     return q
   }
@@ -472,7 +473,7 @@
 
   // ---------- 下書き ----------
   // 文の中の店名・日付・金額・泊数・人数・部屋の名を、途中で折れない span にする（textContent は文のまま）
-  var NW_RE = /ゲストハウス ヒサメノ|\d{4}年\d{1,2}月\d{1,2}日（[^）]+）|[\d,]+円|\d+泊|\d+人|相部屋（ベッド）|個室（2人まで）|和室（4人まで）|離れ（一棟・6人まで）|残りわずか/g
+  var NW_RE = /ゲストハウス ヒサメノ|\d{4}年\d{1,2}月\d{1,2}日（[^）]+）|[\d,]+円|\d+泊|\d+人|相部屋（ベッド）|個室（2人まで）|和室（4人まで）|離れ（一棟・6人まで）|残りわずか|架空の宿/g
   function wrapNw (parent, text) {
     var last = 0
     var m
