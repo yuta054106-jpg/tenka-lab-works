@@ -298,7 +298,6 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
 .pay__diff { margin-top: 8px; line-height: 1.5; }
 .pay__diff-label { color: var(--c-sub); font-size: 13px; }
 .pay__diff-val { font-size: 15px; font-weight: 700; }
-.pay__diff-val--fee { color: var(--c-fee); }
 .pay__reason { margin-top: 12px; font-size: 15px; line-height: 1.7; }
 .pay__none { margin-top: 12px; color: var(--c-sub); font-size: 14px; line-height: 1.7; }
 
@@ -311,6 +310,10 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
   background: #FFFFFF; border-radius: 8px; box-shadow: inset 0 0 0 1.5px var(--c-sub);
 }
 .cand:hover .cand__face { background: var(--c-soft); }
+/* 差額のある候補：選べない（radio なし・点線の枠） */
+.cand--ref { cursor: default; }
+.cand--ref .cand__face { box-shadow: none; border: 1.5px dashed var(--c-sub); }
+.cand--ref:hover .cand__face { background: #FFFFFF; }
 .cand__dot {
   flex: none; position: relative; width: 20px; height: 20px; border-radius: 50%;
   background: #FFFFFF; box-shadow: inset 0 0 0 2px var(--c-main);
@@ -329,6 +332,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
 .cand__diff { color: var(--c-sub); font-size: 13px; }
 .cands__go { margin-top: 12px; }
 .cands__why { margin-top: 4px; color: var(--c-sub); font-size: 14px; line-height: 1.7; }
+.cands__note { margin-top: 8px; color: var(--c-sub); font-size: 14px; line-height: 1.7; }
 
 /* ---------- 未入金の一覧 ---------- */
 .open__total { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 4px; font-size: 15px; font-weight: 700; line-height: 1.4; }
@@ -426,7 +430,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
   .sec__lead ~ .pays { margin-top: 32px; }
   h3 { font-size: 19px; }
   .match__run { width: 320px; }
-  .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .tile { padding: 12px; }
   .tile__num { font-size: 30px; }
   .tile__num--yen { font-size: 28px; }
@@ -458,6 +462,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
   /* まとめの上端を、左の h2 の上端にそろえる（英字の札 18px ＋ 間 8px） */
   .match__sum { padding-top: 26px; }
   .match__run { width: 100%; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pays { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 

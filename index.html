@@ -1333,10 +1333,10 @@
               <div class="card__body">
                 <p class="card__kind">33 ／ 請求と入金の突き合わせ<span class="nowrap">（動くデモ）</span></p>
                 <h3 id="w33-title"><span class="nowrap">カフェ ユメツム</span> <span class="nowrap">入金の消し込み</span></h3>
-                <p class="card__sub">請求の一覧と通帳の入金を<span class="nowrap">1行ずつ突き合わせ、</span><span class="nowrap">合ったもの・</span><span class="nowrap">振込手数料の差し引き・</span><span class="nowrap">まとめての入金・</span><span class="nowrap">要確認に分けます</span></p>
+                <p class="card__sub">請求の一覧と通帳の入金を<span class="nowrap">突き合わせ、</span><span class="nowrap">消し込み済み・</span><span class="nowrap">まとめての入金・</span><span class="nowrap">要確認（振込手数料の候補を含む）に</span><span class="nowrap">分けます</span></p>
                 <p class="card__sub">本番にするときは：ネットバンキングの入金の CSV を、Googleスプレッドシートか Excel に読み込む形にします。<span class="nowrap">手数料の差額をどこまで認めるかは</span><span class="nowrap">お店で決めます</span></p>
                 <ul class="tags" aria-label="使った技術">
-                  <li>名義と金額の突き合わせ</li><li>振込手数料の差額の判定</li><li>まとめての入金の組み合わせ</li><li>キーボード操作・読み上げへの配慮</li>
+                  <li>名義と金額の突き合わせ</li><li>振込手数料の候補の見分け</li><li>まとめての入金の組み合わせ</li><li>キーボード操作・読み上げへの配慮</li>
                 </ul>
                 <details class="points">
                   <summary>制作のポイントを見る<span class="points__icon" aria-hidden="true"></span></summary>
@@ -1345,8 +1345,8 @@
                     <p>「毎月の入金の確認に時間がかかる」「どの請求の入金か分からない」というご相談向けの見本。請求書を出した後の、入金の確認までを見ていただけます。</p>
                     <h4>工夫した点</h4>
                     <ul class="list">
-                      <li>取引先の別の名義（略称・半角カナ）もそろえて比べ、振込手数料が引かれた入金や、2件分をまとめた入金も見分けます</li>
-                      <li>合わないものは自動では消さず、近い請求の候補を出して、人が選んで消し込む形にしました</li>
+                      <li>振込名義を、登録した名義・別の名義（略称など）と照らして取引先を決め、ぴったりの入金と、2件分をまとめた入金を見分けます</li>
+                      <li>当てる請求が1つに決まらない入金や、振込手数料が引かれたらしい入金は自動では消さず、理由と候補を出して人が確かめる形にしました。手で消し込めるのは金額が同じ請求だけです</li>
                       <li>未入金の合計と、期日を過ぎた請求をその場で一覧にします。キーボードだけでも操作できます</li>
                     </ul>
                   </div>

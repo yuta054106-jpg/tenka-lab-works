@@ -90,16 +90,11 @@
   // 入金の順：入金日 → 入金番号
   function depOrder (a, b) { return a.day !== b.day ? a.day - b.day : cmpStr(a.id, b.id) }
 
-  // 2件以上で合計がぴったりの組（古い順に並べた list の位置の配列）。件数の少ない組 → 古い組
-  function bestBundle (list, amount) {
-    var best = null
-    function better (a, b) {
-      if (a.length !== b.length) return a.length < b.length
-      for (var i = 0; i < a.length; i++) { if (a[i] !== b[i]) return a[i] < b[i] }
-      return false
-    }
+  // 2件以上で合計がぴったりの組を全部（古い順に並べた list の位置の配列）
+  function allBundles (list, amount) {
+    var found = []
     function walk (start, picked, sum) {
-      if (picked.length >= 2 && sum === amount && (!best || better(picked, best))) best = picked.slice()
+      if (picked.length >= 2 && sum === amount) found.push(picked.slice())
       for (var i = start; i < list.length; i++) {
         picked.push(i)
         walk(i + 1, picked, sum + list[i].amount)
@@ -107,49 +102,63 @@
       }
     }
     walk(0, [], 0)
-    return best
+    return found
   }
 
+  // 突き合わせ：名義で取引先を決めてから金額を見る。自動で消すのは、当てる請求が1つに決まる時だけ
+  // 段1 全部の入金で、金額が同じ請求1件（同じ取引先に同じ金額の請求が2件以上なら要確認 dup）
+  // 段2 残りの入金で、2件以上の合計がぴったりの組1つ（組が2つ以上なら要確認 multi）
+  // 段3 残りは要確認。振込手数料の差額の範囲の請求があれば fee（手数料候補）、未入金0件は noopen、ほかは mismatch
   function matchAll (invoices, deposits) {
     var invs = invoices.slice().sort(older)
     var deps = deposits.slice().sort(depOrder)
     var used = {}
     var rows = {}
+    var who = {}
+    function openOf (p) { return invs.filter(function (x) { return x.p === p && !used[x.id] }) }
+    function check (d, reason, mine) {
+      rows[d.id] = { kind: 'check', p: who[d.id].p, via: who[d.id].via, invoices: [], diff: null, reason: reason, openCount: mine.length }
+    }
+    function take (d, kind, hit) {
+      hit.forEach(function (x) { used[x.id] = true })
+      rows[d.id] = { kind: kind, p: who[d.id].p, via: who[d.id].via, invoices: hit.map(function (x) { return x.id }), diff: 0, reason: null }
+    }
+    // 段0 名義を引く
     deps.forEach(function (d) {
-      var who = lookupName(d.name)
-      if (!who) { rows[d.id] = { kind: 'check', p: null, via: null, invoices: [], diff: null, reason: 'unknown' }; return }
-      var mine = invs.filter(function (x) { return x.p === who.p && !used[x.id] })
-      var row = { kind: 'check', p: who.p, via: who.via, invoices: [], diff: null, reason: null }
-      var hit = null
-      // 理由の文の出し分け用（未入金が1件だけなら「2件以上の合計」の句を出さない）
-      row.openCount = mine.length
-      if (!mine.length) row.reason = 'noopen'
-      else {
-        // 1／4 ぴったり（一番古い1件）
-        for (var i = 0; i < mine.length; i++) { if (mine[i].amount === d.amount) { hit = [mine[i]]; row.kind = 'exact'; break } }
-        // 2 手数料（差の一番小さい1件。同じ差なら古い方）
-        if (!hit) {
-          var fb = null
-          mine.forEach(function (x) {
-            var df = x.amount - d.amount
-            if (df >= FEE_MIN && df <= FEE_MAX && (!fb || df < fb.amount - d.amount)) fb = x
-          })
-          if (fb) { hit = [fb]; row.kind = 'fee' }
-        }
-        // 3 まとめて
-        if (!hit) {
-          var b = bestBundle(mine, d.amount)
-          if (b) { hit = b.map(function (k) { return mine[k] }); row.kind = 'bundle' }
-        }
-        if (!hit) row.reason = 'mismatch'
+      who[d.id] = lookupName(d.name)
+      if (!who[d.id]) rows[d.id] = { kind: 'check', p: null, via: null, invoices: [], diff: null, reason: 'unknown' }
+    })
+    // 段1 ぴったり（1件）
+    deps.forEach(function (d) {
+      if (rows[d.id]) return
+      var mine = openOf(who[d.id].p)
+      var eq = mine.filter(function (x) { return x.amount === d.amount })
+      if (eq.length === 1) take(d, 'exact', eq)
+      else if (eq.length >= 2) check(d, 'dup', mine)
+    })
+    // 段2 まとめて（組が1つだけの時）
+    deps.forEach(function (d) {
+      if (rows[d.id]) return
+      var mine = openOf(who[d.id].p)
+      var b = allBundles(mine, d.amount)
+      if (b.length === 1) take(d, 'bundle', b[0].map(function (k) { return mine[k] }))
+      else if (b.length >= 2) check(d, 'multi', mine)
+    })
+    // 段3 残りは要確認（請求は未入金のまま）
+    deps.forEach(function (d) {
+      if (rows[d.id]) return
+      var mine = openOf(who[d.id].p)
+      var fee = mine.some(function (x) { var df = x.amount - d.amount; return df >= FEE_MIN && df <= FEE_MAX })
+      check(d, !mine.length ? 'noopen' : fee ? 'fee' : 'mismatch', mine)
+      // 未入金0件の時：同じ取引先の消し込み済みの請求に、手数料の範囲の差のものがあれば、どの入金で消えたかを添える
+      if (!mine.length) {
+        invs.forEach(function (x) {
+          var df = x.amount - d.amount
+          if (rows[d.id].near || x.p !== who[d.id].p || !used[x.id] || df < FEE_MIN || df > FEE_MAX) return
+          var by = deps.filter(function (e) { return rows[e.id] && rows[e.id].invoices.indexOf(x.id) >= 0 })[0]
+          rows[d.id].near = { id: x.id, amount: x.amount, diff: df, later: depOrder(by, d) > 0 }
+        })
       }
-      if (hit) {
-        var sum = 0
-        hit.forEach(function (x) { used[x.id] = true; sum += x.amount })
-        row.invoices = hit.map(function (x) { return x.id })
-        row.diff = sum - d.amount
-      }
-      rows[d.id] = row
     })
     return {
       rows: rows,
@@ -163,27 +172,25 @@
     for (var i = 0; i < list.length; i++) { if (list[i].id === id) return list[i] }
     return null
   }
-  // 要確認の候補（3件まで）。名義が分かった時はその取引先の未入金だけ
+  // 要確認の候補（3件まで）。名義が分かった時はその取引先の未入金だけ。ok は手で消し込める（金額が同じ）もの
   function candidates (result, depositId) {
     var row = result.rows[depositId]
     var d = findIn(result.dep, depositId)
     if (!row || !d || row.kind !== 'check' || row.reason === 'noopen') return []
     var pool = result.open.map(function (id) { return findIn(result.inv, id) })
-    if (row.reason === 'mismatch') pool = pool.filter(function (x) { return x.p === row.p })
+    if (row.reason !== 'unknown') pool = pool.filter(function (x) { return x.p === row.p })
     function gap (x) { var g = x.amount - d.amount; return g < 0 ? -g : g }
     pool.sort(function (a, b) { return gap(a) !== gap(b) ? gap(a) - gap(b) : older(a, b) })
-    return pool.slice(0, 3).map(function (x) { return { id: x.id, amount: x.amount, diff: x.amount - d.amount } })
+    return pool.slice(0, 3).map(function (x) { return { id: x.id, amount: x.amount, diff: x.amount - d.amount, ok: x.amount === d.amount } })
   }
-  // 手で消し込む（元の結果は変えない）。候補に無い請求は当てない
+  // 手で消し込む（元の結果は変えない）。候補のうち金額が同じ請求だけ当てる。差額のある候補は当てない
   function manual (result, depositId, invoiceId) {
-    var ok = candidates(result, depositId).some(function (c) { return c.id === invoiceId })
+    var ok = candidates(result, depositId).some(function (c) { return c.id === invoiceId && c.ok })
     if (!ok) return result
-    var x = findIn(result.inv, invoiceId)
-    var d = findIn(result.dep, depositId)
     var old = result.rows[depositId]
     var rows = {}
     Object.keys(result.rows).forEach(function (k) { rows[k] = result.rows[k] })
-    rows[depositId] = { kind: 'manual', p: old.p, via: old.via, invoices: [invoiceId], diff: x.amount - d.amount, reason: null }
+    rows[depositId] = { kind: 'manual', p: old.p, via: old.via, invoices: [invoiceId], diff: 0, reason: null }
     return {
       rows: rows,
       open: result.open.filter(function (id) { return id !== invoiceId }),
@@ -192,13 +199,13 @@
     }
   }
   function summary (result) {
-    var s = { exact: 0, fee: 0, bundle: 0, manual: 0, check: 0, alias: 0, aliasExact: 0, feeTotal: 0, bundleInvoices: 0, openCount: 0, openTotal: 0, lateCount: 0, lateTotal: 0 }
+    var s = { exact: 0, bundle: 0, manual: 0, check: 0, feeCand: 0, alias: 0, aliasExact: 0, bundleInvoices: 0, openCount: 0, openTotal: 0, lateCount: 0, lateTotal: 0 }
     Object.keys(result.rows).forEach(function (k) {
       var r = result.rows[k]
       s[r.kind]++
-      if (r.via === 'alias' && r.kind !== 'check') s.alias++
+      if (r.kind === 'check' && r.reason === 'fee') s.feeCand++
+      if (r.via === 'alias') s.alias++
       if (r.via === 'alias' && r.kind === 'exact') s.aliasExact++
-      if (r.kind === 'fee') s.feeTotal += r.diff
       if (r.kind === 'bundle') s.bundleInvoices += r.invoices.length
     })
     result.open.forEach(function (id) {
@@ -259,7 +266,7 @@
     if (what === 'go-why') return GO_WHY
     var s = summary(result)
     if (what === 'run') {
-      return '突き合わせました。消し込み済み' + fmtCount(s.exact) + '、手数料差し引き' + fmtCount(s.fee) + '、まとめて入金' + fmtCount(s.bundle) + '、要確認' + fmtCount(s.check) + 'です。未入金は' + fmtCount(s.openCount) + '、合計' + fmtYen(s.openTotal) + 'です。'
+      return '突き合わせました。消し込み済み' + fmtCount(s.exact) + '、まとめて入金' + fmtCount(s.bundle) + '、要確認' + fmtCount(s.check) + (s.feeCand ? '（うち手数料候補' + fmtCount(s.feeCand) + '）' : '') + 'です。未入金は' + fmtCount(s.openCount) + '、合計' + fmtYen(s.openTotal) + 'です。'
     }
     if (what === 'manual') {
       return '入金 ' + depositId + 'を、' + invoiceId + 'に消し込みました。要確認は残り' + fmtCount(s.check) + '、未入金の合計は' + fmtYen(s.openTotal) + 'です。'
@@ -313,15 +320,19 @@
 
   var STATUS = Object.freeze({
     exact: Object.freeze({ label: '消し込み済み', icon: 'i-tick' }),
-    fee: Object.freeze({ label: '手数料差し引き', icon: 'i-fee' }),
     bundle: Object.freeze({ label: 'まとめて入金', icon: 'i-docs' }),
     manual: Object.freeze({ label: '手で消し込み', icon: 'i-pencil' }),
-    check: Object.freeze({ label: '要確認', icon: 'i-alert' })
+    check: Object.freeze({ label: '要確認', icon: 'i-alert' }),
+    fee: Object.freeze({ label: '手数料候補（要確認）', icon: 'i-fee' })
   })
-  function statusTag (kind) {
-    var S = STATUS[kind]
-    return add(el('span', 'status status--' + kind + ' nw'), [icon(S.icon, 16), S.label])
+  // 手数料の範囲の差は消し込まず、要確認の中の「手数料候補」として札を変える
+  function statusTag (kind, reason) {
+    var key = kind === 'check' && reason === 'fee' ? 'fee' : kind
+    var S = STATUS[key]
+    return add(el('span', 'status status--' + key + ' nw'), [icon(S.icon, 16), S.label])
   }
+  // 要確認の理由と、タイルの内訳での呼び方（この順に並べる）
+  var CHECK_KINDS = Object.freeze([['fee', '手数料候補'], ['dup', '同じ金額の請求'], ['multi', '合う組が複数'], ['mismatch', '金額違い'], ['unknown', '名義不明'], ['noopen', '請求なし']])
   function aliasTag () { return el('span', 'alias-tag nw', '別の名義で一致') }
 
   var reduced = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -421,12 +432,20 @@
     var s = summary(state.result)
     var ul = el('ul', 'tiles')
     ul.appendChild(tile('exact', s.exact, s.aliasExact ? ['うち', nw('別の名義で一致'), ' ', nw(fmtCount(s.aliasExact))] : null))
-    ul.appendChild(tile('fee', s.fee, ['振込手数料の差額 ', nw(fmtYen(s.feeTotal))]))
     ul.appendChild(tile('bundle', s.bundle, ['当てた請求 ', nw(fmtCount(s.bundleInvoices))]))
-    ul.appendChild(tile('manual', s.manual, s.manual ? null : ['要確認から選んで消し込めます']))
+    ul.appendChild(tile('manual', s.manual, s.manual ? null : ['金額が同じ候補を選んで消し込めます']))
     var firstCheck = null
-    state.result.dep.forEach(function (d) { if (!firstCheck && state.result.rows[d.id].kind === 'check') firstCheck = d.id })
-    ul.appendChild(tile('check', s.check, s.check ? ['結果の一覧で確かめてください'] : null,
+    // 「要確認へ」の行き先は入金番号の順で最初の要確認（表示の順と同じ）
+    DEPOSITS.forEach(function (d) { if (!firstCheck && state.result.rows[d.id].kind === 'check') firstCheck = d.id })
+    // 要確認の内訳（0件の理由は出さない）
+    var why = []
+    CHECK_KINDS.forEach(function (k) {
+      var n = 0
+      Object.keys(state.result.rows).forEach(function (id) { var r = state.result.rows[id]; if (r.kind === 'check' && r.reason === k[0]) n++ })
+      if (n) { if (why.length) why.push('・'); why.push(nw(k[1] + fmtCount(n))) }
+    })
+    var checkSub = why.length ? ['うち'].concat(why) : null
+    ul.appendChild(tile('check', s.check, checkSub,
       firstCheck ? pageLink('要確認へ', function () { goTo('pay-' + firstCheck + '-h') }) : null))
     var op = el('li', 'tile tile--open')
     op.appendChild(el('p', 'tile__label', '未入金の合計'))
@@ -466,20 +485,47 @@
     return add(el('p', 'pay__diff'), [el('span', 'pay__diff-label', label), ' ', add(el('span', 'pay__diff-val' + (cls ? ' ' + cls : '')), valKids)])
   }
   function reasonText (row) {
-    if (row.reason === 'unknown') return ['この振込名義は、取引先の表（登録の名義・別の名義）にありません。実際のページでは、ここから別の名義に足せます。']
+    if (row.reason === 'unknown') return ['この振込名義は、取引先の表（登録の名義・別の名義）にありません。']
+    if (row.reason === 'noopen' && row.near) {
+      return [partnerParts(row.p), 'には、未入金の請求がありません。', nw(row.near.id), '（', nw(fmtYen(row.near.amount)), '）は、' + (row.near.later ? '後' : '先') + 'の入金でぴったり消し込み済みです。この入金は', nw(fmtYen(row.near.diff)), '少ない別の振込です。何の入金かを取引先に確かめてください。']
+    }
     if (row.reason === 'noopen') return [partnerParts(row.p), 'には、未入金の請求がありません。二重の振込か、先の分の入金かを確かめてください。']
+    if (row.reason === 'fee') return [partnerParts(row.p), 'の未入金の請求との差が、振込手数料の差額（', nw(FEE_RANGE), '）の範囲です。手数料か一部の入金かを確かめるまで、請求は未入金に残します。']
+    if (row.reason === 'dup') return [partnerParts(row.p), 'には、同じ金額の請求が複数あり、どれへの入金か自動では決めませんでした。確かめてから選んでください。']
+    if (row.reason === 'multi') return [partnerParts(row.p), 'の未入金の請求に、合計が入金額と同じになる組み合わせが2つ以上あります。どの請求への入金かを確かめてください。']
     var tail = row.openCount > 1 ? '）にも、2件以上の合計にも当たりません。' : '）にも当たりません。'
     return [partnerParts(row.p), 'の未入金の請求と、金額が合いません。振込手数料の差額（', nw(FEE_RANGE), tail]
   }
-  function candBlock (d, cands) {
+  // 候補の中身（請求番号・取引先・金額・差）。選べる候補は radio の後ろ、選べない候補はそのまま並べる
+  function candFace (c, x, selectable) {
+    var face = add(el('span', 'cand__face'), [
+      selectable ? el('span', 'cand__dot') : null,
+      add(el('span', 'cand__body'), [
+        add(el('span', 'cand__l1'), [nw(c.id, 'cand__id'), hid('、'), partnerParts(x.p, 'cand__p')]),
+        hid('、'),
+        add(el('span', 'cand__l2'), [nw(fmtYen(c.amount), 'cand__amt'), hid('、'), el('span', 'cand__sep', '・'), nw(fmtDiff(c.diff), 'cand__diff')])
+      ])
+    ])
+    if (selectable) face.firstChild.setAttribute('aria-hidden', 'true')
+    face.querySelector('.cand__sep').setAttribute('aria-hidden', 'true')
+    return face
+  }
+  // 手で消し込めるのは、金額が同じ候補（差なし）だけ。差額のある候補は参考に見せるだけで選べない
+  function candBlock (d, cands, row) {
     var frag = document.createDocumentFragment()
     if (!cands.length) { frag.appendChild(el('p', 'pay__none', '当てられる請求がありません。')); return frag }
-    var fs = el('fieldset', 'cands')
-    fs.appendChild(add(el('legend', 'cands__title'), ['当てる請求を選んでください（候補', nw(fmtCount(cands.length)), '）']))
+    var okN = cands.filter(function (c) { return c.ok }).length
+    var fs = el(okN ? 'fieldset' : 'div', 'cands')
+    var n = nw(fmtCount(cands.length))
+    var title = row.reason === 'unknown'
+      ? ['金額が近い参考候補です。振込元を確認してから請求を選んでください（候補', n, '）']
+      : okN ? ['当てる請求を選んでください（候補', n, '）'] : ['候補の請求（', n, '）']
+    fs.appendChild(add(el(okN ? 'legend' : 'p', 'cands__title'), title))
     var pick = state.sel[d.id]
     var name = 'cand-' + d.id
     cands.forEach(function (c) {
       var x = findIn(INVOICES, c.id)
+      if (!c.ok) { fs.appendChild(add(el('div', 'cand cand--ref'), [candFace(c, x, false)])); return }
       var input = el('input', 'cand__input visually-hidden')
       input.type = 'radio'
       input.name = name
@@ -492,19 +538,12 @@
         go.removeAttribute('aria-disabled')
         $('go-why-' + d.id).hidden = true
       })
-      var face = add(el('span', 'cand__face'), [
-        el('span', 'cand__dot'),
-        add(el('span', 'cand__body'), [
-          add(el('span', 'cand__l1'), [nw(c.id, 'cand__id'), hid('、'), partnerParts(x.p, 'cand__p')]),
-          hid('、'),
-          add(el('span', 'cand__l2'), [nw(fmtYen(c.amount), 'cand__amt'), hid('、'), el('span', 'cand__sep', '・'), nw(fmtDiff(c.diff), 'cand__diff')])
-        ])
-      ])
-      face.firstChild.setAttribute('aria-hidden', 'true')
-      face.querySelector('.cand__sep').setAttribute('aria-hidden', 'true')
-      fs.appendChild(add(el('label', 'cand'), [input, face]))
+      fs.appendChild(add(el('label', 'cand'), [input, candFace(c, x, true)]))
     })
     frag.appendChild(fs)
+    // 手数料候補は理由の文で「未入金に残す」と言っているので、注記を重ねない
+    if (okN < cands.length && row.reason !== 'fee') frag.appendChild(el('p', 'cands__note', '金額が合わない候補は、ここでは消し込めません。差額の理由を確かめるまで、請求は未入金に残します。'))
+    if (!okN) return frag
     var go = el('button', 'btn-sub cands__go', 'この請求で消し込む')
     go.type = 'button'
     go.id = 'go-' + d.id
@@ -533,15 +572,12 @@
       add(el('span', 'pay__row'), [nw(d.name, 'pay__name kana'), hid('、'), nw(fmtYen(d.amount), 'pay__amt')])
     ])
     li.appendChild(h)
-    var st = add(el('p', 'pay__status'), [hid('判定：'), statusTag(row.kind)])
-    if (row.via === 'alias' && row.kind !== 'check') { st.appendChild(hid('、')); st.appendChild(aliasTag()) }
+    var st = add(el('p', 'pay__status'), [hid('判定：'), statusTag(row.kind, row.reason)])
+    if (row.via === 'alias') { st.appendChild(hid('、')); st.appendChild(aliasTag()) }
     li.appendChild(st)
     if (row.kind === 'exact') {
       li.appendChild(invBlock('当てた請求', row.invoices))
       li.appendChild(diffLine('差額', [nw('0円')]))
-    } else if (row.kind === 'fee') {
-      li.appendChild(invBlock('当てた請求', row.invoices))
-      li.appendChild(diffLine('振込手数料の差額', [nw(fmtYen(row.diff))], 'pay__diff-val--fee'))
     } else if (row.kind === 'bundle') {
       var sum = 0
       row.invoices.forEach(function (id) { sum += findIn(INVOICES, id).amount })
@@ -549,10 +585,10 @@
       li.appendChild(diffLine('差額', [nw('0円'), '（', nw(fmtCount(row.invoices.length)), 'の合計 ', nw(fmtYen(sum)), '）']))
     } else if (row.kind === 'manual') {
       li.appendChild(invBlock('当てた請求（手で選んだもの）', row.invoices))
-      li.appendChild(diffLine('差額', [nw(row.diff === 0 ? '0円' : fmtDiff(row.diff))]))
+      li.appendChild(diffLine('差額', [nw('0円')]))
     } else {
       li.appendChild(add(el('p', 'pay__reason'), reasonText(row)))
-      li.appendChild(candBlock(d, candidates(state.result, d.id)))
+      li.appendChild(candBlock(d, candidates(state.result, d.id), row))
     }
     return li
   }
@@ -647,7 +683,7 @@
     delete state.sel[depId]
     // ほかのカードで選んでいた候補が無くなったら、選択を外す
     Object.keys(state.sel).forEach(function (k) {
-      if (!candidates(state.result, k).some(function (c) { return c.id === state.sel[k] })) delete state.sel[k]
+      if (!candidates(state.result, k).some(function (c) { return c.id === state.sel[k] && c.ok })) delete state.sel[k]
     })
     render()
     $('pay-' + depId + '-h').focus()

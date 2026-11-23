@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>カフェ ユメツム（デモ）入金の消し込み｜TENKA LAB</title>
-  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。焼き菓子を卸すお店の、請求の一覧と通帳の入金を突き合わせて、消し込み済み・振込手数料の差額・まとめて入金・要確認に分ける見本です。お店・取引先・金額・入金はすべて架空です。">
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。焼き菓子を卸すお店の、請求の一覧と通帳の入金を突き合わせて、消し込み済み・まとめて入金・要確認（振込手数料の差額の候補を含む）に分ける見本です。お店・取引先・金額・入金はすべて架空です。">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#6B4A34">
   <meta property="og:type" content="website">
   <meta property="og:title" content="カフェ ユメツム（デモ）入金の消し込み｜TENKA LAB">
-  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。焼き菓子を卸すお店の、請求の一覧と通帳の入金を突き合わせて、消し込み済み・振込手数料の差額・まとめて入金・要確認に分ける見本です。お店・取引先・金額・入金はすべて架空です。">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。焼き菓子を卸すお店の、請求の一覧と通帳の入金を突き合わせて、消し込み済み・まとめて入金・要確認（振込手数料の差額の候補を含む）に分ける見本です。お店・取引先・金額・入金はすべて架空です。">
   <meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/assets/thumbs/33-payment-pc.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 9h12l-1.5 10h-9z' fill='%236B4A34'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -92,7 +92,7 @@
           <p class="hero__tag nw">デモ（架空のお店）</p>
           <p class="hero__kind">焼き菓子の卸｜入金の消し込み</p>
           <h1 class="h1 nw" id="h-top">カフェ ユメツム</h1>
-          <p class="hero__lead">近所のお店に焼き菓子を卸しているカフェの、月末の入金の確認です。請求の一覧と通帳の入金を、ボタン1つで突き合わせます。合わないものだけを人が確かめて、手で消し込めます。</p>
+          <p class="hero__lead">近所のお店に焼き菓子を卸しているカフェの、月末の入金の確認です。請求の一覧と通帳の入金を、ボタン1つで突き合わせます。合わないものは人が確かめ、金額が同じ請求だけを手で消し込めます。</p>
           <p class="hero__link"><a class="inline-link" href="#match" id="to-match">突き合わせるボタンへ</a></p>
           <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>お店・取引先・金額・入金はすべて<span class="nw">架空</span>です。</span></p>
           <p class="hero__today">デモの今日：<span class="nw">2026年12月25日（金）</span>（端末の時計は使っていません）</p>
@@ -150,7 +150,7 @@
         <div class="match__act">
           <p class="sec__en">MATCH</p>
           <h2 id="h-match" class="sec__title" tabindex="-1">突き合わせる</h2>
-          <p class="sec__lead">名義と金額を、決まった順に1行ずつ比べます。振込手数料の差額は<span class="nw">1〜880円</span>まで（架空。実際は取引先ごとに決めます）。合わないものは自動では消しません。</p>
+          <p class="sec__lead">振込名義で取引先を決めてから、金額を比べます。金額がぴったりの入金を先に当て、振込手数料の差額（<span class="nw">1〜880円</span>。架空で、実際は取引先ごとに決めます）に当たる入金は<span class="nw">「手数料候補」</span>として<span class="nw">要確認</span>に回します。当てる請求が1つに決まらないものは自動では消しません。</p>
           <button type="button" class="btn-main match__run" id="run"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-merge"/></svg><span class="nw">突き合わせる</span></button>
           <p class="match__runnote" id="run-note">請求 15件と、通帳の入金 12行を突き合わせます。</p>
           <button type="button" class="btn-sub match__reset" id="reset" hidden><span class="nw">最初に戻す</span></button>
@@ -164,7 +164,7 @@
       <div class="wrap">
         <p class="sec__en">RESULT</p>
         <h2 id="h-result" class="sec__title" tabindex="-1">結果の一覧</h2>
-        <p class="sec__lead">通帳の入金ごとに、判定と、どの請求に当てたかを出しています。</p>
+        <p class="sec__lead">通帳の入金ごとに、判定と、どの請求に当てたかを出しています。自動で消すのは、当てる請求が1つに決まる入金だけです。金額が同じ候補がある<span class="nw">3件</span>は、この画面で手で消し込めます。</p>
         <p class="result__empty" id="result-empty">「突き合わせる」を押すと、ここに入金ごとの結果が出ます。</p>
         <ol class="pays" id="pays" hidden></ol>
         <p class="result__note">判定はこのページの中だけで行い、保存も送信もしません。手で消し込んだ内容も、再読み込みで消えます。</p>
@@ -178,7 +178,6 @@
         <h2 id="h-open" class="sec__title" tabindex="-1">未入金の一覧</h2>
         <p class="sec__lead">デモの今日 <span class="nw">12月25日（金）</span>の時点で、まだ入金が当たっていない請求です。期日を過ぎたものを上に並べています。</p>
         <div class="open__body" id="open-body"></div>
-        <p class="open__note">実際のページでは、期日を過ぎた請求から、お知らせの文面の下書きを作れます（送るのはお店の方です）。</p>
       </div>
     </section>
 
@@ -187,22 +186,22 @@
       <div class="wrap">
         <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
         <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
-        <p class="lab-lead">毎月の入金の確認を、表計算の中で毎日進められるようにします。合わないものだけを人が見る形にして、確かめる行を<span class="nw">減らす</span>ための見本です。</p>
+        <p class="lab-lead">毎月の入金の確認を、表計算の中で進められるようにします。合わないものだけを人が見る形にして、確かめる行を<span class="nw">減らす</span>ための見本です。</p>
         <ul class="work-3">
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>
-            <h3>入金を毎日読み込む</h3>
-            <ul><li>ネットバンキングからダウンロードした入金の CSV を、Googleスプレッドシート（GAS）か Excel に読み込み、毎朝突き合わせる形にできます</li><li>名義の全角・半角や空白の揺れも、決まりを決めてそろえられます</li></ul>
+            <h3>入金の CSV を取り込む</h3>
+            <ul><li>ネットバンキングから用意した入金の CSV を Googleスプレッドシート（GAS）か Excel に取り込み、設定した時刻に照合できます</li><li>名義の全角・半角や空白の揺れも、決まりを決めてそろえられます</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-lens"/></svg>
             <h3>合わないものだけ人が見る</h3>
-            <ul><li>要確認の行だけを一覧にします</li><li>別の名義の表は、使うほどお店の手で育てられます</li></ul>
+            <ul><li>要確認の行だけを一覧にします</li><li>受託制作では、名義が分からない入金から、取引先の別の名義を登録する画面を追加できます</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg>
             <h3>期日を過ぎた請求のご連絡</h3>
-            <ul><li>期日を過ぎた請求の取引先ごとに、お知らせの文面の下書きを作ります</li><li>送るのはお店の方です</li></ul>
+            <ul><li>受託制作では、期日を過ぎた請求の取引先ごとに、お知らせの文面の下書きを作る機能を追加できます</li><li>送るのはお店の方です</li></ul>
           </li>
         </ul>
         <div class="work-check">
