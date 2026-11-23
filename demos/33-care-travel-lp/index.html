@@ -136,12 +136,12 @@
           <li class="help__row help__row--ok" data-scene="meal"><h3 class="help__scene">食事</h3><p class="help__chip"><span class="chip chip--ok nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-ok"/></svg><span>手伝える</span></span></p><p class="help__text">宿とお店の食事で、席までのご案内・取り分け・小さく切るなどをお手伝いします。食べ物の形は、宿・お店とご相談のうえで決めます。</p></li>
           <li class="help__row help__row--ask" data-scene="toilet"><h3 class="help__scene">お手洗い</h3><p class="help__chip"><span class="chip chip--ask nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-ask"/></svg><span>相談のうえ</span></span></p><p class="help__text">入口までの付き添いと、扉の外での待機はできます。中でのお手伝いは、事前のご相談のうえで決めます。宿のお部屋のお手洗いの様子も、前もって確かめます。</p></li>
           <li class="help__row help__row--ask" data-scene="bath"><h3 class="help__scene">入浴</h3><p class="help__chip"><span class="chip chip--ask nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-ask"/></svg><span>相談のうえ</span></span></p><p class="help__text">浴場までの付き添いと、脱衣所の外での見守りはできます。体を洗う・湯船の出入りのお手伝いは、事前のご相談のうえで決めます。お部屋のお風呂や貸切のお風呂は、宿の空きによります。</p></li>
-          <li class="help__row help__row--no" data-scene="medicine"><h3 class="help__scene">お薬</h3><p class="help__chip"><span class="chip chip--no nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-no"/></svg><span>できない</span></span></p><p class="help__text">お薬はご本人・ご家族の管理です。時間の声かけのみ行います。飲ませる・塗る・貼るなどはできません。</p></li>
+          <li class="help__row help__row--no" data-scene="medicine"><h3 class="help__scene">お薬</h3><p class="help__chip"><span class="chip chip--no nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-no"/></svg><span>できない</span></span></p><p class="help__text">お薬はご本人・ご家族の管理です。時間の声かけだけ行います。飲ませる・塗る・貼るなどはできません。</p></li>
           <li class="help__row help__row--ask" data-scene="night"><h3 class="help__scene">夜間</h3><p class="help__chip"><span class="chip chip--ask nw"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-ask"/></svg><span>相談のうえ</span></span></p><p class="help__text">「夜間の見守り」をつけると、スタッフが近くの部屋で待機し、呼ばれたら<span class="nw">うかがいます</span>。同じ部屋での付き添いや、夜中のお手洗いのお手伝いは、ご相談のうえで決めます。</p></li>
         </ul>
         <div class="help__note">
           <svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-no"/></svg>
-          <p>医療行為（たんの吸引・注射・傷の手当てなど）は、どのプランでもできません。</p>
+          <p>医療行為（たんの吸引・注射・床ずれの処置など）は、どのプランでもできません。</p>
         </div>
         <p class="help__foot">付き添いスタッフ<span class="nw">（架空）</span>が、ご本人のそばでお手伝いします。ここに書いた範囲は目安です。事前の相談で、ご本人の様子に合わせて決め直します。</p>
       </div>
@@ -176,20 +176,21 @@
                 <button type="button" class="opt est__night" data-night="off" aria-pressed="true"><span class="opt__mark"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">なし</span></button>
                 <button type="button" class="opt est__night" data-night="on" aria-pressed="false"><span class="opt__mark"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="opt__name nw">あり</span></button>
               </div>
-              <p class="est__note" id="night-desc">あり：スタッフが近くの部屋で待機し、呼ばれたら<span class="nw">うかがいます</span><span class="nw">（1泊につき 12,000円）</span>。</p>
+              <p class="est__note" id="night-desc">あり：スタッフが近くの部屋で待機し、呼ばれたら<span class="nw">うかがいます</span>（別室で呼び出しを待つ形・<span class="nw">1泊につき 12,000円</span>）。</p>
               <p class="est__off" id="night-off" hidden>日帰りのため、夜間の見守りはありません。</p>
             </div>
           </div>
           <div class="est__side">
             <div class="est__result" id="est-result">
-              <p class="est__cap">料金の目安<span class="nw">（ご本人1名分・税込・架空）</span></p>
+              <p class="est__cap">交通・宿と付き添い料を合わせた目安<span class="nw">（ご本人1名分・税込・架空）</span></p>
               <p class="est__total"><span class="nw" id="est-total">101,000<span class="est__yen">円</span></span></p>
               <dl class="est__dl">
-                <div><dt>旅行代金の目安</dt><dd><span class="nw" id="est-trip">46,000円</span></dd></div>
-                <div><dt id="est-staff-dt">付き添い料（<span class="nw">スタッフ1名</span>）</dt><dd><span class="nw" id="est-staff">55,000円</span><span class="est__per" id="est-per"><span class="nw">1名 55,000円</span> <span class="nw">× 1名</span></span></dd></div>
-                <div><dt>夜間の見守り</dt><dd id="est-night"><span class="nw">0円</span>（なし）</dd></div>
+                <div><dt>旅行代金の目安<span class="est__payto">払う先：交通機関・宿</span></dt><dd><span class="nw" id="est-trip">46,000円</span></dd></div>
+                <div><dt><span id="est-staff-dt">付き添い料（<span class="nw">スタッフ1名</span>）</span><span class="est__payto">払う先：<span class="nw">付き添い旅行 ヒナタミチ</span></span></dt><dd><span class="nw" id="est-staff">55,000円</span><span class="est__per" id="est-per"><span class="nw">1名 55,000円</span> <span class="nw">× 1名</span></span></dd></div>
+                <div><dt>夜間の見守り<span class="est__payto">払う先：<span class="nw">付き添い旅行 ヒナタミチ</span></span></dt><dd id="est-night"><span class="nw">0円</span>（なし）</dd></div>
               </dl>
-              <p class="est__note est__note--res">交通・宿の空き・体の様子で変わります。正式な金額は、ご相談のあとにお伝えします。</p>
+              <p class="est__note est__note--res">交通・宿は、お客様が交通機関・宿へ直接ご予約のうえ、代金も直接お払い<span class="nw">いただきます</span>（架空の設定）。<span class="nw">付き添い旅行 ヒナタミチ</span>がお受けするのは、付き添いだけです。</p>
+              <p class="est__note">交通・宿の空き・体の様子で変わります。表示額は架空の試算です。実際の見積もりは行いません。</p>
               <p class="est__note">ご家族が一緒に行く場合、ご家族の旅行代金は別にかかります。</p>
             </div>
             <p class="est__cta"><button type="button" class="btn-main" id="price-cta" aria-controls="notice"><span class="btn-main__text"><span class="nw">旅の相談をする</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></p>
@@ -209,7 +210,7 @@
           <li class="flow__step"><span class="flow__num" aria-hidden="true">3</span><p class="flow__time nw">9:30〜11:00ごろ</p><h3 class="flow__title">移動</h3><p class="flow__text">車か電車で向かいます。途中で、休憩とお手洗いの時間をとります。</p></li>
           <li class="flow__step"><span class="flow__num" aria-hidden="true">4</span><p class="flow__time nw">11:00〜14:00ごろ</p><h3 class="flow__title">庭園の散策と昼食</h3><p class="flow__text">歩く距離は、その日の体の様子で決めます。車いすの時は、前もって確かめた道を通ります。</p></li>
           <li class="flow__step"><span class="flow__num" aria-hidden="true">5</span><p class="flow__time nw">14:00〜15:00ごろ</p><h3 class="flow__title">休憩</h3><p class="flow__text">座れる場所で、お茶を飲みながら<span class="nw">ひと休みします</span>。</p></li>
-          <li class="flow__step"><span class="flow__num" aria-hidden="true">6</span><p class="flow__time nw">15:00〜16:30ごろ</p><h3 class="flow__title">お送り</h3><p class="flow__text">ご自宅までお送りし、ご家族に今日の様子をお伝えします。</p></li>
+          <li class="flow__step"><span class="flow__num" aria-hidden="true">6</span><p class="flow__time nw">15:00〜16:30ごろ</p><h3 class="flow__title">お送り</h3><p class="flow__text">ご自宅までお送りし、ご本人が了承した相手に、了承した範囲で今日の様子をお伝えします。</p></li>
         </ol>
         <p class="flow__foot"><span class="nw">1泊2日</span>・<span class="nw">2泊3日</span>は、宿での休み方と次の日の流れを、ご相談のうえで決めます。</p>
       </div>
@@ -230,7 +231,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">旅行中に体調が悪くなったら？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
-            <div class="faq__a"><p>無理をせず、休憩をとるか、予定を短くします。事前に伺ったご家族の連絡先へご連絡し、病院にかかるかどうかは、ご家族とご相談のうえで決めます。急ぎの時は救急に連絡します。スタッフが医療行為をすることはできません。</p></div>
+            <div class="faq__a"><p>急ぎの時は、まず119番に連絡し、ご家族にもお知らせします。急ぎでない時は、無理をせず休憩するか予定を短くし、ご本人のお気持ちを伺って、必要に応じてご本人が了承したご家族にご連絡します。スタッフが医療行為をすることはできません。</p></div>
           </details>
           <details class="faq__item">
             <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">キャンセルはできますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
@@ -248,11 +249,11 @@
         <ul class="door">
           <li class="card door__item">
             <span class="door__icon"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-talk"/></svg></span>
-            <div class="door__body"><h3>ご本人から</h3><p>「行ってみたい」の気持ちからで大丈夫です。体のことで気になることを、そのまま<span class="nw">お聞かせください</span>。</p></div>
+            <div class="door__body"><h3>ご本人から</h3><p>「行ってみたい」の気持ちからで大丈夫です。体のことは、ご本人が了承した範囲でお聞きします。</p></div>
           </li>
           <li class="card door__item">
             <span class="door__icon"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-home"/></svg></span>
-            <div class="door__body"><h3>ご家族から</h3><p>離れて暮らすご家族からのご相談もお受けします。ご本人の様子を、分かる範囲で<span class="nw">お聞かせください</span>。</p></div>
+            <div class="door__body"><h3>ご家族から</h3><p>離れて暮らすご家族からのご相談もお受けします。ご本人の様子は、ご本人が了承した範囲で<span class="nw">お聞かせください</span>。</p></div>
           </li>
           <li class="card door__item">
             <span class="door__icon"><svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg></span>
@@ -267,7 +268,7 @@
       <div class="wrap col">
         <div class="card apply__card">
           <h2 class="sec__title" id="h-apply" tabindex="-1">旅の相談</h2>
-          <p class="apply__text">行きたい所・時期・気になる体のことを、まずは<span class="nw">お聞かせください</span>。相談のあとで、手伝える範囲と料金の目安をお伝えします。</p>
+          <p class="apply__text">行きたい所・時期と、付き添いで手伝ってほしいことを、まずは<span class="nw">お聞かせください</span>。体のことは、ご本人が了承した範囲で<span class="nw">うかがいます</span>。相談のあとで、手伝える範囲と料金の目安をお伝えします。</p>
           <p class="apply__act"><button type="button" class="btn-main" id="apply-cta" aria-controls="notice"><span class="btn-main__text"><span class="nw">旅の相談をする</span><wbr><span class="nw">（デモ）</span></span><svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></p>
           <div class="notice" id="notice" hidden>
             <svg width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg>

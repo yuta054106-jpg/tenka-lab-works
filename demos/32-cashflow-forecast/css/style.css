@@ -170,6 +170,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
 .chart__legend { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px 16px; margin-top: 12px; }
 .chart__item { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 1.6; color: var(--c-text); }
 .chart__key { width: 32px; height: 16px; }
+.summary__note { margin-top: 12px; color: var(--c-sub); font-size: 14px; line-height: 1.7; max-width: 40em; }
 .chart__note { margin-top: 12px; color: var(--c-sub); font-size: 14px; line-height: 1.7; max-width: 40em; }
 
 /* 日ごとの残高の表（details） */

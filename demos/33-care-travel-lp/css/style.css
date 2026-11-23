@@ -267,6 +267,7 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
 .est__dl dd { margin-top: 2px; font-weight: 700; text-align: right; }
 .est__per { display: block; color: var(--c-sub); font-size: var(--f-note); font-weight: 400; line-height: 1.6; }
 .est__note--res { margin-top: 16px; }
+.est__payto { display: block; color: var(--c-sub); font-size: var(--f-note); font-weight: 400; line-height: 1.5; }
 .est__cta { margin-top: 24px; }
 
 /* ---------- 当日の流れ ---------- */

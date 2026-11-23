@@ -47,9 +47,9 @@
   // ---------- もしも4個（この順が表示の順） ----------
   var WHATIFS = Object.freeze([
     it({ key: 'late', title: '取引先A 雑貨店（架空）の入金が1週間遅れたら', desc: '12月28日（月）の 80,000円が、1月4日（月）に' }),
-    it({ key: 'sales', title: '12月の店の売上の入金が1割少なかったら', desc: '12月中のカード・QR 決済・現金の入金10件が1割少なく（合わせて −91,000円）' }),
+    it({ key: 'sales', title: '12月中のカード・QR 決済の入金と現金の預け入れが1割少なかったら', desc: '対象は10件、合わせて −91,000円' }),
     it({ key: 'equip', title: '設備の買い替え（架空 150,000円）を12月14日に払ったら', desc: '12月14日（月）に 150,000円の支払いを足す' }),
-    it({ key: 'delay', title: '仕入れ先A 製菓材料店（架空）への支払いを1週間後ろにできたら', desc: '12月31日（木）の 300,000円が、1月7日（木）に（相談できた場合の仮の形）' })
+    it({ key: 'delay', title: '仕入れ先A 製菓材料店（架空）への支払いを1週間後ろにできたら', desc: '12月31日（木）の 300,000円が、1月7日（木）に（仕入れ先が支払日の変更に同意した場合の試算）' })
   ])
   var WKEYS = Object.freeze(WHATIFS.map(function (w) { return w.key }))
 
@@ -364,7 +364,7 @@
     clear(box)
     var s = r.s
     var base = anyOn()
-    var t1 = add(el('li', 'tile'), [el('p', 'tile__label', '今日の残高'), yenNum(START), el('p', 'tile__sub', '架空の口座')])
+    var t1 = add(el('li', 'tile'), [p('tile__label', '12月1日の始まりの残高'), yenNum(START), el('p', 'tile__sub', '架空の口座')])
     var t2 = add(el('li', 'tile'), [el('p', 'tile__label', '6週間の終わりの残高'), yenNum(s.final), p('tile__sub', fmtDay(DAYS - 1)), base ? baseLine(fmtYen(BASE_SUM.final)) : null])
     var t3 = add(el('li', 'tile tile--low'), [el('p', 'tile__label', 'いちばん低い日'), p('tile__day', fmtDay(s.minDay)), yenNum(s.min, 'tile__num--low'), el('p', 'tile__sub', '同じ額の日があれば早い日'), base ? baseLine(fmtDay(BASE_SUM.minDay) + '・' + fmtYen(BASE_SUM.min)) : null])
     var n4 = add(el('p', 'tile__num' + (s.below > 0 ? ' tile__num--below' : '')), [s.below > 0 ? icon('i-alert', 16, 'tile__alert') : null, String(s.below), el('span', 'tile__unit', '日')])

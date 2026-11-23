@@ -86,7 +86,7 @@
           <p class="hero__tag nw">デモ（架空のお店）</p>
           <p class="hero__kind">カフェの事務｜資金繰りの見通し</p>
           <h1 class="h1 nw" id="h-top">カフェ ユメツム</h1>
-          <p class="hero__lead">入金と支払いの予定を日付の順に積み上げて、6週間先までの口座の残高を日ごとに出します。いちばん低い日と、安全ラインを下回る日がひと目で分かります。「もしも」を選ぶと、入金が遅れた時などの見通しに切り替わります。</p>
+          <p class="hero__lead">入金と支払いの予定を日付の順に積み上げて、6週間先までの口座の残高を日ごとに出します。いちばん低い日と、安全ライン<span class="nw">（架空の設定額）</span>を下回る日がひと目で分かります。残高は日の終わりの額で見ています。同じ日の入金と支払いの順番による一時的な不足は、この見通しでは分かりません。「もしも」を選ぶと、入金が遅れた時などの見通しに切り替わります。</p>
           <p class="hero__link"><a class="inline-link" href="#whatif" id="to-whatif">もしもを試す</a></p>
           <p class="hero__note"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span>お店・取引先・金額・予定はすべて<span class="nw">架空</span>です。</span></p>
           <p class="hero__today">デモの今日：<span class="nw">2026年12月1日（火）</span>（端末の時計は使っていません）</p>
@@ -101,6 +101,7 @@
         <h2 id="h-summary" class="sec__title">6週間のまとめ</h2>
         <p class="sec__lead"><span class="nw">12月1日（火）</span>から<span class="nw">1月11日（月）</span>までの<span class="nw">42日</span>です。</p>
         <ul class="tiles" id="tiles"></ul>
+        <p class="summary__note">残高は日の終わりの額です。同じ日の入金と支払いの順番による一時的な不足は、この見通しでは分かりません。</p>
       </div>
     </section>
 
@@ -123,7 +124,7 @@
               </table>
             </div>
           </details>
-          <p class="chart__note">土日・年末年始も予定の日のまま数えています。実際は銀行の休みで前後します。</p>
+          <p class="chart__note">土日・年末年始も予定の日のまま数えています。実際の入出金日は、契約や決済サービス、金融機関の取り扱いによって異なります。</p>
         </div>
       </section>
 
@@ -136,9 +137,9 @@
             <p class="sec__lead">選ぶと、すぐに見通しが変わります。いくつでも重ねられます。</p>
             <ul class="wi__list">
               <li><button type="button" class="wi__btn" id="wi-late" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">取引先A</span> <span class="nw">雑貨店（架空）</span>の入金が<span class="nw">1週間</span>遅れたら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月28日（月）</span>の <span class="nw">80,000円</span>が、<span class="nw">1月4日（月）</span>に</span></button></li>
-              <li><button type="button" class="wi__btn" id="wi-sales" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title">12月の店の売上の入金が1割少なかったら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc">12月中のカード・QR 決済・現金の入金<span class="nw">10件</span>が1割少なく（合わせて <span class="nw">−91,000円</span>）</span></button></li>
+              <li><button type="button" class="wi__btn" id="wi-sales" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title">12月中のカード・QR 決済の入金と現金の預け入れが1割少なかったら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc">対象は<span class="nw">10件</span>、合わせて <span class="nw">−91,000円</span></span></button></li>
               <li><button type="button" class="wi__btn" id="wi-equip" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">設備の買い替え</span><span class="nw">（架空 150,000円）</span>を<span class="nw">12月14日</span>に払ったら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月14日（月）</span>に <span class="nw">150,000円</span>の支払いを足す</span></button></li>
-              <li><button type="button" class="wi__btn" id="wi-delay" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">仕入れ先A</span> <span class="nw">製菓材料店（架空）</span>への支払いを<span class="nw">1週間</span>後ろにできたら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月31日（木）</span>の <span class="nw">300,000円</span>が、<span class="nw">1月7日（木）</span>に（相談できた場合の仮の形）</span></button></li>
+              <li><button type="button" class="wi__btn" id="wi-delay" aria-pressed="false"><span class="wi__mark" aria-hidden="true"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-tick"/></svg></span><span class="wi__title"><span class="nw">仕入れ先A</span> <span class="nw">製菓材料店（架空）</span>への支払いを<span class="nw">1週間</span>後ろにできたら</span><span class="wi__state" aria-hidden="true">オフ</span><span class="wi__desc"><span class="nw">12月31日（木）</span>の <span class="nw">300,000円</span>が、<span class="nw">1月7日（木）</span>に（仕入れ先が支払日の変更に同意した場合の試算）</span></button></li>
             </ul>
             <div class="wi__now">
               <h3>今の見通し</h3>
@@ -147,7 +148,7 @@
                 <div><dt>安全ラインを下回る日</dt><dd id="now-below" class="wi__num"></dd></div>
                 <div><dt>6週間の終わり</dt><dd id="now-final" class="wi__num"></dd></div>
               </dl>
-              <p class="wi__none" id="now-none">安全ラインを下回る日はありません。</p>
+              <p class="wi__none" id="now-none" hidden>安全ラインを下回る日はありません。</p>
             </div>
             <div class="wi__changes">
               <h3>動いた予定</h3>
