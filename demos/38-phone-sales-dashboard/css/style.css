@@ -159,6 +159,9 @@
 .app__ctable { margin-top: 8px; }
 .app__ctable td { font-weight: 700; white-space: nowrap; }
 .app__ctable thead td { background: var(--c-soft); }
+/* 行の名前「客単価（税込）」は括弧の前でだけ折る */
+.app__ctable tbody th[scope="row"] { white-space: normal; }
+.app__ctable tbody th .nw { white-space: nowrap; }
 .app__cdiff { display: flex; gap: 8px; margin-top: 8px; font-size: var(--a-note); line-height: 1.6; }
 .app__cdiff-lab { color: var(--c-sub); }
 .app__errors {

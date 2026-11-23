@@ -52,18 +52,25 @@ var Calc38 = (function () {
     }
     return out
   }
-  // 金額・客数：empty（空欄）／num（0 以上の整数）／neg（マイナス）／nan（数字でない）
+  // 金額・客数：empty（空欄）／num（0 以上の整数）／neg（マイナス）／nan（数字でない）／sep（桁区切りのカンマの位置が崩れている）
+  // 桁区切りは「1〜3桁＋（カンマ＋3桁）の繰り返し」だけ受け付ける（12,34 や 1,2345 は sep）
   function readAmount (v) {
     var s = toHalf(clean(v))
     if (s === '') return { kind: 'empty' }
-    s = s.replace(/[,，]/g, '').replace(/円$/, '')
+    s = s.replace(/円$/, '')
     var neg = /^[-−－▲△]/.test(s)
     if (neg) s = s.slice(1)
     s = s.replace(/^[¥￥]/, '')
+    if (/[,，]/.test(s)) {
+      if (!/^\d{1,3}([,，]\d{3})+$/.test(s)) return /^[\d,，]+$/.test(s) ? { kind: 'sep' } : { kind: 'nan' }
+      s = s.replace(/[,，]/g, '')
+    }
     if (!/^\d+$/.test(s)) return { kind: 'nan' }
     if (neg) return { kind: 'neg' }
     return { kind: 'num', value: Number(s) }
   }
+  // 売上欄の「休」（「休み」も同じ）＝臨時休業の日
+  function isHolidayMark (v) { return /^休み?$/.test(clean(v)) }
   // 'YYYY-MM-DD'・'YYYY/M/D' → 'YYYY-MM-DD'。正しくなければ null
   function readDate (v) {
     var m = /^(\d{4})[-/](\d{1,2})[-/](\d{1,2})$/.exec(toHalf(clean(v)))
@@ -112,12 +119,15 @@ var Calc38 = (function () {
   }
 
   // ---------- シートを読む ----------
-  // 「売上」シート：数える行（日付ごと）・誤りの日・誤りの一覧
+  // 「売上」シート：数える行（日付ごと）・臨時休業の日・誤りの日・誤りの一覧（数えない行）・確かめてほしい行（数える行）
+  // 日付だけの行（売上も客数も空欄）は「その日の入力なし」。定休日の曜日なら定休日、そうでなければ未入力として画面に出す
   function parseSales (rows, today) {
     var counted = {}
+    var holidays = {}
     var errDays = {}
     var first = {}
     var errors = []
+    var warns = []
     rows.forEach(function (r) {
       var ds = clean(r.date)
       var ss = clean(r.sales)
@@ -129,12 +139,27 @@ var Calc38 = (function () {
         return
       }
       if (date > today) return
-      if (ss === '') return
+      if (ss === '' && cs === '') return
+      // 売上が空欄で客数だけ：売上の書き忘れかもしれないので要確認（数えない）
+      if (ss === '') {
+        errors.push({ sheet: 'sales', row: r.row, field: 'sales', kind: 'custonly', input: cs, date: date })
+        errDays[date] = true
+        return
+      }
       if (first[date]) {
         errors.push({ sheet: 'sales', row: r.row, field: 'date', kind: 'dup', input: ds, date: date, first: first[date] })
         return
       }
       first[date] = r.row
+      if (isHolidayMark(ss)) {
+        if (cs !== '') {
+          errors.push({ sheet: 'sales', row: r.row, field: 'customers', kind: 'holidaycust', input: cs, date: date })
+          errDays[date] = true
+          return
+        }
+        holidays[date] = r.row
+        return
+      }
       var a = readAmount(ss)
       if (a.kind !== 'num') {
         errors.push({ sheet: 'sales', row: r.row, field: 'sales', kind: a.kind, input: ss, date: date })
@@ -142,15 +167,20 @@ var Calc38 = (function () {
         return
       }
       var c = readAmount(cs)
-      if (c.kind === 'nan' || c.kind === 'neg') {
+      if (c.kind !== 'num' && c.kind !== 'empty') {
         errors.push({ sheet: 'sales', row: r.row, field: 'customers', kind: c.kind, input: cs, date: date })
         errDays[date] = true
         return
       }
-      counted[date] = { row: r.row, sales: a.value, customers: c.kind === 'num' ? c.value : null }
+      var cust = c.kind === 'num' ? c.value : null
+      // 売上があるのに客数0人：売上は数え、客数・客単価からは外して要確認に出す
+      var custZero = cust === 0 && a.value > 0
+      if (custZero) warns.push({ sheet: 'sales', row: r.row, field: 'customers', kind: 'custzero', input: cs, date: date })
+      counted[date] = { row: r.row, sales: a.value, customers: cust, custZero: custZero }
     })
     errors.sort(function (x, y) { return x.row - y.row })
-    return { counted: counted, errDays: errDays, errors: errors }
+    warns.sort(function (x, y) { return x.row - y.row })
+    return { counted: counted, holidays: holidays, errDays: errDays, errors: errors, warns: warns }
   }
   // 「目標」シート：年月ごとの目標・誤りの一覧
   function parseTargets (rows) {
@@ -186,23 +216,38 @@ var Calc38 = (function () {
     errors.sort(function (x, y) { return x.row - y.row })
     return { targets: targets, errors: errors }
   }
-  // 1日〜upto 日の合計
+  // 1日〜upto 日の合計。客数・客単価は「客数が入っていて、売上あり客数0人でない日」だけ（custDays 日分）
   function sumMonth (counted, ym, upto) {
-    var o = { total: 0, bizDone: 0, customers: 0, custSales: 0 }
+    var o = { total: 0, bizDone: 0, customers: 0, custSales: 0, custDays: 0 }
     for (var d = 1; d <= upto; d++) {
       var c = counted[dateOf(ym, d)]
       if (!c) continue
       o.total += c.sales
       o.bizDone++
-      if (c.customers !== null) { o.customers += c.customers; o.custSales += c.sales }
+      if (c.customers !== null && !c.custZero) { o.customers += c.customers; o.custSales += c.sales; o.custDays++ }
     }
     o.unit = o.customers > 0 ? Math.round(o.custSales / o.customers) : null
     return o
   }
-  function hasMonth (counted, ym) {
-    var D = daysInMonth(ym)
-    for (var d = 1; d <= D; d++) if (counted[dateOf(ym, d)]) return true
-    return false
+  // その日の状態：sales（数える）／error（要確認・数えない）／closed（定休日）／holiday（臨時休業）／missing（未入力）
+  function dayState (ps, date, closed) {
+    if (ps.counted[date]) return 'sales'
+    if (ps.errDays[date]) return 'error'
+    if (isClosed(date, closed)) return 'closed'
+    if (ps.holidays[date]) return 'holiday'
+    return 'missing'
+  }
+  // 1日〜upto 日の、未入力の日（今日は除く。閉店後に入れるため）と要確認の日
+  function gaps (ps, ym, upto, today, closed) {
+    var o = { missing: [], errDays: 0 }
+    for (var d = 1; d <= upto; d++) {
+      var date = dateOf(ym, d)
+      var st = dayState(ps, date, closed)
+      if (st === 'missing' && date !== today) o.missing.push(date)
+      if (st === 'error') o.errDays++
+    }
+    o.incomplete = o.missing.length > 0 || o.errDays > 0
+    return o
   }
 
   // ---------- 画面1枚分の数 ----------
@@ -226,13 +271,19 @@ var Calc38 = (function () {
     var target = Object.prototype.hasOwnProperty.call(pt.targets, ym) ? pt.targets[ym] : null
     var dailyGoal = target !== null && bizMonth > 0 ? Math.round(target / bizMonth) : null
     var restBiz = 0
+    var todayInRest = false
     if (isCurrent) {
       restBiz = openDays(ym, upto + 1, D, closed)
-      if (!isClosed(today, closed) && !ps.counted[today] && !ps.errDays[today]) restBiz += 1
+      if (dayState(ps, today, closed) === 'missing') { restBiz += 1; todayInRest = true }
     }
+    var gap = gaps(ps, ym, upto, today, closed)
+    // 前月比：今月は「前月の1日〜同じ日まで」（前月の日数で頭打ち）、過去の月は「前月の月合計（前月末まで）」
+    // 比べる期間に数える行が1件も無ければ比べない（0円の入力と区別する）
     var prevYm = addMonth(ym, -1)
-    var prevUpto = Math.min(upto, daysInMonth(prevYm))
-    var prev = hasMonth(ps.counted, prevYm) ? sumMonth(ps.counted, prevYm, prevUpto) : null
+    var prevUpto = isCurrent ? Math.min(upto, daysInMonth(prevYm)) : daysInMonth(prevYm)
+    var prevSum = sumMonth(ps.counted, prevYm, prevUpto)
+    var prev = prevSum.bizDone > 0 ? prevSum : null
+    if (prev) prev.incomplete = gaps(ps, prevYm, prevUpto, today, closed).incomplete
     var days = []
     var errDayCount = 0
     var maxDay = null
@@ -240,18 +291,18 @@ var Calc38 = (function () {
     for (var d = 1; d <= D; d++) {
       var date = dateOf(ym, d)
       var c = ps.counted[date]
-      var day = { d: d, date: date, state: 'closed', sales: null, customers: null, diffGoal: null, today: date === today }
+      var day = { d: d, date: date, state: dayState(ps, date, closed), sales: null, customers: null, custZero: false, diffGoal: null, today: date === today }
       if (d > upto) day.state = 'future'
       else if (c) {
-        day.state = 'sales'
         day.sales = c.sales
         day.customers = c.customers
+        day.custZero = c.custZero
         if (dailyGoal !== null) {
           day.diffGoal = c.sales - dailyGoal
           if (c.sales >= dailyGoal) goalDays++
         }
         if (!maxDay || c.sales > maxDay.sales) maxDay = day
-      } else if (ps.errDays[date]) { day.state = 'error'; errDayCount++ }
+      } else if (day.state === 'error') errDayCount++
       days.push(day)
     }
     var errors = ps.errors.concat(pt.errors)
@@ -275,10 +326,14 @@ var Calc38 = (function () {
       remain: target !== null ? Math.max(target - cur.total, 0) : null,
       over: target !== null ? Math.max(cur.total - target, 0) : null,
       restBiz: restBiz,
+      todayInRest: todayInRest,
       forecast: isCurrent && cur.bizDone >= 1 ? cur.total + Math.round(cur.total * restBiz / cur.bizDone) : null,
       avg: cur.bizDone >= 1 ? Math.round(cur.total / cur.bizDone) : null,
       customers: cur.customers,
+      custDays: cur.custDays,
       unit: cur.unit,
+      missing: gap.missing,
+      incomplete: gap.incomplete,
       prevYm: prevYm,
       prevMonth: monthNo(prevYm),
       prevUpto: prevUpto,
@@ -291,6 +346,7 @@ var Calc38 = (function () {
       maxDay: maxDay,
       errDays: errDayCount,
       errors: errors,
+      warns: ps.warns,
       canPrev: ym > minYm,
       canNext: ym < curYm,
       nextYm: addMonth(ym, 1)
@@ -298,7 +354,23 @@ var Calc38 = (function () {
   }
 
   // ---------- 画面の文（すべてここで作る） ----------
-  function sumTitle (h) { return h.month + '月の売上' + (h.isCurrent ? '（' + h.upto + '日まで）' : '（月の合計）') }
+  // 未入力・要確認の日が残る月は「入力済み分の売上」（確定した合計に見せない）
+  function sumTitle (h) {
+    if (h.incomplete) return h.month + '月の入力済み分の売上' + (h.isCurrent ? '（' + h.upto + '日まで）' : '')
+    return h.month + '月の売上' + (h.isCurrent ? '（' + h.upto + '日まで）' : '（月の合計）')
+  }
+  function mdList (list) {
+    var a = list.map(function (x) { return monthNo(x.slice(0, 7)) + '/' + dayNo(x) })
+    return a.length <= 5 ? a.join('・') : a.slice(0, 5).join('・') + ' ほか' + (a.length - 5) + '日'
+  }
+  // 今月のカードの「入力済み分」の説明。そろっていれば null
+  function incompleteText (h) {
+    if (!h.incomplete) return null
+    var p = []
+    if (h.missing.length) p.push('未入力の日が ' + h.missing.length + '日（' + mdList(h.missing) + '）')
+    if (h.errDays) p.push('確かめてほしい日が ' + h.errDays + '日')
+    return p.join('、') + 'あります。上の売上は、入力済みの日だけの合計です。'
+  }
   function emptyText (h) {
     return h.month + '月の入力は' + (h.isCurrent ? 'まだ' : '') + 'ありません。「売上」シートに ' + h.month + '月の行を入れると、ここに出ます。'
   }
@@ -308,37 +380,48 @@ var Calc38 = (function () {
   // 目標との差の行：{ label, value } か { sentence }
   function remainLine (h) {
     if (h.target === null) return null
-    if (h.total < h.target) return { label: h.isCurrent ? '目標まで残り' : '目標まで足りなかった分', value: fmtYen(h.remain) }
+    if (h.total < h.target) return { label: h.isCurrent ? '目標まで残り' : h.incomplete ? '入力済み分では目標まで' : '目標まで足りなかった分', value: fmtYen(h.remain) }
     if (h.total === h.target) return { sentence: '目標ちょうどです' }
     return { sentence: '目標を ' + fmtYen(h.over) + (h.isCurrent ? ' 上回っています' : ' 上回りました') }
   }
   function bizText (h) { return h.bizDone + '日' + (h.isCurrent ? '（残り ' + h.restBiz + '日）' : '') }
   function forecastLines (h) {
     if (!h.isCurrent || h.forecast === null) return null
-    if (h.restBiz === 0) return { none: '残りの営業日はありません。この月の合計は ' + fmtYen(h.total) + ' です。' }
+    if (h.restBiz === 0) {
+      if (h.incomplete) return { none: '残りの営業日はありません。入力済み分の合計は ' + fmtYen(h.total) + ' です（未入力・確かめてほしい日を入れると変わります）。' }
+      return { none: '残りの営業日はありません。この月の合計は ' + fmtYen(h.total) + ' です。' }
+    }
     var cmp = '目安'
     if (h.target !== null) {
       if (h.forecast < h.target) cmp = '目安・目標まで あと ' + fmtYen(h.target - h.forecast)
       else if (h.forecast > h.target) cmp = '目安・目標を ' + fmtYen(h.forecast - h.target) + ' 上回る見込み'
       else cmp = '目安・目標ちょうどの見込み'
     }
-    var notes = ['入力済みの営業日の平均 × 残りの営業日で出した目安です。']
+    var notes = ['入力済みの売上 ＋ 入力済みの営業日の平均 × 残りの営業日 で出した目安です。',
+      '残りの営業日 ' + h.restBiz + '日 ＝ 明日から月末までの定休日でない日' + (h.todayInRest ? '＋今日（まだ未入力）' : '') + '。']
+    if (h.missing.length) notes.push('未入力の日（' + h.missing.length + '日）は見込みに入れていません。')
     if (h.bizDone <= 4) notes.push('まだ' + h.bizDone + '日分なので、見込みは大きくぶれます。')
     return { head: 'このペースなら月末は', value: h.forecast, cmp: cmp, notes: notes }
   }
-  function errorLineText (h) { return '数えていない行が ' + h.errors.length + '行 あります（いちばん下に一覧）。' }
+  function errorLineText (h) {
+    if (h.errors.length) return '数えていない行が ' + h.errors.length + '行 あります（いちばん下に一覧）。'
+    return '確かめてほしい行が ' + h.warns.length + '行 あります（いちばん下に一覧）。'
+  }
   function prevPeriod (h) { return h.prevMonth + '月1日〜' + h.prevUpto + '日' }
   function curPeriod (h) { return h.month + '月1日〜' + h.upto + '日' }
+  // 前月比のカードの見出し：今月は同じ日まで、過去の月は前月の月合計と比べる
+  function prevTitle (h) { return h.isCurrent ? '前月の同じ日までと比べて' : '前月の月合計と比べて' }
   function prevLines (h) {
-    if (!h.prev) return { none: h.prevMonth + '月の入力がないため、比べられません。', period: prevPeriod(h) + ' と比べています' }
+    var period = h.isCurrent ? prevPeriod(h) + ' と比べています' : h.prevMonth + '月の月合計（' + prevPeriod(h) + '）と比べています'
+    if (!h.prev) return { none: prevPeriod(h) + 'の有効な入力がないため、比較できません。', period: period }
     var diff = h.diff
     var word = diff > 0 ? '増' : diff < 0 ? '減' : '同じ'
     var amount = diff === 0 ? '' : fmtYen(Math.abs(diff))
     var rate = h.diffRate === null ? '（前月は0円）' : '（' + fmtSignedRate(h.diffRate) + '）'
-    return {
-      period: prevPeriod(h) + ' と比べています',
-      curLabel: (h.isCurrent ? '今月' : h.month + '月') + '（' + curPeriod(h) + '）',
-      prevLabel: (h.isCurrent ? '前月' : h.prevMonth + '月') + '（' + prevPeriod(h) + '）',
+    var o = {
+      period: period,
+      curLabel: h.isCurrent ? '今月（' + curPeriod(h) + '）' : h.month + '月（' + (h.incomplete ? '入力済み分' : '月の合計') + '）',
+      prevLabel: h.isCurrent ? '前月（' + prevPeriod(h) + '）' : h.prevMonth + '月（' + (h.prev.incomplete ? '入力済み分' : '月の合計') + '）',
       cur: fmtYen(h.total),
       prev: fmtYen(h.prev.total),
       dir: diff > 0 ? 'up' : diff < 0 ? 'down' : 'same',
@@ -346,32 +429,41 @@ var Calc38 = (function () {
       amount: amount,
       rate: rate
     }
+    if (h.incomplete || h.prev.incomplete) o.note = '未入力・確かめてほしい日がある月は、入力済み分で比べています。'
+    return o
   }
+  // 客数・客単価：数えた日数を添える。客数が1日も入っていなければ「未入力」
   function custLines (h) {
     var p = h.prev
+    var partial = h.custDays < h.bizDone || (p !== null && p.custDays < p.bizDone)
     var o = {
+      title: partial ? '入力済みの日の客数・客単価' : '客数と客単価',
       curHead: h.isCurrent ? '今月' : h.month + '月',
-      prevHead: (h.isCurrent ? '前月' : h.prevMonth + '月') + 'の同じ日まで',
-      cust: fmtNum(h.customers) + '人',
-      unit: h.unit === null ? '—' : fmtYen(h.unit),
-      prevCust: p ? fmtNum(p.customers) + '人' : '—',
-      prevUnit: p && p.unit !== null ? fmtYen(p.unit) : '—',
-      diff: null
+      prevHead: h.isCurrent ? '前月の同じ日まで' : '前月の月合計',
+      cust: h.custDays === 0 ? '未入力' : fmtNum(h.customers) + '人',
+      unit: h.custDays === 0 ? '未入力' : h.unit === null ? '—' : fmtYen(h.unit),
+      days: h.custDays + '日分',
+      prevCust: !p ? '—' : p.custDays === 0 ? '未入力' : fmtNum(p.customers) + '人',
+      prevUnit: !p ? '—' : p.custDays === 0 ? '未入力' : p.unit === null ? '—' : fmtYen(p.unit),
+      prevDays: p ? p.custDays + '日分' : '—',
+      diff: null,
+      note: '客単価（税込）＝ 売上（税込）÷ 客数（円未満は四捨五入）。客数が空欄の日と、売上があって客数が0人の日は外しています。'
     }
-    if (p && p.customers > 0 && h.customers > 0) {
+    if (p && p.unit !== null && h.unit !== null) {
       o.diff = '客数 ' + fmtSignedYen(h.customers - p.customers) + '人・客単価 ' + fmtSignedYen(h.unit - p.unit) + '円'
     }
     return o
   }
   function legendGoal (h) {
     if (h.dailyGoal === null) return null
-    return '点線：目標の1日あたり ' + fmtYen(h.dailyGoal) + '（' + fmtYen(h.target) + ' ÷ ' + h.month + '月の営業日 ' + h.bizMonth + '日）'
+    return '点線：目標の1日あたり ' + fmtYen(h.dailyGoal) + '（' + fmtYen(h.target) + ' ÷ ' + h.month + '月の予定営業日 ' + h.bizMonth + '日）'
   }
   function chartLabel (h) {
     var s = h.month + '月の日ごとの売上の棒グラフ。' + h.bars + '日分。'
     if (h.maxDay) s += '一番多い日は' + fmtJMD(h.maxDay.date) + fmtYen(h.maxDay.sales) + '。'
     if (h.dailyGoal !== null) s += '目標の1日あたり' + fmtYen(h.dailyGoal) + '以上の日は' + h.goalDays + '日。'
     if (h.errDays > 0) s += '数えていない日が' + h.errDays + '日あります。'
+    if (h.missing.length > 0) s += '未入力の日が' + h.missing.length + '日あります。'
     return s
   }
   function daysSummary (h) { return '日ごとの数字を表で見る（' + h.upto + '日分）' }
@@ -381,17 +473,17 @@ var Calc38 = (function () {
     h.days.forEach(function (x) {
       if (x.state === 'future') return
       var r = { date: fmtMD(x.date), today: x.today, cells: [] }
-      if (x.state === 'sales') r.cells = [fmtNum(x.sales), x.customers === null ? '—' : fmtNum(x.customers), x.diffGoal === null ? '—' : fmtSignedYen(x.diffGoal)]
-      else if (x.state === 'error') r.cells = ['要確認', '—', '—']
-      else r.cells = ['休み', '—', '—']
+      if (x.state === 'sales') r.cells = [fmtNum(x.sales), x.custZero ? '要確認' : x.customers === null ? '未入力' : fmtNum(x.customers), x.diffGoal === null ? '—' : fmtSignedYen(x.diffGoal)]
+      else r.cells = [DAY_WORD[x.state], '—', '—']
       if (h.dailyGoal === null) r.cells.pop()
       r.state = x.state
       out.push(r)
     })
     return out
   }
+  var DAY_WORD = { error: '要確認', closed: '定休日', holiday: '臨時休業', missing: '未入力' }
   function totalRow (h) {
-    var a = [fmtNum(h.total), fmtNum(h.customers)]
+    var a = [fmtNum(h.total), h.custDays === 0 ? '未入力' : fmtNum(h.customers)]
     if (h.dailyGoal !== null) a.push('—')
     return a
   }
@@ -403,6 +495,7 @@ var Calc38 = (function () {
       if (e.kind === 'ym') return p + '：年月が正しくありません' + input
       if (e.kind === 'dup') return p + '（' + e.ym + '）：同じ年月の行が ' + e.first + '行目 にもあります'
       if (e.kind === 'zero') return p + '（' + e.ym + '）：目標売上が0円です'
+      if (e.kind === 'sep') return p + '（' + e.ym + '）：目標売上の桁区切りのカンマの位置が正しくありません' + input
       if (e.kind === 'neg') return p + '（' + e.ym + '）：目標売上がマイナスです' + input
       return p + '（' + e.ym + '）：目標売上が数字ではありません' + input
     }
@@ -411,8 +504,12 @@ var Calc38 = (function () {
     if (e.kind === 'date') return q + '：日付が正しくありません' + input
     q += '（' + e.date + '）'
     if (e.kind === 'dup') return q + '：同じ日付の行が ' + e.first + '行目 にもあります'
+    if (e.kind === 'custonly') return q + '：売上が空欄で、客数だけ入っています' + input
+    if (e.kind === 'holidaycust') return q + '：売上が「休」なのに、客数が入っています' + input
+    if (e.kind === 'custzero') return q + '：売上があるのに客数が0人です（売上は数え、客数・客単価からは外しています）'
     var what = e.field === 'sales' ? '売上' : '客数'
     if (e.kind === 'neg') return q + '：' + what + 'がマイナスです' + input
+    if (e.kind === 'sep') return q + '：' + what + 'の桁区切りのカンマの位置が正しくありません' + input
     return q + '：' + what + 'が数字ではありません' + input
   }
   function rowList (list) {
@@ -420,19 +517,24 @@ var Calc38 = (function () {
     if (rows.length <= 5) return rows.join('・')
     return rows.slice(0, 5).join('・') + ' …ほか' + (rows.length - 5) + '行'
   }
-  // 誤りの箱：題・要約（シートごと）・一覧
+  // 誤りの箱：題・要約（シートごと）・一覧。数えない行（errors）と、数えたが確かめてほしい行（warns）をまとめて行の順に
   function errorBox (h) {
-    if (!h.errors.length) return null
-    var s = h.errors.filter(function (e) { return e.sheet === 'sales' })
+    if (!h.errors.length && !h.warns.length) return null
+    var s = h.errors.filter(function (e) { return e.sheet === 'sales' }).concat(h.warns)
+    s.sort(function (x, y) { return x.row - y.row })
     var t = h.errors.filter(function (e) { return e.sheet === 'target' })
+    var all = s.concat(t)
     var sum = []
     if (s.length) sum.push('「売上」シートの ' + rowList(s) + ' を確かめてください。')
     if (t.length) sum.push('「目標」シートの ' + rowList(t) + ' を確かめてください。')
+    var end = []
+    if (h.errors.length) end.push('この行は数えていません。')
+    if (h.warns.length) end.push('客数が0人の行は、売上だけ数えています。')
     return {
-      title: '確かめてほしい行が ' + h.errors.length + '行 あります',
+      title: '確かめてほしい行が ' + all.length + '行 あります',
       summary: sum,
-      items: h.errors.map(errorText),
-      end: 'この行は数えていません。シートを直して［読み直す］を押すと、数え直します。'
+      items: all.map(errorText),
+      end: end.join('') + 'シートを直して［読み直す］を押すと、数え直します。'
     }
   }
   function liveText (h) {
@@ -516,6 +618,8 @@ var Calc38 = (function () {
     bizText: bizText,
     forecastLines: forecastLines,
     errorLineText: errorLineText,
+    incompleteText: incompleteText,
+    prevTitle: prevTitle,
     prevLines: prevLines,
     custLines: custLines,
     legendGoal: legendGoal,

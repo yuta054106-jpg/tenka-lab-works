@@ -51,7 +51,7 @@
       <div class="wrap">
         <h1 class="h1" id="h-top">売上を、スマホで見る。</h1>
         <p class="intro__lead">入力はいつものスプレッドシート、見るのはスマホ。閉店後に入れた売上と客数から、今月の合計・目標まで あと いくら・前月との比較を1画面で確かめる見本です。<span class="only-sm">下の表の数字を変えると、上のスマホの画面がその場で変わります。</span><span class="only-lg">左の表の数字を変えると、右のスマホの画面がその場で変わります。</span></p>
-        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。入力した内容はどこにも送られず、保存もされません。</p>
+        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。この公開デモで表に入力した値は、どこにも送られず、保存もされません。</p>
         <p class="intro__now"><span class="nw">デモの今日：</span><span class="nw">2026年11月22日（日）</span><span class="nw">（日付は止めています）</span></p>
       </div>
     </section>
@@ -103,7 +103,7 @@
         <section class="sheet-area" aria-labelledby="h-sheet">
           <h2 class="sec-h2" id="h-sheet">入力シートの見本</h2>
           <p class="sheet-live" id="sheet-live" aria-hidden="true"><span class="sheet-live__t" id="sheet-live-t"></span><span class="sheet-live__err" id="sheet-live-err" hidden><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-warn"/></svg><span id="sheet-live-n"></span></span></p>
-          <p class="sheet-lead">お店が入力するのは、この「売上」シートと「目標」シートだけです。1日1行、売上（税込）と客数を入れます。売上が空欄の日は休みとして数えます。数字を変えると、<span class="only-sm">上の</span><span class="only-lg">右の</span>スマホの画面がその場で変わります。</p>
+          <p class="sheet-lead">お店が入力するのは、この「売上」シートと「目標」シートだけです。1日1行、売上（税込）と客数を入れます。定休日（月曜）は売上を空欄に、臨時休業の日は売上に「休」と入れます。定休日でない日の空欄は「未入力」と出ます。数字を変えると、<span class="only-sm">上の</span><span class="only-lg">右の</span>スマホの画面がその場で変わります。</p>
           <div class="sheet-btns">
             <button type="button" class="btn-sub" id="err-example">誤りの例を入れる</button>
             <button type="button" class="btn-sub" id="reset">最初に戻す</button>
@@ -127,8 +127,9 @@
                 <tbody id="sales-body"></tbody>
               </table>
             </div>
-            <p class="sheet-note">今日（11月22日）より後の行は、まだ数えません。</p>
-            <p class="sheet-note">デモでは数字は保存されません。再読み込みで最初に戻ります。</p>
+            <p class="sheet-note">今日（11月22日）より後の行は、まだ数えません。月曜以外の売上を消すと「未入力」、「休」と入れると「臨時休業」と出ます。</p>
+            <p class="sheet-note">この公開デモで表に入力した値は保存されません。再読み込みで最初に戻ります。</p>
+            <p class="sheet-note">売上の「1,234」のような桁区切りは読めます。「12,34」のようにカンマの位置が崩れた値は、行番号つきで知らせます。</p>
           </div>
           <div class="sheet-panel" id="panel-target" role="tabpanel" aria-labelledby="tab-target" hidden>
             <div class="sheet" id="sheet-target">
@@ -136,7 +137,7 @@
                 <caption class="visually-hidden">「目標」シート</caption>
                 <colgroup><col class="c-no"><col class="c-ym"><col class="c-target"></colgroup>
                 <thead>
-                  <tr><th scope="col">行</th><th scope="col">A 年月</th><th scope="col">B 目標売上</th></tr>
+                  <tr><th scope="col">行</th><th scope="col">A 年月</th><th scope="col">B 目標売上（税込）</th></tr>
                 </thead>
                 <tbody id="target-body"></tbody>
               </table>
@@ -152,7 +153,7 @@
       <div class="wrap">
         <p class="lab-tag">実際のお仕事では</p>
         <h2 class="lab-title" id="h-work">お店の Google アカウントの中で使い続けられる形で作ります</h2>
-        <p class="lab-lead">スプレッドシートと画面は、お店の Google アカウントの中に置きます。月々の利用料はかかりません。</p>
+        <p class="lab-lead">スプレッドシートと画面は、お店の Google アカウントの中に置きます。この機能に対する <span class="nw">TENKA LAB</span> の月額利用料は0円です（Google の利用料は、お店のご契約によります）。</p>
         <ul class="work-3">
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-grid"/></svg>
@@ -161,8 +162,8 @@
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg>
-            <h3>見られるのはお店の人だけ</h3>
-            <ul><li>画面の公開の範囲は「自分のみ」か「お店のアカウントの人だけ」にします</li><li>誰でも見られる形にはしません</li></ul>
+            <h3>見られる人を決めてから渡します</h3>
+            <ul><li>見られる人（店長だけ、など）は導入のときに一緒に決めます</li><li>決めた人以外のアカウントで開けないことも確かめてから、お渡しします</li><li>誰でも見られる形にはしません</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-home"/></svg>

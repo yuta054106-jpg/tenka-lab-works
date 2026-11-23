@@ -60,8 +60,10 @@ var View38 = (function () {
   function sumCard (h) {
     var s = card('sum', C.sumTitle(h), 'app-h-sum')
     s.appendChild(yen(h.total, 'app__big'))
+    var inc = C.incompleteText(h)
+    if (inc) s.appendChild(el('p', 'app__msg app__inc', inc))
     var dl = el('dl', 'app__dl')
-    dlRow(dl, '目標', h.target === null ? '未入力' : C.fmtYen(h.target))
+    dlRow(dl, '目標（税込）', h.target === null ? '未入力' : C.fmtYen(h.target))
     s.appendChild(dl)
     if (h.target !== null) {
       var r = el('div', 'app__rate')
@@ -98,7 +100,7 @@ var View38 = (function () {
       }
       s.appendChild(box)
     }
-    if (h.errors.length) s.appendChild(errLine(h))
+    if (h.errors.length || h.warns.length) s.appendChild(errLine(h))
     return s
   }
   function errLine (h) {
@@ -118,7 +120,7 @@ var View38 = (function () {
 
   // ---------- 3. 前月比 ----------
   function prevCard (h) {
-    var s = card('prev', '前月の同じ日までと比べて', 'app-h-prev')
+    var s = card('prev', C.prevTitle(h), 'app-h-prev')
     var pl = C.prevLines(h)
     s.appendChild(el('p', 'app__period', pl.period))
     if (pl.none) { s.appendChild(el('p', 'app__msg', pl.none)); return s }
@@ -140,6 +142,7 @@ var View38 = (function () {
     d.appendChild(main)
     d.appendChild(el('span', 'app__diff-rate', pl.rate))
     s.appendChild(d)
+    if (pl.note) s.appendChild(el('p', 'app__note', pl.note))
     return s
   }
 
@@ -166,7 +169,7 @@ var View38 = (function () {
       l.appendChild(el('span', null, text))
       ul.appendChild(l)
     }
-    li('bar', '棒：その日の売上（税込）。休みの日は棒がありません。')
+    li('bar', '棒：その日の売上（税込）。定休日・臨時休業・未入力の日は棒がありません（表で見分けられます）。')
     var lg = C.legendGoal(h)
     if (lg) li('goal', lg)
     if (h.errDays > 0) li('q', '?：数えていない日（いちばん下の一覧を確かめてください）')
@@ -265,8 +268,8 @@ var View38 = (function () {
 
   // ---------- 5. 客数と客単価 ----------
   function custCard (h) {
-    var s = card('cust', '客数と客単価', 'app-h-cust')
     var cl = C.custLines(h)
+    var s = card('cust', cl.title, 'app-h-cust')
     var t = el('table', 'app__ctable')
     var hr = el('tr')
     ;[['', 'col'], [cl.curHead, 'col'], [cl.prevHead, 'col']].forEach(function (x) {
@@ -278,10 +281,11 @@ var View38 = (function () {
     th.appendChild(hr)
     t.appendChild(th)
     var tb = el('tbody')
-    ;[['客数', cl.cust, cl.prevCust], ['客単価', cl.unit, cl.prevUnit]].forEach(function (x) {
+    ;[['客数', cl.cust, cl.prevCust], ['客単価（税込）', cl.unit, cl.prevUnit], ['数えた日', cl.days, cl.prevDays]].forEach(function (x) {
       var r = el('tr')
-      var c = el('th', null, x[0])
+      var c = el('th')
       c.scope = 'row'
+      String(x[0]).split(/(?=（)/).forEach(function (w) { c.appendChild(el('span', 'nw', w)) })
       r.appendChild(c)
       r.appendChild(el('td', null, x[1]))
       r.appendChild(el('td', null, x[2]))
@@ -295,7 +299,7 @@ var View38 = (function () {
       p.appendChild(el('span', null, cl.diff))
       s.appendChild(p)
     }
-    s.appendChild(el('p', 'app__note', '客単価＝売上 ÷ 客数（円未満は四捨五入）。客数が空欄の日は外しています。'))
+    s.appendChild(el('p', 'app__note', cl.note))
     return s
   }
 

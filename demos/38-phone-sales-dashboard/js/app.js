@@ -13,8 +13,8 @@
   var SHOP = 'コムギトキ'
   var CLOSED_WEEKDAYS = fz([1])
   var MONTHS_BACK = 2
-  var NOTE = '作品例（架空のお店）。数字はすべて架空です。入力した内容はどこにも送られず、保存もされません。'
-  // 日ごとの [売上, 客数, メモ]（売上は円・税込。null は空欄＝休み）
+  var NOTE = '作品例（架空のお店）。数字はすべて架空です。この公開デモで表に入力した値は、どこにも送られず、保存もされません。'
+  // 日ごとの [売上, 客数, メモ]（売上は円・税込。null は空欄。月曜の空欄＝定休日）
   var OCT = [
     [59200, 51], [65500, 55], [79800, 66], [77100, 64], [null, null], [57400, 49], [55100, 47],
     [60300, 51], [66800, 56], [81200, 67], [78500, 65], [null, null], [56600, 48], [53900, 46],
@@ -140,7 +140,7 @@
     inp.dataset.row = String(r.row)
     inp.dataset.field = field
     inp.setAttribute('aria-label', label)
-    if (field === 'sales' && r.sales === '' && C.weekday(r.date) === 1) inp.placeholder = '休み'
+    if (field === 'sales' && r.sales === '' && CLOSED_WEEKDAYS.indexOf(C.weekday(r.date)) >= 0) inp.placeholder = '定休日'
     w.appendChild(inp)
     td.appendChild(w)
     var hint = el('span', 'visually-hidden', 'この行は数えていません')
@@ -191,7 +191,7 @@
       no.scope = 'row'
       tr.appendChild(no)
       tr.appendChild(el('td', 'cell-ym', r.ym))
-      tr.appendChild(cellIn(r, 'target', '「目標」シート ' + r.row + '行目 ' + C.fmtYm(r.ym) + 'の目標売上'))
+      tr.appendChild(cellIn(r, 'target', '「目標」シート ' + r.row + '行目 ' + C.fmtYm(r.ym) + 'の目標売上（税込）'))
       return tr
     })
     tb.replaceChildren.apply(tb, list)
@@ -205,7 +205,7 @@
   // 誤りのセルに印（面＋枠＋「!」）と aria-invalid
   function markErrors (h) {
     var bad = {}
-    h.errors.forEach(function (e) {
+    h.errors.concat(h.warns).forEach(function (e) {
       var f = e.sheet === 'target' ? (e.field === 'ym' ? 'ym' : 'target') : e.field
       bad[(e.sheet === 'target' ? 't' : 's') + e.row + ':' + f] = true
     })
