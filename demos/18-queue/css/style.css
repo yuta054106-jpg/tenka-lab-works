@@ -1,5 +1,5 @@
 /* 理容 トモリギ（デモ）順番待ちの受付と呼び出し */
-/* 共通部品は ⑯（16-table-order）のクラス名と CSS のまま。:root の色の値を design.md §1 に替え、§1-2 の「行動ボタンの文字は白」「.btn-danger は墨」の2か所を変えた。新しい部品は §15-5 8 のクラス名 */
+/* 共通部品はテーブル注文のデモのクラス名と CSS のまま。:root の色の値を design.md §1 に替え、§1-2 の「行動ボタンの文字は白」「.btn-danger は墨」の2か所を変えた。新しい部品は §15-5 8 のクラス名 */
 :root {
   --c-base: #F5F7FA;
   --c-surface: #FFFFFF;
@@ -315,6 +315,7 @@ main > * + * { margin-top: var(--gap-block); }
 /* ---------- お店の画面（§8） ---------- */
 .k-note { font-size: 14px; color: var(--c-sub); line-height: 1.6; }
 .panel > .k-note + .summary { margin-top: 12px; }
+.summary + .summary-def { margin-top: 8px; }
 .k-none { font-size: 16px; color: var(--c-sub); line-height: 1.6; }
 .seats__list { display: grid; gap: 16px; }
 .seat {
@@ -555,7 +556,7 @@ main > * + * { margin-top: var(--gap-block); }
   .board__seat { min-height: 280px; padding: 32px 24px; }
   .board__seat[data-state="called"] { padding: 30px 22px; }
   .board__seat-name { font-size: 40px; }
-  /* 1024px では列の内側が約 220px のため、160px の「99番」が入るよう幅に合わせる（1280px で 160px。impl_note 参照） */
+  /* 1024px では列の内側が約 220px のため、160px の「99番」が入るよう幅に合わせる（1280px で 160px） */
   .board__no-d { font-size: clamp(120px, 12.5vw, 160px); }
   .board__no-u { font-size: clamp(48px, 5vw, 64px); }
   /* 1024〜1100px で「席1へお進みください」が白い枠からはみ出すため幅に合わせる（1273px〜で 28px） */

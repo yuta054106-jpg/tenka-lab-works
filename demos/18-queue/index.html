@@ -68,7 +68,7 @@
     <p class="visually-hidden" role="status" id="sr-status"></p>
 
     <section class="intro" aria-labelledby="h-intro">
-      <h1 id="h-intro" class="page-title">番号を取ると、<br class="sp-only">何分待ちか分かる</h1>
+      <h1 id="h-intro" class="page-title">番号を取ると、<br class="sp-only">待ち時間の目安が分かる</h1>
       <p class="intro__lead">予約なしで来たお客様は、メニューを選んで番号を取るだけ。お店は席ごとに「次の人を呼ぶ」を押し、待合の画面に番号が大きく出ます。待ち時間は目安です。</p>
       <nav aria-label="手順">
         <ol class="steps steps--4" id="steps">
@@ -90,7 +90,7 @@
       <ul class="intro__notes">
         <li>※ デモ（架空のお店）です。お店・番号・待ち時間はすべて架空です。</li>
         <li>※ お名前・電話番号・メールの欄はありません。お客様は受付番号だけです。</li>
-        <li>※ 受付はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ 受付の番号は、この端末のブラウザに保存します。番号を開くリンク（?no=）はページを開くときに公開先のサーバーにも届きます。AI や外部のサービスには送りません。「見本に戻す」で元に戻せます。</li>
         <li>※ 待ち時間は目安です。前後します。音・通知は出しません。</li>
         <li id="note-nosave" role="note" hidden>※ この端末では保存できないため、ほかのタブとは共有されません。このタブの中では最後まで動きます（再読み込みすると見本に戻ります）。</li>
       </ul>
@@ -157,7 +157,7 @@
               <button type="button" class="btn-sub g-wide" id="btn-next-guest">次の方の受付へ</button>
               <p class="sub sub--13">番号は取り消されません。画面だけ最初に戻ります</p>
               <p><a class="text-link" id="mine-link" href="?view=customer" target="_blank" rel="noopener">この番号を別のタブで見る<svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-ext"/></svg></a></p>
-              <p class="sub sub--13">実際は、番号の紙の QR を自分のスマホで読み取る想定です</p>
+              <p class="sub sub--13">実際は、番号の紙に刷った「番号の確認用」の QR を自分のスマホで読み取る想定です（店先に貼る「受付用」の QR とは別です）</p>
             </section>
           </div>
 
@@ -180,7 +180,7 @@
 
       <!-- タブ2：お店の画面（§8） -->
       <section class="panel" role="tabpanel" id="panel-shop" aria-labelledby="tab-shop" hidden>
-        <p class="k-note">デモ（架空のお店）です。受付はこのブラウザの中だけにあり、どこにも送信しません。</p>
+        <p class="k-note">デモ（架空のお店）です。受付の番号は、この端末のブラウザに保存します（AI や外部のサービスには送りません）。</p>
         <section class="summary" aria-label="お店の集計">
           <div class="summary__box" role="group" aria-labelledby="sum-wait-l">
             <p class="summary__label" id="sum-wait-l">待っている人</p>
@@ -201,6 +201,7 @@
             <p class="summary__val nw"><span class="summary__n" id="sum-done-n"></span><span class="summary__unit">人</span></p>
           </div>
         </section>
+        <p class="sub sub--13 summary-def">「今日の受付」は取り消しを除いた人数です。「平均の待ち時間」は、施術を始めた人の、受付から施術を始めるまでの分の平均です（不在で後ろへ回った人は、最初の受付の時刻から数えます）。</p>
 
         <section class="seats" id="s-seats" aria-labelledby="s-seats-h" tabindex="-1">
           <h2 class="visually-hidden" id="s-seats-h">席（3つ）</h2>
@@ -263,15 +264,16 @@
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-phoneqr"/></svg>
           <h3>自分のスマホで番号を取る・LINE でお知らせ</h3>
           <ul class="dot-list">
-            <li>店先に QR コードを貼り、お客様が自分のスマホで番号を取れるようにします</li>
-            <li>順番が近づいたら LINE でお知らせして、外で待てるようにします</li>
+            <li>店先に「受付用」の QR コードを貼り、お客様が自分のスマホで番号を取れるようにします</li>
+            <li>番号を取った後は、「番号の確認用」の QR（またはリンク）から、自分のスマホで順番を見られるようにします</li>
+            <li>順番が近づいた時の LINE のお知らせは、お店の運用とつなぎ方を確かめてから、別にお見積もりします</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-belltv"/></svg>
           <h3>呼び出しの音と待合の画面</h3>
           <ul class="dot-list">
-            <li>呼び出しの時に、うるさくない音を鳴らせます</li>
+            <li>呼び出しの音は、店内に合わせて種類・音量を決めます</li>
             <li>待合のテレビやタブレットに、呼び出し表示を大きく出します</li>
           </ul>
         </div>

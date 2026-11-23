@@ -418,7 +418,7 @@
     announce(text)
   }
 
-  // ---------- 確認の窓（⑯と同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
+  // ---------- 確認の窓（テーブル注文のデモと同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
   var dlg = $('confirm')
   var hasDialog = typeof window.HTMLDialogElement === 'function' && typeof dlg.showModal === 'function'
   var dlgResolve = null; var dlgOpener = null
@@ -445,7 +445,7 @@
     dlgResolve = null
     if (dlg.open) dlg.close()
     r(yes)
-    // やめた時は開いた所へ戻す。遅れて動いた時に、その間に利用者が動かしたフォーカスを奪わないよう、フォーカスが body・窓の中にある時だけ戻す（⑯ と同じ直し）
+    // やめた時は開いた所へ戻す。遅れて動いた時に、その間に利用者が動かしたフォーカスを奪わないよう、フォーカスが body・窓の中にある時だけ戻す（テーブル注文のデモと同じ直し）
     if (!yes && dlgOpener) {
       var id = dlgOpener
       if ($(id)) $(id).focus()
@@ -471,7 +471,7 @@
   function focusId (id) { var e = $(id); if (e) e.focus({ preventScroll: false }) }
   function setUrl (q) { try { window.history.replaceState(null, '', q) } catch (e) { /* file:// などで置き換えられない時はそのまま */ } }
 
-  // ---------- タブ（⑯と同じ動き。3つ） ----------
+  // ---------- タブ（テーブル注文のデモと同じ動き。3つ） ----------
   var TABS = ['customer', 'shop', 'board']
   function openTab (name, opt) {
     ui.tab = name
