@@ -28,7 +28,7 @@
     fz({ id: 'okinawa', name: '沖縄・離島', ship: 1980, delivery: 'ご注文から5〜8日ほどでお届けします（目安・架空）。島によっては、もう少しかかります。' })
   ])
 
-  // ---------- アレルゲン（特定原材料9品目。ここに無い品目は「含まない」） ----------
+  // ---------- アレルゲン（特定原材料9品目。ここに無い品目は「使用なし」） ----------
   var ALLERGENS = fz(['乳', '小麦', '卵', 'えび', 'かに', 'そば', '落花生', 'くるみ', 'カシューナッツ'])
   var ALLERGEN_TABLE = fz({
     pumpkin: fz(['乳']),
@@ -195,19 +195,23 @@
   function initFixbar () {
     var bar = $('fixbar')
     if (!('IntersectionObserver' in root)) { bar.classList.remove('is-hide'); return }
-    // ファーストビューのボタンは「見えている」か「まだ画面より下にある」間は隠す（見る範囲を下へ大きく広げる）
+    // 購入ボタンの直前の要点（#points）が「まだ画面より下にある」間は隠す（要点より先に購入の案内を出さない）
+    // 画面の下端は、固定ボタンの高さ（約 97px）＋要点の見出し1行ぶん上に見る（出た時に要点がボタンの裏に隠れない）
     // 結果の下とご購入のボタンは、見えている間だけ隠す（同じボタンを2つ並べない）
-    var seen = { hero: true, set: false, buy: false }
-    function update () { bar.classList.toggle('is-hide', seen.hero || seen.set || seen.buy) }
-    var ioHero = new IntersectionObserver(function (es) {
-      es.forEach(function (en) { seen.hero = en.isIntersecting })
+    var seen = { before: true, set: false, buy: false }
+    function update () { bar.classList.toggle('is-hide', seen.before || seen.set || seen.buy) }
+    var ioPoints = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        var bottom = en.rootBounds ? en.rootBounds.bottom : root.innerHeight
+        seen.before = !en.isIntersecting && en.boundingClientRect.top >= bottom
+      })
       update()
-    }, { rootMargin: '0px 0px 100000px 0px' })
+    }, { rootMargin: '0px 0px -150px 0px' })
     var ioCta = new IntersectionObserver(function (es) {
       es.forEach(function (en) { seen[en.target.id === 'set-cta' ? 'set' : 'buy'] = en.isIntersecting })
       update()
     })
-    ioHero.observe($('hero-cta'))
+    ioPoints.observe($('points'))
     ioCta.observe($('set-cta'))
     ioCta.observe($('buy-cta'))
   }
@@ -234,6 +238,8 @@
     document.querySelector('.hd__logo').addEventListener('click', function (e) { e.preventDefault(); goTo('top') })
     $('to-set').addEventListener('click', function (e) { e.preventDefault(); goTo('h-set') })
     $('to-allergen').addEventListener('click', function (e) { e.preventDefault(); goTo('h-allergen') })
+    $('to-allergen2').addEventListener('click', function (e) { e.preventDefault(); goTo('h-allergen') })
+    $('to-howto').addEventListener('click', function (e) { e.preventDefault(); goTo('h-howto') })
     initFixbar()
   }
 
