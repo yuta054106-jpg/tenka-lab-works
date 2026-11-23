@@ -215,6 +215,9 @@ p, li { text-wrap: pretty; }
 .mv--next:hover, .mv--next:active { background: var(--c-main-hover); border-color: var(--c-main-hover); }
 .mv--back { background: #FFFFFF; color: var(--c-main); }
 .mv--back:hover, .mv--back:active { background: var(--c-soft); }
+/* ［作業へ］（点検中のカードだけ）：2つのボタンの下に横いっぱい。白の面・紺の枠で［次へ］より控えめ */
+.mv--skip { grid-column: 1 / -1; background: #FFFFFF; color: var(--c-main); }
+.mv--skip:hover, .mv--skip:active { background: var(--c-soft); }
 .mv:disabled, .mv:disabled:hover { background: #FFFFFF; border: 2px dashed var(--c-sub); color: var(--c-sub); cursor: not-allowed; }
 
 /* ---------- お客様向けの表示 ---------- */

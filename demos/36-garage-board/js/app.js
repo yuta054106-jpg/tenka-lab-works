@@ -11,6 +11,9 @@
   var LAST = COLS.length - 1
   // 部品待ちの列。お客様向けの工程には、この列を実際に通った車だけ出す
   var PARTS = 2
+  // 点検中・作業中の列。［作業へ］は点検中のカードだけに出し、部品待ちを飛ばして作業中へ移す
+  var CHECK = 1
+  var WORK = 3
   // デモの今：2026-11-24（火）15:00。11/24 0:00 からの分。翌日は +1440
   var NOW = 900
   var DAY = 1440
@@ -67,6 +70,14 @@
     if (d === 0) return '（予定の時刻です）'
     return '（' + (-d) + '分過ぎ）'
   }
+  // 行き先の列（動かせなければ -1）。dir は next・back・skip、via＝部品待ちを通ったか
+  // ［戻す］は作業中からだけ分かれる：部品待ちを通った車は部品待ちへ、通っていない車は点検中へ
+  function dest (col, dir, via) {
+    if (dir === 'skip') return col === CHECK ? WORK : -1
+    if (dir === 'next') return col < LAST ? col + 1 : -1
+    if (col === WORK && !via) return CHECK
+    return col > 0 ? col - 1 : -1
+  }
   // 列の中の並び：お渡しの予定の早い順、同じなら受付番号の順
   function byDue (a, b) {
     if (a.due !== b.due) return a.due - b.due
@@ -74,7 +85,7 @@
   }
 
   // 検査用の出口（凍結した定数と純粋な関数だけ）
-  root.__demo36 = fz({ COLS: COLS, NOW: NOW, CARS: CARS, isUrgent: isUrgent, isToday: isToday, fmtTime: fmtTime, fmtDay: fmtDay, urgentNote: urgentNote, custSteps: custSteps })
+  root.__demo36 = fz({ COLS: COLS, NOW: NOW, CARS: CARS, isUrgent: isUrgent, isToday: isToday, fmtTime: fmtTime, fmtDay: fmtDay, urgentNote: urgentNote, custSteps: custSteps, dest: dest })
   if (typeof document === 'undefined') return
 
   // ---------- 画面 ----------
@@ -182,13 +193,18 @@
     b.type = 'button'
     b.dataset.no = car.no
     b.dataset.dir = dir
-    var to = dir === 'next' ? col + 1 : col - 1
-    var can = to >= 0 && to <= LAST
-    var word = dir === 'next' ? '次へ' : '戻す'
+    var to = dest(col, dir, state.via[car.no])
+    var can = to >= 0
+    var word = dir === 'next' ? '次へ' : dir === 'skip' ? '作業へ' : '戻す'
     if (can) {
-      b.setAttribute('aria-label', car.no + ' を「' + COLS[to] + '」へ' + (dir === 'next' ? '進める' : '戻す'))
-      if (dir === 'next') b.append(el('span', null, word), icon('i-next', 16))
-      else b.append(icon('i-back', 16), el('span', null, word))
+      if (dir === 'skip') {
+        b.setAttribute('aria-label', car.no + ' を部品待ちを飛ばして「' + COLS[to] + '」へ進める')
+        b.append(el('span', null, word), icon('i-skip', 16))
+      } else {
+        b.setAttribute('aria-label', car.no + ' を「' + COLS[to] + '」へ' + (dir === 'next' ? '進める' : '戻す'))
+        if (dir === 'next') b.append(el('span', null, word), icon('i-next', 16))
+        else b.append(icon('i-back', 16), el('span', null, word))
+      }
     } else {
       b.disabled = true
       b.setAttribute('aria-label', car.no + (dir === 'next' ? ' はこれ以上進められません' : ' はこれ以上戻せません'))
@@ -217,6 +233,8 @@
     }
     var mv = el('div', 'car__mv')
     mv.append(moveBtn(car, col, 'back'), moveBtn(car, col, 'next'))
+    // ［作業へ］は点検中のカードだけ（部品の要らない車のための近道）
+    if (col === CHECK) mv.appendChild(moveBtn(car, col, 'skip'))
     a.appendChild(mv)
     li.appendChild(a)
     return li
@@ -322,18 +340,21 @@
   function move (no, dir) {
     var car = carOf(no)
     var from = state.col[no]
-    var to = dir === 'next' ? from + 1 : from - 1
-    if (!car || to < 0 || to > LAST) return
+    if (!car) return
+    var to = dest(from, dir, state.via[no])
+    if (to < 0) return
     var was = isUrgent(car, from)
     state.col[no] = to
-    // 部品待ちを通ったことを記録する（戻しても消さない。最初に戻すで消える）
+    // 部品待ちを通ったことを記録する（戻しても消さない。最初に戻すで消える）。［作業へ］では立てない
     if (to === PARTS) state.via[no] = true
     // 行き先の列が畳まれていたら開く（畳んだ列の中ではフォーカスを戻せず、body に落ちるため）
     state.open[to] = true
     render()
     // フォーカスは同じ車の新しいカードの、押したのと同じボタン。押せなければ反対のボタン
-    var same = document.querySelector('.mv[data-no="' + no + '"][data-dir="' + dir + '"]')
-    var other = document.querySelector('.mv[data-no="' + no + '"][data-dir="' + (dir === 'next' ? 'back' : 'next') + '"]')
+    // ［作業へ］の後は新しいカードに［作業へ］が無いので、［次へ］へ
+    var fd = dir === 'skip' ? 'next' : dir
+    var same = document.querySelector('.mv[data-no="' + no + '"][data-dir="' + fd + '"]')
+    var other = document.querySelector('.mv[data-no="' + no + '"][data-dir="' + (fd === 'next' ? 'back' : 'next') + '"]')
     var f = same && !same.disabled ? same : other
     if (f) f.focus()
     say(no + ' を「' + COLS[to] + '」へ移しました。' + (!was && isUrgent(car, to) ? '急ぎです。' : ''))
