@@ -80,7 +80,7 @@
     if (withBody) {
       var b = el('div', 'post__body')
       // 募集・受付を案内する記事は、本文の先頭にデモの文を出す
-      if (C.hasNoReceipt(p)) b.appendChild(el('p', 'demo-note', C.NO_RECEIPT))
+      if (C.hasNoReceipt(p)) b.appendChild(el('p', 'demo-note', C.noReceiptText(p)))
       p.body.forEach(function (line) { b.appendChild(el('p', '', line)) })
       a.appendChild(b)
     }
@@ -193,6 +193,8 @@
     var a = C.account(fy)
     $('period').textContent = fy + '年度（' + a.period + '）'
     $('acc-caption').textContent = fy + '年度 活動計算書の要点（単位：円）'
+    // 表の説明（読み上げ用）：架空の内訳の例を、表に入るとき1回だけ伝える
+    $('acc-ex').textContent = D.INCOME_ITEMS.filter(function (it) { return it.ex }).map(function (it) { return it.name + 'の' + it.ex }).join('。')
     var tb = $('acc-table').tBodies[0]
     clear(tb)
     function row (cls, name, val) {
@@ -208,7 +210,12 @@
     D.INCOME_ITEMS.forEach(function (it) {
       row('is-item', it.name, a.income[it.k])
       // 架空の内訳の例は科目名の下に小さく添える
-      if (it.ex) tb.lastChild.cells[0].appendChild(el('span', 'money__ex', it.ex))
+      // 読み上げでは行見出しのたびに読まれないよう aria-hidden にし、表の説明（#acc-ex）で1回だけ伝える
+      if (it.ex) {
+        var ex = el('span', 'money__ex', it.ex)
+        ex.setAttribute('aria-hidden', 'true')
+        tb.lastChild.cells[0].appendChild(ex)
+      }
     })
     row('is-total', '経常収益計', a.incomeTotal)
     row('is-head', '経常費用', null)
