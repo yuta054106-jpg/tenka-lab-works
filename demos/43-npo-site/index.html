@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>コダマリ学びネット（デモ・架空の団体）</title>
+  <meta name="description" content="TENKA LAB の動くデモ（架空の団体）。NPO 法人の下に2つの事業をまとめ、活動報告を事業と種類で絞り込み、事業報告・活動計算書を年度ごとに探しやすくした公式サイトの見本です。団体・事業・記事・数字はすべて架空です。">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F5C4F">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="コダマリ学びネット（デモ・架空の団体）NPO の公式サイトの見本｜TENKA LAB">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空の団体）。NPO 法人の下に2つの事業をまとめ、活動報告と事業報告・会計報告を探しやすくした公式サイトの見本です。団体・記事・数字はすべて架空です。">
+  <meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/assets/thumbs/46-npo-site-pc.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23FFFFFF'/%3E%3Cg fill='none' stroke-width='3'%3E%3Ccircle cx='16' cy='11' r='7' stroke='%231F5C4F'/%3E%3Ccircle cx='10.5' cy='20.5' r='7' stroke='%232B5A94'/%3E%3Ccircle cx='21.5' cy='20.5' r='7' stroke='%239A4612'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/calc.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <!-- 絵と記号（すべて自作のインライン SVG。<use> で使い回す。人の姿・顔・手は描かない） -->
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <!-- 3つの輪（法人のしるし。重なりは白の線で区切る） -->
+      <symbol id="i-logo" viewBox="0 0 32 32"><g fill="none"><circle cx="16" cy="10.5" r="7.5" stroke="#1F5C4F" stroke-width="3"/><circle cx="10" cy="20.5" r="7.5" stroke="#FFFFFF" stroke-width="6"/><circle cx="10" cy="20.5" r="7.5" stroke="#2B5A94" stroke-width="3"/><circle cx="22" cy="20.5" r="7.5" stroke="#FFFFFF" stroke-width="6"/><circle cx="22" cy="20.5" r="7.5" stroke="#9A4612" stroke-width="3"/></g></symbol>
+      <!-- 札の記号（16px） -->
+      <symbol id="i-book" viewBox="0 0 24 24"><g fill="#FFFFFF" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5 3 4.5v13l9 2z"/><path d="M12 6.5l9-2v13l-9 2z"/></g></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g></symbol>
+      <symbol id="i-rings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><circle cx="8" cy="15.5" r="5"/><circle cx="16" cy="15.5" r="5"/></g></symbol>
+      <!-- サムネの図形（48×48） -->
+      <symbol id="t-kodama" viewBox="0 0 48 48"><g fill="#FFFFFF" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M24 14 8 10v24l16 4z"/><path d="M24 14l16-4v24l-16 4z"/></g></symbol>
+      <symbol id="t-hidamari" viewBox="0 0 48 48"><g stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="11" fill="#FFFFFF"/><path d="M24 4v4M24 40v4M4 24h4M40 24h4M9.9 9.9l2.8 2.8M35.3 35.3l2.8 2.8M9.9 38.1l2.8-2.8M35.3 12.7l2.8-2.8" fill="none"/></g></symbol>
+      <symbol id="t-houjin" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="3"><circle cx="24" cy="16" r="9"/><circle cx="17" cy="29" r="9"/><circle cx="31" cy="29" r="9"/></g></symbol>
+      <!-- 種類の小さな記号（補助。種類は札の字が正） -->
+      <symbol id="k-news" viewBox="0 0 12 12"><path d="M2.5 11V1.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 1.75l7 2.5-7 2.5z" fill="currentColor"/></symbol>
+      <symbol id="k-report" viewBox="0 0 12 12"><circle cx="6" cy="6" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+      <symbol id="k-recruit" viewBox="0 0 12 12"><path d="M6 1.5v9M1.5 6h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <!-- そのほか -->
+      <symbol id="i-check" viewBox="0 0 16 16"><path d="M3 8.5l3.2 3.2L13 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 20 20"><path d="M5 7.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></g></symbol>
+      <symbol id="i-route" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h12M11 3l4 4-4 4"/><path d="M21 17H9M13 13l-4 4 4 4"/></g></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></g></symbol>
+    </defs>
+  </svg>
+
+  <div class="tl-bar" role="note">
+    <p class="tl-bar__text"><strong><span class="nw">TENKA LAB</span> の動く</strong><span class="nw"><strong>デモ</strong>（架空の団体）</span>です。団体・事業・記事・数字はすべて<span class="nw">架空</span>です。</p>
+    <a class="tl-bar__back" href="../../">作品例一覧へ</a>
+  </div>
+
+  <button type="button" class="skip" id="skip">本文へ移動</button>
+
+  <header class="hd">
+    <div class="wrap hd__in">
+      <div class="hd__row">
+        <a class="hd__logo" href="#top">
+          <svg class="hd__mark" width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>
+          <span class="hd__names"><span class="hd__kind">特定非営利活動法人</span><span class="hd__name">コダマリ学びネット</span></span>
+        </a>
+        <span class="hd__demo">デモ（架空の団体）</span>
+      </div>
+      <nav class="hd__nav" aria-label="サイトの中の移動">
+        <ul class="nav">
+          <li><a class="nav__a" href="#top" data-page="top">トップ</a></li>
+          <li><a class="nav__a" href="#kodama" data-page="kodama">こだま塾</a></li>
+          <li><a class="nav__a" href="#hidamari" data-page="hidamari">ひだまり<span class="nav__more">ルーム</span></a></li>
+          <li><a class="nav__a" href="#reports" data-page="reports">活動報告</a></li>
+          <li><a class="nav__a" href="#about" data-page="about">法人情報</a></li>
+          <li><a class="nav__a" href="#support" data-page="support">ご支援</a></li>
+          <li class="nav__wide"><a class="nav__a" href="#contact" data-page="contact">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <p class="demo-band"><strong class="nw">デモ（架空の団体）</strong><span>団体・事業・記事・数字はすべて架空です。<span class="nw">寄付・申込は</span><span class="nw">受け付けていません。</span></span></p>
+
+  <main id="main">
+
+    <!-- 1. トップ -->
+    <section class="page" id="page-top" data-page="top" aria-labelledby="h-top">
+      <div class="hero">
+        <div class="wrap hero__in">
+          <div class="hero__text">
+            <h1 class="h1" id="h-top" tabindex="-1">子どもが安心して学べて、ほっとできる場所を、地域の手で続けていきます。</h1>
+            <p class="lead">コダマリ学びネットは、北海道の小さな町で、放課後の学習会「こだま塾」と、日中の居場所「ひだまりルーム」を運営している NPO 法人です（架空の団体です）。</p>
+          </div>
+          <svg class="hero__art" viewBox="0 0 480 320" role="img" aria-label="町の公民館と、開いた本と、日だまりの絵" focusable="false">
+            <g stroke-linecap="round" stroke-linejoin="round">
+              <rect x="0" y="0" width="480" height="320" rx="16" fill="#F1ECE3"/>
+              <path d="M0 200 C120 170 240 180 330 196 C400 208 450 198 480 190 V304 a16 16 0 0 1 -16 16 H16 a16 16 0 0 1 -16 -16 z" fill="#E3EEEA"/>
+              <!-- 日 -->
+              <g stroke="#9A4612" stroke-width="3">
+                <circle cx="392" cy="78" r="30" fill="#FBEADB"/>
+                <path d="M392 30v12M392 114v12M344 78h12M428 78h12M358 44l8 8M418 104l8 8M358 112l8-8M418 52l8-8" fill="none"/>
+              </g>
+              <!-- 公民館 -->
+              <g stroke="#1F5C4F" stroke-width="3" fill="#FFFFFF">
+                <path d="M170 150 L240 96 L310 150 Z"/>
+                <rect x="184" y="150" width="112" height="92"/>
+                <rect x="226" y="194" width="28" height="48"/>
+                <rect x="198" y="166" width="20" height="20"/>
+                <rect x="262" y="166" width="20" height="20"/>
+              </g>
+              <!-- 開いた本 -->
+              <g stroke="#2B5A94" stroke-width="3" fill="#E4EDF7">
+                <path d="M96 222 L52 210 V262 L96 274 Z"/>
+                <path d="M96 222 L140 210 V262 L96 274 Z"/>
+              </g>
+              <path d="M150 260 H340" fill="none" stroke="#1F5C4F" stroke-width="3"/>
+            </g>
+          </svg>
+          <p class="hero__act"><a class="btn-sub" href="#about">法人情報・情報公開を見る</a></p>
+        </div>
+      </div>
+
+      <section class="sec" aria-labelledby="h-biz">
+        <div class="wrap">
+          <h2 class="h2" id="h-biz">2つの事業</h2>
+          <p class="sec__lead">どちらも<span class="nw">コダマリ学びネット</span>が運営しています。</p>
+          <div class="biz-cards">
+            <article class="card biz-card biz-card--kodama">
+              <p><span class="biz-tag biz-tag--kodama"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>こだま塾</span></p>
+              <h3>放課後の学習会 こだま塾</h3>
+              <p class="biz-card__text">小学4年生から中学3年生までの子が、宿題や苦手なところを、大学生や地域のボランティアと一緒に勉強します。</p>
+              <p class="biz-card__time">毎週 火・木 16:30〜18:30／参加費 無料</p>
+              <p class="biz-card__act"><a class="btn-sub" href="#kodama">こだま塾のページへ</a></p>
+            </article>
+            <article class="card biz-card biz-card--hidamari">
+              <p><span class="biz-tag biz-tag--hidamari"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>ひだまりルーム</span></p>
+              <h3>居場所 ひだまりルーム</h3>
+              <p class="biz-card__text">学校に行きづらい小中学生が、平日の日中に過ごせる場所です。来たいときに来て、帰りたいときに帰れます。</p>
+              <p class="biz-card__time">毎週 月・水・金 10:00〜15:00／利用は無料（昼食は実費）</p>
+              <p class="biz-card__act"><a class="btn-sub" href="#hidamari">ひだまりルームのページへ</a></p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="sec sec--tight" aria-labelledby="h-latest">
+        <div class="wrap">
+          <div class="latest__head">
+            <h2 class="h2" id="h-latest">最新の活動報告</h2>
+          </div>
+          <div class="latest" id="latest"></div>
+          <p class="latest__all"><a class="inline-link" href="#reports" id="to-reports-all">活動報告をすべて見る（18件）</a></p>
+        </div>
+      </section>
+
+      <section class="sec sec--band" aria-labelledby="h-support-band">
+        <div class="wrap">
+          <h2 class="h2" id="h-support-band">ご支援のお願い</h2>
+          <p class="sec__lead">活動は、会費・寄付・助成金と、たくさんの方の時間に支えられています。寄付・会員・ボランティアの3つの関わり方があります。</p>
+          <p><a class="btn-main" href="#support"><span>ご支援の方法を見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></a></p>
+        </div>
+      </section>
+
+      <section class="sec" aria-labelledby="h-org-band">
+        <div class="wrap">
+          <h2 class="h2" id="h-org-band">事業報告と会計報告を公開しています</h2>
+          <dl class="figs">
+            <div><dt>2025年度の経常収益</dt><dd id="fig-income">6,099,210円</dd></div>
+            <div><dt>正会員</dt><dd>42名</dd></div>
+            <div><dt>活動を始めた年</dt><dd>2011年</dd></div>
+          </dl>
+          <p class="sec__text">毎年の事業報告書・活動計算書・貸借対照表・財産目録を、年度ごとにまとめています。</p>
+          <p class="sec__act"><a class="btn-sub" href="#about">法人情報・情報公開へ</a></p>
+        </div>
+      </section>
+    </section>
+
+    <!-- 2. 事業ページ こだま塾 -->
+    <section class="page" id="page-kodama" data-page="kodama" aria-labelledby="h-kodama" hidden>
+      <div class="wrap col page__in">
+        <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">こだま塾</li></ol></nav>
+        <p class="biz-of"><span class="biz-tag biz-tag--houjin"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>法人</span><span>コダマリ学びネットの事業です</span></p>
+        <p class="page__tag"><span class="biz-tag biz-tag--kodama"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-book"/></svg>こだま塾</span></p>
+        <h1 class="h1" id="h-kodama" tabindex="-1">放課後の学習会 こだま塾</h1>
+        <p class="lead">小学4年生から中学3年生までの子が、宿題や苦手なところを、大学生や地域のボランティアと一緒に勉強する場所です。2011年から続けています。</p>
+        <p class="page__act"><a class="btn-sub" href="#reports" data-report-biz="kodama" id="to-reports-kodama">こだま塾の活動報告を見る（7件）</a></p>
+
+        <section class="block" aria-labelledby="h-kodama-info">
+          <h2 class="h2" id="h-kodama-info">参加のご案内</h2>
+          <dl class="info">
+            <div><dt>対象</dt><dd>小学4年生〜中学3年生（町に住む子・町の学校に通う子）</dd></div>
+            <div><dt>日時</dt><dd>毎週 火曜・木曜 16:30〜18:30（学校の長い休みは別の日程）</dd></div>
+            <div><dt>場所</dt><dd>町の公民館 2階 学習室（架空）</dd></div>
+            <div><dt>費用</dt><dd>無料（プリント・文房具も用意しています）</dd></div>
+            <div><dt>定員</dt><dd>1回 20人まで</dd></div>
+          </dl>
+        </section>
+
+        <section class="block" aria-labelledby="h-kodama-flow">
+          <h2 class="h2" id="h-kodama-flow">1日の流れ</h2>
+          <ol class="flow">
+            <li><span class="flow__time">16:30</span><span class="flow__text">受付。来た順に出席の札をかけます</span></li>
+            <li><span class="flow__time">16:40</span><span class="flow__text">宿題の時間。分からない所はボランティアに聞けます</span></li>
+            <li><span class="flow__time">17:30</span><span class="flow__text">休けい（お茶と小さなおやつ）</span></li>
+            <li><span class="flow__time">17:40</span><span class="flow__text">苦手のおさらい（一人ひとりのプリント）</span></li>
+            <li><span class="flow__time">18:20</span><span class="flow__text">片づけと、今日のふりかえり</span></li>
+            <li><span class="flow__time">18:30</span><span class="flow__text">おしまい（冬は保護者の方のお迎えをお願いしています）</span></li>
+          </ol>
+        </section>
+
+        <section class="block" aria-labelledby="h-kodama-faq">
+          <h2 class="h2" id="h-kodama-faq">よくある質問</h2>
+          <div class="faq">
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">勉強が苦手でも参加できますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>できます。宿題を持ってくるだけでかまいません。分からないところから一緒に始めます。</p></div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">申し込みは必要ですか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>はじめての時は、保護者の方からお問い合わせください。見学だけの日も作れます。（デモのため、実際の受付はしていません）</p></div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">成績を上げてもらえますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>成績のお約束はしていません。宿題を終わらせる習慣と、「分からない」と言える場所づくりを大事にしています。</p></div>
+            </details>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- 3. 事業ページ ひだまりルーム -->
+    <section class="page" id="page-hidamari" data-page="hidamari" aria-labelledby="h-hidamari" hidden>
+      <div class="wrap col page__in">
+        <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">ひだまりルーム</li></ol></nav>
+        <p class="biz-of"><span class="biz-tag biz-tag--houjin"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg>法人</span><span>コダマリ学びネットの事業です</span></p>
+        <p class="page__tag"><span class="biz-tag biz-tag--hidamari"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>ひだまりルーム</span></p>
+        <h1 class="h1" id="h-hidamari" tabindex="-1">居場所 ひだまりルーム</h1>
+        <p class="lead">学校に行きづらい小中学生が、平日の日中に過ごせる場所です。勉強をしてもしなくても、来たいときに来て、帰りたいときに帰れます。2019年に始めました。</p>
+        <p class="page__act"><a class="btn-sub" href="#reports" data-report-biz="hidamari" id="to-reports-hidamari">ひだまりルームの活動報告を見る（5件）</a></p>
+
+        <section class="block" aria-labelledby="h-hidamari-info">
+          <h2 class="h2" id="h-hidamari-info">参加のご案内</h2>
+          <dl class="info">
+            <div><dt>対象</dt><dd>小学1年生〜中学3年生で、学校に行きづらい子（はじめに保護者の方とお話しします）</dd></div>
+            <div><dt>日時</dt><dd>毎週 月曜・水曜・金曜 10:00〜15:00（冬の12月〜2月は 10:30 から。祝日は休み）</dd></div>
+            <div><dt>場所</dt><dd>町の中心の、もと商店だった建物の1階（架空）</dd></div>
+            <div><dt>費用</dt><dd>利用は無料。昼ごはんを食べる日は、材料の実費 1回200円</dd></div>
+            <div><dt>ボランティア</dt><dd>ボランティアの募集は、法人の事務局がまとめて行っています（活動報告の「法人」）</dd></div>
+          </dl>
+        </section>
+
+        <section class="block" aria-labelledby="h-hidamari-flow">
+          <h2 class="h2" id="h-hidamari-flow">1日の流れ</h2>
+          <ol class="flow">
+            <li><span class="flow__time">10:00</span><span class="flow__text">開きます。その日のすごし方を自分で決めます</span></li>
+            <li><span class="flow__time">10:30</span><span class="flow__text">好きなことの時間（読書・工作・ボードゲーム・勉強）</span></li>
+            <li><span class="flow__time">12:00</span><span class="flow__text">昼ごはん（食べたい子だけ。みんなでつくる日もあります）</span></li>
+            <li><span class="flow__time">13:00</span><span class="flow__text">静かな時間。近くを歩く日もあります</span></li>
+            <li><span class="flow__time">14:30</span><span class="flow__text">片づけとおやつ</span></li>
+            <li><span class="flow__time">15:00</span><span class="flow__text">閉じます</span></li>
+          </ol>
+        </section>
+
+        <section class="block" aria-labelledby="h-hidamari-faq">
+          <h2 class="h2" id="h-hidamari-faq">よくある質問</h2>
+          <div class="faq">
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">毎日来なければいけませんか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>いいえ。来る日も、来る時間も、子ども本人が決めます。</p></div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">学校と連絡を取っていますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>保護者の方が希望する時だけ、保護者の方と相談したうえで学校とお話しします。</p></div>
+            </details>
+            <details class="faq__item">
+              <summary class="faq__q"><span class="faq__mark" aria-hidden="true">Q</span><span class="faq__qt">見学はできますか？</span><svg class="faq__chev" width="24" height="24" aria-hidden="true" focusable="false"><use href="#i-chev"/></svg></summary>
+              <div class="faq__a"><p>保護者の方だけ、または親子で見学できます。（デモのため、実際の受付はしていません）</p></div>
+            </details>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- 4. 活動報告の一覧 -->
+    <section class="page" id="page-reports" data-page="reports" aria-labelledby="h-reports" hidden>
+      <div class="wrap col page__in">
+        <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">活動報告</li></ol></nav>
+        <h1 class="h1" id="h-reports" tabindex="-1">活動報告</h1>
+        <p class="lead">2つの事業と法人のお知らせ・活動のようす・募集を、新しい順に並べています。記事・日付はすべて架空です。子どもの名前と写真は載せていません。</p>
+
+        <div class="card filter">
+          <fieldset class="chips-set">
+            <legend class="chips-set__legend">事業で絞り込む</legend>
+            <div class="chips">
+              <label class="chip"><input class="visually-hidden" type="radio" name="biz" value="all" id="biz-all" checked><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>すべて</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="biz" value="kodama" id="biz-kodama"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>こだま塾</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="biz" value="hidamari" id="biz-hidamari"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>ひだまりルーム</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="biz" value="houjin" id="biz-houjin"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>法人</label>
+            </div>
+          </fieldset>
+          <fieldset class="chips-set">
+            <legend class="chips-set__legend">種類で絞り込む</legend>
+            <div class="chips">
+              <label class="chip"><input class="visually-hidden" type="radio" name="kind" value="all" id="kind-all" checked><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>すべて</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="kind" value="news" id="kind-news"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>お知らせ</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="kind" value="report" id="kind-report"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>活動のようす</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="kind" value="recruit" id="kind-recruit"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>募集</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <p class="count" id="count">18件中 6件を表示</p>
+        <div class="posts" id="posts"></div>
+        <div class="empty" id="empty" hidden>
+          <p>この組み合わせの活動報告はありません。事業か種類を「すべて」に戻してください。</p>
+          <p class="empty__act"><button type="button" class="btn-sub" id="clear">絞り込みを外す</button></p>
+        </div>
+        <p class="more"><button type="button" class="btn-sub" id="more">もっと見る（残り12件）</button></p>
+      </div>
+    </section>
+
+    <!-- 5. 法人情報・情報公開 -->
+    <section class="page" id="page-about" data-page="about" aria-labelledby="h-about" hidden>
+      <div class="wrap col page__in">
+        <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">法人情報・情報公開</li></ol></nav>
+        <h1 class="h1" id="h-about" tabindex="-1">法人情報・情報公開</h1>
+        <p class="lead">コダマリ学びネットの成り立ちと、毎年の事業報告・会計報告をまとめています。数字はすべて架空です。</p>
+
+        <section class="block" aria-labelledby="h-org">
+          <h2 class="h2" id="h-org">法人の概要</h2>
+          <dl class="info info--org" id="org"></dl>
+        </section>
+
+        <section class="block" aria-labelledby="h-docs">
+          <h2 class="h2" id="h-docs">情報公開の書類</h2>
+          <p class="notice">デモのため実際の書類はありません。実際のサイトでは、ここから各年度の書類（PDF）を開けます。</p>
+          <p class="docs__teikan">定款（2024年6月 変更）：デモのため書類はありません</p>
+          <div class="tbl">
+            <table class="docs" id="docs">
+              <caption>年度ごとの書類</caption>
+              <thead><tr><th scope="col">書類</th><th scope="col">2025年度</th><th scope="col">2024年度</th><th scope="col">2023年度</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="docs__to"><button class="btn-text" type="button" id="to-accounts">活動計算書の要点を見る</button></p>
+        </section>
+
+        <section class="block" aria-labelledby="h-accounts">
+          <h2 class="h2" id="h-accounts" tabindex="-1">活動計算書の要点</h2>
+          <p class="sec__lead">年度を選ぶと、その年度の収益と費用の内訳が表と横棒で変わります。単位は円です。</p>
+          <fieldset class="chips-set fy">
+            <legend class="visually-hidden">年度を選ぶ</legend>
+            <div class="chips">
+              <label class="chip"><input class="visually-hidden" type="radio" name="fy" value="2025" id="fy-2025" checked><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>2025年度</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="fy" value="2024" id="fy-2024"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>2024年度</label>
+              <label class="chip"><input class="visually-hidden" type="radio" name="fy" value="2023" id="fy-2023"><svg class="chip__check" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>2023年度</label>
+            </div>
+          </fieldset>
+          <p class="period" id="period"></p>
+          <div class="acc">
+            <div class="tbl acc__table">
+              <table class="money" id="acc-table">
+                <caption id="acc-caption"></caption>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="acc__bars">
+              <p class="bars__note">棒の長さは、3年度の中で一番大きい額（2025年度の経常費用計 6,205,400円）を100%にしています。</p>
+              <figure class="bars" id="bars" aria-hidden="true"></figure>
+            </div>
+          </div>
+          <p class="acc__sum" id="acc-sum"></p>
+        </section>
+
+        <section class="block" aria-labelledby="h-trend">
+          <h2 class="h2" id="h-trend">3年度の推移</h2>
+          <div class="tbl">
+            <table class="money trend" id="trend">
+              <caption>3年度の推移（単位：円）</caption>
+              <thead><tr><th scope="col">年度</th><th scope="col">経常収益計</th><th scope="col">経常費用計</th><th scope="col">当期正味財産増減額</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <p class="note">このデモの団体は、経常外の収益・費用と法人税等がない設定のため、当期経常増減額と当期正味財産増減額は同じ額です。マイナスは費用が収益を上回った年度です。</p>
+        </section>
+      </div>
+    </section>
+
+    <!-- 6. ご支援のお願い -->
+    <section class="page" id="page-support" data-page="support" aria-labelledby="h-support" hidden>
+      <div class="wrap page__in">
+        <div class="col col--flush">
+          <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">ご支援のお願い</li></ol></nav>
+          <h1 class="h1" id="h-support" tabindex="-1">ご支援のお願い</h1>
+          <p class="lead">こだま塾とひだまりルームは、会費・寄付・助成金と、たくさんの方の時間に支えられて続いています。いただいたご支援の使い道は、毎年の活動計算書で報告しています。</p>
+          <p><a class="inline-link" href="#about">活動計算書の要点を見る</a></p>
+        </div>
+        <div class="support">
+          <section class="card support__card" aria-labelledby="h-sp1">
+            <h2 class="h2" id="h-sp1">寄付で支える</h2>
+            <p>1回だけでも、毎月でも。金額は自由です。</p>
+            <h3>使い道の目安</h3>
+            <ul class="dots">
+              <li>3,000円 … 学習会のプリントと文房具 10人分（1か月）</li>
+              <li>5,000円 … ひだまりルームの昼ごはんの材料 25食分</li>
+              <li>10,000円 … 学習室の会場費 2か月分</li>
+            </ul>
+            <p class="support__act"><button type="button" class="btn-main" data-demo="msg-sp1"><span>寄付の方法を見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></p>
+            <p class="demo-msg" id="msg-sp1" hidden></p>
+          </section>
+          <section class="card support__card" aria-labelledby="h-sp2">
+            <h2 class="h2" id="h-sp2">会員になる</h2>
+            <p>会員の会費は、2つの事業を続けるための土台になります。会報を年2回お送りします。</p>
+            <dl class="mini-dl">
+              <div><dt>正会員</dt><dd>年会費 3,000円（総会で議決に加わります）</dd></div>
+              <div><dt>賛助会員</dt><dd>年会費 1口 2,000円（活動を応援する会員です）</dd></div>
+            </dl>
+            <p class="support__act"><button type="button" class="btn-main" data-demo="msg-sp2"><span>会員の申し込み方法を見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></p>
+            <p class="demo-msg" id="msg-sp2" hidden></p>
+          </section>
+          <section class="card support__card" aria-labelledby="h-sp3">
+            <h2 class="h2" id="h-sp3">ボランティアで関わる</h2>
+            <p>経験や資格は要りません。できる時間で関わってください。</p>
+            <ul class="dots">
+              <li>こだま塾の宿題の見守り（週1回・2時間から）</li>
+              <li>ひだまりルームの昼ごはんづくり（月1回から）</li>
+              <li>事務のお手伝い（会報の発送など）</li>
+            </ul>
+            <p class="support__act"><button type="button" class="btn-main" data-demo="msg-sp3"><span>ボランティアの説明を見る</span><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-arrow"/></svg></button></p>
+            <p class="demo-msg" id="msg-sp3" hidden></p>
+          </section>
+        </div>
+        <p class="note support__note">金額と使い道は架空の目安です。寄付・会員・ボランティアの申込は受け付けていません。決済・入力の欄はありません。</p>
+      </div>
+    </section>
+
+    <!-- 7. お問い合わせ（入力欄は置かない。灰色の見本だけ） -->
+    <section class="page" id="page-contact" data-page="contact" aria-labelledby="h-contact" hidden>
+      <div class="wrap col page__in">
+        <nav aria-label="現在の位置" class="crumb"><ol><li><a href="#top">コダマリ学びネット</a></li><li aria-current="page">お問い合わせ</li></ol></nav>
+        <h1 class="h1" id="h-contact" tabindex="-1">お問い合わせ</h1>
+        <p class="lead">事業の見学・ボランティア・取材などのお問い合わせの窓口です。</p>
+        <p class="soft-box">デモのため、連絡先（電話・メール・住所）は載せていません。</p>
+        <div class="form-sample" role="img" aria-label="お問い合わせフォームの見本。入力はできません。">
+          <span class="form-sample__tag">見本（入力できません）</span>
+          <div class="fs__field"><span class="fs__label">お名前</span><span class="fs__box">（入力できません）</span></div>
+          <div class="fs__field"><span class="fs__label">メールアドレス</span><span class="fs__box">（入力できません）</span></div>
+          <div class="fs__field"><span class="fs__label">お問い合わせの種類（見学・ボランティア・取材・その他）</span><span class="fs__box">（入力できません）</span></div>
+          <div class="fs__field"><span class="fs__label">内容</span><span class="fs__box fs__box--tall">（入力できません）</span></div>
+          <div class="fs__send">送信する</div>
+        </div>
+        <p class="contact__real">実際のお仕事では、ここにお問い合わせのフォームを置きます。届いたお問い合わせは、団体のメールに届くようにします。</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- 実際のお仕事では（TENKA LAB の層。どの画面の下にも出す） -->
+  <section class="sec sec--lab" id="work" aria-labelledby="h-work">
+    <div class="wrap">
+      <p class="lab-tag"><span class="nw">TENKA LAB</span> より</p>
+      <h2 class="lab-title" id="h-work">実際のお仕事では</h2>
+      <p class="lab-lead">法人のサイトと事業ごとのサイトを1つにまとめ、「どの事業を誰が運営しているか」と「事業報告・会計報告」を探しやすくします。このページは、架空の NPO を題材にした自主制作のデモです。</p>
+      <ul class="work-3">
+        <li>
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg>
+          <h3>いまのサイトを表にします</h3>
+          <p>いまお使いの複数のサイトの契約とドメインを表にして、まとめた後の年間の維持費と並べてお見せします（金額は契約を拝見してから）。</p>
+        </li>
+        <li>
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-route"/></svg>
+          <h3>古いページから案内します</h3>
+          <p>前のサイトの各ページから、新しいページへ移る案内（転送）の一覧を作ります。</p>
+        </li>
+        <li>
+          <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg>
+          <h3>申請と寄付の受付を確かめます</h3>
+          <p>Google Ad Grants などの申請の要件を、ページごとに確かめます（申請そのものと結果はお約束できません）。寄付の受付は、団体がお使いの決済サービスに合わせます（手数料は団体のご負担・別のお見積もり）。</p>
+        </li>
+      </ul>
+      <div class="work-check">
+        <h3>載せる前に</h3>
+        <ul>
+          <li>子どもの写真・名前を載せる時は、保護者の同意を団体で確かめていただきます</li>
+          <li>定款・事業報告書などの書類は、団体の最新の版を載せます</li>
+        </ul>
+        <p class="work-check__note">このページの団体・事業・記事・数字はすべて架空で、実在の団体とは関係ありません。</p>
+      </div>
+      <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p class="ft__logo"><span class="ft__mark"><svg width="28" height="28" aria-hidden="true" focusable="false"><use href="#i-logo"/></svg></span><span>特定非営利活動法人 コダマリ学びネット（架空）</span></p>
+    <p>このページは <span class="nw">TENKA LAB</span> が作った動く<span class="nw">デモ</span>です。コダマリ学びネットは架空の団体で、事業・活動報告・数字もすべて架空です。寄付・会員・ボランティアの申込は受け付けていません。</p>
+    <nav aria-label="サイトの中の移動（フッター）"><ul class="ft__nav">
+      <li><a href="#top">トップ</a></li>
+      <li><a href="#kodama">こだま塾</a></li>
+      <li><a href="#hidamari">ひだまりルーム</a></li>
+      <li><a href="#reports">活動報告</a></li>
+      <li><a href="#about">法人情報</a></li>
+      <li><a href="#support">ご支援</a></li>
+      <li><a href="#contact">お問い合わせ</a></li>
+    </ul></nav>
+    <p><a class="btn" href="../../">ほかの作品例を見る</a></p>
+    <p class="copy">© TENKA LAB（デモ）</p>
+  </footer>
+
+  <p class="visually-hidden" role="status" id="sr-status"></p>
+</body>
+</html>
