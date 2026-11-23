@@ -17,7 +17,7 @@
   var IL = { taste: '味', speed: '提供の速さ', service: '接客', comfort: '居心地', price: '価格' }
   var SLOTS = ['morning', 'lunch', 'afternoon', 'night']
   var SL = { morning: '朝', lunch: '昼', afternoon: '午後', night: '夜' }
-  var SR = { morning: '開店〜11時', lunch: '11〜14時', afternoon: '14〜17時', night: '17時〜閉店' }
+  var SR = { morning: '開店〜11時未満', lunch: '11時〜14時未満', afternoon: '14時〜17時未満', night: '17時〜閉店' }
   var CATS = ['pro', 'pas', 'det']
   var CL = { pro: '推奨', pas: '中立', det: '批判' }
   var ANS_KEYS = ['id', 'date', 'slot', 'taste', 'speed', 'service', 'comfort', 'price', 'again', 'comment', 'done', 'memo']
@@ -382,7 +382,7 @@
   // 折れてはいけない語（§16）を .nw の span に包む（テキストノードを分けて createElement で入れる）
   function esc (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
   var NW_WORDS = ['喫茶 カサネド', '提供の速さ', '総合の平均', '前の月と同じ', '前の月は回答なし', '推奨と批判の差', 'まだ対応していません', 'まだ対応していない声', '対応済み', 'いちばん低い項目', '回答なし',
-    'デモ（架空のお店）', 'デモの日付', '見本に戻す', 'CSV をダウンロード', '印刷・PDFで保存', '開店〜11時', '11〜14時', '14〜17時', '17時〜閉店', '居心地', '接客', '価格', '午後', '推奨', '中立', '批判', 'デモ', '架空']
+    'デモ（架空のお店）', 'デモの日付', '見本に戻す', 'CSV をダウンロード', '印刷・PDFで保存', '開店〜11時未満', '11時〜14時未満', '14時〜17時未満', '17時〜閉店', '居心地', '接客', '価格', '午後', '推奨', '中立', '批判', 'デモ', '架空']
     .sort(function (a, b) { return b.length - a.length })
   var NW_RE = new RegExp([
     '\\d{4}年\\d{1,2}月(?:\\d{1,2}日(?:（[日月火水木金土]）)?)?', '\\d{4}-\\d{2}-\\d{2}', 'A\\d{3,4}', '合計 \\d+／25', 'また来たい \\d+',
@@ -663,6 +663,8 @@
     announce('回答を受け付けました（' + a.id + '）。' + jpMonth(ui.doneYm) + 'の集計に入りました')
     $('thanks-h').focus()
   })
+  // 送信を止める処理を登録した後に回答ボタンを有効にする（JavaScript が動かない時は押せないまま。HTML で disabled）
+  $('btn-answer').disabled = false
   // 直前の1件（id・来店日・時間帯の3つが合う回答がある時だけ）
   function lastAdded () {
     var la = ui.lastAdded
@@ -813,12 +815,13 @@
     add(lb, [cb, icon('i-okc', 16, 'pick-btn__ic'), '対応済み'])
     cb.addEventListener('change', function () { markDone(id, cb.checked) })
     var memoL = el('label', 'field__label', '社内メモ（60字まで）'); memoL.setAttribute('for', 'memo-' + id)
-    var mi = el('input', 'input'); mi.id = 'memo-' + id; mi.type = 'text'; mi.maxLength = 80; mi.autocomplete = 'off'; mi.setAttribute('aria-describedby', 'err-memo-' + id)
+    var mi = el('input', 'input'); mi.id = 'memo-' + id; mi.type = 'text'; mi.maxLength = 80; mi.autocomplete = 'off'; mi.setAttribute('aria-describedby', 'memo-hint-' + id + ' err-memo-' + id)
     mi.value = a.memo
     mi.addEventListener('input', function () { if (mi.hasAttribute('aria-invalid') && !checkText(mi.value, 60).e) { mi.removeAttribute('aria-invalid'); hideErrP('err-memo-' + id) } })
     var sb = btn('btn-sub', 'メモを保存', 'memo-save-' + id); sb.setAttribute('aria-label', 'メモを保存 ' + id)
     sb.addEventListener('click', function () { saveMemo(id) })
     var err = el('p', 'field__err'); err.id = 'err-memo-' + id; err.hidden = true
+    var hint = el('p', 'field__hint', '同じブラウザを使う人が見られます。実在の方の情報は書かないでください'); hint.id = 'memo-hint-' + id
     var scores = ITEMS.map(function (k) { return IL[k] + a[k] }).join('・')
     add(art, [
       add(el('div', 'voice__head'), [h, stateTag(category(a.again))]),
@@ -827,7 +830,7 @@
       add(el('p', 'voice__sum'), [nw('合計 ' + total(a) + '／25'), '・', nw('また来たい ' + a.again)]),
       add(el('div', 'voice__state'), [el('span', 'voice__tag'), lb]),
       add(el('p', 'voice__memo'), [el('span', 'voice__memo-l', '社内メモ'), el('span', 'voice__memo-t')]),
-      add(el('div', 'field memo-field'), [memoL, add(el('div', 'memo-row'), [mi, sb]), err])
+      add(el('div', 'field memo-field'), [memoL, add(el('div', 'memo-row'), [mi, sb]), hint, err])
     ])
     art.setAttribute('data-memo', a.memo)
     return { el: art, key: cardKey(a) }
@@ -928,14 +931,16 @@
     if (off) { b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-describedby', descId) } else { b.removeAttribute('aria-disabled'); b.removeAttribute('aria-describedby') }
     $(descId).hidden = !off
   }
-  function csvName () { return 'kasanedo_survey_' + ui.expYm + '.csv' }
+  // ファイル名と印刷の題名（PDF の名前）に「デモ・架空回答」を入れる
+  function outName () { return 'kasanedo_survey_' + ui.expYm + '_デモ・架空回答' }
+  function csvName () { return outName() + '.csv' }
   function renderExport () {
     if (!ui.expYm) ui.expYm = ui.sumYm
     var sel = $('export-month'); fillSelect(sel, MONTH_OPTS); sel.value = ui.expYm
     var n = monthAnswers(S, ui.expYm).length
     setDisabled($('btn-csv'), !n, 'csv-none')
     setDisabled($('btn-print'), !n, 'print-none')
-    setText($('csv-name'), ['ファイル名：', nw(csvName()), nw('（' + n.toLocaleString('ja-JP') + '件）')])
+    setText($('csv-name'), ['ファイル名：', nw('kasanedo_survey_' + ui.expYm), nw('_デモ・架空回答.csv'), nw('（' + n.toLocaleString('ja-JP') + '件）')])
     $('csv-peek').textContent = buildCsv(S, ui.expYm).slice(1).split('\r\n').filter(function (l) { return l !== '' }).slice(0, 4).join('\n')
   }
   $('export-month').addEventListener('change', function () { load(); ui.expYm = $('export-month').value; renderAll() })
@@ -990,12 +995,12 @@
     return add(el('table', cls), [cg, thead, tbody])
   }
   var PRINT_ITEM_COLS = [['項目', 30], ['平均', 16, 1], ['前の月から', 36], ['5点', 20, 1], ['4点', 20, 1], ['3点', 20, 1], ['2点', 20, 1], ['1点', 0, 1]]
-  var PRINT_SLOT_COLS = [['時間帯', 34], ['回答数', 20, 1], ['味', 20, 1], ['提供の速さ', 24, 1], ['接客', 20, 1], ['居心地', 20, 1], ['価格', 20, 1], ['総合', 0, 1]]
+  var PRINT_SLOT_COLS = [['時間帯', 44], ['回答数', 20, 1], ['味', 20, 1], ['提供の速さ', 24, 1], ['接客', 20, 1], ['居心地', 20, 1], ['価格', 20, 1], ['総合', 0, 1]]
   var PRINT_VOICE_COLS = [['来店日', 15], ['時間帯', 13], ['番号', 15], ['合計', 17, 1], ['また来たい', 19, 1], ['ひとこと', 0, 0, 1]]
   function buildSheet () {
     var ym = ui.expYm
     var ms = monthStats(S, ym); var df = monthDiff(S, ym)
-    var shop = el('p', 'sheet__shop', SHOP + '　' + jpMonth(ym) + 'のアンケート集計')
+    var shop = el('p', 'sheet__shop', SHOP + '　' + jpMonth(ym) + 'のアンケート集計（デモ・架空回答）')
     shop.appendChild(stampSvg())
     var sumLine = '回答 ' + ms.n.toLocaleString('ja-JP') + '件（' + (df.n === null ? '前の月は回答なし' : '前の月から ' + diffText(df.n, 'n')) + '）／総合 ' + fmt1(ms.avgAll) + '（' + diffText(df.avgAll, 'avg') + '）／' +
       '推奨と批判の差 ' + fmtSigned(ms.d) + '（' + diffText(df.d, 'd') + '）／いちばん低い項目 ' + IL[ms.low] + ' ' + fmt1(ms.avg[ms.low])
@@ -1013,11 +1018,12 @@
       el('p', 'sheet__h', '5つの項目（平均と、点ごとの件数）'),
       sheetTable(PRINT_ITEM_COLS, items, 'sheet__items'),
       el('p', 'sheet__nps', 'また来たいと思うか：' + CATS.map(function (c) { return CL[c] + ' ' + ms.pct[c] + '%（' + ms.cnt[c] + '件）' }).join('・')),
+      el('p', 'sheet__note', '推奨と批判の差＝9〜10点の割合 − 0〜6点の割合（ポイント。四捨五入した後の割合どうしを引く）'),
       el('p', 'sheet__h', '時間帯ごとの平均'),
       sheetTable(PRINT_SLOT_COLS, slots, 'sheet__slots'),
       el('p', 'sheet__h', '点数の低い声（' + lows.length + '件）'),
       lows.length ? sheetTable(PRINT_VOICE_COLS, vrows, 'sheet__voices') : el('p', null, 'ひとことのある回答はありません'),
-      el('p', 'sheet__foot', 'デモ（架空のお店）です。回答はすべて架空です。TENKA LAB の制作見本です。')
+      el('p', 'sheet__foot', 'デモ（架空のお店）です。最初から入っている見本回答はすべて架空です。TENKA LAB の制作見本です。')
     ])
   }
   var elPrintRoot = $('print-root')
@@ -1027,12 +1033,12 @@
     load()
     if (!monthAnswers(S, ui.expYm).length) { announce('この月の回答はありません'); return }
     fillPrint()
-    document.title = 'kasanedo_survey_' + ui.expYm
+    document.title = outName()
     window.print()
   })
   window.addEventListener('beforeprint', function () {
     if (!elPrintRoot.firstChild) fillPrint()
-    document.title = 'kasanedo_survey_' + ui.expYm
+    document.title = outName()
   })
   window.addEventListener('afterprint', function () {
     elPrintRoot.textContent = ''

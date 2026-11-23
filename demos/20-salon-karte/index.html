@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>美容室 ソヨギ（デモ）顧客カルテと再来店のお声がけ｜TENKA LAB</title>
-  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。美容室のお客様10人の来店の記録を呼び名で探し、前回の色番号を確かめ、次の来店の目安を過ぎた方を並べる見本です。お客様・記録はすべて架空です。">
+  <meta name="description" content="TENKA LAB の動くデモ（架空のお店）。美容室のお客様10人の来店の記録を呼び名で探し、前回の色番号を確かめ、次の来店の目安に達した方を並べる見本です。お客様・記録はすべて架空です。">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#553A55">
   <meta property="og:type" content="website">
   <meta property="og:title" content="美容室 ソヨギ（デモ）顧客カルテと再来店のお声がけ｜TENKA LAB">
-  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。美容室のお客様10人の来店の記録を呼び名で探し、前回の色番号を確かめ、次の来店の目安を過ぎた方を並べる見本です。お客様・記録はすべて架空です。">
+  <meta property="og:description" content="TENKA LAB の動くデモ（架空のお店）。美容室のお客様10人の来店の記録を呼び名で探し、前回の色番号を確かめ、次の来店の目安に達した方を並べる見本です。お客様・記録はすべて架空です。">
   <meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/assets/thumbs/22-salon-pc.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%23F7F3EB' stroke='%23553A55' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M9 21C5.2 17.6 3.4 12.6 4.2 7.4 8 10.2 9.4 15 9 21z'/%3E%3Cpath d='M9 21C20.5 20.5 19.5 15 21 14.6 15.6 14.2 11.2 16.6 9 21z'/%3E%3Cpath d='M9 21C7.6 13.6 10 6.8 15.6 2.8 17.4 9.4 14.6 16.4 9 21z'/%3E%3C/g%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -66,7 +66,7 @@
 
     <section class="intro" aria-labelledby="h-intro">
       <h1 id="h-intro" class="page-title">前回の色も、<br class="sp-only">しばらく来ていない方も、すぐ分かる</h1>
-      <p class="intro__lead">お客様ごとの来店の記録を、呼び名か番号ですぐ開けます。前回のカラーの番号とメモは一番上に。次の来店の目安を過ぎた方は、過ぎた日数の多い順に並びます。</p>
+      <p class="intro__lead">お客様ごとの来店の記録を、呼び名か番号ですぐ開けます。前回のカラーの番号とメモは一番上に。次の来店の目安に達した方（目安の日ちょうどの方も含みます）は、過ぎた日数の多い順に並びます。</p>
       <nav aria-label="手順">
         <ol class="steps" id="steps">
           <li class="step"><a href="#panel-search" data-step="search"><span class="step__num" aria-hidden="true">1</span><span class="step__label">お客様を探す</span></a></li>
@@ -76,7 +76,7 @@
         </ol>
       </nav>
       <ul class="intro__notes">
-        <li>※ デモ（架空のお店）です。お客様・記録はすべて架空です。実在の方の情報は入力しないでください。</li>
+        <li>※ デモ（架空のお店）です。最初から入っている見本（お客様・記録）はすべて架空です。実在の方の情報は入力しないでください。</li>
         <li>※ このデモの「今日」は 2026年12月1日 に決めてあります（日付が変わっても同じ結果になるように）。</li>
         <li>※ 入れた記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
         <li>※ お声がけの連絡（LINE・メールなど）はこのデモからは送りません。</li>
@@ -144,7 +144,7 @@
             <p class="karte__due" id="karte-due"></p>
             <dl class="last-box" id="last-box">
               <div class="last-box__item">
-                <dt class="last-box__l">前回のカラー</dt>
+                <dt class="last-box__l" id="last-color-l">前回のカラー</dt>
                 <dd class="last-box__color" id="last-color"></dd>
               </div>
               <div class="last-box__item last-box__item--memo">
@@ -156,7 +156,7 @@
 
           <section class="card karte-form-card" aria-labelledby="form-h">
             <div class="card__head"><h3 id="form-h">今日の記録を足す</h3></div>
-            <p class="form-note">お客様・記録はすべて架空です。実在の方の情報は入力しないでください。</p>
+            <p class="form-note">最初から入っている見本はすべて架空です。実在の方の情報は入力しないでください。</p>
             <form class="karte-form" id="karte-form" novalidate>
               <div class="field">
                 <label class="field__label" for="f-date">日付</label>
@@ -175,22 +175,22 @@
               </fieldset>
               <div class="amts" id="amts">
                 <div class="field amt" id="amt-cut" hidden>
-                  <label class="field__label" for="f-amt-cut">カットの金額</label>
+                  <label class="field__label" for="f-amt-cut">カットの金額（税込）</label>
                   <div class="input-wrap input-wrap--yen"><input id="f-amt-cut" class="input input--num" type="text" inputmode="numeric" autocomplete="off" aria-describedby="err-f-amt-cut"><span class="input__unit" aria-hidden="true">円</span></div>
                   <p class="field__err" id="err-f-amt-cut" hidden></p>
                 </div>
                 <div class="field amt" id="amt-color" hidden>
-                  <label class="field__label" for="f-amt-color">カラーの金額</label>
+                  <label class="field__label" for="f-amt-color">カラーの金額（税込）</label>
                   <div class="input-wrap input-wrap--yen"><input id="f-amt-color" class="input input--num" type="text" inputmode="numeric" autocomplete="off" aria-describedby="err-f-amt-color"><span class="input__unit" aria-hidden="true">円</span></div>
                   <p class="field__err" id="err-f-amt-color" hidden></p>
                 </div>
                 <div class="field amt" id="amt-perm" hidden>
-                  <label class="field__label" for="f-amt-perm">パーマの金額</label>
+                  <label class="field__label" for="f-amt-perm">パーマの金額（税込）</label>
                   <div class="input-wrap input-wrap--yen"><input id="f-amt-perm" class="input input--num" type="text" inputmode="numeric" autocomplete="off" aria-describedby="err-f-amt-perm"><span class="input__unit" aria-hidden="true">円</span></div>
                   <p class="field__err" id="err-f-amt-perm" hidden></p>
                 </div>
                 <div class="field amt" id="amt-tr" hidden>
-                  <label class="field__label" for="f-amt-tr">トリートメントの金額</label>
+                  <label class="field__label" for="f-amt-tr">トリートメントの金額（税込）</label>
                   <div class="input-wrap input-wrap--yen"><input id="f-amt-tr" class="input input--num" type="text" inputmode="numeric" autocomplete="off" aria-describedby="err-f-amt-tr"><span class="input__unit" aria-hidden="true">円</span></div>
                   <p class="field__err" id="err-f-amt-tr" hidden></p>
                 </div>
@@ -213,13 +213,13 @@
                 <label class="field__label" for="f-memo">メモ（200字まで）</label>
                 <textarea id="f-memo" class="input input--memo" aria-describedby="f-memo-note err-f-memo"></textarea>
                 <div class="memo-foot">
-                  <p class="memo-foot__note" id="f-memo-note">電話番号などは書かないでください</p>
+                  <p class="memo-foot__note" id="f-memo-note">同じブラウザを使う人が見られる見本の欄です。実在の方のお名前・連絡先は書かないでください</p>
                   <p class="memo-foot__count" id="f-memo-count"></p>
                 </div>
                 <p class="field__err" id="err-f-memo" hidden></p>
               </div>
               <p class="f-total" id="f-total"></p>
-              <button type="submit" class="btn-main" id="btn-add"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>この記録を足す</button>
+              <button type="submit" class="btn-main" id="btn-add" disabled><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-plus"/></svg>この記録を足す</button>
               <p class="field__err" id="err-form" hidden></p>
             </form>
           </section>
@@ -239,7 +239,7 @@
       <section class="panel" role="tabpanel" id="panel-due" aria-labelledby="tab-due" hidden>
         <div>
           <h2 class="panel__h" id="due-h" tabindex="-1">お声がけの候補</h2>
-          <p class="panel-note">最後の来店のメニューの目安を過ぎた方を、過ぎた日数の多い順に並べています。</p>
+          <p class="panel-note">最後の来店のメニューの目安に達した方（目安の日ちょうどの方も含みます）を、過ぎた日数の多い順に並べています。</p>
         </div>
         <div class="th-box" role="group" aria-labelledby="th-h">
           <p class="th-box__h" id="th-h">次の来店の目安</p>
@@ -263,6 +263,7 @@
           <ul class="th-box__notes">
             <li>2つ以上のメニューの時は、短い方の日数で判定します</li>
             <li>トリートメントだけの来店は判定しません</li>
+            <li>最初の 45・40・90日は、このデモで決めた設定値です</li>
           </ul>
         </div>
         <dl class="summary">
@@ -277,7 +278,7 @@
         </dl>
         <section class="due-sec" aria-labelledby="due-yet-h">
           <h3 class="sec-h" id="due-yet-h" tabindex="-1">まだの方</h3>
-          <p class="notice" id="due-yet-none" hidden>目安を過ぎた方はいません</p>
+          <p class="notice" id="due-yet-none" hidden>目安に達した方はいません</p>
           <ul class="due-cards" id="due-cards"></ul>
           <div class="table-box table-box--lg" id="due-table-box">
             <table class="due-table" id="due-table">
@@ -302,7 +303,7 @@
           <p class="notice" id="due-done-none" hidden>まだありません</p>
           <ul class="done-list" id="done-list"></ul>
         </section>
-        <p class="sub">※ このデモは連絡を送りません。お声がけは、お店から電話や LINE などでお願いします。実際のお仕事では、LINE 公式アカウントなどとつなぐ形をご相談できます（別にお見積もり）。</p>
+        <p class="sub">※ このデモは連絡を送りません。デモでは、お声がけ済みの記録を試せます。実際のお仕事では、LINE 公式アカウントなどとつなぐ形をご相談できます（別にお見積もり）。</p>
       </section>
 
       <!-- タブ4：月のまとめ（§9） -->
@@ -369,7 +370,7 @@
         </section>
         <section class="card" id="csv-card" aria-labelledby="csv-h">
           <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-          <p class="out__desc">選んでいる月の来店の記録を、1行に1件で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+          <p class="out__desc">選んでいる月の来店の記録を、1行に1件で出します。UTF-8（BOM 付き）の CSV です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
           <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
           <p class="sub out__none" id="csv-none" hidden>この月の記録はありません</p>
           <p class="sub sub--13 out__name" id="csv-name"></p>
@@ -389,7 +390,7 @@
         </section>
         <section class="card" id="print-card" aria-labelledby="print-h">
           <div class="card__head"><h3 id="print-h">印刷（A4 縦）</h3></div>
-          <p class="out__desc">選んでいる月のまとめ（人数・件数・売上・メニュー別・担当別・来店の一覧）を、A4 縦の1枚に印刷します。メモと色番号は紙に出しません。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+          <p class="out__desc">選んでいる月のまとめ（人数・件数・売上・メニュー別・担当別・来店の一覧）を、A4 縦で印刷します。1枚に収まるように、来店の一覧は25件までを載せ、それより多い月は「ほか ○件」と書きます（全件は CSV で見られます）。メモと色番号は紙に出しません。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
           <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷・PDFで保存</button>
           <p class="sub out__none" id="print-none" hidden>この月の記録はありません</p>
         </section>
@@ -408,7 +409,7 @@
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
           <h3>いまの表・予約の仕組みとつなぐ</h3>
           <ul class="dot-list">
-            <li>お店のスプレッドシート・予約の仕組みの記録を、カルテに取り込めます</li>
+            <li>お店のスプレッドシート・予約の仕組みの記録の取り込みは、お使いの仕組みを確かめてから、できるかどうかと費用を個別にご案内します</li>
             <li>カルテに写真を付けられます（お客様の同意のうえで）</li>
           </ul>
         </div>
@@ -416,7 +417,7 @@
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-chat"/></svg>
           <h3>お声がけを送る</h3>
           <ul class="dot-list">
-            <li>お声がけの候補の方へ、LINE 公式アカウントなどから案内を送る形にできます（送る文はお店が決めます）</li>
+            <li>お声がけの候補の方への案内（LINE 公式アカウントなど）は、お使いのアカウントを確かめてから、配信できるかどうかと費用を個別にご案内します（送る文はお店が決めます）</li>
           </ul>
         </div>
         <div class="work-box">
