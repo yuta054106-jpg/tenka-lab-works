@@ -146,7 +146,7 @@
             <p class="sheet__meta" id="ho-meta"></p>
           </div>
           <div class="sheet__body">
-            <p class="sheet__lead">次の5つは、AI 受付に答えを作らせません。お客様の文に「合図の言葉」が入っていたら、Q&amp;A より先にこの一覧を見て、決まった文だけを返し、お店の人へ回します。</p>
+            <p class="sheet__lead">次の5つは、AI 受付に答えを作らせません。お客様の文に「合図の言葉」が入っていたら、Q&amp;A より先にこの一覧を見て、決まった文だけを返し、お店の人へ回します。合図の言葉が無くても、食べられるか・入っているかを尋ねる質問や、前の会話を受けた質問は人へ回します。AI 受付はアレルギーの可否を判断しません。</p>
             <p class="legend-line"><span class="sig sig--added">食べられる</span><span>下線：11月2日のテストのあとに足した言葉</span></p>
             <div class="only-table" id="ho-table"></div>
             <div class="only-cards cards" id="ho-cards"></div>
@@ -173,7 +173,7 @@
               <div class="stat"><p class="stat__lab">合格率（修正後合格を含む）</p><p class="stat__num" id="ts-all"></p><p class="stat__sub" id="ts-all-sub"></p></div>
               <div class="stat"><p class="stat__lab">1回目の合格率（含まない）</p><p class="stat__num" id="ts-first"></p><p class="stat__sub" id="ts-first-sub"></p></div>
               <div class="stat"><p class="stat__lab">要修正</p><p class="stat__num is-seal" id="ts-todo"></p><p class="stat__sub" id="ts-todo-sub"></p></div>
-              <div class="stat"><p class="stat__lab">人へ回す質問に答えてしまった</p><p class="stat__num" id="ts-wrong"></p><p class="stat__sub" id="ts-wrong-sub"></p></div>
+              <div class="stat"><p class="stat__lab">人へ回す質問への誤回答（再テスト後の残り）</p><p class="stat__num" id="ts-wrong"></p><p class="stat__sub" id="ts-wrong-sub"></p></div>
             </div>
             <h3 class="h3 h3--gap">見かた</h3>
             <ul class="legend" id="ts-legend"></ul>
@@ -252,12 +252,12 @@
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-cycle"/></svg>
             <h3>試して、外れを残して、直す</h3>
-            <ul><li>言い回しを変えた質問で試し、外れたものと直し方を記録します。使い始めた後も月1回、答えられなかった質問を見直します</li></ul>
+            <ul><li>言い回しを変えた質問で試し、外れたものと直し方を記録します。使い始めた後の月1回の見直しは、ご希望があれば別のお見積もりで行います</li></ul>
           </li>
         </ul>
         <div class="work-check">
           <h3>本番にするときは</h3>
-          <ul><li>本番にするときは：お店の公式アカウントのチャットに AI 受付を設定し、この表を答えの元として渡します。AI の利用料と、月1回の見直しの回数は、別にお見積もりします。</li></ul>
+          <ul><li>本番にするときは：お店の公式アカウントのチャットに AI 受付を設定し、この表を答えの元として渡します。</li><li>人へ回した質問をお店の人へ知らせる方法（どの通知で知らせるか・いつ確かめるか）は、本番の前にお店と決めます。</li><li>予約の確定・変更・取り消しは、AI 受付の返事では完了しません。お店の人が返事をした時点で完了します。</li><li>AI の利用料と、使い始めた後の月1回の見直しは納品に含まず、別にお見積もりします。</li></ul>
           <p class="work-check__note">飲食に限らず、美容室・教室・整体院など、よく聞かれる質問が決まっているお店なら同じ形で作れます。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
