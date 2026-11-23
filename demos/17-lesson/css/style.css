@@ -366,7 +366,7 @@ main > * + * { margin-top: var(--gap-block); }
 .sum-table tbody th { font-size: 16px; font-weight: 700; white-space: nowrap; }
 .sum-table .num { text-align: right; }
 .sum-table .lg { display: none; }
-/* 列の幅（768〜1023px）。§9-3 の幅では見出し「（振替あり）」・「（振替 1）」・「ふくろう組（土）」が入らないため配分を変えた（impl_note 参照。和は 654px＝カードの中） */
+/* 列の幅（768〜1023px）。§9-3 の幅では見出し「（振替あり）」・「（振替 1）」・「ふくろう組（土）」が入らないため配分を変えた（和は 654px＝カードの中） */
 .sum-table .c-id { width: 108px; }
 .sum-table .c-course { width: 56px; }
 .sum-table .c-plan { width: 40px; }
@@ -551,7 +551,7 @@ main > * + * { margin-top: var(--gap-block); }
   .sum-table { font-size: 15px; }
   .sum-table .lg { display: table-cell; }
   .sum-table .md { display: none; }
-  /* 1024px〜 の列（和は 910px。§9-3 の 896px から配分を変えた。impl_note 参照） */
+  /* 1024px〜 の列（和は 910px。§9-3 の 896px から配分を変えた） */
   .sum-table .c-id { width: 76px; }
   .sum-table .c-course { width: 60px; }
   .sum-table .c-plan { width: 44px; }
@@ -574,7 +574,7 @@ main > * + * { margin-top: var(--gap-block); }
   body > *:not(#print-root) { display: none !important; }
   #print-root { display: block !important; color: #000000; font-family: var(--font-body); }
   #print-root .sheet { width: 273mm; font-size: 9pt; line-height: 1.3; color: #000000; }
-  #print-root .sheet__head { display: flex; align-items: center; gap: 4mm; margin: 0 0 3mm; }
+  #print-root .sheet__head { display: flex; align-items: center; gap: 8mm; margin: 0 0 3mm; padding-top: 3mm; }
   #print-root .sheet__shop { position: relative; padding-right: 10mm; font-family: var(--font-head); font-size: 15pt; font-weight: 700; white-space: nowrap; }
   #print-root .sheet__period { font-size: 10pt; }
   #print-root .stamp { position: absolute; right: -4mm; top: 50%; width: 12mm; height: 12mm; margin-top: -6mm; transform: rotate(-4deg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
