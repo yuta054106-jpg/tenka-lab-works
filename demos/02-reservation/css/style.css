@@ -57,7 +57,7 @@ button, input, textarea { font: inherit; color: inherit; }
   clip: rect(0 0 0 0); white-space: nowrap; margin: -1px;
 }
 
-/* ---------- TENKA LAB バー（作品例・デモ 4ページ共通） ---------- */
+/* ---------- TENKA LAB バー（作品例・デモの4ページ共通） ---------- */
 .tl-bar {
   display: flex;
   align-items: center;

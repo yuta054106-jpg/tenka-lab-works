@@ -53,7 +53,7 @@ a { color: var(--c-main); }
 .wrap { max-width: 1120px; margin: 0 auto; padding: 0 var(--pad-x); }
 
 /* (A) デモ帯 */
-/* ---------- TENKA LAB バー（作品例・デモ 4ページ共通） ---------- */
+/* ---------- TENKA LAB バー（作品例・デモの4ページ共通） ---------- */
 .tl-bar {
   display: flex;
   align-items: center;

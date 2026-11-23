@@ -1,6 +1,6 @@
 /* 整体院 ソラユイ（デモ・架空のお店）＋シナリオ型チャット
    配色・文字は design.md に従う。外部フォント・外部画像なし（写真は img/ に自前で置く） */
-/* TENKA LAB バー（作品例・デモ 4ページ共通） */
+/* TENKA LAB バー（作品例・デモの4ページ共通） */
 .tl-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:40px;padding:8px 16px;background:#1B2A41;color:#FFFFFF;font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic","Meiryo",sans-serif;font-size:13px;line-height:1.5;letter-spacing:.04em}
 .tl-bar__text{margin:0}
 .tl-bar strong{font-weight:700}
