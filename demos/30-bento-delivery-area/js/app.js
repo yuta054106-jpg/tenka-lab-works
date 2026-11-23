@@ -183,10 +183,22 @@
     if (A.zone === 'X') return A.name + '地区は配達の区域外です。'
     return A.name + '地区は' + A.zone + '区分です。' + ZONES[A.zone].min + '個から配達できます。'
   }
+  // 希望日は締めに間に合うが、最低の個数に足りない時の不足数（足りていれば 0）
+  function wishShort (s) {
+    var r = delivery(s)
+    if (r.kind !== 'ok') return 0
+    var m = money(s)
+    return m.kind === 'short' ? m.need : 0
+  }
   function s2 (s) {
     var r = delivery(s)
     if (r.kind === 'earliest') return '最短のお届け日は' + fmtDay(r.E) + 'です。'
-    if (r.kind === 'ok') return fmtDay(r.w) + 'にお届けできます。'
+    if (r.kind === 'ok') {
+      // 「お届けできます」は地区・日付・最低の個数をすべて満たす時だけ
+      var need = wishShort(s)
+      if (need > 0) return fmtDay(r.w) + 'は締めには間に合います。最低の個数まであと' + need + '個です。'
+      return fmtDay(r.w) + 'にお届けできます。'
+    }
     if (r.kind === 'late') return fmtDay(r.w) + 'は締めを過ぎています。次は' + fmtDay(r.E) + 'です。'
     if (r.kind === 'closed') return fmtDay(r.w) + 'は定休日です。次は' + fmtDay(r.N) + 'です。'
     return ''
@@ -194,7 +206,7 @@
   function s3 (s) {
     var r = money(s)
     if (r.kind === 'ok') return '合計の目安は' + fmtYen(r.total) + 'です。'
-    if (r.kind === 'short') return 'あと' + r.need + '個で配達できます。'
+    if (r.kind === 'short') return '最低の個数まであと' + r.need + '個です。'
     return ''
   }
   function s4 (s) { return 'デモの時刻を' + fmtNow(s.t) + 'にしました。' }
@@ -202,7 +214,8 @@
   function srText (what, s) {
     if (what === 'area' || what === 'hash') {
       if (s.d !== null && AREAS[s.d].zone === 'X') return s1(s)
-      return s1(s) + s2(s) + s3(s)
+      // 希望日の文で個数の不足を言った時は、同じ文をくり返さない
+      return s1(s) + s2(s) + (wishShort(s) > 0 ? '' : s3(s))
     }
     if (what === 'time') return s4(s) + s2(s)
     if (what === 'wish') return s2(s)
@@ -217,7 +230,7 @@
     wdOf: wdOf, isOpen: isOpen, prevOpen: prevOpen, cutDay: cutDay, inTime: inTime, canDeliver: canDeliver,
     firstFrom: firstFrom, earliest: earliest, delivery: delivery, money: money, parseHash: parseHash, buildHash: buildHash,
     fmtYen: fmtYen, fmtDay: fmtDay, fmtCut: fmtCut, fmtNow: fmtNow, fmtQty: fmtQty, fmtUnit: fmtUnit, fmtZone: fmtZone,
-    dayKey: dayKey, srText: srText
+    dayKey: dayKey, srText: srText, wishShort: wishShort
   }
 
   // ======================================================================
@@ -367,17 +380,18 @@
     okp.appendChild(txt('配達できます'))
     box.appendChild(okp)
     var dl = el('dl', 'zres__list')
+    // 値は para の parts の形（文字列はそのまま、[文字列] は折らない）
+    var feeParts = Z.fee === 0 ? [['無料']] : [[fmtYen(Z.fee)]]
+    if (Z.freeAt !== null && Z.freeAt > 0) feeParts.push(['（' + Z.freeAt + '個以上で無料）'])
     var rows = [
-      ['配達料', Z.fee === 0 ? '無料' : fmtYen(Z.fee)],
-      ['最低の個数', Z.min + '個から'],
-      ['締め', Z.lead === 1 ? 'お届けの前日の15:00まで' : 'お届けの前々日の15:00まで']
+      ['配達料', feeParts],
+      ['最低の個数', [[Z.min + '個から']]],
+      ['締め', ['お届けの', [(Z.lead === 1 ? '1つ前' : '2つ前') + 'の営業日'], 'の', ['15:00より前'], '（日曜は数えない）']]
     ]
     rows.forEach(function (r) {
       var d = el('div', 'zres__row')
       d.appendChild(el('dt', null, r[0]))
-      var dd = el('dd')
-      dd.appendChild(nw(r[1]))
-      d.appendChild(dd)
+      d.appendChild(para('dd', null, r[1]))
       dl.appendChild(d)
     })
     box.appendChild(dl)
@@ -413,16 +427,19 @@
     if (r.kind === 'none') { box.appendChild(el('p', 'wres__msg', '地区を選ぶと、最短のお届け日が出ます。')); return }
     if (r.kind === 'out') { box.appendChild(el('p', 'wres__msg', 'この地区には配達していないため、お届けの日は出していません。')); return }
     if (r.kind === 'earliest') {
-      box.appendChild(whenDay('最短のお届け日', null, fmtDay(r.E), ['その日に届けるための締め：', [fmtCut(r.cutE) + ' まで']]))
+      box.appendChild(whenDay('最短のお届け日', null, fmtDay(r.E), ['その日に届けるための締め：', [fmtCut(r.cutE) + ' より前']]))
     } else if (r.kind === 'ok') {
-      box.appendChild(whenDay('ご希望の日', 'お届けできます', fmtDay(r.w), ['締め：', [fmtCut(r.cutW) + ' まで']]))
+      // 「お届けできます」は地区・日付・最低の個数をすべて満たす時だけ
+      var need = wishShort(state)
+      box.appendChild(whenDay('ご希望の日', need > 0 ? null : 'お届けできます', fmtDay(r.w), ['締め：', [fmtCut(r.cutW) + ' より前']]))
+      if (need > 0) box.appendChild(para('p', 'wres__sub wres__short', ['締めには間に合います。', ['最低の個数まで'], ['あと' + need + '個'], 'です。']))
       box.appendChild(para('p', 'wres__sub', ['最短のお届け日は', [fmtDay(r.E)], 'です。']))
     } else if (r.kind === 'late') {
       box.appendChild(noticeBox([[fmtDay(r.w)], 'のお届けは、締めを過ぎています'], [[fmtDay(r.w)], 'にお届けするための締めは、', [fmtCut(r.cutW)], ' でした。']))
-      box.appendChild(whenDay('次に届けられる日', null, fmtDay(r.E), ['締め：', [fmtCut(r.cutE) + ' まで']]))
+      box.appendChild(whenDay('次に届けられる日', null, fmtDay(r.E), ['締め：', [fmtCut(r.cutE) + ' より前']]))
     } else if (r.kind === 'closed') {
       box.appendChild(noticeBox([[fmtDay(r.w)], 'は', ['定休日'], 'です'], ['日曜日はお休みのため、配達していません。']))
-      box.appendChild(whenDay('次に届けられる日', null, fmtDay(r.N), ['締め：', [fmtCut(r.cutN) + ' まで']]))
+      box.appendChild(whenDay('次に届けられる日', null, fmtDay(r.N), ['締め：', [fmtCut(r.cutN) + ' より前']]))
     }
     box.appendChild(el('p', 'wres__note', 'お届けは11時〜12時の間です（架空）。時間の指定は、このデモでは選べません。'))
   }
@@ -436,7 +453,7 @@
     if (r.kind === 'out') { box.appendChild(el('p', 'wres__msg', 'この地区には配達していないため、配達料は出していません。')); return }
     var zk = AREAS[state.d].zone
     if (r.kind === 'short') {
-      box.appendChild(noticeBox(['あと', [r.need + '個'], 'で配達できます'], [[zk + '区分'], 'の配達は', [r.min + '個から'], 'です。いまは', [fmtQty(r.n)], 'です。']))
+      box.appendChild(noticeBox(['最低の個数まで', ['あと' + r.need + '個']], [[zk + '区分'], 'の配達は', [r.min + '個から'], 'です。いまは', [fmtQty(r.n)], 'です。']))
       return
     }
     var B = BENTOS[state.b]

@@ -319,6 +319,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
 .when-day__value { color: var(--c-main); font-size: 28px; font-weight: 700; line-height: 1.2; }
 .when-day__cut { color: var(--c-text); font-size: 15px; font-weight: 700; line-height: 1.6; }
 .wres__sub, .wres__note { color: var(--c-sub); font-size: 14px; line-height: 1.7; }
+.wres__short { margin-top: 8px; color: var(--c-text); font-size: 15px; font-weight: 700; }
 .wres > .wres__note { margin-top: 16px; }
 
 /* 配達料と合計の表 */
