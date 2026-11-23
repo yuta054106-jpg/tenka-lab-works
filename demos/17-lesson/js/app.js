@@ -985,7 +985,7 @@
       var head = add(el('div', 'sum-card__head'), [el('span', 'sum-card__id', s.id), el('span', 'sum-card__meta', kumiW(s) + '・' + COURSE_NAME[s.course])])
       var feeRowEl = add(el('div', 'sum-card__fee'), [remainTag(ms.remain), el('strong', null, yen(feeOf(s))), stateTag(p ? 'paid' : 'due')])
       add(li, [head,
-        // 語と数の間で折れないように、区切り（／・）の所だけで折る（オウホン 2026-11-21：375px で「まだの回」と数が別の行に分かれていた）
+        // 語と数の間で折れないように、区切り（／・）の所だけで折る（2026-11-21：375px で「まだの回」と数が別の行に分かれていた）
         add(el('p'), [nw('出席 ' + times(ms.present)), nw('（うち振替 ' + ms.mkIn + '）'), '／', nw('予定 ' + times(ms.plan))]),
         add(el('p'), [nw('欠席（振替あり） ' + ms.m), '・', nw('欠席 ' + ms.a), '・', nw('まだの回 ' + ms.rest)]),
         feeRowEl])

@@ -1,5 +1,4 @@
-/* TENKA LAB 作品例の紹介ページ（スマホ優先。768px・1024px で広げる）
-   デザイン：design-review-2026-11-20.md（ヨウタンワ）4章 */
+/* TENKA LAB 作品例の紹介ページ（スマホ優先。768px・1024px で広げる） */
 :root {
   --c-bg: #F7F6F2;
   --c-surface: #FFFFFF;
@@ -595,7 +594,7 @@ a { color: var(--c-main); }
   .site-nav a { padding: 0 6px; }
 }
 
-/* ---------- 作品例の絞り込み（portfolio-filter-design.md／ヨウタンワ 2026-11-22） ---------- */
+/* ---------- 作品例の絞り込み ---------- */
 /* JS が無いときは .filter が hidden のまま＝今と同じ全件表示 */
 :root { --c-control-line: #7A808C; }   /* 押せる部品の輪郭（背景比 3.7:1） */
 .filter[hidden], .filter__reset[hidden], .filter__bottom[hidden],

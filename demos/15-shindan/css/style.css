@@ -249,7 +249,7 @@ h3 { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .04em;
   display: flex; align-items: center; min-height: 48px; cursor: pointer;
   color: var(--c-main); font-size: 15px; font-weight: 700; line-height: 1.4;
 }
-/* 開閉の印（summary を flex にすると既定の三角が消えるため、CSS の三角で出す。2026-11-21 オウホン） */
+/* 開閉の印（summary を flex にすると既定の三角が消えるため、CSS の三角で出す。2026-11-21） */
 .quiz__score summary::-webkit-details-marker { display: none; }
 .quiz__score summary::before {
   content: ''; flex: none; width: 0; height: 0; margin-right: 8px;

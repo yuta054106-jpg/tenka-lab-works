@@ -168,7 +168,7 @@ main { padding-bottom: var(--gap-block); }
 .card__aside { font-size: 14px; color: var(--c-sub); line-height: 1.6; }
 .card__aside--lock { display: inline-flex; align-items: center; gap: 4px; }
 .card__link { margin-top: 24px; font-size: 14px; }
-/* 文字だけのリンクも押せる範囲を 44px 以上に（オウホン検査で追加） */
+/* 文字だけのリンクも押せる範囲を 44px 以上に */
 .card__link a, .kpi--warn a, .stable a.nm { position: relative; }
 .card__link a::before { content: ""; position: absolute; inset: -14px -8px; }
 
@@ -453,7 +453,7 @@ main { padding-bottom: var(--gap-block); }
 .r-from { position: relative; min-height: 56px; padding-right: 68px; text-align: right; line-height: 1.5; }
 .r-from__name { font-size: 16px; font-weight: 700; }
 .r-from__store { font-size: 12px; }
-/* 角印は店名・店舗名の右に置き、文字にかぶせない（オウホン検査で修正） */
+/* 角印は店名・店舗名の右に置き、文字にかぶせない */
 .stamp { position: absolute; top: 0; right: 0; transform: rotate(-4deg); opacity: .9; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .r-sum {
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 24px;

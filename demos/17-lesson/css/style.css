@@ -4,7 +4,7 @@
   --c-base: #FAF8F3;
   --c-surface: #FFFFFF;
   --c-soft: #EFEDE6;
-  --c-soft-hover: #E4E1D8; /* 面が --c-soft の選択ボタン（クラス・回・月）の hover だけ。墨の文字で 10.88:1（モウテン 2026-11-21 計算） */
+  --c-soft-hover: #E4E1D8; /* 面が --c-soft の選択ボタン（クラス・回・月）の hover だけ。墨の文字で 10.88:1（2026-11-21 計算） */
   --c-water-bg: #E5F2F7;
   --c-due-bg: #FCEDE8;
   --c-main: #2E2A27;

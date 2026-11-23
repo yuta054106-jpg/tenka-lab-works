@@ -349,7 +349,7 @@
     dlgResolve = null
     if (dlg.open) dlg.close()
     r(yes)
-    // やめた時は開いた所へ戻す。遅れて動いた時に、その間に利用者が動かしたフォーカスを奪わないよう、フォーカスが body・窓の中にある時だけ戻す（オウホン 2026-11-21）
+    // やめた時は開いた所へ戻す。遅れて動いた時に、その間に利用者が動かしたフォーカスを奪わないよう、フォーカスが body・窓の中にある時だけ戻す（2026-11-21）
     if (!yes && dlgOpener) {
       var id = dlgOpener
       window.setTimeout(function () {

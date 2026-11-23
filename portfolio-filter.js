@@ -1,4 +1,4 @@
-// 作品例の「やりたいことで絞り込む」（portfolio-filter-design.md／ヨウタンワ 2026-11-22）
+// 作品例の「やりたいことで絞り込む」
 // JS が動かないときは .filter が hidden のまま＝全件表示。外部通信・ライブラリなし。
 (function () {
   'use strict'

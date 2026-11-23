@@ -1,6 +1,5 @@
 /* TENKA LAB 営業用デモページ（店先でスマホを見せる1ページ）
-   ../portfolio.css を読み込んだ上で、足りない部品だけ足す
-   デザイン：営業用デモ/design.md（ヨウタンワ 2026-11-21） */
+   ../portfolio.css を読み込んだ上で、足りない部品だけ足す */
 :root {
   --section-y: 48px;
   --sales-max: 560px;

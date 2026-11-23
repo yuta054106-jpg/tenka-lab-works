@@ -717,7 +717,7 @@
     var st = o.canceled ? '（取消）' : o.handed ? '（渡した）' : ''
     return fmtNo(o.no) + ' ' + o.kana + '様 ' + fmtDay(o.date) + SLOT[o.slot].name + st + ' を直す・取り消す'
   }
-  // スマホのカードは aria-label が中身を上書きするため、商品・お会計・支払い・メモも入れる（モウテンのレビュー）
+  // スマホのカードは aria-label が中身を上書きするため、商品・お会計・支払い・メモも入れる
   function cardLabel (o) {
     var st = o.canceled ? '（取消）' : o.handed ? '（渡した）' : ''
     return fmtNo(o.no) + ' ' + o.kana + '様 ' + fmtDay(o.date) + SLOT[o.slot].name + st + '。' + itemsText(o.items) + '。' +

@@ -321,7 +321,7 @@ main.wrap { padding-top: var(--gap-block); padding-bottom: var(--gap-block); }
   .btn { width: 280px; }
 }
 
-/* 768〜1023px：4列だとカードの中が約 110px しかなく「104.0万円」「26.0万円」も右が切れるため、2列×2段にする（2026-11-21 オウホン） */
+/* 768〜1023px：4列だとカードの中が約 110px しかなく「104.0万円」「26.0万円」も右が切れるため、2列×2段にする（2026-11-21） */
 @media (min-width: 768px) and (max-width: 1023px) {
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .kpi { min-height: 0; }

@@ -561,7 +561,7 @@ svg { flex: none; }
 .menu__item.is-sold > .changed-tag { right: auto; left: 8px; }
 /* 日替わりの箱は上に見出しと日付があるため、箱の右下に出す */
 .daily > .changed-tag { top: auto; bottom: -12px; }
-/* 360px でもカレンダーのマスを 48px 以上にする（オウホン 2026-11-21） */
+/* 360px でもカレンダーのマスを 48px 以上にする（2026-11-21） */
 @media (max-width: 374px) {
   .owner__body { padding-left: 8px; padding-right: 8px; }
 }

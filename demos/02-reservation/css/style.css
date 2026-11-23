@@ -361,7 +361,7 @@ fieldset.field { margin-bottom: 0; }
   .memo[open] .item__message-full { display: block; }
 }
 
-/* 768〜1023px：固定の列が広すぎて「お名前・連絡先」の列が 30〜40px に潰れ、名前が1文字ずつ縦に並んでいたため、列と間を詰める（2026-11-21 オウホン） */
+/* 768〜1023px：固定の列が広すぎて「お名前・連絡先」の列が 30〜40px に潰れ、名前が1文字ずつ縦に並んでいたため、列と間を詰める（2026-11-21） */
 @media (min-width: 768px) and (max-width: 1023px) {
   .list__head, .item__grid { grid-template-columns: 88px 104px 92px minmax(0, 1fr) 84px 132px; column-gap: 8px; }
 }
