@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>多店舗の月次締めボード（デモ）｜ヨモスガラ食堂</title>
-  <meta name="description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て催促できる、TENKA LAB の動くデモ（架空のお店）です。">
+  <meta name="description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て、催促文を作ってコピーできる、TENKA LAB の動くデモ（架空のお店）です。">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#1F4A3D">
   <meta property="og:type" content="website">
   <meta property="og:title" content="多店舗の月次締めボード（デモ）｜ヨモスガラ食堂">
-  <meta property="og:description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て催促できる、TENKA LAB の動くデモ（架空のお店）です。">
+  <meta property="og:description" content="5店舗の月次締めの進み具合と、基準を外れた数字を1枚で見て、催促文を作ってコピーできる、TENKA LAB の動くデモ（架空のお店）です。">
   <meta property="og:image" content="https://yuta054106-jpg.github.io/tenka-lab-works/assets/thumbs/41-multi-store-close-pc.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231F4A3D'/%3E%3Cpath d='M5 7h6v11H5zM13 7h6v11h-6zM7 10h2M7 13h2M15 10h2M15 13h2' fill='none' stroke='%23FFFFFF' stroke-width='1.6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
@@ -58,7 +58,7 @@
       <div class="wrap">
         <h1 class="h1" id="h-top"><span class="nw">5店舗の月次締めを、</span><span class="nw">1枚で見る。</span></h1>
         <p class="intro__lead">本部の経理が毎月はじめに追いかける「どの店の、どの締めが止まっているか」と「数字が基準を外れた店」を、1枚の台帳にまとめた見本です。下の「店の詳細」で状態を変えると、台帳・催促の一覧・完了率がその場で変わります。</p>
-        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。入力した内容はどこにも送られず、保存もされません。</p>
+        <p class="intro__note">作品例（架空のお店）。数字はすべて架空です。変更は自動で送信・保存されません。CSVには変更後の締めの状態が、催促文には入力した差し戻しの理由が入ります。</p>
         <p class="intro__note"><span class="nw">ヨモスガラ食堂</span>は架空のお店です。店名に使った地名は一般の地名で、実在のお店とは関係ありません。</p>
         <p class="intro__note">金額は税抜です。</p>
         <p class="intro__now"><span class="nw">デモの今日：</span><span class="nw">2026年11月6日（金）</span><span class="nw">（日付は止めています）</span></p>
@@ -83,7 +83,7 @@
     <section class="sec" id="board" aria-labelledby="h-board">
       <div class="wrap">
         <h2 class="h2" id="h-board"><span class="h2__no" aria-hidden="true">1</span>締めの進み具合</h2>
-        <p class="sec__lead">10月の締めの6項目を、店ごとに並べました。札の下の数は、その状態になってから止まっている日数です（完了は完了した日）。</p>
+        <p class="sec__lead">10月の締めの6項目を、店ごとに並べました。札の下の数は、その状態になってからの経過日数です（完了は完了日）。</p>
         <ul class="legend" id="legend" aria-label="札の見方"></ul>
         <div class="ledger">
           <div class="only-table" id="board-table"></div>
@@ -96,7 +96,7 @@
     <section class="sec" id="nudge" aria-labelledby="h-nudge">
       <div class="wrap">
         <h2 class="h2" id="h-nudge"><span class="h2__no" aria-hidden="true">2</span>催促の一覧</h2>
-        <p class="sec__lead">差し戻しにした項目と、期日まで2日以内なのに手が付いていない項目です。差し戻しが先、そのあと期日の近い順に並べています。</p>
+        <p class="sec__lead">差し戻しにした項目と、期日まで2日以内なのに手が付いていない項目です。差し戻しが先、そのあと期日の近い順に並べています。作業中と本部の確認待ちは「締めの進み具合」で確認してください。</p>
         <div class="ledger">
           <p class="empty" id="nudge-empty" hidden>いま催促する項目はありません。</p>
           <div class="only-table" id="nudge-table"></div>
@@ -120,7 +120,7 @@
     <section class="sec" id="check" aria-labelledby="h-check">
       <div class="wrap">
         <h2 class="h2" id="h-check"><span class="h2__no" aria-hidden="true">3</span>数字の確かめ</h2>
-        <p class="sec__lead">本部の基準を外れた数字に「!」を付けました。境目ちょうどの値は基準の内側とします。「仮」は、元になる締めの項目がまだ完了していない数字です（あとで変わる見込みがあります）。</p>
+        <p class="sec__lead">本部の基準を外れた数字に「!」を付けました。基準を外れたかは、表示と同じく小数第1位に丸めた値で判定します（境目ちょうどの値は基準の内側）。「仮」は、元になる締めの項目がまだ完了していない数字です（あとで変わる見込みがあります）。率・前年比・客単価は売上も元になるため、売上の取込が完了するまで「仮」です。</p>
         <div class="ledger">
           <div class="std">
             <h3 class="h3">本部の基準</h3>
@@ -219,7 +219,7 @@
         </ul>
         <div class="work-check">
           <h3>本番にするときは</h3>
-          <ul><li>本番にするときは：各店の入力を共通の保存先とログインにして、店ごとに自分の店だけを入力できる形にします。売上の取込や会計とのつなぎは、別にお見積もりします。</li></ul>
+          <ul><li>各店の入力を共通の保存先とログインにして、店ごとに自分の店だけを入力できる形にします。売上の取込や会計とのつなぎは、別にお見積もりします。</li></ul>
           <p class="work-check__note">飲食に限らず、小売・美容など、店ごとに月の締めがある会社なら同じ形で使えます。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>

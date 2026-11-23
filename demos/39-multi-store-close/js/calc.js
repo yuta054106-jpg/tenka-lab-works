@@ -145,14 +145,14 @@ var Calc39 = (function () {
   }
   function nudgeText (state, si, today) {
     var list = nudges(state, today).filter(function (n) { return n.store === si })
-    var lines = [STORES[si] + ' 店長さま', '', '本部 経理です。' + MONTH_LABEL + 'の締めで、次の' + list.length + '件が止まっています。', '']
+    var lines = ['【架空デモの文面例】', STORES[si] + ' 店長さま', '', '本部 経理です。' + MONTH_LABEL + 'の締めで、次の' + list.length + '件が残っています。', '']
     list.forEach(function (n) {
       var it = ITEMS[n.item]
       lines.push('・' + it.name + '：' + ST_NAME[n.st] + '（担当 ' + it.role + '・期日 ' + fmtJMD(it.due) + '）')
       var r = state.items[si][n.item].reason.trim()
       if (n.back && r) lines.push('　差し戻しの理由：' + r)
     })
-    lines.push('', '締めの期限は ' + fmtJMD(CLOSE_DUE) + 'です。終わったら、締めボードの状態を「本部の確認待ち」にしてください。', 'よろしくお願いします。')
+    lines.push('', '終わったら、締めボードの状態を「本部の確認待ち」にしてください。', '各項目の期日までに対応をお願いします。難しい場合は対応予定をお知らせください。')
     return { text: lines.join('\n'), count: list.length, missing: list.filter(function (n) { return n.back && !state.items[si][n.item].reason.trim() }).map(function (n) { return ITEMS[n.item].name }) }
   }
 
@@ -173,14 +173,19 @@ var Calc39 = (function () {
     else if (m.yoyR > 1000 + std.yoy) f.yoy = 'high'
     return f
   }
+  // 仮の判定（元になる項目が完了していない数字）。率は分母の売上も元になる
+  // 原価の額は仕入の請求書と棚卸、人件費の額は勤怠、売上を使う率・前年比・客単価は売上の取込も見る
   function provOf (row) {
     var nd = function (i) { return row[i].st !== 'done' }
-    return { sales: nd(0), cost: nd(2) || nd(3), labor: nd(5), fl: nd(2) || nd(3) || nd(5) }
+    var s = nd(0)
+    var ca = nd(2) || nd(3)
+    var la = nd(5)
+    return { sales: s, yoy: s, costAmt: ca, cost: s || ca, laborAmt: la, labor: s || la, fl: s || ca || la, unit: s }
   }
   var FLAG_KEYS = ['cost', 'labor', 'fl', 'yoy']
   var FLAG_NAME = { cost: '原価率', labor: '人件費率', fl: 'FL比率', yoy: '前年比' }
-  var PROV_KEYS = ['sales', 'cost', 'labor', 'fl']
-  var PROV_NAME = { sales: '売上', cost: '原価率', labor: '人件費率', fl: 'FL比率' }
+  var PROV_KEYS = ['sales', 'yoy', 'costAmt', 'cost', 'laborAmt', 'labor', 'fl', 'unit']
+  var PROV_NAME = { sales: '売上', yoy: '前年比', costAmt: '原価', cost: '原価率', laborAmt: '人件費', labor: '人件費率', fl: 'FL比率', unit: '客単価' }
   function flagCount (f) { return FLAG_KEYS.filter(function (k) { return f[k] }).length }
 
   // 全部の集計
@@ -199,7 +204,8 @@ var Calc39 = (function () {
     NUMS.forEach(function (v) { for (var k = 0; k < 7; k++) sum[k] += v[k] })
     var total = metricsOf(sum)
     total.flags = flagsOf(total, state.std)
-    total.prov = { sales: false, cost: false, labor: false, fl: false }
+    total.prov = {}
+    PROV_KEYS.forEach(function (k) { total.prov[k] = false })
     stores.forEach(function (s) { PROV_KEYS.forEach(function (k) { if (s.metrics.prov[k]) total.prov[k] = true }) })
     var nl = nudges(state, today)
     var markStores = 0
@@ -247,6 +253,7 @@ var Calc39 = (function () {
     var s = String(v)
     return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s
   }
+  var CSV_NOTE = '架空デモ：ヨモスガラ食堂は架空のお店で、店名・数字・状態はすべて架空です'
   function csv (state) {
     var c = compute(state)
     var head = ['店'].concat(ITEMS.map(function (it) { return it.name.replace('（日計と一致）', '') }))
@@ -254,7 +261,8 @@ var Calc39 = (function () {
     var nums = function (m) {
       return [m.sales, m.prev, t1(m.yoyR), m.open, m.buy, m.close, m.cost, t1(m.costR), m.labor, t1(m.laborR), t1(m.flR), m.cust, m.unit, flagNames(m.flags), provNames(m.prov)]
     }
-    var rows = [head]
+    // 単体で共有されても架空と分かるように、先頭に1行入れる
+    var rows = [[CSV_NOTE], head]
     c.stores.forEach(function (s, si) {
       rows.push([s.name].concat(state.items[si].map(function (it) { return ST_NAME[it.st] })).concat([s.done]).concat(nums(s.metrics)))
     })
@@ -269,7 +277,7 @@ var Calc39 = (function () {
     r10: r10, divR: divR, t1: t1, tv: tv, seed: seed, copyStd: copyStd, setState: setState,
     stalledText: stalledText, dueText: dueText, nudges: nudges, nudgeText: nudgeText,
     compute: compute, flagNames: flagNames, provNames: provNames, readStd: readStd,
-    stdRangeText: stdRangeText, stdBandText: stdBandText, csvCell: csvCell, csv: csv
+    stdRangeText: stdRangeText, stdBandText: stdBandText, csvCell: csvCell, csv: csv, CSV_NOTE: CSV_NOTE
   }
   return Object.freeze(api)
 })()

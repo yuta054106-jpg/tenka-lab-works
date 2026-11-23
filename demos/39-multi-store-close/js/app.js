@@ -100,7 +100,7 @@
   function cellBody (c, si, ii) {
     var it = S.items[si][ii]
     var line = [el('span', { text: C.stalledText(it) })]
-    if (it.st !== 'done') line.push(hidden('止まっている'))
+    if (it.st !== 'done') line.push(hidden('経過'))
     if (isNudge(c, si, ii)) line.push(nudgeTag())
     return [stTag(it.st), el('span', { class: 'st-line' }, line)]
   }
@@ -178,7 +178,7 @@
     var tb = el('table', { class: 'grid-table nudge-table' })
     tb.appendChild(el('caption', { class: 'visually-hidden', text: '催促の一覧' }))
     var hr = el('tr')
-    ;['順', '店', '項目', '担当', '止まっている日数', '状態', '期日', '操作'].forEach(function (h) { hr.appendChild(el('th', { scope: 'col', text: h })) })
+    ;['順', '店', '項目', '担当', '経過日数', '状態', '期日', '操作'].forEach(function (h) { hr.appendChild(el('th', { scope: 'col', text: h })) })
     tb.appendChild(el('thead', null, [hr]))
     var body = el('tbody')
     list.forEach(function (n, k) {
@@ -197,7 +197,7 @@
       cards.appendChild(el('article', { class: 'card card--nudge' }, [
         el('div', { class: 'card__hd' }, [el('h3', { class: 'h3' }, [el('span', { class: 'nudge-no', text: String(k + 1) }), el('span', { class: 'nw', text: C.STORES[n.store] })])]),
         el('p', { class: 'card-row__name', text: it.name }),
-        el('p', { class: 'st-line', text: '担当 ' + it.role + '｜止まっている ' + sd }),
+        el('p', { class: 'st-line', text: '担当 ' + it.role + '｜経過 ' + sd }),
         el('p', { class: 'nudge-st' }, [stTag(n.st, true), el('span', { class: 'st-line' }, ['期日 '].concat(dueCell(it)))]),
         el('p', { class: 'card__btn' }, [nudgeBtn(n.store)])
       ]))
@@ -289,11 +289,11 @@
       return el('tr', { class: si < 0 ? 'tr-total' : null }, [
         el('th', { scope: 'row' }, [el('span', { class: 'nw', text: name })]),
         yenCell(m.sales, m.prov.sales),
-        rateCell(m, 'yoyR', 'td', 'sales'),
+        rateCell(m, 'yoyR', 'td', 'yoy'),
         rateCell(m, 'costR', 'td', 'cost'),
         rateCell(m, 'laborR', 'td', 'labor'),
         rateCell(m, 'flR', 'td', 'fl'),
-        yenCell(m.unit, m.prov.sales),
+        yenCell(m.unit, m.prov.unit),
         el('td', null, [b || el('span', { text: '—' })])
       ])
     }
@@ -309,11 +309,11 @@
       var add = function (dt, dd) { dl.appendChild(el('div', { class: 'nums__row' + (dd.classList.contains('is-off') ? ' is-off' : '') }, [el('dt', { text: dt }), dd])) }
       var yd = function (v, p) { return el('dd', { class: 'num' }, [el('span', { class: 'v-main' }, [el('span', { class: 'v', text: C.fmtYen(v) }), p ? provTag() : null])]) }
       add('売上', yd(m.sales, m.prov.sales))
-      add('前年比', rateCell(m, 'yoyR', 'dd', 'sales'))
+      add('前年比', rateCell(m, 'yoyR', 'dd', 'yoy'))
       add('原価率', rateCell(m, 'costR', 'dd', 'cost'))
       add('人件費率', rateCell(m, 'laborR', 'dd', 'labor'))
       add('FL比率', rateCell(m, 'flR', 'dd', 'fl'))
-      add('客単価', yd(m.unit, m.prov.sales))
+      add('客単価', yd(m.unit, m.prov.unit))
       var b = si >= 0 ? checkBtn(si, m) : null
       return el('article', { class: 'card' + (si < 0 ? ' card--total' : '') }, [el('h3', { class: 'h3 nw', text: name }), dl, b ? el('p', { class: 'card__btn' }, [b]) : null])
     }
@@ -379,23 +379,23 @@
     }
     row('売上', C.fmtYen(m.sales), { prov: m.prov.sales })
     row('前年同月', C.fmtYen(m.prev))
-    row('前年比', C.t1(m.yoyR) + '%', { flag: m.flags.yoy, key: 'yoy', prov: m.prov.sales })
+    row('前年比', C.t1(m.yoyR) + '%', { flag: m.flags.yoy, key: 'yoy', prov: m.prov.yoy })
     row('期首の棚卸', C.fmtYen(m.open))
     row('＋ 仕入', C.fmtYen(m.buy))
     row('− 期末の棚卸', C.fmtYen(m.close))
-    row('＝ 原価', C.fmtYen(m.cost), { sum: true })
+    row('＝ 原価', C.fmtYen(m.cost), { sum: true, prov: m.prov.costAmt })
     row('原価率', C.t1(m.costR) + '%', { flag: m.flags.cost, key: 'cost', prov: m.prov.cost })
-    row('人件費', C.fmtYen(m.labor))
+    row('人件費', C.fmtYen(m.labor), { prov: m.prov.laborAmt })
     row('人件費率', C.t1(m.laborR) + '%', { flag: m.flags.labor, key: 'labor', prov: m.prov.labor })
     row('FL比率（原価＋人件費）', C.t1(m.flR) + '%', { flag: m.flags.fl, key: 'fl', prov: m.prov.fl })
     row('客数', C.fmtNum(m.cust) + '人')
-    row('客単価', C.fmtYen(m.unit), { prov: m.prov.sales })
+    row('客単価', C.fmtYen(m.unit), { prov: m.prov.unit })
     // 仮の元になる項目（項目の順）
     var src = []
     var p = m.prov
     if (p.sales) src.push(0)
-    if (p.cost) { if (S.items[si][2].st !== 'done') src.push(2); if (S.items[si][3].st !== 'done') src.push(3) }
-    if (p.labor) src.push(5)
+    if (p.costAmt) { if (S.items[si][2].st !== 'done') src.push(2); if (S.items[si][3].st !== 'done') src.push(3) }
+    if (p.laborAmt) src.push(5)
     src.sort()
     var pv = $('det-prov')
     pv.hidden = !src.length
@@ -407,21 +407,21 @@
     var t = c.total
     var dl = $('total-dl')
     clear(dl)
-    var add = function (dt, v, f, sub) {
+    var add = function (dt, v, f, sub, prov) {
       dl.appendChild(el('div', { class: 'total__i' + (f ? ' is-off' : '') }, [el('dt', { text: dt }), el('dd', null, [
-        el('span', { class: 'v-main' }, [f ? icon('i-bang', 16, 'bang') : null, el('span', { class: 'v', text: v })]),
+        el('span', { class: 'v-main' }, [f ? icon('i-bang', 16, 'bang') : null, el('span', { class: 'v', text: v }), prov ? provTag() : null]),
         f ? el('span', { class: 'off', text: f === 'high' ? '基準外（高い）' : '基準外（低い）' }) : null,
         sub ? el('span', { class: 'st-line', text: sub }) : null])]))
     }
-    add('売上の合計', C.fmtYen(t.sales))
-    add('前年比', C.t1(t.yoyR) + '%', t.flags.yoy)
-    add('原価の合計', C.fmtYen(t.cost))
-    add('原価率', C.t1(t.costR) + '%', t.flags.cost)
-    add('人件費の合計', C.fmtYen(t.labor))
-    add('人件費率', C.t1(t.laborR) + '%', t.flags.labor)
-    add('FL比率', C.t1(t.flR) + '%', t.flags.fl)
-    add('客単価', C.fmtYen(t.unit), null, '客数 ' + C.fmtNum(t.cust) + '人')
-    $('total-avg').textContent = '率は合計÷合計で出しています（5店の原価率を平均すると ' + C.t1(c.avgCost) + '% になり、売上の大きい店の重みが消えます）。'
+    add('売上の合計', C.fmtYen(t.sales), null, null, t.prov.sales)
+    add('前年比', C.t1(t.yoyR) + '%', t.flags.yoy, null, t.prov.yoy)
+    add('原価の合計', C.fmtYen(t.cost), null, null, t.prov.costAmt)
+    add('原価率', C.t1(t.costR) + '%', t.flags.cost, null, t.prov.cost)
+    add('人件費の合計', C.fmtYen(t.labor), null, null, t.prov.laborAmt)
+    add('人件費率', C.t1(t.laborR) + '%', t.flags.labor, null, t.prov.labor)
+    add('FL比率', C.t1(t.flR) + '%', t.flags.fl, null, t.prov.fl)
+    add('客単価', C.fmtYen(t.unit), null, '客数 ' + C.fmtNum(t.cust) + '人', t.prov.unit)
+    $('total-avg').textContent = '率は合計÷合計で出しています（5店の原価率を平均すると ' + C.t1(c.avgCost) + '% になり、売上の大きい店の重みが消えます）。合計の「仮」は、どれか1店でも仮の数字があると付きます。'
   }
 
   // ---------- 全部を描き直す ----------
@@ -550,7 +550,7 @@
     if (c.nudges.length) {
       var t2 = el('table', { class: 'pr-table' })
       var h2 = el('tr')
-      ;['順', '店', '項目', '担当', '止まっている日数', '状態', '期日'].forEach(function (h) { h2.appendChild(el('th', { text: h })) })
+      ;['順', '店', '項目', '担当', '経過日数', '状態', '期日'].forEach(function (h) { h2.appendChild(el('th', { text: h })) })
       t2.appendChild(el('thead', null, [h2]))
       var b2 = el('tbody')
       c.nudges.forEach(function (n, k) {
