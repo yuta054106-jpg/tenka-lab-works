@@ -1,17 +1,17 @@
 // 洋食 ミナトビ（デモ）メニューの原価計算と値付け
 // 表示する値はすべて textContent / setAttribute / createElement(NS) で入れる（HTML の文字列を流し込む書き方は使わない）
-// 金額は内部ですべて整数（0.01円＝1）。割り算は最後に1回だけ（design.md §11）
-// 入力欄は最初に1回だけ作り、描き直しでは文字の所だけ書き換える（フォーカスと打っている途中の文字を守る。§8-2・§13-3）
+// 金額は内部ですべて整数（0.01円＝1）。割り算は最後に1回だけ
+// 入力欄は最初に1回だけ作り、描き直しでは文字の所だけ書き換える（フォーカスと打っている途中の文字を守る）
 (function () {
   'use strict'
 
-  // ---------- 定数（design.md §13-1・§20） ----------
+  // ---------- 定数 ----------
   var KEY = 'tenkaLab.demo19.recipeCost.v1'
   var TEST_KEY = 'tenkaLab.demo19.test'
   var SHOP = '洋食 ミナトビ'
   var CSV_NAME = 'minatobi_genka_kakuu-demo.csv'
   var PRINT_TITLE = 'minatobi_genka_架空デモ'
-  var CAP = 1000000000 // 1皿の原価の上限（0.01円単位。＝1,000万円。§11-7）
+  var CAP = 1000000000 // 1皿の原価の上限（0.01円単位。＝1,000万円）
   var ING = [
     { id: 'F01', name: '玉ねぎ', unit: 'g', q: 1000, p: 300, y: 90 },
     { id: 'F02', name: '合いびき肉', unit: 'g', q: 1000, p: 1200, y: 100 },
@@ -53,8 +53,8 @@
   }
   function divCeil (n, d) { var a = qr(n, d); return a[1] > 0 ? a[0] + 1 : a[0] }
 
-  // ---------- 計算（§11。状態を引数で受ける純粋な関数） ----------
-  // 食材1行の原価（0.01円単位）。表示用の「使える量あたり」は使わない（§11-1）
+  // ---------- 計算（状態を引数で受ける純粋な関数） ----------
+  // 食材1行の原価（0.01円単位）。表示用の「使える量あたり」は使わない
   function lineSen (use10, f) { return divRound(use10 * f.p * 1000, f.q * f.y) }
   function costSen (st, mid) {
     var m = MENU_BY_ID[mid]; var s = 0
@@ -79,7 +79,7 @@
   function calcAll (st) { return MENU.map(function (m) { return calc(st, m.id) }) }
   function overCap (st) { return MENU.some(function (m) { return costSen(st, m.id) > CAP }) }
 
-  // ---------- 書き方（§2-3。関数1つずつ） ----------
+  // ---------- 書き方（関数1つずつ） ----------
   var MINUS = '−'
   function yen (n) { return (n < 0 ? MINUS : '') + Math.abs(n).toLocaleString('ja-JP') + '円' }
   function sen2 (s) { return Math.floor(s / 100).toLocaleString('ja-JP') + '.' + String(s % 100).padStart(2, '0') }
@@ -89,11 +89,11 @@
   function dpt (d) { var a = Math.abs(d); var s = Math.floor(a / 10) + '.' + (a % 10) + 'ポイント'; return d > 0 ? '+' + s : d < 0 ? MINUS + s : '±' + s }
   function num10 (u10) { return u10 % 10 === 0 ? (u10 / 10).toLocaleString('ja-JP') : Math.floor(u10 / 10).toLocaleString('ja-JP') + '.' + (u10 % 10) }
   function qty (u10, unit) { return num10(u10) + unit }
-  // 使える量あたり（表示だけ。計算には使わない。§11-1）
+  // 使える量あたり（表示だけ。計算には使わない）
   function unitPrice (fid, f) { return yen2(divRound(f.p * 10000, f.q * f.y)) + '／' + ING_BY_ID[fid].unit }
   function chgPct (a, b) { var d = divRound(Math.abs(b - a) * 1000, a); var s = Math.floor(d / 10) + '.' + (d % 10) + '%'; return b > a ? '+' + s : b < a ? MINUS + s : '±' + s }
 
-  // ---------- 入力の読み取りと検証（§12） ----------
+  // ---------- 入力の読み取りと検証 ----------
   function norm (s) { return String(s).trim().normalize('NFKC').trim().replace(/,/g, '') }
   // 戻り値 { v } か { e: 'empty' | 'form' | 'big' }
   function parseInt10 (text, min, max) {
@@ -126,7 +126,7 @@
   var CAP_MSG = 'この値だと1皿の原価が 1,000万円を超えるため、受け付けません'
   function parseField (kind, text) { return kind === 'use' ? parseUse10(text) : parseInt10(text, SPEC[kind].min, SPEC[kind].max) }
 
-  // ---------- 保存の検証（§13-2）。通れば新しい状態、外れれば null ----------
+  // ---------- 保存の検証。通れば新しい状態、外れれば null ----------
   function isObj (v) { return !!v && typeof v === 'object' && !Array.isArray(v) }
   function intIn (v, a, b) { return typeof v === 'number' && Number.isInteger(v) && v >= a && v <= b }
   function sameKeys (o, list) {
@@ -169,7 +169,7 @@
   }
   function clone (st) { return JSON.parse(JSON.stringify(st)) }
 
-  // ---------- CSV（§14） ----------
+  // ---------- CSV ----------
   function csvCell (v) {
     if (typeof v === 'number') return String(v)
     var s = String(v)
@@ -194,7 +194,7 @@
     return '﻿' + lines.join('\r\n') + '\r\n'
   }
 
-  // ---------- 保存（§13） ----------
+  // ---------- 保存 ----------
   var canSave = (function () {
     try {
       window.localStorage.setItem(TEST_KEY, '1'); window.localStorage.removeItem(TEST_KEY)
@@ -264,7 +264,7 @@
   function vh (text) { return el('span', 'visually-hidden', text) }
   function setText (e, kids) { e.textContent = ''; add(e, kids); return e }
 
-  // 折れてはいけない語（§17）を .nw の span に包む（テキストノードを分けて createElement で入れる）
+  // 折れてはいけない語を .nw の span に包む（テキストノードを分けて createElement で入れる）
   function esc (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
   var NW_WORDS = ['洋食 ミナトビ', 'ハンバーグ定食', 'オムライス', 'ナポリタン', 'エビフライ', 'ビーフシチュー', 'プリン',
     '玉ねぎ', '合いびき肉', '米', 'デミグラスソース', '生クリーム', '牛すね肉', 'エビ（殻つき）', 'スパゲッティ', 'トマトケチャップ', 'パン粉', '鶏もも肉',
@@ -303,7 +303,7 @@
     list.forEach(wrapText)
     return root
   }
-  // 状態の札（§1-3）
+  // 状態の札
   var TAG = {
     over: ['目標超え', 'i-over'], ok: ['目標内', 'i-check'], raise: ['値上げの案', 'i-up'], keep: ['いまの売値で目標内', null], edited: ['見本から変更', 'i-pencil']
   }
@@ -313,7 +313,7 @@
     t.appendChild(document.createTextNode(TAG[k][0]))
     return t
   }
-  // 前後の比較の印（色に頼らず形と文字で。§1-3）
+  // 前後の比較の印（色に頼らず形と文字で）
   function trend (d) {
     var s = el('span', 'trend')
     s.appendChild(icon(d > 0 ? 'i-tri-up' : d < 0 ? 'i-tri-down' : 'i-eq', 14))
@@ -324,7 +324,7 @@
   // ---------- 知らせ ----------
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
   var srTimer = null
-  // 入力による再計算は止まって 500ms 後に1回（§19-2）。ボタンは短く待つだけ
+  // 入力による再計算は止まって 500ms 後に1回。ボタンは短く待つだけ
   function announce (msg, wait) {
     var sr = $('sr-status')
     window.clearTimeout(srTimer)
@@ -458,7 +458,7 @@
     return v + '%'
   }
   function errMsg (id, code) { var f = FIELDS[id]; return code === 'cap' ? CAP_MSG : SPEC[f.kind][code] }
-  // 誤りの文を出す（入力値は引用しない。§12）
+  // 誤りの文を出す（入力値は引用しない）
   function showErr (id) {
     var p = $('err-' + id); var inp = $(id)
     if (!p || !inp) return
@@ -508,7 +508,7 @@
   $('target-err').id = 'err-in-target'
   $('in-target').setAttribute('aria-describedby', 'target-hint err-in-target')
 
-  // 食材の値段の行（§9）。12行×3欄を1回だけ作る
+  // 食材の値段の行。12行×3欄を1回だけ作る
   var ingRefs = {}
   function buildIng () {
     var table = $('ing-table')
@@ -548,14 +548,14 @@
       add(tb, [tr, er, ir])
       table.appendChild(tb)
       ingRefs[f.id] = { tb: tb, tag: tag, unit: unitSpan, impactRow: ir, box: box }
-      // 前後の比較の「前」は、この行の欄にフォーカスが入った時に取る（§9-3）
+      // 前後の比較の「前」は、この行の欄にフォーカスが入った時に取る
       tb.addEventListener('focusin', function () {
         tb.classList.add('ing-row--editing')
         if (ui.focusFid !== f.id) { load(); ui.focusFid = f.id; ui.focusBefore = snapshot(S, f.id) }
       })
       tb.addEventListener('focusout', function (e) {
         if (!e.relatedTarget || !tb.contains(e.relatedTarget)) tb.classList.remove('ing-row--editing')
-        // 行を離れたら、次に入った時に新しい「前」を取る（§9-3。別の窓へ移っただけの時はフォーカスが行に残るので取り直さない）
+        // 行を離れたら、次に入った時に新しい「前」を取る（別の窓へ移っただけの時はフォーカスが行に残るので取り直さない）
         window.setTimeout(function () {
           if (ui.focusFid === f.id && !tb.contains(document.activeElement)) ui.focusFid = null
         }, 0)
@@ -567,7 +567,7 @@
     calcAll(st).forEach(function (c) { r[c.id] = c })
     return { fid: fid, ing: { p: st.ing[fid].p, q: st.ing[fid].q, y: st.ing[fid].y }, res: r }
   }
-  // 前と後の比較（§9-3・§9-4）。純粋な関数
+  // 前と後の比較。純粋な関数
   function impact (before, after, fid) {
     var a = {}; calcAll(after).forEach(function (c) { a[c.id] = c })
     var changed = ['p', 'q', 'y'].filter(function (k) { return before.ing[k] !== after.ing[fid][k] })
@@ -577,7 +577,7 @@
     }
   }
 
-  // レシピ（§8）。メニューを選び直した時だけ行を作り直す（入力中の描き直しでは作らない）
+  // レシピ。メニューを選び直した時だけ行を作り直す（入力中の描き直しでは作らない）
   var recipeRefs = {}
   function buildRecipe () {
     var table = $('recipe-table')
@@ -632,7 +632,7 @@
     renderAll()
   }
 
-  // ---------- 入力のたびに（§8-2・§9-2・§12） ----------
+  // ---------- 入力のたびに ----------
   function onField (id, ev) {
     var f = FIELDS[id]; var inp = $(id)
     if (!f || !inp) return
@@ -687,7 +687,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('.pick-btn--t'), function (b) {
       b.setAttribute('aria-pressed', Number(b.getAttribute('data-t')) === t && !ui.errs['in-target'] ? 'true' : 'false')
     })
-    // 入力欄に 25・30・35 以外を入れた時は3つとも押していない形（§6）
+    // 入力欄に 25・30・35 以外を入れた時は3つとも押していない形
     var inp = $('in-target')
     var cur = parseInt10(inp.value, 10, 60)
     if (cur.v == null || [25, 30, 35].indexOf(cur.v) < 0) {
@@ -872,7 +872,7 @@
     if (keep && $(keep) && document.activeElement !== $(keep) && (document.activeElement === document.body || !document.activeElement)) $(keep).focus({ preventScroll: true })
   }
 
-  // 並べ替え（§7-4。保存しない）
+  // 並べ替え（保存しない）
   var SORT_NAME = { base: '見本の順', ratio: '原価率の高い順', profit: '粗利の低い順' }
   Array.prototype.forEach.call(document.querySelectorAll('.pick-btn--sort'), function (b) {
     b.addEventListener('click', function () {
@@ -900,7 +900,7 @@
     showToast('CSV を作りました（' + MENU.length + '品）')
   })
 
-  // ---------- 紙面（§15。値は textContent） ----------
+  // ---------- 紙面（値は textContent） ----------
   function stampSvg () {
     var s = document.createElementNS(NS, 'svg')
     s.setAttribute('class', 'stamp'); s.setAttribute('width', '56'); s.setAttribute('height', '56'); s.setAttribute('viewBox', '0 0 56 56')
@@ -974,7 +974,7 @@
     document.title = baseTitle
   })
 
-  // ---------- 見本に戻す（§13-5） ----------
+  // ---------- 見本に戻す ----------
   $('btn-reset').addEventListener('click', function () {
     confirmBox().then(function (yes) {
       if (!yes) return
@@ -993,7 +993,7 @@
     })
   })
 
-  // ---------- 2つのタブの同期（§13-3） ----------
+  // ---------- 2つのタブの同期 ----------
   window.addEventListener('storage', function (e) {
     if (!canSave) return
     if (e.key !== null && e.key !== KEY) return

@@ -1,5 +1,5 @@
 /* 洋食 ミナトビ（デモ）メニューの原価計算と値付け */
-/* 共通部品は ⑰（17-lesson）のクラス名と CSS のまま、入力欄は ⑪（11-expense）の .field・.input。:root の色の値を design.md §1-1 に替え、§1-2 の行動ボタンを1か所。新しい部品は §19-5 のクラス名 */
+/* 色・余白・文字の大きさは :root にまとめる。行動ボタン（赤）は3か所だけ */
 :root {
   --c-base: #FAF7EF;
   --c-surface: #FFFFFF;
@@ -138,7 +138,7 @@ main > .tabs-area { margin-top: 16px; }
   width: 100%; min-height: 52px; padding: 0 32px; border: 0; border-radius: 26px;
   background: var(--c-accent); color: #fff; font-size: 16px; font-weight: 700; line-height: 1.3; cursor: pointer;
 }
-/* §1-2 行動ボタン（ケチャップの赤）は「CSV をダウンロード」「印刷・PDFで保存」「作品例を見る」の3つだけ */
+/* 行動ボタン（ケチャップの赤）は「CSV をダウンロード」「印刷・PDFで保存」「作品例を見る」の3つだけ */
 .btn-main, .site-footer .btn { background: var(--c-accent); color: var(--c-on-accent); border: 0; }
 .btn-main:hover, .btn-main:active, .site-footer .btn:hover, .site-footer .btn:active { background: var(--c-accent-dark); }
 .btn-sub {
@@ -159,7 +159,7 @@ main > .tabs-area { margin-top: 16px; }
 .dot-list li { position: relative; padding-left: 1em; }
 .dot-list li::before { content: "・"; position: absolute; left: 0; }
 
-/* 選択のボタン（並べ替え・メニュー・目標の 25/30/35。§3） */
+/* 選択のボタン（並べ替え・メニュー・目標の 25/30/35） */
 .pick-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 0; min-height: 48px; padding: 0 8px;
   border: 1.5px solid var(--c-main); border-radius: 8px; background: var(--c-soft); color: var(--c-text);
@@ -176,7 +176,7 @@ main > .tabs-area { margin-top: 16px; }
   .pick-btn { transition: background-color 120ms; }
 }
 
-/* ---------- 入力欄（⑪の .field・.input。§3） ---------- */
+/* ---------- 入力欄（.field・.input） ---------- */
 .field__label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
 .field__hint { margin-top: 6px; font-size: 14px; color: var(--c-sub); line-height: 1.5; }
 .field__err { display: grid; grid-template-columns: 16px minmax(0, 1fr); column-gap: 6px; margin-top: 6px; font-size: 14px; font-weight: 700; color: var(--c-bad); line-height: 1.5; }
@@ -192,7 +192,7 @@ main > .tabs-area { margin-top: 16px; }
 .input__unit { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; font-weight: 700; color: var(--c-sub); pointer-events: none; }
 .cell-label { display: block; margin-bottom: 4px; font-size: 13px; font-weight: 700; line-height: 1.4; color: var(--c-sub); }
 
-/* ---------- 目標の原価率の帯（§6） ---------- */
+/* ---------- 目標の原価率の帯 ---------- */
 .target-bar { padding: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
 .target-bar__label { margin-bottom: 6px; }
 .target-bar__ctrl { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px; align-items: center; }
@@ -241,7 +241,7 @@ main > .tabs-area { margin-top: 16px; }
 .sec-h { font-size: 17px; font-weight: 700; line-height: 1.4; color: var(--c-main); }
 .explain { padding: 12px 16px; background: var(--c-soft); border-radius: 8px; box-shadow: inset 4px 0 0 var(--c-main); font-size: 14px; line-height: 1.6; }
 
-/* ---------- 状態の札（§1-3） ---------- */
+/* ---------- 状態の札 ---------- */
 .state-tag {
   display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px 0 6px;
   font-size: 13px; font-weight: 700; line-height: 1; white-space: nowrap; vertical-align: middle; border-radius: 4px;
@@ -254,7 +254,7 @@ main > .tabs-area { margin-top: 16px; }
 .state-tag--edited { background: #FFFFFF; color: var(--c-main); border: 1px dashed var(--c-main); border-radius: 4px; }
 .trend { display: inline-flex; align-items: center; vertical-align: -2px; }
 
-/* ---------- 原価一覧（§7） ---------- */
+/* ---------- 原価一覧 ---------- */
 .sort__btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .sort__btns .pick-btn span { word-break: keep-all; }
 .menu-cards > * + * { margin-top: 8px; }
@@ -276,7 +276,7 @@ main > .tabs-area { margin-top: 16px; }
 .table-box { display: none; }
 .cost-table, .price-table, .recipe-table, .ing-table { width: 100%; border-collapse: separate; border-spacing: 0; }
 
-/* 表（768px〜）。見出しの下と合計の上は帳簿の 2px の線（§3） */
+/* 表（768px〜）。見出しの下と合計の上は帳簿の 2px の線 */
 .cost-table, .price-table { table-layout: fixed; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; overflow: hidden; font-size: 15px; }
 .cost-table th, .cost-table td, .price-table th, .price-table td { padding: 4px 8px; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; line-height: 1.4; }
 .cost-table thead th, .price-table thead th { height: 48px; background: var(--c-soft); color: var(--c-sub); font-size: 13px; font-weight: 700; line-height: 1.3; border-bottom: 2px solid var(--c-main); }
@@ -308,7 +308,7 @@ main > .tabs-area { margin-top: 16px; }
 .cols th, .cols td { padding: 4px 10px; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: top; }
 .cols thead th { background: var(--c-soft); color: var(--c-sub); font-size: 13px; }
 
-/* ---------- レシピ（§8） ---------- */
+/* ---------- レシピ ---------- */
 .menu-pick__btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .recipe > * + * { margin-top: 16px; }
 .recipe-sum { padding: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-top: 4px solid var(--c-main); border-radius: 12px; }
@@ -358,7 +358,7 @@ main > .tabs-area { margin-top: 16px; }
 .ing-table .c-y { grid-area: y; }
 .ing-table tbody.ing-row--editing { background: var(--c-olive-bg); box-shadow: inset 4px 0 0 var(--c-main); }
 
-/* 影響のあったメニューの箱（§9-4） */
+/* 影響のあったメニューの箱 */
 .impact-row td { padding-top: 12px; }
 .impact { padding: 12px 16px; background: var(--c-olive-bg); border-radius: 8px; box-shadow: inset 4px 0 0 var(--c-main); border: 1px solid var(--c-line); }
 .impact__h { font-size: 15px; font-weight: 700; line-height: 1.5; color: var(--c-main); }
@@ -370,7 +370,7 @@ main > .tabs-area { margin-top: 16px; }
 .impact__cost { font-size: 14px; line-height: 1.6; }
 .impact__ratio { font-size: 14px; font-weight: 700; line-height: 1.6; }
 
-/* ---------- 値付けの目安（§10） ---------- */
+/* ---------- 値付けの目安 ---------- */
 .price-lead { margin-top: 4px; }
 .price-cards > * + * { margin-top: 8px; }
 .price-card { display: grid; gap: 4px; padding: 12px 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
@@ -572,7 +572,7 @@ main > .tabs-area { margin-top: 16px; }
   .impact__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 24px; }
 }
 
-/* ---------- 印刷（A4 縦・1枚。§15） ---------- */
+/* ---------- 印刷（A4 縦・1枚） ---------- */
 @page { size: A4 portrait; margin: 12mm; }
 
 @media print {

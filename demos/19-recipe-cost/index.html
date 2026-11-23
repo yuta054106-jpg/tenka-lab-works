@@ -16,7 +16,7 @@
   <script src="js/app.js" defer></script>
 </head>
 <body>
-  <!-- アイコン（design.md §18-2。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <!-- アイコン（線 2px、currentColor）。JS は createElementNS の use で使う -->
   <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
     <defs>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -82,7 +82,7 @@
       </ul>
     </section>
 
-    <!-- 目標の原価率の帯（§6） -->
+    <!-- 目標の原価率の帯 -->
     <section class="target-bar" aria-label="目標の原価率">
       <div class="target-bar__row">
         <label class="field__label target-bar__label" for="in-target">目標の原価率（%）</label>
@@ -110,7 +110,7 @@
         <button type="button" role="tab" class="tabs__tab" id="tab-price" aria-controls="panel-price" aria-selected="false" tabindex="-1"><span class="nw">値付け<span class="pc-only">の目安</span></span></button>
       </div>
 
-      <!-- タブ1：原価一覧（§7） -->
+      <!-- タブ1：原価一覧 -->
       <section class="panel" role="tabpanel" id="panel-list" aria-labelledby="tab-list">
         <h2 class="panel__h" id="list-h" tabindex="-1">メニューの原価一覧</h2>
         <section class="summary" aria-label="原価一覧の数">
@@ -173,7 +173,7 @@
         </section>
       </section>
 
-      <!-- タブ2：レシピ（§8） -->
+      <!-- タブ2：レシピ -->
       <section class="panel" role="tabpanel" id="panel-recipe" aria-labelledby="tab-recipe" hidden>
         <h2 class="panel__h" id="recipe-h" tabindex="-1">メニューの中身（レシピ）</h2>
         <div class="menu-pick">
@@ -211,7 +211,7 @@
         </section>
       </section>
 
-      <!-- タブ3：食材の値段（§9） -->
+      <!-- タブ3：食材の値段 -->
       <section class="panel" role="tabpanel" id="panel-ing" aria-labelledby="tab-ing" hidden>
         <div>
           <h2 class="panel__h" id="ing-h" tabindex="-1">食材の値段</h2>
@@ -233,7 +233,7 @@
         </table>
       </section>
 
-      <!-- タブ4：値付けの目安（§10） -->
+      <!-- タブ4：値付けの目安 -->
       <section class="panel" role="tabpanel" id="panel-price" aria-labelledby="tab-price" hidden>
         <div>
           <h2 class="panel__h" id="price-h" tabindex="-1">値付けの目安</h2>
@@ -320,7 +320,7 @@
     <p class="copy">© TENKA LAB</p>
   </footer>
 
-  <!-- 確認の窓（§13-5）。最初のフォーカスは「やめる」、Esc＝やめる -->
+  <!-- 確認の窓。最初のフォーカスは「やめる」、Esc＝やめる -->
   <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
     <h2 class="confirm__title" id="cf-title">見本に戻しますか</h2>
     <p class="confirm__body" id="cf-body">食材の値段・使う量・目標の原価率を、見本の値に戻します。</p>

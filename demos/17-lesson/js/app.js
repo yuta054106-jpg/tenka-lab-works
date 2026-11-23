@@ -444,7 +444,7 @@
     announce(text)
   }
 
-  // ---------- 確認の窓（⑯と同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
+  // ---------- 確認の窓（ほかのデモと同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
   var dlg = $('confirm')
   var hasDialog = typeof window.HTMLDialogElement === 'function' && typeof dlg.showModal === 'function'
   var dlgResolve = null; var dlgOpener = null
@@ -501,7 +501,7 @@
   var ui = { tab: 'att', cls: 'B', lesson: firstLesson('B'), month: BASE_MONTH, dueOnly: false, notice: null, pickNotice: null }
   function focusId (id) { var e = $(id); if (e) e.focus({ preventScroll: false }) }
 
-  // ---------- タブ（⑯と同じ動き） ----------
+  // ---------- タブ（ほかのデモと同じ動き） ----------
   var TABS = ['att', 'fee', 'sum']
   function openTab (name, opt) {
     ui.tab = name
