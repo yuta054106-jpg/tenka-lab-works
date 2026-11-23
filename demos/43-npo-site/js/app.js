@@ -79,6 +79,8 @@
     a.appendChild(head)
     if (withBody) {
       var b = el('div', 'post__body')
+      // 募集・受付を案内する記事は、本文の先頭にデモの文を出す
+      if (C.hasNoReceipt(p)) b.appendChild(el('p', 'demo-note', C.NO_RECEIPT))
       p.body.forEach(function (line) { b.appendChild(el('p', '', line)) })
       a.appendChild(b)
     }
@@ -203,7 +205,11 @@
       tb.appendChild(tr)
     }
     row('is-head', '経常収益', null)
-    D.INCOME_ITEMS.forEach(function (it) { row('is-item', it.name, a.income[it.k]) })
+    D.INCOME_ITEMS.forEach(function (it) {
+      row('is-item', it.name, a.income[it.k])
+      // 架空の内訳の例は科目名の下に小さく添える
+      if (it.ex) tb.lastChild.cells[0].appendChild(el('span', 'money__ex', it.ex))
+    })
     row('is-total', '経常収益計', a.incomeTotal)
     row('is-head', '経常費用', null)
     D.EXPENSE_ITEMS.forEach(function (it) { row('is-item', it.name, a.expense[it.k]) })

@@ -244,6 +244,13 @@ h3 { font-size: var(--f-h3); font-weight: 700; line-height: 1.5; letter-spacing:
 .post__title { margin-top: 8px; }
 .post__body { grid-column: 1 / -1; max-width: 36em; }
 .post__body p { line-height: 1.85; }
+/* 募集・受付を案内する所のデモの文（記事の本文の先頭・お問い合わせの冒頭） */
+.demo-note {
+  margin-top: 8px; padding: 8px 12px; border-left: 4px solid var(--c-main); border-radius: 8px; background: var(--c-soft);
+  color: var(--c-text); font-size: var(--f-note); font-weight: 700; line-height: 1.6; max-width: 36em;
+}
+.post__body .demo-note { line-height: 1.6; margin-bottom: 4px; }
+.page__in > .h1 + .demo-note { margin-top: 16px; }
 .posts { margin-top: 16px; }
 .posts > .post + .post, .posts > .month + .post { margin-top: 16px; }
 .posts > .post + .month { margin-top: 40px; }
@@ -297,6 +304,7 @@ thead th { background: var(--c-soft); font-size: 14px; font-weight: 700; border-
 .money th[scope="row"] { font-size: var(--f-money); }
 .money .is-head th { background: var(--c-soft); font-weight: 700; }
 .money .is-item th { padding-left: 24px; }
+.money__ex { display: block; color: var(--c-sub); font-size: var(--f-note); font-weight: 400; line-height: 1.5; }
 .money .is-total th, .money .is-total td { font-weight: 700; border-top: 2px solid var(--c-text); }
 .money .is-ord th, .money .is-ord td { font-weight: 700; }
 .money .is-diff th, .money .is-diff td { font-weight: 700; color: var(--c-main); border-top: 2px solid var(--c-main); }

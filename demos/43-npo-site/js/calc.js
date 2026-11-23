@@ -90,7 +90,7 @@ var Calc43 = (function (D) {
   function summary (fy) {
     var a = account(fy)
     if (a.diff >= 0) return fy + '年度は、収益が費用を ' + fmtYen(a.diff) + ' 上回りました。'
-    return fy + '年度は、費用が収益を ' + fmtYen(-a.diff) + ' 上回りました。前の年度までの蓄えでまかなっています。'
+    return fy + '年度は、経常費用が経常収益を ' + fmtYen(-a.diff) + ' 上回りました。次期繰越正味財産額は ' + fmtYen(a.end) + ' です。'
   }
   function sayFy (fy) { return fy + '年度の活動計算書を表示しました。' }
 
@@ -109,13 +109,16 @@ var Calc43 = (function (D) {
   }
 
   var DEMO_MSG = '（デモ）実際の受付はありません。このページは架空の団体の見本です。'
+  // 募集の記事（と noReceipt の記事）の本文の先頭に出す文
+  var NO_RECEIPT = 'デモのため、実際の募集・受付はありません。'
+  function hasNoReceipt (p) { return p.kind === 'recruit' || p.noReceipt === true }
 
   return Object.freeze({
     D: D, PER: PER, PAGE_IDS: PAGE_IDS, BIZ_BY_ID: BIZ_BY_ID, KIND_BY_ID: KIND_BY_ID, SORTED: SORTED,
     sortPosts: sortPosts, filterPosts: filterPosts, countByBiz: countByBiz, firstShown: firstShown, moreShown: moreShown,
     countText: countText, moreText: moreText, fmtDate: fmtDate, monthLabel: monthLabel, isNew: isNew, withMonths: withMonths,
     sayFilter: sayFilter, sayMore: sayMore, fmtNum: fmtNum, fmtYen: fmtYen, account: account, FYS: FYS, BAR_BASE: BAR_BASE,
-    barPct: barPct, summary: summary, sayFy: sayFy, routeOf: routeOf, titleOf: titleOf, DEMO_MSG: DEMO_MSG
+    barPct: barPct, summary: summary, sayFy: sayFy, routeOf: routeOf, titleOf: titleOf, DEMO_MSG: DEMO_MSG, NO_RECEIPT: NO_RECEIPT, hasNoReceipt: hasNoReceipt
   })
 })(typeof Data43 !== 'undefined' ? Data43 : require('./data.js'))
 if (typeof module !== 'undefined' && module.exports) module.exports = Calc43
