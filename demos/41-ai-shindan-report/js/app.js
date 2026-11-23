@@ -101,7 +101,8 @@
     var sub = $('cv-save-sub')
     clear(sub)
     sub.appendChild(document.createTextNode(C.fmtYen(f.yen) + '円ぶん'))
-    sub.appendChild(el('span', { class: 'nw', text: '（時給で換算した参考額）' }))
+    sub.appendChild(el('br'))
+    sub.appendChild(document.createTextNode('（時給で換算した参考額）'))
     return ai
   }
 
