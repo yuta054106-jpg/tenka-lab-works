@@ -319,6 +319,7 @@ main > .tabs-area { margin-top: 16px; }
 .recipe-nums dt { font-size: 13px; font-weight: 700; color: var(--c-sub); }
 .recipe-nums dd { font-size: 16px; font-weight: 700; }
 .recipe-note { margin-top: 8px; }
+.profit-note { margin-top: 8px; }
 
 /* 入力のある表（レシピ・食材）。スマホは tbody 1つを1枚のカードにする（入力欄を2つ作らないため） */
 .recipe-table, .ing-table { display: block; }
@@ -579,6 +580,7 @@ main > .tabs-area { margin-top: 16px; }
   body > *:not(#print-root) { display: none !important; }
   #print-root { display: block !important; color: #000000; font-family: var(--font-body); }
   #print-root .sheet { width: 186mm; padding-top: 3.5mm; font-size: 9pt; line-height: 1.3; color: #000000; }
+  #print-root .sheet__demo { margin: 0 0 2mm; padding: 1mm 2mm; border: 0.3mm solid #000; font-size: 9pt; font-weight: 700; text-align: center; }
   #print-root .sheet__head { display: flex; align-items: center; gap: 4mm; margin: 0 0 2mm; }
   #print-root .sheet__shop { position: relative; padding-right: 16mm; font-family: var(--font-head); font-size: 15pt; font-weight: 700; white-space: nowrap; }
   #print-root .sheet__cond { font-size: 9pt; margin-bottom: 4mm; }

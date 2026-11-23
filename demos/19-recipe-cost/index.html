@@ -151,9 +151,10 @@
             <tbody id="cost-tbody"></tbody>
           </table>
         </div>
+        <p class="sub profit-note">※ 粗利＝税抜の売値−1皿の原価（表の食材だけ。少しの調味料は含まない）</p>
         <section class="card" id="csv-card" aria-labelledby="csv-h">
           <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-          <p class="out__desc">6品の原価一覧を、1行に1品で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+          <p class="out__desc">6品の原価一覧を、1行に1品で出します。Excel 向けの CSV（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
           <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
           <p class="sub sub--13 out__name" id="csv-name"></p>
           <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
@@ -205,6 +206,8 @@
             </tfoot>
           </table>
           <p class="sub recipe-note">※ 内訳は 0.01円まで出し、合計を円で四捨五入します</p>
+          <p class="sub recipe-note">※ 使う量は、皮むきなどの後に1皿に使う量です</p>
+          <p class="sub recipe-note">※ 粗利＝税抜の売値−1皿の原価（表の食材だけ。少しの調味料は含まない）</p>
         </section>
       </section>
 
@@ -275,28 +278,29 @@
 
     <section class="card work-card" aria-labelledby="h-work">
       <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
-      <p>お店の食材・レシピ・売値に合わせて作ります。いま使っている Excel やスプレッドシートのまま、同じ仕組みを組み込むこともできます。</p>
+      <p>お店の食材・レシピ・売値に合わせて作ります。いま使っている Excel やスプレッドシートに、同じ計算を組み込むこともできます（いまのファイルの形式を確かめてからお見積もりします）。</p>
       <div class="work-boxes">
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
           <h3>いまの表計算で、同じ計算を</h3>
           <ul class="dot-list">
             <li>お店の Excel・スプレッドシートに、原価と原価率と値付けの目安の計算を作れます</li>
-            <li>GAS で、仕入れの値段を一括で更新できます</li>
+            <li>Google スプレッドシートなら、GAS で仕入れの値段を一括で更新できます</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg>
-          <h3>売れた数と掛けて、月の原価を</h3>
+          <h3>売れた数から、月の食材原価を</h3>
           <ul class="dot-list">
-            <li>レジの売上の数と掛けて、月の原価と原価率を出せます</li>
+            <li>メニューごとの売れた数から、月の食材原価を試算します。原価率は食材原価の合計÷税抜の売上の合計です</li>
+            <li>レジの売れた数を使う場合は、出せるデータと形式を確かめてお見積もりします</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-invoice"/></svg>
           <h3>請求書から値段を取り込む</h3>
           <ul class="dot-list">
-            <li>仕入れ先の請求書の CSV から、食材の値段を取り込めます</li>
+            <li>仕入れ先の請求書の CSV から、食材の値段を取り込めます（CSV が出せるかと形式を確かめてお見積もりします）</li>
           </ul>
         </div>
       </div>

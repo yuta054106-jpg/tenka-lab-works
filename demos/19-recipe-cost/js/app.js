@@ -9,8 +9,8 @@
   var KEY = 'tenkaLab.demo19.recipeCost.v1'
   var TEST_KEY = 'tenkaLab.demo19.test'
   var SHOP = '洋食 ミナトビ'
-  var CSV_NAME = 'minatobi_genka.csv'
-  var PRINT_TITLE = 'minatobi_genka'
+  var CSV_NAME = 'minatobi_genka_kakuu-demo.csv'
+  var PRINT_TITLE = 'minatobi_genka_架空デモ'
   var CAP = 1000000000 // 1皿の原価の上限（0.01円単位。＝1,000万円。§11-7）
   var ING = [
     { id: 'F01', name: '玉ねぎ', unit: 'g', q: 1000, p: 300, y: 90 },
@@ -64,6 +64,9 @@
   function ratio10 (sen, price) { return divRound(sen * 11, price) } // 0.1% 単位
   function isOver (r10, t) { return r10 > t * 10 } // 表示の原価率で比べる（30.0% は目標 30% で目標内）
   function profitYen (sen, price) { return divRound(price * 1000 - 11 * sen, 1100) }
+  // 目安の売値：原価率（四捨五入の前）が目標以下になる、いちばん安い10円単位の売値（切り上げ）。
+  // 目標超え（表示の原価率で判定）なら、目安は必ずいまの売値より高い。
+  // 逆に、四捨五入の前が目標を少し超え、表示が目標ちょうど（例 30.0%）の時は「目標内」で、目安はいまの売値より10円以上高くなる
   function suggestYen (sen, t) { return 10 * divCeil(11 * sen, 100 * t) }
   function senYen (sen) { return divRound(sen, 100) }
   function calc (st, mid) {
@@ -71,7 +74,7 @@
     var sen = costSen(st, mid)
     var r = ratio10(sen, m.price)
     var sug = suggestYen(sen, st.target)
-    return { id: mid, sen: sen, yen: senYen(sen), r10: r, over: isOver(r, st.target), profit: profitYen(sen, m.price), suggest: sug, diff: sug - m.price, raise: sug > m.price }
+    return { id: mid, sen: sen, yen: senYen(sen), r10: r, over: isOver(r, st.target), profit: profitYen(sen, m.price), suggest: sug, diff: sug - m.price, raise: isOver(r, st.target) } // 値上げの案は一覧の「目標超え」と同じ判定
   }
   function calcAll (st) { return MENU.map(function (m) { return calc(st, m.id) }) }
   function overCap (st) { return MENU.some(function (m) { return costSen(st, m.id) > CAP }) }
@@ -937,7 +940,7 @@
     var shop = el('p', 'sheet__shop', SHOP + '　メニューの原価帳')
     shop.appendChild(stampSvg())
     add(head, [shop])
-    var cond = el('p', 'sheet__cond', '目標の原価率 ' + S.target + '%・消費税 10% で計算（デモの仮定）。売値は税込、仕入れ値は税抜。')
+    var cond = el('p', 'sheet__cond', '目標の原価率 ' + S.target + '%・消費税 10% で計算（デモの仮定）。売値は税込、仕入れ値は税抜。粗利＝税抜の売値−1皿の原価（表の食材だけ）。')
     var mrows = all.map(function (c) {
       var m = MENU_BY_ID[c.id]
       return { cls: c.over ? 'is-over' : null, bold: c.over ? 7 : -1, cells: [m.name, yen(m.price), yen(c.yen), pct(c.r10), yen(c.profit), yen(c.suggest), dyen(c.diff), c.over ? '目標超え' : '目標内'] }
@@ -946,7 +949,8 @@
       var f = S.ing[g.id]
       return { cells: [g.name, yen(f.p), f.q.toLocaleString('ja-JP') + g.unit, f.y + '%', unitPrice(g.id, f), menusOf(g.id).map(function (m) { return m.name }).join('・')] }
     })
-    return add(el('div', 'sheet'), [head, cond,
+    var demo = el('p', 'sheet__demo', '架空のデモ（TENKA LAB の制作見本）です。お店・食材・値段・数字はすべて架空です。')
+    return add(el('div', 'sheet'), [demo, head, cond,
       el('p', 'sheet__h', 'メニューの原価と値付けの目安（' + MENU.length + '品）'),
       sheetTable(PRINT_MENU_COLS, mrows, 'sheet__menu'),
       el('p', 'sheet__h', '食材の値段（' + ING.length + '品）'),
