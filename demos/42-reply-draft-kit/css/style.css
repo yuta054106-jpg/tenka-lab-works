@@ -210,6 +210,7 @@ p, li { text-wrap: pretty; }
 .prompt { background: var(--c-soft); box-shadow: inset 4px 0 0 var(--c-main); }
 .tpl { background: var(--c-auto-bg); box-shadow: inset 4px 0 0 var(--c-auto); }
 .slot { padding: 0 4px; background: var(--c-change-bg); border: 1px solid var(--c-change); border-radius: 4px; }
+.mix-warn { margin-top: 8px; max-width: 40em; padding: 8px 12px; border-left: 4px solid var(--c-change); background: var(--c-change-bg); color: var(--c-text); font-size: 16px; font-weight: 700; line-height: 1.7; }
 .shop-line { margin-top: 8px; max-width: 40em; color: var(--c-main); font-size: 16px; font-weight: 700; line-height: 1.7; }
 .more { max-width: 44em; margin-top: 16px; }
 .more__sum {

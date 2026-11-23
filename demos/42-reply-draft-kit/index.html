@@ -67,7 +67,7 @@
           <li class="howto__item"><span class="howto__no" aria-hidden="true">3</span><span class="howto__t">置き換えを確かめてコピーする</span></li>
         </ol>
         <p class="intro__note">デモ（架空のお店）。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は架空のお店で、実在のお店とは関係ありません。例の文・名前・番号はすべて架空です。</p>
-        <p class="intro__note">貼った文はこのページの中だけで扱い、どこにも送らず、保存もしません。</p>
+        <p class="intro__note">このページは、貼った文をどこにも送らず、保存もしません。</p>
         <div class="intro__foot">
           <a class="inline-link" href="../41-ai-shindan-report/">AI 活用の診断の見本に戻る</a>
           <button type="button" class="btn-sub" id="reset-all">最初に戻す</button>
@@ -115,7 +115,7 @@
             <div class="bench">
               <div class="bench__in">
                 <label class="field__lab" for="src-text">届いた文</label>
-                <p class="note note--tight" id="src-hint">お客様の文をそのまま貼れます。</p>
+                <p class="note note--tight" id="src-hint">公開中の見本では、例か架空の文で試してください（お店で使う時は、届いた文をそのまま貼れます）。</p>
                 <textarea class="paste" id="src-text" rows="10" spellcheck="false" autocomplete="off" aria-describedby="src-hint"></textarea>
               </div>
               <div class="bench__out">
@@ -141,10 +141,11 @@
             <p class="state" id="st-prompt"></p>
           </div>
           <div class="chapter__body">
-            <p class="lead">お店の決まりと、置き換えた後の文を組み立てました。コピーして、お店の AI サービスに貼ります。AI の答えは下書きです。</p>
+            <p class="lead">お店の決まりと、置き換えた後の文を組み立てました。コピーして、お店の AI サービスに貼ります。AI サービスに貼った文は、そのサービスに渡ります。置き換えを確かめてから貼ります。AI の答えは下書きです。</p>
             <p class="note" id="prompt-wait">種類を選び、届いた文を貼ると、ここに頼み方の文ができます。</p>
             <div class="out-ai" id="out-ai" hidden>
               <h3 class="h3 h3--gap">AI への頼み方の文</h3>
+              <p class="mix-warn" id="mix-warn" hidden></p>
               <p class="copy-row"><button type="button" class="btn-act" id="copy-prompt"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg>頼み方の文をコピー</button></p>
               <p class="copy-msg" id="msg-prompt" hidden></p>
               <div class="prompt" id="prompt-box"></div>
@@ -244,11 +245,11 @@
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-cal"/></svg>
-            <h3>1か月後に記録を見て直す</h3>
+            <h3>1か月後に記録を見て直す（見直しは別のお見積もり）</h3>
           </li>
         </ul>
         <div class="work-check">
-          <p class="work-check__note">AI の利用料は、お店が使う AI サービスの料金で、お店の契約・お店のご負担です。この道具そのものは月額0円で動きます。</p>
+          <p class="work-check__note">AI の利用料は、お店が使う AI サービスの料金で、お店の契約・お店のご負担です。この道具自体の月額の利用料はかかりません（公開先・見直しは別のお見積もり）。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../">ほかの作品例を見る</a></p>
       </div>

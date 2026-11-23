@@ -157,6 +157,17 @@ var Calc42 = (function (D) {
     while (lines.length && /^[\s　]*$/.test(lines[lines.length - 1])) lines.pop()
     return lines.join('\n')
   }
+  // AI に頼む種類なのに、店長が答える用件（アレルギー・原材料・送料・日持ち）の言葉が入っていたら、その言葉を返す（2026-11-23 顧問の指摘）
+  // 破損・割れは、不満のクチコミのお返事に自然に出るため数えない（その種類の決まりで補償を書かない）
+  var SHOP_WORDS = ['アレルギー', '原材料', '卵', '小麦', '乳製品', 'ナッツ', 'そば粉', '落花生', '送料', '日持ち', '賞味期限', '消費期限']
+  function shopWords (kindId, text) {
+    if (kindClass(kindId) !== 'ai') return []
+    var t = String(text || '')
+    return SHOP_WORDS.filter(function (w) { return t.indexOf(w) >= 0 })
+  }
+  function mixText (words) {
+    return words.length ? '店長が答える用件の言葉（' + words.join('・') + '）があります。その言葉で尋ねている文なら、「届いた文」の欄から消してから、頼み方の文をコピーしてください。その用件は、店長がひな形で答えます。' : ''
+  }
   function buildPrompt (kindId, replacedText) {
     if (kindClass(kindId) !== 'ai') return null
     var body = trimBlankLines(replacedText || '')
@@ -246,7 +257,7 @@ var Calc42 = (function (D) {
   return Object.freeze({
     D: D, KIND_BY_ID: KIND_BY_ID, COUNT_KEYS: COUNT_KEYS, RULES: RULES, NOT_NAMES: NOT_NAMES,
     normalize: normalize, redact: redact, pieces: pieces, isBlank: isBlank, kindClass: kindClass, classLabel: classLabel,
-    buildPrompt: buildPrompt, template: template, slots: slots,
+    buildPrompt: buildPrompt, shopWords: shopWords, mixText: mixText, SHOP_WORDS: SHOP_WORDS, template: template, slots: slots,
     canSend: canSend, checkedN: checkedN, goText: goText, checkState: checkState, pasteState: pasteState, sayRedact: sayRedact,
     h10: h10, fmtHours: fmtHours, fmtNum: fmtNum, fmtDiff: fmtDiff, yen: yen, recordRows: recordRows
   })

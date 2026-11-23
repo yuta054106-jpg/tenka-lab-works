@@ -146,6 +146,7 @@
     var showAi = cls === 'ai' && prompt !== null
     $('prompt-wait').hidden = showShop || showAi
     $('out-ai').hidden = !showAi
+    if (!showAi) { $('mix-warn').textContent = ''; $('mix-warn').hidden = true }
     $('out-shop').hidden = !showShop
     if (showShop) setState('st-prompt', D.CLS_NAME.shop)
     else if (showAi) setState('st-prompt', D.CLS_NAME.ai)
@@ -155,6 +156,9 @@
         $('prompt-box').textContent = prompt
         $('msg-prompt').hidden = true
       }
+      var mix = C.mixText(C.shopWords(ui.kind, r.text))
+      $('mix-warn').textContent = mix
+      $('mix-warn').hidden = mix === ''
       fillTpl($('tpl-ai'), C.template(ui.kind))
     }
     if (showShop) fillTpl($('tpl-shop'), C.template(ui.kind))
