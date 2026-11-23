@@ -296,6 +296,8 @@ thead th { background: var(--c-soft); font-size: 14px; font-weight: 700; border-
 .docs th[scope="row"] { font-weight: 700; }
 .docs td { color: var(--c-sub); font-size: 14px; }
 .docs__to { margin-top: 8px; }
+/* 年度ごとの書類の表：360px 以上は見出し（年度・書類名）を1行に（「事業報告／書」の1字の折り返しを避ける。11-24 ヨウタンワ）。360px 未満は折り返してはみ出さない */
+@media (min-width: 360px) { .docs th { white-space: nowrap; } .docs th, .docs td { padding-left: 5px; padding-right: 5px; } }
 .fy { margin-top: 24px; }
 .period { margin-top: 16px; color: var(--c-sub); font-size: var(--f-note); }
 .acc { display: grid; gap: 24px; margin-top: 8px; }
