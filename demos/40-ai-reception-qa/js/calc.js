@@ -69,6 +69,7 @@ var Calc40 = (function (D) {
       todoAnswer: todo.filter(function (t) { return t.expect === 'answer' }).length,
       todoHandoff: todo.filter(function (t) { return t.expect === 'handoff' }).length,
       wrongFirst: wrong.length,
+      // 再テスト後の残り：1回目に人へ回す質問へ Q&A の答えを返し（answeredWrongly）、まだ直していない（result が todo）もの。0件でも数として出す
       wrongNow: wrong.filter(function (t) { return t.result === 'todo' }).length
     }
     s.okAll = s.pass + s.fixed

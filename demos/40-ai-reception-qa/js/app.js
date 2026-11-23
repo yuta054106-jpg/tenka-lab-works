@@ -380,7 +380,7 @@
     var s = C.testSummary()
     var h = C.handoffSummary()
     var p1 = el('div', { class: 'pr-page' })
-    p1.appendChild(el('p', { class: 'pr-title', text: 'ヨツツジ食堂（架空）AI 受付の設定の記録　2026年11月4日（水）時点' }))
+    p1.appendChild(el('p', { class: 'pr-title', text: '見本（架空）ヨツツジ食堂 AI 受付の設定の記録　2026年11月4日（水）時点' }))
     p1.appendChild(el('p', { text: 'AI の答えを再現する画面ではありません。設定代行でお渡しする表と記録の見本です。' }))
     p1.appendChild(el('p', { class: 'pr-sum', text: '答える範囲 ' + D.QA.length + '問／答えさせない ' + h.groups + '分類／誤回答テスト ' + s.total + '件／合格率 ' + C.fmt10(s.rateAll10) + '%（修正後合格を含む。含まないと ' + C.fmt10(s.rateFirst10) + '%）／要修正 ' + s.todo + '件' }))
     p1.appendChild(prHead('記録 1', '答える範囲の表（Q&A 30問）'))
@@ -405,6 +405,7 @@
     p2.appendChild(t2.t)
     p2.appendChild(el('p', { class: 'pr-note', text: '下線と * ：11月2日のテストのあとに足した言葉' }))
     p2.appendChild(prHead('記録 4', '月1回の見直し（10月の分）'))
+    p2.appendChild(el('p', { class: 'pr-note', text: '使い始めた後の見直しは納品に含まず、ご希望の場合に別のお見積もりで行います。この記録はその見本です。' }))
     var t4 = prTable('pr-rv', ['順', '10月に答えられなかった質問', '回数', '足す先（案）', '判断'])
     D.REVIEW.forEach(function (r) {
       t4.b.appendChild(el('tr', null, [el('td', { text: r.no }), el('td', { text: r.q + (r.memo ? '（メモ：' + r.memo + '）' : '') }), el('td', { text: r.times + '回' }), el('td', { text: r.target }), el('td', { text: C.DEC_NAME[ui.dec[r.no]] })]))
@@ -415,7 +416,7 @@
 
     var p3 = el('div', { class: 'pr-page pr-break' })
     p3.appendChild(prHead('記録 3', '誤回答テストの記録（70件）'))
-    p3.appendChild(el('p', { class: 'pr-sum', text: '合格率（修正後合格を含む）' + C.fmt10(s.rateAll10) + '%（' + s.okAll + ' / ' + s.total + '）／1回目の合格率（含まない）' + C.fmt10(s.rateFirst10) + '%（' + s.pass + ' / ' + s.total + '）／要修正 ' + s.todo + '件／人へ回す質問に答えてしまった ' + s.wrongNow + '件（1回目は ' + s.wrongFirst + '件）' }))
+    p3.appendChild(el('p', { class: 'pr-sum', text: '合格率（修正後合格を含む）' + C.fmt10(s.rateAll10) + '%（' + s.okAll + ' / ' + s.total + '）／1回目の合格率（含まない）' + C.fmt10(s.rateFirst10) + '%（' + s.pass + ' / ' + s.total + '）／要修正 ' + s.todo + '件／人へ回す質問への誤回答：再テスト後の残り ' + s.wrongNow + '件（1回目は ' + s.wrongFirst + '件）' }))
     var t3 = prTable('pr-ts', ['番号', '質問の言い回し', '期待する動き', '結果', '直したこと'])
     D.TESTS.forEach(function (t) {
       t3.b.appendChild(el('tr', null, [el('td', { text: t.no }), el('td', { text: t.q }), el('td', { text: C.expectLabel(t) }), el('td', null, [resultTag(t.result)]), el('td', { text: t.result === 'pass' ? '—' : t.fix })]))
@@ -437,8 +438,8 @@
   $('qa-clear').addEventListener('click', clearQa)
   $('ts-clear').addEventListener('click', clearTests)
   $('reset-all').addEventListener('click', resetAll)
-  $('csv-qa').addEventListener('click', function () { saveCsv(C.qaCsv(), 'yotsutsuji_qa.csv', 'Q&A の CSV を保存しました。') })
-  $('csv-test').addEventListener('click', function () { saveCsv(C.testCsv(), 'yotsutsuji_test.csv', 'テストの記録の CSV を保存しました。') })
+  $('csv-qa').addEventListener('click', function () { saveCsv(C.qaCsv(), 'yotsutsuji_qa_sample-demo.csv', 'Q&A の CSV を保存しました。') })
+  $('csv-test').addEventListener('click', function () { saveCsv(C.testCsv(), 'yotsutsuji_test_sample-demo.csv', 'テストの記録の CSV を保存しました。') })
   // beforeprint が来ないブラウザでも中身が出るよう、先に作ってから印刷する（beforeprint でも同じ中身に作り直す）
   $('print-btn').addEventListener('click', function () { buildPrint(); window.print() })
   window.addEventListener('beforeprint', buildPrint)
