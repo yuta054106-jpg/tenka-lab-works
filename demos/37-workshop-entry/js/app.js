@@ -17,7 +17,7 @@
   var KINDS = fz({
     tebineri: fz({ name: 'はじめての手びねり（湯のみ）', time: '2時間', price: 3500, priceNote: '', bring: 'エプロン・手をふくタオル（爪は短めに）', extra: '' }),
     rokuro: fz({ name: 'ろくろ体験（小鉢）', time: '2時間', price: 4800, priceNote: '', bring: 'エプロン・手をふくタオル・汚れてもよい服', extra: '' }),
-    oyako: fz({ name: '親子の粘土あそび', time: '1時間30分', price: 2500, priceNote: '大人もお子さまも', bring: 'エプロン（お子さまの分も）・手をふくタオル', extra: '4歳から小学生のお子さまと保護者の方向けです。' })
+    oyako: fz({ name: '親子の粘土あそび', time: '1時間30分', price: 2500, priceNote: '大人もお子さまも', bring: 'エプロン（お子さまの分も）・手をふくタオル', extra: '4歳から小学生のお子さまと保護者の方向けです。', min: 2, minNote: '2人から（保護者1人＋お子さま1人以上）申し込めます。', cond: '4歳から小学生のお子さまと保護者1人でご参加ください（架空の設定）。2人から（保護者1人＋お子さま1人以上）申し込めます。人数は保護者の方も含めて選びます。' })
   })
   var COMMON_NOTE = '焼き上がりは約1か月後です。お渡しの方法は当日ご案内します。'
 
@@ -80,14 +80,21 @@
       rest: slot.cap - booked - held,
       cancels: ofStatus(list, 'cancel').sort(byNo),
       came: came,
+      // 1組の最少人数（親子体験は保護者1人＋お子さま1人以上で2人から）
+      min: KINDS[slot.kind].min || 1,
       closed: slot.start - 30 <= NOW,
       today: slot.start < DAY
     }
   }
-  // お客様の画面の札：締切 → 満席・待ち（待ちが1組以上 または 残り0）→ 残りわずか（1〜2）→ 残り◯席
+  // お客様の画面の札：締切 → 順番待ち受付中（待ちが1組以上で、まだ申込で埋まっていない席がある）
+  // → 満席・待ち（待ちが1組以上 または 残り0）→ 残りわずか（1〜2）→ 残り◯席
+  // 順番待ち受付中も満席と同じく、新しい申込は待ちの最後に入る（待っている方より先に席を取らない）
   function custState (c) {
     if (c.closed) return 'closed'
+    if (c.waits.length > 0 && c.free > 0) return 'queue'
     if (c.waits.length > 0 || c.rest === 0) return 'wait'
+    // 待ちはいないが、残り席が最少人数に足りない回も順番待ち（新しい申込は待ちへ）
+    if (c.rest < c.min) return 'queue'
     if (c.rest <= 2) return 'few'
     return 'free'
   }
@@ -95,7 +102,7 @@
   function maxNinzu (c) {
     var s = custState(c)
     if (s === 'closed') return 0
-    if (s === 'wait') return 4
+    if (s === 'wait' || s === 'queue') return 4
     return Math.min(4, c.rest)
   }
   // 管理画面の札
@@ -337,12 +344,14 @@
   }
   function waitRow (c, e, i) {
     var isCand = c.cand.indexOf(e) >= 0
+    // ［繰り上げる］は先頭の候補だけ（確定も待ちの順に行う）
+    var isHead = c.cand.length > 0 && c.cand[0] === e
     var li = el('li', 'row row--wait' + (isCand ? ' row--cand' : ''))
     li.dataset.no = e.no
     var info = rowInfo(e, '待ち' + (i + 1) + '番')
     info.append(' ', isCand ? chip('cand', 'i-up', '繰り上げ候補') : chip('wait', null, '待ち'))
     var bs = el('div', 'row__btns')
-    if (isCand) {
+    if (isHead) {
       var bp = btn('btn-main', '繰り上げる', 'promote', { no: e.no })
       bp.setAttribute('aria-label', e.no + '（' + e.size + '人）を申込に繰り上げる')
       bs.appendChild(bp)
@@ -387,7 +396,7 @@
 
     // 繰り上げの説明（候補がいる時／空きと待ちがあって候補がいない時）
     if (c.cand.length) {
-      box.appendChild(el('p', 'promo promo--go', '空いた ' + c.free + '席に、待ちの先頭から ' + c.cand.length + '組（' + c.held + '人）が入れます。［繰り上げる］で申込に移ります（実際のお仕事では、ここでお客様にご連絡します）。'))
+      box.appendChild(el('p', 'promo promo--go', '空いた ' + c.free + '席に、待ちの先頭から ' + c.cand.length + '組（' + c.held + '人）が入れます。［繰り上げる］で先頭の方から順に申込に移ります（実際のお仕事では、ここでお客様にご連絡します）。'))
     } else if (c.free > 0 && c.waits.length) {
       box.appendChild(el('p', 'promo', '空き ' + c.free + '席。待ちの先頭 ' + c.waits[0].no + ' は ' + c.waits[0].size + '人のため、まだ入れません。順番を守るため、後ろの方を先に繰り上げません。'))
     }
@@ -402,7 +411,7 @@
     if (c.today) {
       var num = el('p', 'recv__num')
       num.append('来た ', el('strong', null, c.came + '人'), '／申込 ', el('strong', null, c.booked + '人'))
-      recv.appendChild(num)
+      recv.append(num, el('p', 'recv__hint', '組の全員がそろったら［来ました］を押してください。'))
       var notYet = c.bookedList.filter(function (e) { return e.at === null })
       if (!c.bookedList.length) {
         recv.appendChild(el('p', 'recv__all', '申込はありません。'))
@@ -461,9 +470,15 @@
   function custChip (c) {
     var s = custState(c)
     if (s === 'closed') return chip('closed', 'i-lock', '申込は締め切りました')
+    if (s === 'queue') return chip('queue', 'i-few', '順番待ち受付中')
     if (s === 'wait') return chip('full', 'i-full', '満席・キャンセル待ちできます')
     if (s === 'few') return chip('few', 'i-few', '残りわずか 残り' + c.rest + '席')
     return chip('free', 'i-free', '残り' + c.rest + '席')
+  }
+  // 順番待ち受付中の添え（待ちがいる時／最少人数に席が足りない時）
+  function queueText (c) {
+    if (c.waits.length) return '空いた席は待ちの順にご案内します。いま ' + c.waits.length + '組がお待ちです'
+    return c.min + '人から申し込めます。いまは残り' + c.rest + '席のため順番待ちでの受付です'
   }
   function renderCustCards () {
     var ul = $('slots-cust')
@@ -476,7 +491,10 @@
       li.dataset.slot = s.id
       var chips = el('div', 'slot__chips')
       chips.appendChild(custChip(c))
-      li.append(el('p', 'slot__date', rangeText(s)), el('h3', 'slot__name', kindOf(s).name), el('p', 'slot__meta', priceLine(s)), chips)
+      li.append(el('p', 'slot__date', rangeText(s)), el('h3', 'slot__name', kindOf(s).name), el('p', 'slot__meta', priceLine(s)))
+      if (kindOf(s).cond) li.appendChild(el('p', 'slot__cond', kindOf(s).cond))
+      li.appendChild(chips)
+      if (st === 'queue') li.appendChild(el('p', 'slot__add', queueText(c)))
       if (st === 'wait' && c.waits.length) li.appendChild(el('p', 'slot__add', 'いま ' + c.waits.length + '組がお待ちです'))
       if (st === 'closed') li.appendChild(el('p', 'slot__add', '申込は開始の30分前までです。'))
       var b
@@ -510,35 +528,58 @@
     return p
   }
 
+  // 完了の箱。番号から いまの状態（申込・待ち順・繰り上げ候補・キャンセル）を引き直して出す
+  function doneBox (d) {
+    var f = findEntry(d.no)
+    var slot = f.slot
+    var e = f.entry
+    var k = kindOf(slot)
+    var c = calcOf(slot)
+    var now = e.status
+    var w = el('div', 'done')
+    w.id = 'done'
+    var title
+    if (now === 'cancel') title = 'この' + (d.mode === 'wait' ? 'キャンセル待ち' : '申込') + 'はキャンセルになりました（デモ）'
+    else if (now === 'booked' && d.mode === 'wait') title = '繰り上げで申込になりました（デモ）'
+    else if (now === 'booked') title = '申し込みました（デモ）'
+    else title = 'キャンセル待ちに登録しました（デモ）'
+    var h = el('h3', 'done__title', title)
+    h.id = 'done-h'
+    h.tabIndex = -1
+    // 繰り上げで申込になった後は「申込番号」と出す
+    w.append(h, el('p', 'done__nolab', d.mode === 'wait' && now !== 'booked' ? '番号' : '申込番号'), el('p', 'done__no', d.no))
+    if (now === 'wait') {
+      var pos = c.waits.indexOf(e) + 1
+      w.appendChild(el('p', 'done__pos', 'いま 待ち' + pos + '番目 です'))
+      if (pos !== d.pos) w.appendChild(el('p', 'done__was', '（登録時は 待ち' + d.pos + '番目）'))
+    }
+    var what = el('p', 'done__what')
+    what.append(el('span', 'nw', rangeText(slot)), ' ', el('span', 'ib', k.name + '・' + e.size + '人'))
+    w.appendChild(what)
+    if (now === 'cancel') {
+      w.appendChild(el('p', 'done__info', 'お店の管理画面でキャンセルにしました。もう一度申し込む時は［続けて申し込む］から選んでください。'))
+    } else if (now === 'wait') {
+      var isCand = c.cand.indexOf(e) >= 0
+      w.appendChild(el('p', 'done__info', isCand
+        ? '席が空き、繰り上げ候補になりました。お店からのご連絡をお待ちください（デモでは連絡しません）。'
+        : '席が空いて順番が来たら、お店からご連絡します（デモでは連絡しません）。'))
+    } else {
+      w.appendChild(line('done__line', '合計', fmtYen(k.price * e.size) + '（税込・当日お店でお支払い）'))
+      w.appendChild(line('done__line', '集合', fmtTime(slot.start - 10) + '（開始の10分前）'))
+      w.appendChild(line('done__line', '持ち物', k.bring))
+      w.appendChild(el('p', 'done__info', COMMON_NOTE + (k.extra ? k.extra : '')))
+    }
+    w.appendChild(el('p', 'done__note', 'このデモでは、どこにも送られず保存もされません。'))
+    w.appendChild(btn('btn-sub btn-again', '続けて申し込む', 'again'))
+    return w
+  }
+
   function renderEntry () {
     var box = $('entry')
     box.replaceChildren()
     var d = state.done
     if (d) {
-      var slot = slotOf(d.slot)
-      var k = kindOf(slot)
-      var w = el('div', 'done')
-      w.id = 'done'
-      var h = el('h3', 'done__title', d.mode === 'wait' ? 'キャンセル待ちに登録しました（デモ）' : '申し込みました（デモ）')
-      h.id = 'done-h'
-      h.tabIndex = -1
-      w.append(h, el('p', 'done__nolab', d.mode === 'wait' ? '番号' : '申込番号'), el('p', 'done__no', d.no))
-      if (d.mode === 'wait') w.appendChild(el('p', 'done__pos', 'いま 待ち' + d.pos + '番目 です'))
-      var what = el('p', 'done__what')
-      what.append(el('span', 'nw', rangeText(slot)), ' ', el('span', 'ib', k.name + '・' + d.size + '人'))
-      w.appendChild(what)
-      if (d.mode === 'wait') {
-        w.appendChild(el('p', 'done__info', '席が空いて順番が来たら、お店からご連絡します（デモでは連絡しません）。'))
-      } else {
-        w.appendChild(line('done__line', '合計', fmtYen(k.price * d.size) + '（税込・当日お店でお支払い）'))
-        w.appendChild(line('done__line', '集合', fmtTime(slot.start - 10) + '（開始の10分前）'))
-        w.appendChild(line('done__line', '持ち物', k.bring))
-        w.appendChild(el('p', 'done__info', COMMON_NOTE + (k.extra ? k.extra : '')))
-      }
-      w.appendChild(el('p', 'done__note', 'このデモでは、どこにも送られず保存もされません。'))
-      var again = btn('btn-sub btn-again', '続けて申し込む', 'again')
-      w.appendChild(again)
-      box.appendChild(w)
+      box.appendChild(doneBox(d))
       return
     }
     var h3 = el('h3', 'entry__title', '申込の内容')
@@ -560,27 +601,31 @@
     var sel = el('p', 'entry__slot')
     sel.append(el('span', 'entry__lab', '選んだ回：'), el('span', 'ib', startText(s)), ' ', el('span', 'ib', kindOf(s).name))
     inner.appendChild(sel)
+    // 参加の条件は人数を選ぶ前に出す
+    if (kindOf(s).cond) inner.appendChild(el('p', 'entry__cond', kindOf(s).cond))
 
     var fs = el('fieldset', 'ninzu')
     fs.appendChild(el('legend', 'ninzu__legend', '人数'))
     var opts = el('div', 'ninzu__opts')
     for (var n = 1; n <= 4; n++) {
-      var lab = el('label', 'ninzu__opt' + (n === state.ninzu ? ' is-on' : '') + (n > max ? ' is-off' : ''))
+      var off = n > max || n < c.min
+      var lab = el('label', 'ninzu__opt' + (n === state.ninzu ? ' is-on' : '') + (off ? ' is-off' : ''))
       var r = el('input')
       r.type = 'radio'
       r.name = 'ninzu'
       r.value = String(n)
       r.className = 'ninzu__radio'
       r.checked = n === state.ninzu
-      r.disabled = n > max
+      r.disabled = off
       lab.appendChild(r)
       if (n === state.ninzu) lab.appendChild(icon('i-tick', 16))
       lab.appendChild(el('span', null, n + '人'))
       opts.appendChild(lab)
     }
     fs.appendChild(opts)
-    if (max < 4) {
-      var note = el('p', 'ninzu__note', '残り' + c.rest + '席のため、' + (max + 1) + '人以上は選べません。')
+    var minNote = c.min > 1 ? kindOf(s).minNote : ''
+    if (max < 4 || minNote) {
+      var note = el('p', 'ninzu__note', minNote + (max < 4 ? '残り' + c.rest + '席のため、' + (max + 1) + '人以上は選べません。' : ''))
       note.id = 'ninzu-note'
       fs.setAttribute('aria-describedby', 'ninzu-note')
       fs.appendChild(note)
@@ -588,7 +633,12 @@
     inner.appendChild(fs)
     inner.append(mockField('お名前'), mockField('ご連絡先（電話またはメール）'))
     var go
-    if (st === 'wait') {
+    if (st === 'queue') {
+      inner.appendChild(el('p', 'entry__wait', c.waits.length
+        ? 'この回は順番待ち受付中です（空いた席は待ちの順にご案内）。キャンセル待ちに登録すると、順番が来た時にお店からご連絡します（デモでは連絡しません）。'
+        : 'この回は' + c.min + '人から申し込めます。いまは残り' + c.rest + '席のため順番待ちでの受付です。キャンセル待ちに登録すると、席が空いて順番が来た時にお店からご連絡します（デモでは連絡しません）。'))
+      go = btn('btn-go', 'キャンセル待ちに登録（デモ）', 'apply')
+    } else if (st === 'wait') {
       inner.appendChild(el('p', 'entry__wait', 'この回は満席です。キャンセル待ちに登録すると、席が空いて順番が来た時にお店からご連絡します（デモでは連絡しません）。'))
       go = btn('btn-go', 'キャンセル待ちに登録（デモ）', 'apply')
     } else {
@@ -611,9 +661,10 @@
   function render () {
     // 選んでいた人数が選べなくなったら、選べる一番大きい人数にする
     if (state.pick && !state.done) {
-      var max = maxNinzu(calcOf(slotOf(state.pick)))
+      var pc = calcOf(slotOf(state.pick))
+      var max = maxNinzu(pc)
       if (state.ninzu > max) state.ninzu = max
-      if (state.ninzu < 1) state.ninzu = 1
+      if (state.ninzu < pc.min) state.ninzu = pc.min
     }
     renderAllNums()
     renderTable()
@@ -668,7 +719,8 @@
   }
   function onPromote (no) {
     var f = findEntry(no)
-    if (!f || calcOf(f.slot).cand.indexOf(f.entry) < 0) return
+    var cd = f ? calcOf(f.slot).cand : []
+    if (!f || !cd.length || cd[0] !== f.entry) return
     f.entry.status = 'booked'
     render()
     var after = calcOf(f.slot)
@@ -680,13 +732,14 @@
     var s = slotOf(id)
     var c = calcOf(s)
     if (custState(c) === 'closed') return
-    // 選択中の回をもう一度押した時は人数を残す（別の回なら 1人 から）
-    if (state.pick !== id) state.ninzu = 1
+    // 選択中の回をもう一度押した時は人数を残す（別の回なら最少人数から。ふつうは 1人、親子体験は 2人）
+    if (state.pick !== id) state.ninzu = c.min
     state.pick = id
     state.done = null
     render()
     focusSel('#entry-h')
-    say(shortText(s) + ' の回を選びました。' + (custState(c) === 'wait' ? 'キャンセル待ちになります。' : '残り' + c.rest + '席です。'))
+    var cs = custState(c)
+    say(shortText(s) + ' の回を選びました。' + (cs === 'wait' || cs === 'queue' ? 'キャンセル待ちになります。' : '残り' + c.rest + '席です。'))
   }
   function onNinzu (n) {
     state.ninzu = n
@@ -699,13 +752,14 @@
     var c = calcOf(s)
     var st = custState(c)
     var size = state.ninzu
-    if (st === 'closed' || size < 1 || size > maxNinzu(c)) return
-    var mode = st === 'wait' ? 'wait' : 'booked'
+    if (st === 'closed' || size < c.min || size > maxNinzu(c)) return
+    var mode = st === 'wait' || st === 'queue' ? 'wait' : 'booked'
     var no = 'T-' + state.nextNo
     state.entries[s.id].push({ no: no, size: size, status: mode, at: null })
     state.nextNo += 1
     var pos = mode === 'wait' ? calcOf(s).waits.length : 0
-    state.done = { mode: mode, no: no, slot: s.id, size: size, pos: pos }
+    // 控えは登録時の形と待ち順だけ。いまの状態は表示のたびに番号から引き直す
+    state.done = { mode: mode, no: no, pos: pos }
     render()
     focusSel('#done-h')
     if (mode === 'wait') say(no + ' でキャンセル待ちに登録しました。待ち' + pos + '番目です。')

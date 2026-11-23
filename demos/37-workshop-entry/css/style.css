@@ -136,6 +136,8 @@ p, li { text-wrap: pretty; }
 .chip--done { background: var(--c-done); border-color: var(--c-main); color: var(--c-main); }
 .chip--wait { background: #FFFFFF; border: 2px dashed var(--c-sub); color: var(--c-text); }
 .chip--cancel { background: #FFFFFF; border: 2px dashed var(--c-sub); color: var(--c-sub); }
+/* 順番待ち受付中：空いた席はあるが待ちの方が先。残りわずかと同じ黄土の面に、待ちと同じ点線の枠 */
+.chip--queue { background: var(--c-few); border: 2px dashed var(--c-text); color: var(--c-text); }
 
 /* ---------- ヘッダー ---------- */
 .hd { background: #FFFFFF; border-bottom: 1px solid var(--c-line); }
@@ -210,6 +212,7 @@ p.slot__name { color: var(--c-text); }
 .slot__nums dd { font-size: 16px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
 .slot__chips { margin-top: 12px; }
 .slot__add { margin-top: 8px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
+.slot__cond { margin-top: 4px; color: var(--c-text); font-size: var(--f-note); line-height: 1.6; }
 .slot__chips { align-self: flex-start; }
 /* 並んだカードのボタンの高さをそろえる（中身の行数が違っても下端に置く） */
 .slot__op { margin-top: auto; padding-top: 12px; }
@@ -262,6 +265,7 @@ p.slot__name { color: var(--c-text); }
 .recv { margin-top: 12px; padding: 16px; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 12px; }
 .recv__num { font-size: var(--f-body); line-height: 1.4; }
 .recv__num strong { font-size: var(--f-num); font-weight: 700; }
+.recv__hint { margin-top: 4px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
 .recv__lab { margin-top: 12px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
 .recv__list { display: flex; flex-wrap: wrap; gap: 0 4px; margin-top: 4px; }
 .recv__list li { font-weight: 700; letter-spacing: .04em; white-space: nowrap; }
@@ -322,6 +326,7 @@ p.slot__name { color: var(--c-text); }
 }
 .entry__total { margin-top: 20px; font-size: var(--f-body); font-weight: 700; line-height: 1.6; }
 .entry__pay { margin-top: 4px; color: var(--c-sub); font-size: var(--f-note); line-height: 1.6; }
+.entry__cond { margin-top: 12px; padding: 8px 12px; background: var(--c-base); border-left: 4px solid var(--c-text); font-size: var(--f-note); line-height: 1.6; }
 .entry__wait { margin-top: 20px; font-size: var(--f-body); line-height: 1.7; }
 .entry__box .btn-go { margin-top: 16px; }
 .done { padding: 24px; background: var(--c-surface); border: 2px solid var(--c-main); border-radius: 12px; line-height: 1.6; }
@@ -329,6 +334,7 @@ p.slot__name { color: var(--c-text); }
 .done__nolab { margin-top: 12px; color: var(--c-sub); font-size: var(--f-note); }
 .done__no { font-size: var(--f-done-no); font-weight: 700; line-height: 1.2; letter-spacing: .04em; }
 .done__pos { margin-top: 8px; font-weight: 700; }
+.done__was { color: var(--c-sub); font-size: var(--f-note); }
 .done__what { margin-top: 12px; font-weight: 700; }
 .done__line { display: grid; grid-template-columns: 4.5em minmax(0, 1fr); align-items: baseline; margin-top: 6px; }
 .done__lab { color: var(--c-sub); font-size: var(--f-note); font-weight: 700; }
