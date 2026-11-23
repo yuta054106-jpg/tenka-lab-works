@@ -14,8 +14,8 @@
   var C2_LESSONS = [1, 3] // 月2回コースが来る回
   var COURSE_NAME = { c4: '月4回', c2: '月2回' }
   var PAY_NAME = { cash: '現金', bank: '振込' }
-  var CSV_NAME = 'hanatsuge_2026-11_matome.csv'
-  var PRINT_TITLE = 'hanatsuge_2026-11_matome'
+  var CSV_NAME = 'hanatsuge_2026-11_matome_demo.csv' // 対象の月とデモ（架空）の印
+  var PRINT_TITLE = 'hanatsuge_2026-11_matome_demo'
   var SCHOOL = '子ども書道教室 ハナツゲ'
   var CLASSES = [
     { id: 'A', day: '火曜', time: '16:00', kumi: 'ひよこ組', w: '火' },
@@ -444,7 +444,7 @@
     announce(text)
   }
 
-  // ---------- 確認の窓（⑯と同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
+  // ---------- 確認の窓（ほかのデモと同じ。最初のフォーカスは「やめる」、Esc＝やめる） ----------
   var dlg = $('confirm')
   var hasDialog = typeof window.HTMLDialogElement === 'function' && typeof dlg.showModal === 'function'
   var dlgResolve = null; var dlgOpener = null
@@ -501,7 +501,7 @@
   var ui = { tab: 'att', cls: 'B', lesson: firstLesson('B'), month: BASE_MONTH, dueOnly: false, notice: null, pickNotice: null }
   function focusId (id) { var e = $(id); if (e) e.focus({ preventScroll: false }) }
 
-  // ---------- タブ（⑯と同じ動き） ----------
+  // ---------- タブ（ほかのデモと同じ動き） ----------
   var TABS = ['att', 'fee', 'sum']
   function openTab (name, opt) {
     ui.tab = name
@@ -1066,14 +1066,14 @@
     sv('text', Object.assign({ y: '45' }, ft), '本')
     return s
   }
-  var PRINT_COLS = [['生徒', 14], ['組', 20], ['クラス', 22], ['コース', 14], ['予定', 11, 1], ['出席', 11, 1], ['うち振替', 13, 1], ['欠席（振替あり）', 22, 1], ['欠席', 11, 1], ['まだの回', 15, 1], ['振替の残り', 17, 1], ['月謝', 20, 1], ['状態', 18], ['方法・入金日', 65]]
+  var PRINT_COLS = [['生徒', 14], ['組', 20], ['クラス', 22], ['コース', 14], ['予定', 11, 1], ['出席', 11, 1], ['うち振替', 16, 1], ['欠席（振替あり）', 28, 1], ['欠席', 11, 1], ['まだの回', 15, 1], ['振替の残り', 20, 1], ['月謝', 20, 1], ['状態', 18], ['方法・入金日', 53]]
   function buildSheet () {
     var ft = feeTotals(S, BASE_MONTH)
     var tot = { plan: 0, present: 0, mkIn: 0, m: 0, a: 0, rest: 0, remain: 0 }
     var head = el('div', 'sheet__head')
     var shop = el('p', 'sheet__shop', SCHOOL)
     shop.appendChild(stampSvg())
-    add(head, [shop, el('p', 'sheet__period', '2026年11月のまとめ（' + md(TODAY) + 'までの記録）')])
+    add(head, [shop, el('p', 'sheet__period', '2026年11月のまとめ（' + md(TODAY) + 'までの記録）・デモ（架空の教室）')])
     var cg = el('colgroup')
     PRINT_COLS.forEach(function (c) { var col = el('col'); col.style.width = c[1] + 'mm'; cg.appendChild(col) })
     var thead = add(el('thead'), add(el('tr'), PRINT_COLS.map(function (c) { var t = el('th', c[2] ? 'num' : null, c[0]); t.setAttribute('scope', 'col'); return t })))

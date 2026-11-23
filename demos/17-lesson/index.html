@@ -177,7 +177,8 @@
       <section class="panel" role="tabpanel" id="panel-sum" aria-labelledby="tab-sum" hidden>
         <div class="sum-head">
           <h2 class="panel__h" id="sum-h" tabindex="-1">2026年11月のまとめ</h2>
-          <p class="sub">11/19（木）までの記録です。11月の残りの回は「まだの回」に数えます。</p>
+          <p class="sub">まとめは 2026年11月の分で固定です（月謝のタブで選んだ月では変わりません）。11/19（木）までの記録です。</p>
+          <p class="sub">「まだの回」は、予定の回のうち出欠をまだ記録していない回です（11/20（金）以降の回と、記録を押していない回を含みます）。</p>
           <p class="panel-note">デモ（架空の教室）です。表の生徒・数・金額はすべて架空です。</p>
         </div>
         <section class="summary summary--4" aria-label="11月のまとめの数">
@@ -203,7 +204,7 @@
           </div>
         </section>
         <section class="card" id="sum-card" aria-labelledby="sum-list-h">
-          <div class="card__head"><h3 id="sum-list-h">生徒ごとのまとめ（18人）</h3></div>
+          <div class="card__head"><h3 id="sum-list-h">生徒ごとのまとめ<span class="nw">（2026年11月・18人）</span></h3></div>
           <div class="sum-scroll" id="sum-scroll">
             <table class="sum-table" id="sum-table">
               <caption class="visually-hidden">2026年11月の生徒ごとの出席・欠席・振替の残り・月謝の状態</caption>
@@ -231,7 +232,7 @@
         <div class="sum-out">
           <section class="card" id="csv-card" aria-labelledby="csv-h">
             <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-            <p class="out__desc">11月のまとめを、1行に1人で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+            <p class="out__desc">2026年11月のまとめを、1行に1人で出します。Excel 向けの CSV（UTF-8・BOM 付き）です。ファイル名に対象の月とデモ（架空の教室）の印を入れます。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
             <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
             <p class="sub sub--13 out__name" id="csv-name"></p>
             <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
@@ -250,7 +251,7 @@
           </section>
           <section class="card" id="print-card" aria-labelledby="print-h">
             <div class="card__head"><h3 id="print-h">印刷（A4 横）</h3></div>
-            <p class="out__desc">生徒ごとのまとめの表を A4 横の1枚で印刷します。ボタンや色の札は出ません。PDF にするには、印刷の画面で送信先を『PDF に保存』にします。</p>
+            <p class="out__desc">2026年11月の生徒ごとのまとめの表を、A4 横向けの印刷の形で出します。ページ数は印刷の設定で変わります。紙の上には対象の月とデモ（架空の教室）であることを入れ、ボタンや色の札は出ません。PDF にするには、印刷の画面で送信先を『PDF に保存』にします。</p>
             <button type="button" class="btn-sub out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>印刷・PDFで保存</button>
           </section>
         </div>
@@ -270,14 +271,14 @@
           <h3>欠席の連絡を、保護者の方から</h3>
           <ul class="dot-list">
             <li>保護者向けの欠席連絡のフォームや、LINE との連携を作れます</li>
-            <li>届いた連絡がそのまま「欠席（振替あり）」に入るようにします</li>
+            <li>届いた欠席連絡を一覧に出し、教室のルールに沿って振替の可否を先生が確定します</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bookcheck"/></svg>
           <h3>振込の確かめと、領収の控え</h3>
           <ul class="dot-list">
-            <li>振込の記録と月謝の照合を手伝う画面を作れます</li>
+            <li>入金の記録を使った、振込の照合の補助を作れます</li>
             <li>月謝袋の代わりに、入金の控え（領収の控え）を出せます</li>
           </ul>
         </div>
@@ -290,6 +291,7 @@
           </ul>
         </div>
       </div>
+      <p class="work-safe">保護者の方から受け取る項目・保存先・見られる人は、お見積もりの時に教室と一緒に決めます。</p>
       <p class="work-safe"><strong>費用は、つなぐ先と生徒の数によって変わるため、別にお見積もりします。</strong></p>
       <p class="card__link"><a class="text-link" href="../../">ほかの作品例を見る</a></p>
     </section>
