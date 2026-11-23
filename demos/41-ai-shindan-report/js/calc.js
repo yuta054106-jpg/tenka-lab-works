@@ -1,5 +1,6 @@
 // AI 活用の診断の見本（ミツカド舎・架空）の計算。画面に触らない純粋な関数だけ
-// すべて整数で計算する。月の時間は 0.1時間・額は 1円で四捨五入
+// すべて整数で計算する。月の分数＝月の回数×1回の分数、月の時間＝月の分数÷60（0.1時間で四捨五入）、月の額＝月の分数÷60×時給（1円で四捨五入）
+// 画面・CSV・印刷はどれもこの関数で出すので、端数の処理は同じになる
 var Calc41 = (function (D) {
   'use strict'
   var WAY_NAME = {}
@@ -112,6 +113,11 @@ var Calc41 = (function (D) {
     o.hours = fmtHours(o.min)
     return o
   }
+  // 1本目（私たちが作る分）の減る見込み
+  function firstSaving (wage) {
+    var p = D.PROPOSALS.filter(function (x) { return x.first })[0]
+    return proposalSaving(p, wage)
+  }
   function targetLabel (p) {
     return p.targets.map(function (x) { return x.task + ' ' + TASK_BY_NO[x.task].name }).join('・')
   }
@@ -173,7 +179,7 @@ var Calc41 = (function (D) {
     D: D, WAY_NAME: WAY_NAME, TASK_BY_NO: TASK_BY_NO, SORTS: SORTS, MAX_MIN: MAX_MIN,
     minutes: minutes, h10: h10, fmtHours: fmtHours, yen: yen, fmtYen: fmtYen, parseWage: parseWage,
     sortName: sortName, sortTasks: sortTasks, filterTasks: filterTasks, view: view, totals: totals, byWay: byWay, barWidth: barWidth,
-    proposalSaving: proposalSaving, proposalTotals: proposalTotals, targetLabel: targetLabel, reviewRows: reviewRows,
+    proposalSaving: proposalSaving, proposalTotals: proposalTotals, firstSaving: firstSaving, targetLabel: targetLabel, reviewRows: reviewRows,
     saySort: saySort, sayFilter: sayFilter, sayWage: sayWage, sayWageBad: sayWageBad, sayCheck: sayCheck,
     csvCell: csvCell, tasksCsv: tasksCsv, proposalsCsv: proposalsCsv
   })

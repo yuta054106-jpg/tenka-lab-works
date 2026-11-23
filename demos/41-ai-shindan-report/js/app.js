@@ -90,15 +90,19 @@
   }
   function drawCover () {
     var t = C.totals(D.TASKS, ui.wage)
-    var p = C.proposalTotals(ui.wage)
     var ai = C.filterTasks(D.TASKS, 'ai').length
     big('cv-n', '', String(t.n), '')
     big('cv-h', '', t.hours, '時間')
     $('cv-h-sub').textContent = t.n + '作業の合計（' + C.fmtYen(t.min) + '分）'
     big('cv-yen', '', C.fmtYen(t.yen), '円')
     $('cv-yen-sub').textContent = '時給 ' + C.fmtYen(ui.wage) + '円で計算（架空）'
-    big('cv-save', '月', p.hours, '時間')
-    $('cv-save-sub').textContent = C.fmtYen(p.yen) + '円ぶん（推測）'
+    var f = C.firstSaving(ui.wage)
+    big('cv-save', '月', f.hours, '時間')
+    var sub = $('cv-save-sub')
+    clear(sub)
+    sub.appendChild(document.createTextNode(C.fmtYen(f.yen) + '円ぶん'))
+    sub.appendChild(el('br'))
+    sub.appendChild(document.createTextNode('（時給で換算した参考額）'))
     return ai
   }
 
@@ -347,10 +351,11 @@
     clear(root)
     var tt = C.totals(D.TASKS, ui.wage)
     var pt = C.proposalTotals(ui.wage)
+    var pf = C.firstSaving(ui.wage)
     var p1 = el('div', { class: 'pr-page' })
     p1.appendChild(el('p', { class: 'pr-title', text: '焼き菓子とケーキ ミツカド舎（架空）AI 活用の診断　2026年11月13日' }))
     p1.appendChild(el('p', { text: 'AI の診断を自動で行う画面ではありません。聞き取りのあとにお渡しする書類の見本です。' }))
-    p1.appendChild(el('p', { class: 'pr-sum', text: '診断日 2026年11月13日／棚卸した作業 ' + tt.n + '／月の合計 ' + tt.hours + '時間／月の見込み額 ' + C.fmtYen(tt.yen) + '円（時給 ' + C.fmtYen(ui.wage) + '円）／提案3つで減る見込み 月' + pt.hours + '時間（' + C.fmtYen(pt.yen) + '円・推測）' }))
+    p1.appendChild(el('p', { class: 'pr-sum', text: '診断日 2026年11月13日／棚卸した作業 ' + tt.n + '／月の合計 ' + tt.hours + '時間／月の見込み額 ' + C.fmtYen(tt.yen) + '円（時給 ' + C.fmtYen(ui.wage) + '円）／1本目（私たちが作る分）で減る見込み 月' + pf.hours + '時間（' + C.fmtYen(pf.yen) + '円・推測・時給で換算した参考額）' }))
     p1.appendChild(prHead('1', '業務の棚卸表（15作業）'))
     var t1 = prTable('pr-tasks', ['番号', '作業', '理由', '誰が', '回数', '1回', '時間', '額'])
     D.TASKS.forEach(function (x) {
@@ -363,7 +368,7 @@
 
     var p2 = el('div', { class: 'pr-page pr-break' })
     p2.appendChild(prHead('2', '提案書（効く順に3つ）'))
-    p2.appendChild(el('p', { class: 'pr-sum', text: '3つ合わせて減る見込み：月' + pt.hours + '時間・' + C.fmtYen(pt.yen) + '円（推測）　時給 ' + C.fmtYen(ui.wage) + '円で計算' }))
+    p2.appendChild(el('p', { class: 'pr-sum', text: '3つすべてを行った場合の試算（推測）：月' + pt.hours + '時間・' + C.fmtYen(pt.yen) + '円　額は時給 ' + C.fmtYen(ui.wage) + '円で換算した参考額' }))
     D.PROPOSALS.forEach(function (x) {
       var s = C.proposalSaving(x, ui.wage)
       var b = el('div', { class: 'pr-prop' })
@@ -392,7 +397,7 @@
     root.appendChild(p3)
 
     var p4 = el('div', { class: 'pr-page pr-break' })
-    p4.appendChild(prHead('4', '1か月後のふりかえり（見本）　2026-12-18（架空）'))
+    p4.appendChild(prHead('4', '1か月後のふりかえり（見本）　使い始め 2026-11-18・ふりかえり 2026-12-18（架空）'))
     var t4 = prTable('pr-rv', ['項目', '見込み', '実際（架空）', '差', '判断'])
     C.reviewRows(ui.wage).forEach(function (r) {
       t4.b.appendChild(el('tr', null, [el('td', { text: r.item }), el('td', { text: r.plan }), el('td', { text: r.actual }), el('td', { text: r.diff }), el('td', { text: r.judge })]))
@@ -401,7 +406,7 @@
     p4.appendChild(el('p', { class: 'pr-sum', text: '提案1をどうするか：続ける／［直して続ける（選んだもの）］／やめる' }))
     p4.appendChild(el('p', { text: '減った時間は見込みより44分少なめでした。焼き数の表で、曜日と天気の補正を手で直す回数が多かったためです。補正の列を足して続けます。発注の数の計算は見込みどおりなので、そのまま続けます。' }))
     p4.appendChild(el('p', { text: '次にすること：焼き数の表に「補正」の列を足す（店長と30分）／提案2を始めるかを決める（使い方ルールの8項目が決まってから）／次のふりかえり（お店で）：2027-01-15' }))
-    p4.appendChild(el('p', { class: 'pr-foot', text: 'デモ（架空のお店）。時間・金額はすべて架空の見込みです。このページは AI を動かしていません。' }))
+    p4.appendChild(el('p', { class: 'pr-foot', text: 'デモ（架空のお店）。時間・金額はすべて架空の見込みです。このページは AI を動かしておらず、AI のサービスへの送信はありません。' }))
     root.appendChild(p4)
   }
 

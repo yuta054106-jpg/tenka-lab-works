@@ -59,10 +59,10 @@
       <div class="wrap">
         <h1 class="h1" id="h-top"><span class="nw">15の作業を、</span><span class="nw">月の時間とお金で</span><span class="nw">並べました。</span></h1>
         <p class="notice">AI の診断を自動で行う画面ではありません。聞き取りのあとにお渡しする書類の見本です。</p>
-        <p class="intro__lead">AI 活用の診断では、お店の作業を1つずつ聞き取り、「月に何時間・何円ぶんか」を並べてから、AI を使うかどうかも含めて効く順に選びます。お渡しするのは、業務の棚卸表・提案書・AI の使い方ルール・1か月後のふりかえり表の4つです。架空のお菓子屋さん「<span class="nw">焼き菓子とケーキ ミツカド舎</span>」を例に、その4つを1ページにまとめました。</p>
+        <p class="intro__lead">AI 活用の診断では、お店の作業を1つずつ聞き取り、「月に何時間・何円ぶんか」を並べてから、AI を使うかどうかも含めて効く順に選びます。お渡しするのは、業務の棚卸表・提案書・AI の使い方ルール・1か月後のふりかえり表の4つです。本番でお渡しするのは表計算ソフトの表と書類（記録）で、このページの時給の変更・並べ替え・絞り込み・CSV・印刷は、見本を見ていただくための機能です。架空のお菓子屋さん「<span class="nw">焼き菓子とケーキ ミツカド舎</span>」を例に、その4つを1ページにまとめました。</p>
         <p class="intro__note">デモ（架空のお店）。<span class="nw">焼き菓子とケーキ ミツカド舎</span>は架空のお店で、実在のお店とは関係ありません。</p>
         <p class="intro__note">時間・金額はすべて架空の見込みです。減る時間と額は推測で、約束するものではありません。</p>
-        <p class="intro__note">このページは AI を動かしておらず、どこにも通信しません。</p>
+        <p class="intro__note">このページは AI を動かしておらず、AI のサービスへの送信はありません。</p>
         <dl class="facts" aria-label="ミツカド舎の設定">
           <div><dt class="visually-hidden">お店の種類</dt><dd>焼き菓子とケーキの店</dd></div>
           <div><dt class="visually-hidden">店舗</dt><dd>2店舗（本店・駅前の小さな売り場）</dd></div>
@@ -82,7 +82,7 @@
             <div class="stat"><p class="stat__lab">棚卸した作業</p><p class="stat__num" id="cv-n"></p><p class="stat__sub">AI が向くのは 4つ</p></div>
             <div class="stat"><p class="stat__lab">月の合計</p><p class="stat__num" id="cv-h"></p><p class="stat__sub" id="cv-h-sub"></p></div>
             <div class="stat"><p class="stat__lab">月の見込み額</p><p class="stat__num" id="cv-yen"></p><p class="stat__sub" id="cv-yen-sub"></p></div>
-            <div class="stat"><p class="stat__lab">提案3つで減る見込み</p><p class="stat__num is-main" id="cv-save"></p><p class="stat__sub" id="cv-save-sub"></p></div>
+            <div class="stat"><p class="stat__lab">1本目（私たちが作る分）で減る見込み（推測）</p><p class="stat__num is-main" id="cv-save"></p><p class="stat__sub" id="cv-save-sub"></p></div>
           </div>
           <p class="cover__reset"><button type="button" class="btn-sub" id="reset-all">最初に戻す</button></p>
         </div>
@@ -112,7 +112,7 @@
             <p class="chapter__meta">聞き取り 2026-11-06（60分）・確認 2026-11-10（メッセージ）</p>
           </div>
           <div class="chapter__body">
-            <p class="lead">店主・店長・スタッフに聞き取った15の作業です。「月の時間」は 回数 × 1回の分、「月の額」は 月の時間 × 時給 で出しています。向いているやり方には、AI を使わない方がよいものもそのまま書いています。</p>
+            <p class="lead">店主・店長・スタッフに聞き取った15の作業です。月の分数＝月の回数×1回の分数、月の時間＝月の分数÷60、月の額＝月の分数÷60×時給 で出しています（時間は0.1時間、額は1円で四捨五入。CSV・印刷も同じ）。向いているやり方には、AI を使わない方がよいものもそのまま書いています。</p>
             <p class="strong-line">AI が向くのは 15のうち 4つです。いちばん時間がかかっているのは、AI ではなく表で片づく作業（5つで月27.8時間）でした。</p>
 
             <div class="wage">
@@ -157,8 +157,8 @@
           <div class="chapter__body">
             <p class="lead">棚卸表から、減る見込みが大きく、お店の月額の費用が小さく、間違えても戻しやすいものを3つ選びました。1つ目を、診断に含まれる「自動化1本」として私たちが作ります。2つ目と3つ目は、お店で進めるか、別にご相談ください。</p>
             <div class="sum-box">
-              <p class="sum-box__line">3つ合わせて減る見込み：<span class="sum-box__num" id="pr-sum"></span><span class="nw">（推測）</span></p>
-              <p class="note note--tight">見込みは聞き取りからの推測です。1か月後のふりかえり（4）で実際と比べます。</p>
+              <p class="sum-box__line">3つすべてを行った場合の試算<span class="nw">（推測）</span>：<span class="sum-box__num" id="pr-sum"></span></p>
+              <p class="note note--tight">額は、減る見込みの時間を時給で換算した参考額です。3つの対象の作業は重ならないので、同じ時間を二重には数えていません。表紙の「減る見込み」は1本目の分だけです。見込みは聞き取りからの推測で、1か月後のふりかえり（4）で実際と比べます。</p>
             </div>
             <div class="proposals" id="pr-list"></div>
             <p class="note">提案2を実際に1本作った見本（作品例44・架空のお店）：<a class="inline-link" href="../42-reply-draft-kit/">お取り寄せの返信の下書きキットを見る</a></p>
@@ -204,7 +204,7 @@
             <p class="chapter__meta">2026-12-18（架空）</p>
           </div>
           <div class="chapter__body">
-            <p class="lead">提案1を使い始めて1か月後に、見込みと実際を比べる表の見本です。実際の数は架空です。見込みより少なかった所も、そのまま書きます。</p>
+            <p class="lead">提案1を使い始めた日（2026-11-18・架空）から1か月後に、見込みと実際を比べる表の見本です。実際の数は架空です。見込みより少なかった所も、そのまま書きます。</p>
             <div class="only-table" id="rv-table"></div>
             <div class="only-cards" id="rv-cards"></div>
             <h3 class="h3 h3--gap">提案1をどうするか</h3>
