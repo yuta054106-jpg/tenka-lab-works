@@ -16,7 +16,7 @@
   <script src="js/app.js" defer></script>
 </head>
 <body>
-  <!-- アイコン（design.md §18-2。線 2px、currentColor）。JS は createElementNS の use で使う -->
+  <!-- アイコン（線 2px、currentColor）。JS は createElementNS の use で使う -->
   <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
     <defs>
       <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.8l4.8 4.8L19.5 7.2" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -82,7 +82,7 @@
       </ul>
     </section>
 
-    <!-- 目標の原価率の帯（§6） -->
+    <!-- 目標の原価率の帯 -->
     <section class="target-bar" aria-label="目標の原価率">
       <div class="target-bar__row">
         <label class="field__label target-bar__label" for="in-target">目標の原価率（%）</label>
@@ -110,7 +110,7 @@
         <button type="button" role="tab" class="tabs__tab" id="tab-price" aria-controls="panel-price" aria-selected="false" tabindex="-1"><span class="nw">値付け<span class="pc-only">の目安</span></span></button>
       </div>
 
-      <!-- タブ1：原価一覧（§7） -->
+      <!-- タブ1：原価一覧 -->
       <section class="panel" role="tabpanel" id="panel-list" aria-labelledby="tab-list">
         <h2 class="panel__h" id="list-h" tabindex="-1">メニューの原価一覧</h2>
         <section class="summary" aria-label="原価一覧の数">
@@ -151,9 +151,10 @@
             <tbody id="cost-tbody"></tbody>
           </table>
         </div>
+        <p class="sub profit-note">※ 粗利＝税抜の売値−1皿の原価（表の食材だけ。少しの調味料は含まない）</p>
         <section class="card" id="csv-card" aria-labelledby="csv-h">
           <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-          <p class="out__desc">6品の原価一覧を、1行に1品で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+          <p class="out__desc">6品の原価一覧を、1行に1品で出します。Excel 向けの CSV（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
           <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
           <p class="sub sub--13 out__name" id="csv-name"></p>
           <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
@@ -172,7 +173,7 @@
         </section>
       </section>
 
-      <!-- タブ2：レシピ（§8） -->
+      <!-- タブ2：レシピ -->
       <section class="panel" role="tabpanel" id="panel-recipe" aria-labelledby="tab-recipe" hidden>
         <h2 class="panel__h" id="recipe-h" tabindex="-1">メニューの中身（レシピ）</h2>
         <div class="menu-pick">
@@ -205,10 +206,12 @@
             </tfoot>
           </table>
           <p class="sub recipe-note">※ 内訳は 0.01円まで出し、合計を円で四捨五入します</p>
+          <p class="sub recipe-note">※ 使う量は、皮むきなどの後に1皿に使う量です</p>
+          <p class="sub recipe-note">※ 粗利＝税抜の売値−1皿の原価（表の食材だけ。少しの調味料は含まない）</p>
         </section>
       </section>
 
-      <!-- タブ3：食材の値段（§9） -->
+      <!-- タブ3：食材の値段 -->
       <section class="panel" role="tabpanel" id="panel-ing" aria-labelledby="tab-ing" hidden>
         <div>
           <h2 class="panel__h" id="ing-h" tabindex="-1">食材の値段</h2>
@@ -230,7 +233,7 @@
         </table>
       </section>
 
-      <!-- タブ4：値付けの目安（§10） -->
+      <!-- タブ4：値付けの目安 -->
       <section class="panel" role="tabpanel" id="panel-price" aria-labelledby="tab-price" hidden>
         <div>
           <h2 class="panel__h" id="price-h" tabindex="-1">値付けの目安</h2>
@@ -260,6 +263,7 @@
             <tbody id="price-tbody"></tbody>
           </table>
         </div>
+        <p class="sub price-note">※ 目標との比較は、表示の原価率（小数第1位まで）で行います。目安の売値は四捨五入する前の原価率で出すため、表示がちょうど目標（例 30.0%）の時は、目標内でも目安がいまの売値より高くなることがあります。</p>
         <p class="sub">※ この表は保存しません。売値は変わりません。</p>
         <section class="card" id="print-card" aria-labelledby="print-h">
           <div class="card__head"><h3 id="print-h">印刷（A4 縦）</h3></div>
@@ -275,28 +279,29 @@
 
     <section class="card work-card" aria-labelledby="h-work">
       <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
-      <p>お店の食材・レシピ・売値に合わせて作ります。いま使っている Excel やスプレッドシートのまま、同じ仕組みを組み込むこともできます。</p>
+      <p>お店の食材・レシピ・売値に合わせて作ります。いま使っている Excel やスプレッドシートに、同じ計算を組み込むこともできます（いまのファイルの形式を確かめてからお見積もりします）。</p>
       <div class="work-boxes">
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
           <h3>いまの表計算で、同じ計算を</h3>
           <ul class="dot-list">
             <li>お店の Excel・スプレッドシートに、原価と原価率と値付けの目安の計算を作れます</li>
-            <li>GAS で、仕入れの値段を一括で更新できます</li>
+            <li>Google スプレッドシートなら、GAS で仕入れの値段を一括で更新できます</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg>
-          <h3>売れた数と掛けて、月の原価を</h3>
+          <h3>売れた数から、月の食材原価を</h3>
           <ul class="dot-list">
-            <li>レジの売上の数と掛けて、月の原価と原価率を出せます</li>
+            <li>メニューごとの売れた数から、月の食材原価を試算します。原価率は食材原価の合計÷税抜の売上の合計です</li>
+            <li>レジの売れた数を使う場合は、出せるデータと形式を確かめてお見積もりします</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-invoice"/></svg>
           <h3>請求書から値段を取り込む</h3>
           <ul class="dot-list">
-            <li>仕入れ先の請求書の CSV から、食材の値段を取り込めます</li>
+            <li>仕入れ先の請求書の CSV から、食材の値段を取り込めます（CSV が出せるかと形式を確かめてお見積もりします）</li>
           </ul>
         </div>
       </div>
@@ -316,7 +321,7 @@
     <p class="copy">© TENKA LAB</p>
   </footer>
 
-  <!-- 確認の窓（§13-5）。最初のフォーカスは「やめる」、Esc＝やめる -->
+  <!-- 確認の窓。最初のフォーカスは「やめる」、Esc＝やめる -->
   <dialog class="confirm" id="confirm" aria-labelledby="cf-title" aria-describedby="cf-body">
     <h2 class="confirm__title" id="cf-title">見本に戻しますか</h2>
     <p class="confirm__body" id="cf-body">食材の値段・使う量・目標の原価率を、見本の値に戻します。</p>
