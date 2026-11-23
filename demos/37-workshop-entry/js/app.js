@@ -236,6 +236,8 @@
     if (a === 'full') box.appendChild(chip('full', 'i-full', '満席'))
     else if (a === 'few') box.appendChild(chip('few', 'i-few', '残りわずか'))
     else box.appendChild(chip('free', 'i-free', '空きあり'))
+    // 残りが1組の最少人数に足りない回（親子体験の残り1席など）は、お客様の画面では順番待ち受付中になるため添える
+    if (c.rest > 0 && c.rest < c.min) box.appendChild(el('span', 'chips__min', c.min + '人から'))
     if (c.cand.length) box.appendChild(chip('cand', 'i-up', '繰り上げ候補 ' + c.cand.length + '組'))
     return box
   }
@@ -602,7 +604,12 @@
     sel.append(el('span', 'entry__lab', '選んだ回：'), el('span', 'ib', startText(s)), ' ', el('span', 'ib', kindOf(s).name))
     inner.appendChild(sel)
     // 参加の条件は人数を選ぶ前に出す
-    if (kindOf(s).cond) inner.appendChild(el('p', 'entry__cond', kindOf(s).cond))
+    var cond = null
+    if (kindOf(s).cond) {
+      cond = el('p', 'entry__cond', kindOf(s).cond)
+      cond.id = 'entry-cond'
+      inner.appendChild(cond)
+    }
 
     var fs = el('fieldset', 'ninzu')
     fs.appendChild(el('legend', 'ninzu__legend', '人数'))
@@ -623,13 +630,16 @@
       opts.appendChild(lab)
     }
     fs.appendChild(opts)
-    var minNote = c.min > 1 ? kindOf(s).minNote : ''
+    // 最少人数の注記は、条件の箱が出ている時は重ねて書かない（条件の箱を人数の説明として読ませる）
+    var minNote = c.min > 1 && !cond ? kindOf(s).minNote : ''
+    var desc = cond ? ['entry-cond'] : []
     if (max < 4 || minNote) {
       var note = el('p', 'ninzu__note', minNote + (max < 4 ? '残り' + c.rest + '席のため、' + (max + 1) + '人以上は選べません。' : ''))
       note.id = 'ninzu-note'
-      fs.setAttribute('aria-describedby', 'ninzu-note')
+      desc.push('ninzu-note')
       fs.appendChild(note)
     }
+    if (desc.length) fs.setAttribute('aria-describedby', desc.join(' '))
     inner.appendChild(fs)
     inner.append(mockField('お名前'), mockField('ご連絡先（電話またはメール）'))
     var go

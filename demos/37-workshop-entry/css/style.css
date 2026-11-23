@@ -138,6 +138,8 @@ p, li { text-wrap: pretty; }
 .chip--cancel { background: #FFFFFF; border: 2px dashed var(--c-sub); color: var(--c-sub); }
 /* 順番待ち受付中：空いた席はあるが待ちの方が先。残りわずかと同じ黄土の面に、待ちと同じ点線の枠 */
 .chip--queue { background: var(--c-few); border: 2px dashed var(--c-text); color: var(--c-text); }
+/* 管理の札の添え：残りが最少人数に足りない回の「◯人から」（札ではなく字だけ） */
+.chips__min { color: var(--c-text); font-size: var(--f-chip); font-weight: 700; line-height: 1; white-space: nowrap; }
 
 /* ---------- ヘッダー ---------- */
 .hd { background: #FFFFFF; border-bottom: 1px solid var(--c-line); }
