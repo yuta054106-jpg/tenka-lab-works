@@ -320,6 +320,7 @@ main > .tabs-area { margin-top: 16px; }
 .recipe-nums dd { font-size: 16px; font-weight: 700; }
 .recipe-note { margin-top: 8px; }
 .profit-note { margin-top: 8px; }
+.price-note { margin-top: 8px; }
 
 /* 入力のある表（レシピ・食材）。スマホは tbody 1つを1枚のカードにする（入力欄を2つ作らないため） */
 .recipe-table, .ing-table { display: block; }
