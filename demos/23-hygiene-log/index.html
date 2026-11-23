@@ -63,7 +63,7 @@
 
     <section class="intro" aria-labelledby="h-intro">
       <h1 id="h-intro" class="page-title">冷蔵庫の温度と衛生のチェックを、<br class="sp-only">スマホで毎日の記録に</h1>
-      <p class="intro__lead">開店前と閉店後の冷蔵庫・冷凍庫の温度と、毎日の衛生のチェックを、スマホで記録します。基準を外れるとその場で「基準外」と出て、とった対応を残せます。月の記録表には記録漏れの日に印が付き、そのまま A4 横1枚に印刷できます。</p>
+      <p class="intro__lead">開店前と閉店後の冷蔵庫・冷凍庫の温度と、毎日の衛生のチェックを、スマホで記録します。基準を外れるとその場で「基準外」と出て、とった対応を残せます。月の記録表には記録漏れの日に印が付き、そのまま <span class="nw">A4 横向け</span>に印刷できます。</p>
       <nav aria-label="手順">
         <ol class="steps" id="steps">
           <li class="step"><a href="#panel-today" data-step="today"><span class="step__num" aria-hidden="true">1</span><span class="step__label">今日の<wbr>温度と<wbr>チェックを<wbr>記録する</span></a></li>
@@ -74,9 +74,10 @@
       </nav>
       <ul class="intro__notes">
         <li>※ デモ（架空のお店）です。記録はすべて架空です。実在のお店の記録やお名前は入力しないでください。</li>
-        <li>※ これは記録の仕組みの見本です。衛生管理の基準そのもの（項目・温度）は、お店の衛生管理計画と保健所の指導に従ってください。</li>
+        <li>※ これは記録の仕組みの見本です。項目（一般的衛生管理7・重要管理3）・温度の基準・1日2回の測定は、この架空のお店の設定です。実際の項目と基準は、お店の衛生管理計画と保健所の指導に従ってください。</li>
+        <li>※ このデモは、1日分（開店前・閉店後の温度とチェック）をまとめて入れて「記録する」で確定する見本です。途中の保存はしません。</li>
         <li>※ このデモの「今日」は 2026年12月1日 に決めてあります（日付が変わっても同じ結果になるように）。見本は 2026年11月の記録です（定休日は月曜）。</li>
-        <li>※ 記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
+        <li>※ 記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。対応のひとことも、この端末に保存され、CSV と印刷に出ます。「見本に戻す」で元に戻せます。</li>
         <li id="note-nosave" hidden><span role="note">※ この端末では保存できないため、記録はこのページを開いている間だけ残ります（再読み込みすると見本に戻ります）。</span></li>
         <li id="note-broken" hidden><span role="note">※ 保存されていた記録が読めなかったため、見本の記録に戻しました。</span></li>
       </ul>
@@ -109,7 +110,7 @@
                   </div>
                   <p class="field__hint" id="l-date-hint">2026-12-01 の形</p>
                   <p class="field__note" id="l-date-late" hidden>今日より前の日は「後から記録」として残ります</p>
-                  <p class="field__note" id="l-date-mon" hidden>月曜は定休日です。臨時の営業として記録します</p>
+                  <p class="field__note" id="l-date-mon" hidden>月曜は定休日です。<span class="nw">臨時の営業</span>として記録します（営業日数と記録した日数に入ります）</p>
                   <p class="field__err" id="err-l-date" hidden></p>
                 </div>
                 <p class="sub-label" id="sample-l">見本を入れる</p>
@@ -280,7 +281,7 @@
         <div class="export-grid">
           <section class="card" id="csv-card" aria-labelledby="csv-h">
             <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-            <p class="out__desc">選んでいる月の記録表を、1行に1日で出します（定休日・記録漏れの日も1行）。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+            <p class="out__desc">選んでいる月の記録表を、1行に1日で出します（定休日・記録漏れの日も1行）。どの行も最後の列<span class="nw">「データ」</span>は<span class="nw">「デモ・架空」</span>です。文字コードは <span class="nw">UTF-8（BOM 付き）</span>です。Excel で文字化けする時は、取り込みの時に <span class="nw">UTF-8</span> を選んでください。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
             <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
             <p class="sub out__name" id="csv-name"></p>
             <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
@@ -298,8 +299,8 @@
             </details>
           </section>
           <section class="card" id="print-card" aria-labelledby="print-h">
-            <div class="card__head"><h3 id="print-h">月の記録表を印刷（A4 横1枚）</h3></div>
-            <p class="out__desc">保健所の確認や保管用に、選んでいる月の記録表と、否・基準外の対応を A4 横1枚にまとめます。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+            <div class="card__head"><h3 id="print-h">月の記録表を印刷（A4 横）</h3></div>
+            <p class="out__desc">保管用の月次記録表の見本として、選んでいる月の記録表と、否・基準外の対応を <span class="nw">A4 横向け</span>にまとめます。記録の量や印刷の設定で2枚以上になることがあります。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
             <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>月の記録表を印刷</button>
             <p class="sub sub--13 out__name">印刷の向きは「横」を選んでください。</p>
           </section>
@@ -326,14 +327,14 @@
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-bell"/></svg>
           <h3>記録漏れ・基準外を店長に</h3>
           <ul class="dot-list">
-            <li>閉店の時刻を過ぎても記録が無い日や、基準外が出た時に、店長に知らせる形にできます</li>
+            <li>閉店の時刻を過ぎても記録が無い日や、基準外が出た時に、店長に知らせる形にできます。知らせる時点（測った時か、1日分を確定した時か）と手段は、お見積もりの時に決めます</li>
           </ul>
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-printer"/></svg>
           <h3>月末にまとめて印刷・保管</h3>
           <ul class="dot-list">
-            <li>月が替わったら、その月の記録表を A4 で印刷できる形にまとめ、保管しやすくします</li>
+            <li>月が替わったら、前月分の記録表を A4 で印刷できる形にまとめ、保管しやすくします</li>
           </ul>
         </div>
       </div>

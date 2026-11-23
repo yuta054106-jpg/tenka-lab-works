@@ -389,3 +389,6 @@ h4 { font-size: 18px; font-weight: 700; line-height: 1.45; }
   .item, .card, .caution, .work-3 > li { break-inside: avoid; }
   .alg-card { position: static; }
 }
+
+/* ---------- 絞り込みの注意（結果の直近）・アドレスに残ることの案内 ---------- */
+.alg-note { margin-top: 12px; color: var(--c-sub); font-size: 14px; line-height: 1.7; }

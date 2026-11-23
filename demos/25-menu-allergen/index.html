@@ -141,7 +141,7 @@
           <li data-i18n="C2">同じ厨房・同じ調理器具で調理するため、表示にない原材料がごく少量混ざることがあります（実際のお店では、お店が調べて書きます）。</li>
           <li data-i18n="C3">表示しているのは、特定原材料の<span class="nw">9品目</span>（<span class="nw">えび</span>・<span class="nw">かに</span>・<span class="nw">くるみ</span>・<span class="nw">小麦</span>・<span class="nw">そば</span>・<span class="nw">卵</span>・<span class="nw">乳</span>・<span class="nw">落花生</span>・<span class="nw">カシューナッツ</span>）だけです。大豆・ごまなど、特定原材料に準ずる<span class="nw">20品目</span>は表示していません。</li>
           <li data-i18n="C4">トッピングやサイドを足すと、その原材料も加わります。</li>
-          <li class="caution__strong" data-i18n="C5">重いアレルギーのある方は、注文の前にお店の人へ直接お伝えください。</li>
+          <li class="caution__strong" data-i18n="C5">食物アレルギーのある方は、注文の前にお店の人へ直接お伝えください。</li>
         </ul>
       </div>
     </section>
@@ -169,8 +169,10 @@
                   <label class="alg-opt"><input type="checkbox" class="alg-opt__input visually-hidden" value="cashew"><span class="alg-opt__face"><svg class="alg-opt__box" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1" y="1" width="18" height="18" rx="5"/><path d="M5.5 10.2l3 3 6-6.2"/></svg><svg class="alg-icon" width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-cashew"/></svg><span class="alg-opt__text nw" data-i18n="P12">カシューナッツ</span></span></label>
                 </div>
               </fieldset>
-              <p class="alg-result" id="alg-result">原材料を選んでいません。全<span class="nw">20品</span>を表示しています。</p>
+              <p class="alg-result" id="alg-result"></p>
+              <p class="alg-note" data-i18n="P14">選んだ品目を使っているかの情報で並べ替えています。調理中に混ざることがあります。実際のお店では、食物アレルギーのある方は注文の前にお店の人へお伝えください。</p>
               <button type="button" class="btn-sub alg-clear" id="alg-clear"><svg width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-clear"/></svg><span class="nw" data-i18n="P13">選んだ原材料をすべて外す</span></button>
+              <p class="alg-note alg-note--url" data-i18n="P15">選んだ原材料はページのアドレスに残ります（共有すると相手にも伝わります）。</p>
             </div>
           </div>
         </section>
@@ -197,26 +199,26 @@
                   <div><dt data-i18n="M8c">ココナッツのスープ：</dt><dd data-i18n="M8cd"><span class="nw">カシューナッツ</span></dd></div>
                 </dl>
               </div>
-              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料を含みます（下にまとめています）。</p>
+              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料のいずれかを含みます（下にまとめています）。</p>
               <ul class="items" id="items-curry"></ul>
             </div>
 
             <div class="cat" id="cat-topping">
               <h3 class="cat__title" data-i18n="M2">トッピング</h3>
               <p class="cat__lead" data-i18n="M10">トッピングを足すと、その原材料も加わります。例：チキンと野菜の<span class="nw">スープカレー</span>（<span class="nw">小麦</span>）に<span class="nw">半熟卵</span>（<span class="nw">卵</span>）を足すと、<span class="nw">小麦</span>と<span class="nw">卵</span>を含みます。</p>
-              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料を含みます（下にまとめています）。</p>
+              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料のいずれかを含みます（下にまとめています）。</p>
               <ul class="items" id="items-topping"></ul>
             </div>
 
             <div class="cat" id="cat-side">
               <h3 class="cat__title" data-i18n="M3">サイド</h3>
-              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料を含みます（下にまとめています）。</p>
+              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料のいずれかを含みます（下にまとめています）。</p>
               <ul class="items" id="items-side"></ul>
             </div>
 
             <div class="cat" id="cat-drink">
               <h3 class="cat__title" data-i18n="M4">飲みもの</h3>
-              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料を含みます（下にまとめています）。</p>
+              <p class="cat__empty" data-i18n="M9" hidden>この分類の品は、すべて選んだ原材料のいずれかを含みます（下にまとめています）。</p>
               <ul class="items" id="items-drink"></ul>
             </div>
 
@@ -246,18 +248,18 @@
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-lang"/></svg>
             <h3 data-i18n="W3h">翻訳は人の目で</h3>
-            <ul data-i18n="W3l"><li>機械翻訳のままにせず、短く平易な英語にします</li><li>英語を母語とする方の確認は、お店とご相談のうえで手配します（費用は別）</li><li>中国語・韓国語なども追加できます</li></ul>
+            <ul data-i18n="W3l"><li>機械翻訳のままにせず、短く平易な英語にします</li><li>英語を母語とする方の確認を入れるかは、お見積もりの条件として決めます（費用は別）</li><li>中国語・韓国語などの言語の追加も、お見積もりの条件としてご相談します（費用は別）</li></ul>
           </li>
           <li>
             <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-qr"/></svg>
             <h3 data-i18n="W4h"><span class="nw">QR</span> の置き場所と更新</h3>
-            <ul data-i18n="W4l"><li><span class="nw">QR</span> はテーブル・レジ横・入口などに置けます</li><li>メニューや値段が変わった時の直し方（お店で直す・保守で直す）を、最初に決めます</li><li>費用の目安：ページ<span class="nw">1枚</span> <span class="nw">80,000円（税込）</span>から。原材料の絞り込み・言語の切り替えをつける場合は、内容によりお見積もり</li></ul>
+            <ul data-i18n="W4l"><li><span class="nw">QR</span> はテーブル・レジ横・入口などに置けます</li><li>メニューや値段が変わった時の直し方（お店で直せる範囲・保守で直す範囲）は、お見積もりの条件として最初に決めます</li><li>費用の目安：ページ<span class="nw">1枚</span> <span class="nw">80,000円（税込）</span>から。原材料の絞り込み・言語の切り替えをつける場合は、内容によりお見積もり</li></ul>
           </li>
         </ul>
         <div class="work-check">
           <h3 data-i18n="W5h">お店で確かめていただくこと</h3>
           <ul data-i18n="W5l"><li>原材料の表が、仕入れ先の資料（原材料の規格書など）と合っていること</li><li>同じ厨房・調理器具で混ざる可能性の書き方</li><li>メニューや仕入れ先を変えた時に、原材料の表も直すこと</li></ul>
-          <p class="work-check__note" data-i18n="W6">アレルギーの表示の内容は、お店が決めて責任を持ちます。<span class="nw">TENKA LAB</span> は表示の内容を判断しません。</p>
+          <p class="work-check__note" data-i18n="W6">原材料と注意書きは、お店が確かめて決め、責任を持ちます。<span class="nw">TENKA LAB</span> は、お店が確かめた内容を翻訳し、表示と絞り込みに反映します（内容が正しいかは判断しません）。</p>
         </div>
         <p class="lab-more"><a class="btn-text" href="../../" data-i18n="W7">ほかの作品例を見る</a></p>
       </div>

@@ -117,7 +117,7 @@
     var total = rec.regCash + rec.card + rec.qr
     return { amt: amt, counted: counted, actual: actual, diff: actual - rec.regCash, total: total, unit: unitPrice(total, rec.customers) }
   }
-  // 明日の釣り銭に残す目安（§6-4）：残す＝min(数えた, 目安)、取り出す＝数えた − 残す、足りない＝目安 − 残す
+  // 次の営業日の釣り銭に残す目安（§6-4）：残す＝min(数えた, 目安)、取り出す＝数えた − 残す、足りない＝目安 − 残す
   function floatPlan (counts) {
     var keep = counts.map(function (c, i) { return Math.min(c, FLOAT_PLAN[i]) })
     var out = counts.map(function (c, i) { return c - keep[i] })
@@ -313,16 +313,16 @@
   }
   var CSV_COLS = [
     ['日付', '2026-11-01 の形'], ['曜日', '日〜土'], ['売上合計', 'レジの記録（現金売上（レジ）＋カード＋QR）。円'], ['現金売上（レジ）', '円'], ['カード', '円'], ['QR', '円'], ['客数', '人'],
-    ['客単価', '売上合計÷客数（1円未満は四捨五入）。客数 0 の日は空'], ['数えた現金', '金種ごとの枚数×金額の合計'], ['釣り銭準備金', '30000'], ['現金売上（実際）', '数えた現金 − 釣り銭準備金'],
-    ['過不足', '現金売上（実際）− 現金売上（レジ）。少ない時はマイナス'], ['区分', '多い・少ない・ぴったり'], ['理由', 'ぴったりの日は空'], ['ひとこと', '60字まで。ぴったりの日は空'], ['締めた人', '早番・遅番・店長']
-  ].concat(DN.map(function (n) { return [n, '枚数 0〜9,999'] }))
+    ['客単価', '売上合計÷客数（1円未満は四捨五入）。客数 0 の日は空'], ['数えた現金', '金種ごとの枚数×金額の合計'], ['釣り銭準備金', '30000'], ['準備金を引いた現金', '数えた現金 − 釣り銭準備金'],
+    ['過不足', '準備金を引いた現金 − 現金売上（レジ）。少ない時はマイナス'], ['区分', '多い・少ない・ぴったり'], ['理由', 'ぴったりの日は空'], ['ひとこと', '60字まで。ぴったりの日は空'], ['締めた人', '早番・遅番・店長']
+  ].concat(DN.map(function (n) { return [n, '枚数 0〜9,999'] }), [['データ', 'どの行も「デモ・架空」（このデモの架空の数字）']])
   function buildCsv (st, ym) {
     var lines = [CSV_COLS.map(function (c) { return c[0] }).join(',')]
     monthRecs(st, ym).forEach(function (r) {
       var c = closeCalc(r)
       var k = diffKind(c.diff)
       lines.push([csvCell(r.date), csvCell(wdName(r.date)), c.total, r.regCash, r.card, r.qr, r.customers, csvCell(c.unit), c.counted, FLOAT, c.actual, c.diff,
-        csvCell(KIND_L[k]), csvCell(k === 'even' ? '' : REASON_L[r.reason]), csvCell(k === 'even' ? '' : r.note), csvCell(ROLE_L[r.role])].concat(r.counts).map(function (v) { return typeof v === 'number' ? String(v) : v }).join(','))
+        csvCell(KIND_L[k]), csvCell(k === 'even' ? '' : REASON_L[r.reason]), csvCell(k === 'even' ? '' : r.note), csvCell(ROLE_L[r.role])].concat(r.counts, [csvCell('デモ・架空')]).map(function (v) { return typeof v === 'number' ? String(v) : v }).join(','))
     })
     return '\uFEFF' + lines.join('\r\n') + '\r\n'
   }
@@ -393,9 +393,9 @@
 
   // 折れてはいけない語（§16）を .nw の span に包む（テキストノードを分けて createElement で入れる）
   function esc (s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') }
-  var NW_WORDS = [SHOP, '現金売上（レジの記録）', '現金売上（実際）', '釣り銭準備金', '数えた現金', 'QR（スマホ決済）', '売上合計', '客単価', '1日平均',
+  var NW_WORDS = [SHOP, '現金売上（レジの記録）', '準備金を引いた現金', '釣り銭準備金', '数えた現金', 'QR（スマホ決済）', '売上合計', '客単価', '1日平均',
     '締めの記録なし', 'いま締めた日', '定休日', 'ぴったり', '少ない', '多い', '数え間違い', '釣り銭の渡し間違い', 'レジの打ち間違い', 'その他', '早番', '遅番', '店長',
-    'デモ（架空のお店）', 'デモの日付', '見本に戻す', 'CSV をダウンロード', '日報を印刷', '締めの控えを印刷', 'デモ', '架空'].concat(DN)
+    'デモ（架空のお店）', 'デモの日付', '見本に戻す', 'CSV をダウンロード', '日報を印刷', '締めの控えを印刷', 'デモ', '架空', 'デモ・架空', '次の営業日'].concat(DN)
     .sort(function (a, b) { return b.length - a.length })
   var NW_RE = new RegExp([
     '\\d{4}年\\d{1,2}月(?:\\d{1,2}日(?:（[日月火水木金土]）)?)?', '\\d{4}-\\d{2}-\\d{2}', '\\d{2}-\\d{2}（[日月火水木金土]）',
@@ -686,7 +686,7 @@
     var rt = $('reg-total')
     if (f.total == null) setText(rt, ['売上合計 —', el('span', 'sub-note', '（レジの記録の誤りを直すと出ます）')])
     else setText(rt, [nw('売上合計'), ' ', nw(yen(f.total)), el('span', 'sub-note', '（レジの記録の合計）')])
-    // 明日の釣り銭に残す目安（§6-4）
+    // 次の営業日の釣り銭に残す目安（§6-4）
     var tb = $('float-tbody'); tb.textContent = ''
     DENOMS.forEach(function (d, i) {
       var th = el('th', null, DN[i]); th.setAttribute('scope', 'row')
@@ -718,7 +718,7 @@
   function lackText (plan, actual) {
     var parts = []
     plan.lack.forEach(function (l, i) { if (l > 0) parts.push(DN[i] + 'が ' + n3(l) + '枚') })
-    return parts.join('、') + '足りません。取り出すお札から ' + yen(plan.lackY) + '分を両替して残すと、明日の釣り銭が ' + yen(FLOAT) + ' になります。入金に回す額は ' + yen(actual) + ' です'
+    return parts.join('、') + '足りません。取り出すお札から ' + yen(plan.lackY) + '分を両替して残すと、次の営業日の釣り銭が ' + yen(FLOAT) + ' になります。入金に回す額は ' + yen(actual) + ' です'
   }
   // 打っている途中の読み上げ（止まって 600ms 後に1回。同じ文は続けて読まない）
   function scheduleLive () {
@@ -897,7 +897,7 @@
     var c = closeCalc(r); var k = diffKind(c.diff)
     return {
       date: [nw(jpDate(r.date)), '　締めた人 ', nw(ROLE_L[r.role])],
-      l1: [nw('数えた現金'), ' ', nw(yen(c.counted)), ' ／ ', nw('現金売上（実際）'), ' ', nw(yen(c.actual))],
+      l1: [nw('数えた現金'), ' ', nw(yen(c.counted)), ' ／ ', nw('準備金を引いた現金'), ' ', nw(yen(c.actual))],
       l2: ['レジの記録 ', nw(yen(r.regCash)), ' ／ 過不足 ', nw(fmtDiff(c.diff)), stateTag(k)],
       l3: [nw('売上合計'), ' ', nw(yen(c.total)), '・客数 ', nw(n3(r.customers) + '人'), '・', nw('客単価'), ' ', nw(c.unit === null ? '—' : yen(c.unit))],
       reason: k === 'even' ? null : ['理由 ', nw(REASON_L[r.reason])],
@@ -1087,7 +1087,7 @@
   function setDisabled (b, off) {
     if (off) { b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-describedby', 'export-none') } else { b.removeAttribute('aria-disabled'); b.removeAttribute('aria-describedby') }
   }
-  function csvName () { return 'hinatagi_nippou_' + ui.expYm + '.csv' }
+  function csvName () { return 'hinatagi_nippou_demo_' + ui.expYm + '.csv' }
   function renderExport () {
     var sel = $('export-month'); fillSelect(sel, MONTH_OPTS); sel.value = ui.expYm
     var rows = monthRecs(S, ui.expYm); var n = rows.length
@@ -1215,11 +1215,11 @@
       el('p', 'sheet__foot', FOOT_E)
     ]))
   }
-  var PRINT_SLIP_COLS = [['金種', 30], ['枚数', 26, 1], ['金額（円）', 42, 1], ['明日に残す（枚）', 44, 1], ['取り出す（枚）', 0, 1]]
+  var PRINT_SLIP_COLS = [['金種', 30], ['枚数', 26, 1], ['金額（円）', 42, 1], ['次の営業日に残す（枚）', 44, 1], ['取り出す（枚）', 0, 1]]
   function buildSlipSheet (r) {
     var c = closeCalc(r); var k = diffKind(c.diff); var p = floatPlan(r.counts)
     var rows = DENOMS.map(function (d, i) { return [DN[i], n3(r.counts[i]), n3(c.amt[i]), n3(p.keep[i]), n3(p.out[i])] })
-    var calc = [['数えた現金', yen(c.counted)], ['− 釣り銭準備金', yen(FLOAT)], ['＝ 現金売上（実際）', yen(c.actual)], ['現金売上（レジの記録）', yen(r.regCash)]]
+    var calc = [['数えた現金', yen(c.counted)], ['− 釣り銭準備金', yen(FLOAT)], ['＝ 準備金を引いた現金', yen(c.actual)], ['現金売上（レジの記録）', yen(r.regCash)]]
     var ct = add(el('table', 'calc-tbl'), [add(el('colgroup'), [el('col'), el('col')])])
     ct.firstChild.firstChild.style.width = '52mm'
     var tb = el('tbody')
@@ -1244,7 +1244,7 @@
       ct,
       el('p', 'sheet__big', '売上合計 ' + yen(c.total) + '（現金 ' + n3(r.regCash) + '・カード ' + n3(r.card) + '・QR ' + n3(r.qr) + '）'),
       el('p', 'sheet__line', '客数 ' + n3(r.customers) + '人・客単価 ' + (c.unit === null ? '—' : yen(c.unit))),
-      el('p', 'sheet__big', c.actual >= 0 ? '明日に残す ' + yen(p.keepY) + '・入金に回す ' + yen(c.actual) : '明日に残す 0円・入金に回す 0円'),
+      el('p', 'sheet__big', c.actual >= 0 ? '次の営業日に残す ' + yen(p.keepY) + '・入金に回す ' + yen(c.actual) : '次の営業日に残す 0円・入金に回す 0円'),
       notice,
       seal,
       el('p', 'sheet__foot', FOOT_E)

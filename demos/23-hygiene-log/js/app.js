@@ -167,6 +167,8 @@
     var recs = monthRecs(st, ym)
     var o = { ym: ym, days: days.length, rec: count('rec'), closed: count('closed'), miss: count('miss'), today: count('today'), ng: 0, out: 0, badDays: 0 }
     o.biz = o.rec + o.miss + o.today
+    // 臨時の営業（記録した月曜）の日数
+    o.extra = days.filter(function (d) { return d.kind === 'rec' && isMonday(d.date) }).length
     o.perItem = ITEMS.map(function () { return 0 })
     o.perFridge = [0, 0, 0]
     recs.forEach(function (r) {
@@ -355,16 +357,18 @@
     .concat(SLOTS.map(function (s) { return [s, '温度（℃、小数第1位）。マイナスは -'] }))
     .concat([['基準外の数', '温度の6つのうち基準外の数']])
     .concat(ITEMS.map(function (it) { return [it.name, it.auto ? '良・否（温度の6つから自動）' : '良・否'] }))
-    .concat([['否の数', '10項目のうち否の数（冷蔵冷凍の温度を含む）'], ['確認した人', '開店・中番・閉店・店長'], ['対応とひとこと', '基準外・否の1件ずつ（測る所か項目名・対応：ひとこと）を「 ／ 」でつなぐ']])
+    .concat([['否の数', '10項目のうち否の数（冷蔵冷凍の温度を含む）'], ['確認した人', '開店・中番・閉店・店長'], ['対応とひとこと', '基準外・否の1件ずつ（測る所か項目名・対応：ひとこと）を「 ／ 」でつなぐ'], ['データ', 'どの行も「デモ・架空」（このデモの記録はすべて架空）']])
+  // どの行の最後にも入れる架空の印（表計算に取り込んだり行を写したりしても分かるように）
+  var CSV_DEMO = 'デモ・架空'
   function buildCsv (st, ym) {
     var lines = [CSV_COLS.map(function (c) { return c[0] }).join(',')]
     var evs = events(st, ym)
     monthDays(st, ym).forEach(function (d) {
       var head = [csvCell(d.date), csvCell(wdName(d.date)), csvCell(KIND_CSV[d.kind])]
-      if (d.kind !== 'rec') { for (var i = 0; i < 21; i++) head.push('""'); lines.push(head.join(',')); return }
+      if (d.kind !== 'rec') { for (var i = 0; i < 21; i++) head.push('""'); head.push(csvCell(CSV_DEMO)); lines.push(head.join(',')); return }
       var r = d.rec; var dc = dayCalc(r)
       var ev = evs.filter(function (x) { return x.date === d.date }).map(eventText).join(' ／ ')
-      lines.push(head.concat([csvCell(r.late ? '後から' : '当日')], r.temps.map(csvTemp), [String(dc.outN)], itemVals(r, dc).map(function (v) { return csvCell(v === 'ng' ? '否' : '良') }), [String(dc.ngN), csvCell(labelOf(ROLES, r.role)), csvCell(ev)]).join(','))
+      lines.push(head.concat([csvCell(r.late ? '後から' : '当日')], r.temps.map(csvTemp), [String(dc.outN)], itemVals(r, dc).map(function (v) { return csvCell(v === 'ng' ? '否' : '良') }), [String(dc.ngN), csvCell(labelOf(ROLES, r.role)), csvCell(ev), csvCell(CSV_DEMO)]).join(','))
     })
     return '\uFEFF' + lines.join('\r\n') + '\r\n'
   }
@@ -621,8 +625,8 @@
     foot.firstChild.id = noteId + '-hint'; foot.lastChild.id = noteId + '-count'
     return add(fs, [el('legend', 'act-box__l', legendText), pick, errP('err-' + key), add(el('div', 'field act-note'), [lb, ta, foot, errP('err-' + noteId)])])
   }
-  var NOTE_HINT = '何があったか、どうしたか。お名前・連絡先は書かないでください'
-  var NOTE_HINT_HEALTH = '何をしたか。病名・症状・お名前は書かないでください'
+  var NOTE_HINT = '何があったか、どうしたか。氏名・連絡先・体調の詳しい内容は書かないでください。この端末に保存され、CSV に出ます'
+  var NOTE_HINT_HEALTH = '何をしたか。氏名・病名・症状は書かないでください。この端末に保存され、CSV に出ます'
   function buildTemps () {
     var box = $('temp-units')
     FRIDGES.forEach(function (f, k) {
@@ -1074,7 +1078,8 @@
     var sel = $('month-month'); fillSelect(sel); sel.value = ym
     var ms = monthStats(S, ym)
     $('ms-biz').textContent = String(ms.biz)
-    $('ms-biz-note').textContent = '定休日 ' + ms.closed + '日' + (ms.closed ? '（月曜）' : '')
+    // 記録した月曜は臨時の営業として営業日数・記録した日数に入り、記録しない月曜は定休日（記録漏れにしない）
+    setText($('ms-biz-note'), ['定休日 ' + ms.closed + '日' + (ms.closed ? '（月曜）' : '')].concat(ms.extra ? ['・', nw('臨時の営業 ' + ms.extra + '日')] : []))
     $('ms-rec').textContent = String(ms.rec)
     $('ms-rec-note').textContent = '記録漏れ ' + ms.miss + '日'
     $('ms-ng').textContent = String(ms.ng)
@@ -1202,7 +1207,7 @@
   function setDisabled (b, off) {
     if (off) { b.setAttribute('aria-disabled', 'true'); b.setAttribute('aria-describedby', 'export-empty') } else { b.removeAttribute('aria-disabled'); b.removeAttribute('aria-describedby') }
   }
-  function csvName () { return 'minasegi_eisei_' + ui.expYm + '.csv' }
+  function csvName () { return 'minasegi_eisei_demo_' + ui.expYm + '.csv' }
   function renderExport () {
     var sel = $('export-month'); fillSelect(sel); sel.value = ui.expYm
     var n = monthRecs(S, ui.expYm).length
