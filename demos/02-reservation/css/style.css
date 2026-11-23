@@ -93,7 +93,7 @@ button, input, textarea { font: inherit; color: inherit; }
 /* ヘッダー */
 .site-header { background: var(--c-surface); border-bottom: 2px dashed var(--c-stitch); }
 .site-header__inner { max-width: 1040px; margin: 0 auto; padding: 16px; }
-.brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 18px; font-weight: 700; line-height: 1.4; color: var(--c-main); }
+.brand { display: flex; align-items: center; gap: 8px; font-family: var(--font-head); font-size: 18px; font-weight: 700; line-height: 1.4; color: var(--c-main); letter-spacing: normal; }
 .brand__logo { flex: none; }
 .brand__demo {
   display: inline-flex; align-items: center; height: 20px; padding: 0 6px;

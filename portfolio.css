@@ -502,6 +502,8 @@ a { color: var(--c-main); }
   padding-top: var(--sp-3);
 }
 .nowrap { white-space: nowrap; }
+/* 幅 340px 未満の端末では、題の折り返し位置の指定より、はみ出さないことを優先する */
+@media (max-width: 339px) { .nowrap { white-space: normal; } }
 .btn {
   display: inline-flex;
   align-items: center;
@@ -592,6 +594,11 @@ a { color: var(--c-main); }
 @media (max-width: 400px) {
   .brand { font-size: 18px; letter-spacing: .08em; }
   .site-nav a { padding: 0 6px; }
+}
+/* 320px 前後：さらに詰めて1行に収める */
+@media (max-width: 339px) {
+  .brand { font-size: 17px; letter-spacing: .04em; }
+  .site-nav a { padding: 0 4px; font-size: 13px; }
 }
 
 /* ---------- 作品例の絞り込み ---------- */
