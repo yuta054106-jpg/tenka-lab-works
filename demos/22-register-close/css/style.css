@@ -104,6 +104,7 @@ main > .today-bar { margin-top: 24px; }
 
 /* ---------- h1・リード・手順 ---------- */
 .page-title { font-family: var(--font-head); font-size: 22px; font-weight: 700; line-height: 1.4; color: var(--c-main); text-wrap: balance; }
+.intro__sub { margin-top: 8px; font-size: 15px; font-weight: 700; line-height: 1.6; color: var(--c-text); }
 .intro__lead { margin-top: 12px; }
 .steps { display: grid; gap: 8px; margin-top: 24px; }
 .step a {
@@ -267,6 +268,7 @@ main > .today-bar { margin-top: 24px; }
 
 /* ---------- CSV・印刷 ---------- */
 .out__desc { font-size: 14px; line-height: 1.7; }
+.cr-premise { margin-top: 8px; }
 .out__btn { width: 100%; margin-top: 16px; }
 .out__name { margin-top: 8px; }
 .out__peek-h { margin-top: 24px; margin-bottom: 8px; font-size: 14px; font-weight: 700; }

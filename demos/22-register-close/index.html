@@ -60,7 +60,8 @@
     <p class="visually-hidden" role="status" aria-live="polite" id="sr-status"></p>
 
     <section class="intro" aria-labelledby="h-intro">
-      <h1 id="h-intro" class="page-title">閉店後のレジ締めを、<br class="sp-only">数えるだけで日報に</h1>
+      <h1 id="h-intro" class="page-title"><span class="nw">レジの記録と</span><span class="nw">現金の枚数を</span><span class="nw">入れて日報に</span></h1>
+      <p class="intro__sub">「締める」を押すと日報に1行残ります</p>
       <p class="intro__lead">お札と硬貨の枚数を入れると、金種ごとの金額と合計、レジの記録との過不足が、その場で出ます。締めると日報に1行ずつたまり、月の合計・曜日ごとの平均・過不足の回数と理由がひと目で分かります。</p>
       <nav aria-label="手順">
         <ol class="steps" id="steps">
@@ -74,7 +75,7 @@
         <li>※ デモ（架空のお店）です。数字はすべて架空です。実在のお店の売上やお名前は入力しないでください。</li>
         <li>※ このデモの「今日」は 2026年12月1日 に決めてあります（日付が変わっても同じ結果になるように）。見本は 2026年11月の26日分（定休日は水曜）です。</li>
         <li>※ 締めの記録はお使いのブラウザの中にだけ保存します（この端末・このブラウザだけ）。どこにも送信しません。「見本に戻す」で元に戻せます。</li>
-        <li>※ 金額はすべて税込の円で、1円単位の整数です。会計や税の判断はしません。</li>
+        <li>※ 売上は税込、金額は1円単位の整数です。会計や税の判断はしません。</li>
         <li id="note-nosave" hidden><span role="note">※ この端末では保存できないため、締めの記録はこのページを開いている間だけ残ります（再読み込みすると見本に戻ります）。</span></li>
         <li id="note-broken" hidden><span role="note">※ 保存されていた記録が読めなかったため、見本の記録に戻しました。</span></li>
       </ul>
@@ -158,7 +159,7 @@
                   <dl class="cr-rows">
                     <div class="cr-row"><dt class="nw">数えた現金</dt><dd class="nw" id="cr-counted"></dd></div>
                     <div class="cr-row"><dt class="nw">− 釣り銭準備金</dt><dd class="nw" id="cr-float"></dd></div>
-                    <div class="cr-row"><dt class="nw">＝ 現金売上（実際）</dt><dd class="nw" id="cr-actual"></dd></div>
+                    <div class="cr-row"><dt class="nw">＝ 準備金を引いた現金</dt><dd class="nw" id="cr-actual"></dd></div>
                     <div class="cr-row"><dt class="nw">現金売上（レジの記録）</dt><dd class="nw" id="cr-reg"></dd></div>
                   </dl>
                   <p class="cr-diff-l">過不足</p>
@@ -166,6 +167,7 @@
                   <p class="cr-tag" id="cr-tag"></p>
                   <p class="cr-wait" id="cr-wait" hidden></p>
                 </div>
+                <p class="sub sub--13 cr-premise" id="cr-premise">※ 準備金と売上のほかに現金の出し入れ<span class="nw">（金庫へ移す・支払い）</span>がない日の計算です。出し入れがあるお店は、本番でその欄を足します。</p>
                 <p class="notice" id="under-float" hidden>数えた現金が釣り銭準備金（30,000円）より少なくなっています。枚数を確かめてください</p>
                 <div class="reason-area" id="reason-area" hidden>
                   <fieldset class="reason-set" id="c-reason-set" aria-describedby="err-reason">
@@ -202,10 +204,10 @@
             </div>
 
             <section class="card close-float" aria-labelledby="float-h">
-              <div class="card__head"><h3 id="float-h">明日の釣り銭に残す目安</h3></div>
+              <div class="card__head"><h3 id="float-h">次の営業日の釣り銭に残す目安</h3></div>
               <div class="float-box">
                 <table class="float-table">
-                  <caption class="visually-hidden">明日の釣り銭に残す目安（金種ごと）</caption>
+                  <caption class="visually-hidden">次の営業日の釣り銭に残す目安（金種ごと）</caption>
                   <thead><tr><th scope="col">金種</th><th scope="col" class="num">数えた</th><th scope="col" class="num">残す</th><th scope="col" class="num">取り出す</th></tr></thead>
                   <tbody id="float-tbody"></tbody>
                 </table>
@@ -339,7 +341,7 @@
         <div class="export-grid">
           <section class="card" id="csv-card" aria-labelledby="csv-h">
             <div class="card__head"><h3 id="csv-h">CSV で書き出す</h3></div>
-            <p class="out__desc">選んでいる月の日報を、1行に1日で出します。Excel で開いても文字化けしない形（UTF-8・BOM 付き）です。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
+            <p class="out__desc">選んでいる月の日報を、1行に1日で、<span class="nw">UTF-8（BOM 付き）</span>の CSV で出します。どの行にも「データ」の列に「デモ・架空」と入ります。ファイルはこの端末の中で作るだけで、どこにも送信しません。</p>
             <button type="button" class="btn-main out__btn" id="btn-csv"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-csv"/></svg>CSV をダウンロード</button>
             <p class="sub out__name" id="csv-name"></p>
             <p class="out__peek-h" id="csv-peek-h">CSV の中身（先頭4行）</p>
@@ -358,12 +360,12 @@
           </section>
           <div class="print-col">
             <section class="card" id="print-card" aria-labelledby="print-h">
-              <div class="card__head"><h3 id="print-h">日報を印刷（A4 縦1枚）</h3></div>
-              <p class="out__desc">選んでいる月の日報を、A4 縦1枚にまとめます。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
+              <div class="card__head"><h3 id="print-h">日報を印刷（A4 縦1枚向け）</h3></div>
+              <p class="out__desc">選んでいる月の日報を、A4 縦1枚向けの印刷にまとめます。PDF にするには、印刷の画面で送信先を「PDF に保存」にします。</p>
               <button type="button" class="btn-main out__btn" id="btn-print"><svg width="20" height="20" aria-hidden="true" focusable="false"><use href="#i-print"/></svg>日報を印刷</button>
             </section>
             <section class="card" id="slip-card" aria-labelledby="slip-card-h">
-              <div class="card__head"><h3 id="slip-card-h">締めの控えを印刷（A4 縦1枚）</h3></div>
+              <div class="card__head"><h3 id="slip-card-h">締めの控えを印刷（A4 縦1枚向け）</h3></div>
               <div class="field">
                 <label class="field__label" for="slip-date">締めた日</label>
                 <select id="slip-date" class="input select"></select>
@@ -381,7 +383,7 @@
 
     <section class="card work-card" aria-labelledby="h-work">
       <div class="card__head"><h2 id="h-work">実際のお仕事では</h2></div>
-      <p>いまお使いの締めの紙やレジの日報を見せていただき、項目と並びを合わせて作ります。金種・釣り銭準備金・締める人の分け方も、お店のやり方に合わせます。</p>
+      <p>いまお使いの締めの紙やレジの日報を見せていただき、項目と並びを合わせて作ります（個人情報を伏せた見本で構いません）。金種・釣り銭準備金・締める人の分け方も、お店のやり方に合わせます。</p>
       <div class="work-boxes">
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-sheet"/></svg>
@@ -392,9 +394,9 @@
         </div>
         <div class="work-box">
           <svg width="32" height="32" aria-hidden="true" focusable="false"><use href="#i-paper"/></svg>
-          <h3>月末に税理士さん用の CSV を</h3>
+          <h3><span class="nw">月次締めの後に</span><span class="nw">税理士さん用の</span> <span class="nw">CSV を</span></h3>
           <ul class="dot-list">
-            <li>月が替わったら、税理士さんに渡す形の CSV を自動で作れます。列の名前・並びは税理士さんの指示に合わせます</li>
+            <li>月次締めの後に、税理士さんに渡す形の CSV を自動で作れます。作る日は、お見積もりの時に決めます。列の名前・並びは税理士さんの指示に合わせます</li>
           </ul>
         </div>
         <div class="work-box">
