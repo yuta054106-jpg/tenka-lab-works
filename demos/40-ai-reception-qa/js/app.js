@@ -405,6 +405,7 @@
     p2.appendChild(t2.t)
     p2.appendChild(el('p', { class: 'pr-note', text: '下線と * ：11月2日のテストのあとに足した言葉' }))
     p2.appendChild(prHead('記録 4', '月1回の見直し（10月の分）'))
+    p2.appendChild(el('p', { class: 'pr-note', text: '使い始めた後の見直しは納品に含まず、ご希望の場合に別のお見積もりで行います。この記録はその見本です。' }))
     var t4 = prTable('pr-rv', ['順', '10月に答えられなかった質問', '回数', '足す先（案）', '判断'])
     D.REVIEW.forEach(function (r) {
       t4.b.appendChild(el('tr', null, [el('td', { text: r.no }), el('td', { text: r.q + (r.memo ? '（メモ：' + r.memo + '）' : '') }), el('td', { text: r.times + '回' }), el('td', { text: r.target }), el('td', { text: C.DEC_NAME[ui.dec[r.no]] })]))
