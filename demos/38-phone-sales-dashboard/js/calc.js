@@ -124,6 +124,7 @@ var Calc38 = (function () {
   function parseSales (rows, today) {
     var counted = {}
     var holidays = {}
+    var futureHolidays = {}
     var errDays = {}
     var first = {}
     var errors = []
@@ -138,7 +139,11 @@ var Calc38 = (function () {
         errors.push({ sheet: 'sales', row: r.row, field: 'date', kind: ds === '' ? 'nodate' : 'date', input: ds, date: '' })
         return
       }
-      if (date > today) return
+      // 今日より後の日は数えない。ただし売上欄が「休」（客数は空欄）の日は、先の臨時休業として月末の見込みの残りの営業日から外す（2026-11-23）
+      if (date > today) {
+        if (isHolidayMark(ss) && cs === '') futureHolidays[date] = r.row
+        return
+      }
       if (ss === '' && cs === '') return
       // 売上が空欄で客数だけ：売上の書き忘れかもしれないので要確認（数えない）
       if (ss === '') {
@@ -180,7 +185,7 @@ var Calc38 = (function () {
     })
     errors.sort(function (x, y) { return x.row - y.row })
     warns.sort(function (x, y) { return x.row - y.row })
-    return { counted: counted, holidays: holidays, errDays: errDays, errors: errors, warns: warns }
+    return { counted: counted, holidays: holidays, futureHolidays: futureHolidays, errDays: errDays, errors: errors, warns: warns }
   }
   // 「目標」シート：年月ごとの目標・誤りの一覧
   function parseTargets (rows) {
@@ -272,8 +277,15 @@ var Calc38 = (function () {
     var dailyGoal = target !== null && bizMonth > 0 ? Math.round(target / bizMonth) : null
     var restBiz = 0
     var todayInRest = false
+    var restHolidays = 0
     if (isCurrent) {
       restBiz = openDays(ym, upto + 1, D, closed)
+      // 明日から月末までの、定休日の曜日でない日に「休」と書いた日（先の臨時休業）を残りの営業日から引く
+      for (var fd = upto + 1; fd <= D; fd++) {
+        var fdate = dateOf(ym, fd)
+        if (ps.futureHolidays[fdate] && !isClosed(fdate, closed)) restHolidays++
+      }
+      restBiz -= restHolidays
       if (dayState(ps, today, closed) === 'missing') { restBiz += 1; todayInRest = true }
     }
     var gap = gaps(ps, ym, upto, today, closed)
@@ -326,6 +338,7 @@ var Calc38 = (function () {
       remain: target !== null ? Math.max(target - cur.total, 0) : null,
       over: target !== null ? Math.max(cur.total - target, 0) : null,
       restBiz: restBiz,
+      restHolidays: restHolidays,
       todayInRest: todayInRest,
       forecast: isCurrent && cur.bizDone >= 1 ? cur.total + Math.round(cur.total * restBiz / cur.bizDone) : null,
       avg: cur.bizDone >= 1 ? Math.round(cur.total / cur.bizDone) : null,
@@ -398,7 +411,7 @@ var Calc38 = (function () {
       else cmp = '目安・目標ちょうどの見込み'
     }
     var notes = ['入力済みの売上 ＋ 入力済みの営業日の平均 × 残りの営業日 で出した目安です。',
-      '残りの営業日 ' + h.restBiz + '日 ＝ 明日から月末までの定休日でない日' + (h.todayInRest ? '＋今日（まだ未入力）' : '') + '。']
+      '残りの営業日 ' + h.restBiz + '日 ＝ 明日から月末までの定休日でない日' + (h.restHolidays ? '（先に「休」と書いた' + h.restHolidays + '日を除く）' : '') + (h.todayInRest ? '＋今日（まだ未入力）' : '') + '。']
     if (h.missing.length) notes.push('未入力の日（' + h.missing.length + '日）は見込みに入れていません。')
     if (h.bizDone <= 4) notes.push('まだ' + h.bizDone + '日分なので、見込みは大きくぶれます。')
     return { head: 'このペースなら月末は', value: h.forecast, cmp: cmp, notes: notes }
